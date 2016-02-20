@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * Created by kimberlysookoo on 2/17/16.
+ * what up player?
  */
 public class ReadFile {
     private ArrayList<String[]> splitFile;
