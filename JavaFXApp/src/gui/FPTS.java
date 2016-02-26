@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxapp;
+package gui;
 
+import model.User;
 import java.awt.Insets;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import static javafx.application.Application.launch;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -32,7 +34,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author ericepstein
  */
-public class JavaFXApp extends Application {
+public class FPTS extends Application {
     
     Stage thestage;
     Page homePage;
@@ -117,12 +119,18 @@ public class JavaFXApp extends Application {
         grid.setVgap(5);
         grid.setHgap(5);
         
+        //Defining a Register button
+        Button register = new Button("Register");
+        GridPane.setConstraints(register, 1, 2);
+        grid.getChildren().add(register);
+        
         final TextField loginID = new TextField();
         loginID.setPromptText("Enter your login id.");
         loginID.setPrefColumnCount(10);
         loginID.getText();
         GridPane.setConstraints(loginID, 0, 0);
         grid.getChildren().add(loginID);
+
         //Defining the first Password text field
         final PasswordField password1 = new PasswordField();
         password1.setPromptText("Enter your password.");
@@ -137,12 +145,7 @@ public class JavaFXApp extends Application {
         //Defining the Clear button
         Button clear = new Button("Clear");
         GridPane.setConstraints(clear, 1, 1);
-           grid.getChildren().add(clear);
-           
-        //Defining a Register button
-        Button register = new Button("Register");
-        GridPane.setConstraints(register, 1, 2);
-        grid.getChildren().add(register);
+        grid.getChildren().add(clear);
 
         //Adding a Label
         final Label label = new Label();
@@ -325,36 +328,7 @@ public class JavaFXApp extends Application {
         launch(args);
     }
     
-    class User {
-        private String loginID;
-        private String password;
-        
-        public User(String loginID, String password) {
-            this.loginID = loginID;
-            this.password = hash(password);
-        }
-        
-        public String hash(String password) {
-            String encryptedPW = "";
-            for (int i = 0; i < password.length(); i++) {
-                char encryptedChar = (char) (password.charAt(i) + 1);
-                encryptedPW += encryptedChar;
-            }
-            return encryptedPW;
-        }
-        
-        public boolean equals(User u) {
-            return u.getPassword().equals(password) && u.getLoginID().equals(loginID);
-        }
-        
-        public String getLoginID() {
-            return loginID;
-        }
-        
-        private String getPassword() {
-            return password;
-        }
-    }
+    
     
     class Page {
         private Scene scene;
@@ -378,7 +352,7 @@ public class JavaFXApp extends Application {
             aGroup.getChildren().add(createNav(pages));
         }
         
-        public HBox createNav(ArrayList<Page> pages) { 
+        private HBox createNav(ArrayList<Page> pages) { 
             HBox nav = new HBox();
             for (Page aPage : pages) {
                 //Creates the visit buttons
