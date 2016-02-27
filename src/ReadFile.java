@@ -34,8 +34,10 @@ public class ReadFile {
             reader = new BufferedReader(new FileReader(csv));
             while ((line = reader.readLine()) != null) {
 
-                String[] split = line.split(",");
+                line = line.substring(1,line.length()-1);
+                String[] split = line.split("\",\"");
                 splitFile.add(split);
+                System.out.println(java.util.Arrays.toString(split));
             }
         } catch (FileNotFoundException e) {
             System.out.println("That file does not exist! Please try again.");
