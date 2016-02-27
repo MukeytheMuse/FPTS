@@ -24,7 +24,6 @@ public class ReadFile {
 
     //Reads in CSV file
     public void readFile() {
-        //String filePath = "/Users/kimberlysookoo/Desktop/rit-challenge/transactions-person-A.csv";
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter file name: ");
         String csv = userInput.nextLine();
