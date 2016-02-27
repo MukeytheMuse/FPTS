@@ -4,11 +4,25 @@
  * and open the template in the editor.
  */
 package model;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
- *
- * @author ericepstein
+ * Portfolio is a collection of holdings.
+ * 
+ * @author ericepstein & Kaitlin
  */
 public class Portfolio {
+    private ArrayList<Holding> portfolioHoldings;
+    private double currentValue;
     
+    /**
+     * 
+     * @author ericepstein & Kaitlin
+     */    
+    public Portfolio(){
+
+    }    
+    
+    //public
 }
