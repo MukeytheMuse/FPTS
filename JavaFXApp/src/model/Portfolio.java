@@ -24,5 +24,13 @@ public class Portfolio {
 
     }    
     
+    public void addHolding(Holding h) {
+        portfolioHoldings.add(h);
+    }
+    
+    public void removeHolding(Holding h) {
+        portfolioHoldings.remove(h);
+    }
+    
     //public
 }
