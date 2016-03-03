@@ -5,6 +5,10 @@
  */
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 /**
  *
  * @author ericepstein
@@ -16,6 +20,7 @@ public class User {
         public User(String loginID, String password) {
             this.loginID = loginID;
             this.password = hash(password);
+
         }
         
         public String hash(String password) {
@@ -38,4 +43,4 @@ public class User {
         private String getPassword() {
             return password;
         }
-    }
+}

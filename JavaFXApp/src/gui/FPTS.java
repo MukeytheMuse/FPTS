@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.ArrayList;
 import static javafx.application.Application.launch;
 import javafx.scene.Group;
@@ -163,21 +164,21 @@ public class FPTS extends Application {
                     */
                     User u = new User(loginID.getText(), password1.getText());
                     //need to establish condition checking for duplicate login ID
-                    
+
                     //should be a global variable
                     ArrayList<User> users = new ArrayList<User>();
-                    users.add(new User("lala","lol"));
-                    
+                    users.add(new User("lala", "lol"));
+
                     for (User existingUser : users) {
                         if (u.equals(existingUser)) {
                             thestage.setScene(homePage.getScene());
                             break;
                         }
                     }
-                   
+
                     password1.clear();
                     label.setText("Not a valid combination of login ID and password");
-                   
+
                 } else {
                     label.setText("You have missing fields.");
                 }
@@ -262,7 +263,21 @@ public class FPTS extends Application {
                     /*label.setText(password1.getText() + " " + password2.getText() + ", "
                    + "thank you for your comment!");
                     */
-                    
+
+                    FileWriter fileWriter = null;
+                    BufferedWriter bufferedWriter = null;
+
+                    try {
+                        fileWriter = new FileWriter("UserData.txt");
+                        bufferedWriter = new BufferedWriter(fileWriter);
+                        bufferedWriter.write(loginID.getText() + ",");
+                        bufferedWriter.write(password1.getText());
+                        bufferedWriter.newLine();
+                        bufferedWriter.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
                     //need to establish condition checking for duplicate login ID
                     if (false) {
                         label.setText(loginID.getText() + " is an existing login ID. Please enter another one.");
