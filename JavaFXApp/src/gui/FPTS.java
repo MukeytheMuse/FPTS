@@ -293,7 +293,7 @@ public class FPTS extends Application {
                         fileWriter = new FileWriter("UserData.txt",true);
                         bufferedWriter = new BufferedWriter(fileWriter);
                         bufferedWriter.write(user.getLoginID() + ",");
-                        bufferedWriter.write(user.getPassword());
+                        bufferedWriter.write(user.hash(password1.getText()));
                         bufferedWriter.newLine();
                         bufferedWriter.close();
                     } catch (IOException e1) {
