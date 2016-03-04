@@ -32,7 +32,7 @@ public class IndexComposite implements Holding {
     public void delete(Holding h){
         if(surEquityList.contains(h)){
             surEquityList.remove(h);
-        } else{
+        } else {
             //return error stating this equity is not in the collection.
         }
     }
