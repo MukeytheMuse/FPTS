@@ -182,7 +182,7 @@ public class FPTS extends Application {
                             //System.out.println(line);
                             String[] splitLine = line.split(",");
                             //System.out.println(splitLine[0]);
-                            User newUser = new User(splitLine[0], splitLine[1]);
+                            User newUser = new User(splitLine[0], u.unHash(splitLine[1]));
                             users.add(newUser);
                         }
 
@@ -287,12 +287,13 @@ public class FPTS extends Application {
 
                     FileWriter fileWriter = null;
                     BufferedWriter bufferedWriter = null;
+                    User user = new User(loginID.getText(), password1.getText());
 
                     try {
                         fileWriter = new FileWriter("UserData.txt",true);
                         bufferedWriter = new BufferedWriter(fileWriter);
-                        bufferedWriter.write(loginID.getText() + ",");
-                        bufferedWriter.write(password1.getText());
+                        bufferedWriter.write(user.getLoginID() + ",");
+                        bufferedWriter.write(user.getPassword());
                         bufferedWriter.newLine();
                         bufferedWriter.close();
                     } catch (IOException e1) {
