@@ -41,6 +41,7 @@ public class FPTS extends Application {
     
     Stage thestage;
     Page homePage;
+    private ArrayList<User> users = new ArrayList<User>();
     
     @Override
     public void start(Stage primaryStage) {
@@ -168,13 +169,13 @@ public class FPTS extends Application {
                     //need to establish condition checking for duplicate login ID
 
                     //should be a global variable
-                    ArrayList<User> users = new ArrayList<User>();
+
                     //users.add(new User("lala", "lol"));
 
                     Scanner scanner = null;
 
                     try {
-                        scanner = new Scanner(new File("/Users/kimberlysookoo/IdeaProjects/HelloWorld2/UserData.txt"));
+                        scanner = new Scanner(new File("UserData.txt"));
 
                         while (scanner.hasNextLine()) {
                             String line = scanner.nextLine();
@@ -288,7 +289,7 @@ public class FPTS extends Application {
                     BufferedWriter bufferedWriter = null;
 
                     try {
-                        fileWriter = new FileWriter("UserData.txt");
+                        fileWriter = new FileWriter("UserData.txt",true);
                         bufferedWriter = new BufferedWriter(fileWriter);
                         bufferedWriter.write(loginID.getText() + ",");
                         bufferedWriter.write(password1.getText());
