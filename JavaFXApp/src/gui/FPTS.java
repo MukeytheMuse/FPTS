@@ -21,7 +21,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import static javafx.application.Application.launch;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -163,21 +166,39 @@ public class FPTS extends Application {
                     */
                     User u = new User(loginID.getText(), password1.getText());
                     //need to establish condition checking for duplicate login ID
-                    
+
                     //should be a global variable
                     ArrayList<User> users = new ArrayList<User>();
-                    users.add(new User("lala","lol"));
-                    
+                    //users.add(new User("lala", "lol"));
+
+                    Scanner scanner = null;
+
+                    try {
+                        scanner = new Scanner(new File("/Users/kimberlysookoo/IdeaProjects/HelloWorld2/UserData.txt"));
+
+                        while (scanner.hasNextLine()) {
+                            String line = scanner.nextLine();
+                            //System.out.println(line);
+                            String[] splitLine = line.split(",");
+                            //System.out.println(splitLine[0]);
+                            User newUser = new User(splitLine[0], splitLine[1]);
+                            users.add(newUser);
+                        }
+
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+
                     for (User existingUser : users) {
                         if (u.equals(existingUser)) {
                             thestage.setScene(homePage.getScene());
                             break;
                         }
                     }
-                   
+
                     password1.clear();
                     label.setText("Not a valid combination of login ID and password");
-                   
+
                 } else {
                     label.setText("You have missing fields.");
                 }
@@ -262,7 +283,21 @@ public class FPTS extends Application {
                     /*label.setText(password1.getText() + " " + password2.getText() + ", "
                    + "thank you for your comment!");
                     */
-                    
+
+                    FileWriter fileWriter = null;
+                    BufferedWriter bufferedWriter = null;
+
+                    try {
+                        fileWriter = new FileWriter("UserData.txt");
+                        bufferedWriter = new BufferedWriter(fileWriter);
+                        bufferedWriter.write(loginID.getText() + ",");
+                        bufferedWriter.write(password1.getText());
+                        bufferedWriter.newLine();
+                        bufferedWriter.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
                     //need to establish condition checking for duplicate login ID
                     if (false) {
                         label.setText(loginID.getText() + " is an existing login ID. Please enter another one.");
