@@ -31,6 +31,15 @@ public class User {
             }
             return encryptedPW;
         }
+
+        public String unHash(String password) {
+            String textPass = "";
+            for (int i = 0; i < password.length(); i++) {
+                char encryptedChar = (char) (password.charAt(i) - 1);
+                textPass += encryptedChar;
+            }
+            return textPass;
+        }
         
         public boolean equals(User u) {
             return u.getPassword().equals(password) && u.getLoginID().equals(loginID);

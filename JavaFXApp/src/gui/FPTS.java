@@ -10,6 +10,7 @@ import java.awt.Insets;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import model.*;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -41,14 +42,13 @@ public class FPTS extends Application {
     
     Stage thestage;
     Page homePage;
+    private ArrayList<User> users = new ArrayList<User>();
     
     @Override
     public void start(Stage primaryStage) {
         thestage=primaryStage;
-
-        //make a load eq here
-
-
+        //LoadedEquities eq = new LoadedEquities();
+        
         //can now use the stage in other methods
        
         //make things to put on panes
@@ -178,6 +178,7 @@ public class FPTS extends Application {
                     Scanner scanner = null;
 
                     try {
+                        //                     scanner = new Scanner(new File("UserData.txt"));
                         scanner = new Scanner(new File("/Users/kimberlysookoo/IdeaProjects/HelloWorld2/UserData.txt"));
 
                         while (scanner.hasNextLine()) {
@@ -290,7 +291,7 @@ public class FPTS extends Application {
 
                     FileWriter fileWriter = null;
                     BufferedWriter bufferedWriter = null;
-
+                    //User user = new User(loginID.getText(), password1.getText());
                     try {
                         fileWriter = new FileWriter("UserData.txt");
                         bufferedWriter = new BufferedWriter(fileWriter);
