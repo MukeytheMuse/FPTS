@@ -178,23 +178,7 @@ public class FPTS extends Application {
 
                     //users.add(new User("lala", "lol"));
 
-                    Scanner scanner = null;
-
-                    try {
-                        scanner = new Scanner(new File("UserData.txt"));
-
-                        while (scanner.hasNextLine()) {
-                            String line = scanner.nextLine();
-                            //System.out.println(line);
-                            String[] splitLine = line.split(",");
-                            //System.out.println(splitLine[0]);
-                            User newUser = new User(splitLine[0], u.unHash(splitLine[1]));
-                            users.add(newUser);
-                        }
-
-                    } catch (FileNotFoundException e1) {
-                        e1.printStackTrace();
-                    }
+                    fillUsers();
 
                     for (User existingUser : users) {
                         if (u.equals(existingUser)) {
@@ -307,7 +291,20 @@ public class FPTS extends Application {
                     }
 
                     //need to establish condition checking for duplicate login ID
-                    if (false) {
+                    boolean flag = false;
+
+                    fillUsers();
+
+                    System.out.println("ARRAY LENGTH: " + users.size());
+                    for( User usr : users){
+                        System.out.println("USER: " + usr.getLoginID());
+                        if(usr.getLoginID().equals(loginID.getText())){
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    if (flag) {
                         label.setText(loginID.getText() + " is an existing login ID. Please enter another one.");
                     }
                     else if (password1.getText().equals(password2.getText())) {
@@ -414,5 +411,29 @@ public class FPTS extends Application {
         }
         
     }
-    
+    /*
+     * Private method used to populate the users ArrayList<User> from the UserData.txt file.
+     */
+    private void fillUsers(){
+        if(users.size() == 0){
+            try {
+                Scanner scanner = new Scanner(new File("UserData.txt"));
+
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if(line.length() != 0){
+                        //System.out.println(line);
+                        String[] splitLine = line.split(",");
+                        //System.out.println(splitLine[0]);
+                        User newUser = new User(splitLine[0], User.unHash(splitLine[1]));
+                        users.add(newUser);
+                    }
+                }
+
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
 }
