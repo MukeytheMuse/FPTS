@@ -45,6 +45,10 @@ public class FPTS extends Application {
     @Override
     public void start(Stage primaryStage) {
         thestage=primaryStage;
+
+        //make a load eq here
+
+
         //can now use the stage in other methods
        
         //make things to put on panes

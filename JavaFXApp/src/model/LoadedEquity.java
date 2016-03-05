@@ -15,7 +15,7 @@ public class LoadedEquity {
     
     private String tickerSymbol;
     private String equityName;
-    double perShareValue; 
+    double perShareValue;
     ArrayList<String> indices; 
     ArrayList<String> sectors;
     
