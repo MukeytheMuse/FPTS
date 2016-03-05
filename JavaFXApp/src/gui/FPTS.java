@@ -10,6 +10,7 @@ import java.awt.Insets;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import model.*;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -46,6 +47,8 @@ public class FPTS extends Application {
     @Override
     public void start(Stage primaryStage) {
         thestage=primaryStage;
+        //LoadedEquities eq = new LoadedEquities();
+        
         //can now use the stage in other methods
        
         //make things to put on panes
@@ -93,6 +96,7 @@ public class FPTS extends Application {
         Page simPage = new Page(scene2, "Simulation");
         Page searchPage = new Page(scene3, "Symbol Search");
         
+        
         Page loginPage = new Page(loginScene, "Log in");
         Page regPage = new Page(registerScene, "Register");
        
@@ -115,6 +119,8 @@ public class FPTS extends Application {
         primaryStage.setScene(createLogInPage().getScene());
         primaryStage.show();
     }
+    
+    
     
     //returns HBox of relevant scenes
 
