@@ -257,7 +257,7 @@ public class FPTS extends Application {
         //Defining the Clear button
         Button clear = new Button("Clear");
         GridPane.setConstraints(clear, 1, 1);
-           grid.getChildren().add(clear);
+        grid.getChildren().add(clear);
 
         //Adding a Label
         final Label label = new Label();
@@ -341,6 +341,8 @@ public class FPTS extends Application {
         Page regPage = new Page(regScene, "LogIn");
         return regPage;
     }
+
+
     
     //Overloading fieldHasContent for PasswordField
     public boolean fieldHasContent(PasswordField aField) {
@@ -407,6 +409,24 @@ public class FPTS extends Application {
                 visitBtn.setOnAction( visitPage );
                 nav.getChildren().add(visitBtn);
             }
+
+            //Defining the Logout button
+            Button logout = new Button("Logout");
+            GridPane.setConstraints(logout, 1, 1);
+            nav.getChildren().add(logout);
+
+            //createLogInPage() = new Page loginPage;
+
+            //Setting an action for the Logout button
+            logout.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    thestage.setScene(createLogInPage().getScene());
+                    thestage.show();
+                    //thestage.setScene(loginPage.getScene());
+                }
+            });
+
             return nav;
         }
         
