@@ -96,6 +96,7 @@ public class FPTS extends Application {
         Page simPage = new Page(scene2, "Simulation");
         Page searchPage = new Page(scene3, "Symbol Search");
         
+        
         Page loginPage = new Page(loginScene, "Log in");
         Page regPage = new Page(registerScene, "Register");
        
@@ -118,6 +119,8 @@ public class FPTS extends Application {
         primaryStage.setScene(createLogInPage().getScene());
         primaryStage.show();
     }
+    
+    
     
     //returns HBox of relevant scenes
 
@@ -175,18 +178,17 @@ public class FPTS extends Application {
                     ArrayList<User> users = new ArrayList<User>();
                     //users.add(new User("lala", "lol"));
 
-                    Scanner scanner = null;
+                    fillUsers();
 
                     try {
-                        //                     scanner = new Scanner(new File("UserData.txt"));
-                        scanner = new Scanner(new File("/Users/kimberlysookoo/IdeaProjects/HelloWorld2/UserData.txt"));
+                        scanner = new Scanner(new File("UserData.txt"));
 
                         while (scanner.hasNextLine()) {
                             String line = scanner.nextLine();
                             //System.out.println(line);
                             String[] splitLine = line.split(",");
                             //System.out.println(splitLine[0]);
-                            User newUser = new User(splitLine[0], splitLine[1]);
+                            User newUser = new User(splitLine[0], u.unHash(splitLine[1]));
                             users.add(newUser);
                         }
 
@@ -291,12 +293,13 @@ public class FPTS extends Application {
 
                     FileWriter fileWriter = null;
                     BufferedWriter bufferedWriter = null;
-                    //User user = new User(loginID.getText(), password1.getText());
+                    User user = new User(loginID.getText(), password1.getText());
+
                     try {
-                        fileWriter = new FileWriter("UserData.txt");
+                        fileWriter = new FileWriter("UserData.txt",true);
                         bufferedWriter = new BufferedWriter(fileWriter);
-                        bufferedWriter.write(loginID.getText() + ",");
-                        bufferedWriter.write(password1.getText());
+                        bufferedWriter.write(user.getLoginID() + ",");
+                        bufferedWriter.write(user.hash(password1.getText()));
                         bufferedWriter.newLine();
                         bufferedWriter.close();
                     } catch (IOException e1) {
@@ -304,7 +307,20 @@ public class FPTS extends Application {
                     }
 
                     //need to establish condition checking for duplicate login ID
-                    if (false) {
+                    boolean flag = false;
+
+                    fillUsers();
+
+                    System.out.println("ARRAY LENGTH: " + users.size());
+                    for( User usr : users){
+                        System.out.println("USER: " + usr.getLoginID());
+                        if(usr.getLoginID().equals(loginID.getText())){
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    if (flag) {
                         label.setText(loginID.getText() + " is an existing login ID. Please enter another one.");
                     }
                     else if (password1.getText().equals(password2.getText())) {
@@ -341,6 +357,8 @@ public class FPTS extends Application {
         Page regPage = new Page(regScene, "LogIn");
         return regPage;
     }
+
+
     
     //Overloading fieldHasContent for PasswordField
     public boolean fieldHasContent(PasswordField aField) {
@@ -407,9 +425,51 @@ public class FPTS extends Application {
                 visitBtn.setOnAction( visitPage );
                 nav.getChildren().add(visitBtn);
             }
+
+            //Defining the Logout button
+            Button logout = new Button("Logout");
+            GridPane.setConstraints(logout, 1, 1);
+            nav.getChildren().add(logout);
+
+            //createLogInPage() = new Page loginPage;
+
+            //Setting an action for the Logout button
+            logout.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    thestage.setScene(createLogInPage().getScene());
+                    thestage.show();
+                    //thestage.setScene(loginPage.getScene());
+                }
+            });
+
             return nav;
         }
         
     }
-    
+    /*
+     * Private method used to populate the users ArrayList<User> from the UserData.txt file.
+     */
+    private void fillUsers(){
+        if(users.size() == 0){
+            try {
+                Scanner scanner = new Scanner(new File("UserData.txt"));
+
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if(line.length() != 0){
+                        //System.out.println(line);
+                        String[] splitLine = line.split(",");
+                        //System.out.println(splitLine[0]);
+                        User newUser = new User(splitLine[0], User.unHash(splitLine[1]));
+                        users.add(newUser);
+                    }
+                }
+
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
 }
