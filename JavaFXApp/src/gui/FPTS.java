@@ -53,6 +53,8 @@ public class FPTS extends Application implements Observer {
     
     private Portfolio p;
     
+    private Searcher s;
+    
     private VBox matchDisplay;
     
     private TextField tickerSymbolInput; 
@@ -64,7 +66,9 @@ public class FPTS extends Application implements Observer {
         thestage=primaryStage;
         matchDisplay = new VBox();
         p = new Portfolio();
+        s = new LoadedEquitySearcher();
         this.p.addObserver(this);
+        
         //LoadedEquities eq = new LoadedEquities();
         
         //can now use the stage in other methods
@@ -220,8 +224,8 @@ public class FPTS extends Application implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         //displayMatches(ArrayList<)
-        
         displayMatches(this.p.getMatches());
+        //isplayMatches(this.s.getMatches());
     }
     
     //returns HBox of relevant scenes
