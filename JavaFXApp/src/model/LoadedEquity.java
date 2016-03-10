@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author ericepstein
  */
-public class LoadedEquity {
+public class LoadedEquity implements Searchable {
     
     private String tickerSymbol;
     private String equityName;
@@ -25,6 +25,18 @@ public class LoadedEquity {
         this.perShareValue = perShareValue;
         this.indices = indices;
         this.sectors = sectors;
+    }
+    
+    public String getDisplayName() {
+        return tickerSymbol;
+    }
+    
+    public String getEquityName() {
+        return equityName;
+    }
+    
+    public String getTickerSymbol() {
+        return tickerSymbol;
     }
     
     public boolean isMatch(String tickerSymbol, String equityName, String index, String sector) {
