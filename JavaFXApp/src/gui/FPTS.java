@@ -7,6 +7,7 @@ package gui;
 
 import model.User;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +25,8 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
@@ -33,20 +36,31 @@ import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
  * @author ericepstein
  */
-public class FPTS extends Application {
+public class FPTS extends Application implements Observer {
     
-    Stage thestage;
-    Page homePage;
+    private Stage thestage;
+    private Page homePage;
+    
+    private Portfolio p;
+    
+    private VBox matchDisplay;
+    
+    private TextField tickerSymbolInput; 
+    
     private ArrayList<User> users = new ArrayList<User>();
     
     @Override
     public void start(Stage primaryStage) {
         thestage=primaryStage;
+        matchDisplay = new VBox();
+        p = new Portfolio();
+        this.p.addObserver(this);
         //LoadedEquities eq = new LoadedEquities();
         
         //can now use the stage in other methods
@@ -92,10 +106,10 @@ public class FPTS extends Application {
         
         ArrayList<Page> pages = new ArrayList<Page>();
         
-        homePage = new Page(scene1, "Home Page");
-        Page simPage = new Page(scene2, "Simulation");
-        Page searchPage = new Page(scene3, "Symbol Search");
         
+        homePage = new Page(scene1, "Home Page");
+        Page simPage = new Page(scene2, "Simulation");   
+        Page searchPage = new Page(scene3, "Symbol Search");
         
         Page loginPage = new Page(loginScene, "Log in");
         Page regPage = new Page(registerScene, "Register");
@@ -103,11 +117,15 @@ public class FPTS extends Application {
         pages.add(homePage);
         pages.add(simPage);
         pages.add(searchPage);
+        Pane nav = createNav(pages);
        
         //g1 = (Group) scene1.getRoot();
-        homePage.addNav(pages);
-        simPage.addNav(pages);
-        searchPage.addNav(pages);
+        //homePage.addNav(pages);
+        //simPage.addNav(pages);
+        //searchPage.addNav(pages);
+        
+        designSearchScene(searchPage.getScene(), nav);
+        
         /*
         Group aGroup = (Group) scene1.getRoot();
         aGroup.getChildren().addAll(createNav(pages), new Label("s1"));
@@ -116,11 +134,75 @@ public class FPTS extends Application {
         */
         
         primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(createLogInPage().getScene());
+        //primaryStage.setScene(createLogInPage().getScene());
+        primaryStage.setScene(searchPage.getScene());
         primaryStage.show();
     }
     
     
+    public void designSearchScene(Scene searchScene, Pane nav) {
+  
+        VBox splitPage = new VBox();
+        
+        VBox searchPane = new VBox();
+        
+        VBox queries = new VBox();
+        
+        Label aLabel = new Label("Ticker symbol:");
+        tickerSymbolInput = new TextField ();
+        HBox aField = new HBox();
+        aField.getChildren().addAll(aLabel, tickerSymbolInput);
+        aField.setSpacing(10);
+        queries.getChildren().add(aField);
+         
+        //tickerSymbolInput.setText();
+        queries.getChildren().add(tickerSymbolInput);
+        
+        //VBox listing = new VBox();
+        ArrayList<Holding> holdings = p.getMatches();
+
+        Button searchBtn = new Button();
+        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                p.setMatches(queries.getChildren());
+            }
+        });
+             
+        searchPane.getChildren().addAll(queries, searchBtn, matchDisplay);
+        
+        splitPage.getChildren().addAll(nav, searchPane);
+        
+        //searchGroup.getChildren().add(searchPane);
+        Group searchGroup = (Group) searchScene.getRoot();
+        searchGroup.getChildren().add(splitPage);
+    }
+    
+    public void displayMatches(ArrayList<Holding> matches) {
+        //given the list
+        matchDisplay.getChildren().clear();
+        for (Holding h : matches) {
+            String symbol = h.getSymbol();
+            Button item = new Button(symbol);
+            item.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+            item.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    tickerSymbolInput.setText(symbol);
+                }
+            });
+            matchDisplay.getChildren().add(item);
+        }   
+        
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        //displayMatches(ArrayList<)
+        
+        displayMatches(this.p.getMatches());
+    }
     
     //returns HBox of relevant scenes
 
@@ -387,6 +469,23 @@ public class FPTS extends Application {
     }
     
     
+    public HBox createNav(ArrayList<Page> pages) { 
+        HBox nav = new HBox();
+        for (Page aPage : pages) {
+            //Creates the visit buttons
+            EventHandler< ActionEvent > visitPage =
+                new EventHandler< ActionEvent >() {
+                    @Override
+                    public void handle( ActionEvent event ) {
+                        thestage.setScene(aPage.getScene());
+                    }
+                };
+            Button visitBtn = new Button(aPage.toString());
+            visitBtn.setOnAction( visitPage );
+            nav.getChildren().add(visitBtn);
+        }
+        return nav;
+    }
     
     class Page {
         private Scene scene;
@@ -405,46 +504,9 @@ public class FPTS extends Application {
             return title;
         }
         
-        public void addNav(ArrayList<Page> pages) {
-            Group aGroup = (Group) scene.getRoot();
-            aGroup.getChildren().add(createNav(pages));
-        }
         
-        private HBox createNav(ArrayList<Page> pages) { 
-            HBox nav = new HBox();
-            for (Page aPage : pages) {
-                //Creates the visit buttons
-                EventHandler< ActionEvent > visitPage =
-                    new EventHandler< ActionEvent >() {
-                        @Override
-                        public void handle( ActionEvent event ) {
-                            thestage.setScene(aPage.getScene());
-                        }
-                    };
-                Button visitBtn = new Button(aPage.toString());
-                visitBtn.setOnAction( visitPage );
-                nav.getChildren().add(visitBtn);
-            }
 
-            //Defining the Logout button
-            Button logout = new Button("Logout");
-            GridPane.setConstraints(logout, 1, 1);
-            nav.getChildren().add(logout);
 
-            //createLogInPage() = new Page loginPage;
-
-            //Setting an action for the Logout button
-            logout.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                    thestage.setScene(createLogInPage().getScene());
-                    thestage.show();
-                    //thestage.setScene(loginPage.getScene());
-                }
-            });
-
-            return nav;
-        }
         
     }
     /*
@@ -461,7 +523,7 @@ public class FPTS extends Application {
                         //System.out.println(line);
                         String[] splitLine = line.split(",");
                         //System.out.println(splitLine[0]);
-                        User newUser = new User(splitLine[0], User.unHash(splitLine[1]));
+                        User newUser = new User(splitLine[0], splitLine[1]);
                         users.add(newUser);
                     }
                 }
@@ -473,3 +535,5 @@ public class FPTS extends Application {
     }
 
 }
+
+

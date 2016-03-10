@@ -23,4 +23,9 @@ public class SurrogateEquity implements Holding {
     public double getValue() {
         return currentValue;
     }
+    
+    public String getSymbol() {
+        return "";
+    }
+    
 }

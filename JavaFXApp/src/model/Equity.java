@@ -47,8 +47,13 @@ public class Equity implements Holding {
         this.currentValue = currentValue;
     }
     
+    public String getSymbol() {
+        return tickerSymbol;
+    }
     
-
+    public String toString() {
+        return tickerSymbol + "\t" + equityName + "\t" + currentPricePerShare; 
+    }
     
     public String getTickerSymbol(){
         return tickerSymbol;

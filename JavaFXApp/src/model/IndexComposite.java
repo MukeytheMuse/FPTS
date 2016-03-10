@@ -16,8 +16,6 @@ public class IndexComposite implements Holding {
     private List<Holding> surEquityList;
     private double currentValue;
     
-    
-    
     //may only add a surEquity
     public IndexComposite(String indexName, Holding se){
         this.indexName = indexName;
@@ -46,6 +44,10 @@ public class IndexComposite implements Holding {
         }
             
         return count;
+    }
+    
+    public String getSymbol() {
+        return indexName;
     }
     
 }
