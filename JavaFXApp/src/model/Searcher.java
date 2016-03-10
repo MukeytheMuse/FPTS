@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import gui.FPTS;
 
 /**
  *
@@ -22,21 +23,22 @@ abstract public class Searcher extends Observable {
     ObservableList<Node> queries;
     ArrayList<Searchable> toBeSearched;
     ArrayList<Searchable> matches;
-    ArrayList<String> holdingStrings;
+    ArrayList<ArrayList<String>> holdingStrings;
     //private T t;
     
     public void search(ObservableList<Node> queries, ArrayList<Searchable> toBeSearched) {
         //define(queries, toBeSearched);
-        toBeSearched = getToBeSearched();
-        holdingStrings = getHoldingStrings();
+        this.toBeSearched = toBeSearched;
+        
+        this.queries = queries;
+        matches = new ArrayList<Searchable>();
         generateMatches();
     }
     
     //abstract void set(T t);
     
     //abstract ArrayList<T> getMatches();
-    abstract ArrayList<Searchable> getToBeSearched();
-    abstract ArrayList<String> getHoldingStrings();
+    abstract ArrayList<ArrayList<String>> getHoldingStrings(Searchable e);
     //abstract void define(ObservableList<Node> queries, ArrayList<T> toBeSearched);
     
     /*
@@ -53,39 +55,63 @@ abstract public class Searcher extends Observable {
     //abstract public ArrayList<Searchable> getMatches();
     
     public void generateMatches() { 
-            for (Searchable e : toBeSearched) {          
-                boolean isMatch = false;
-                for (int i = 0; i < holdingStrings.size(); i++) {
+          
+        //System.out.println("SIZE OF HOLDING STIRNGS IS " + holdingStrings.size());
+        //System.out.println("SIZE OF QUERIES IS " + queries.size());
+        
+            for (Searchable e : toBeSearched) {
+                boolean isMatch = true;
+                System.out.println("NEW SEARCHABLE");
+                ArrayList<ArrayList<String>> allItems = getHoldingStrings(e);
+               
+                for (int i = 0; i < allItems.size(); i++) {
+                    
+                    ArrayList<String> anItem = allItems.get(i);
+                    
                     Pane p = (Pane) queries.get(i);
                     ComboBox cond = (ComboBox) p.getChildren().get(1);
                     TextField content = (TextField) p.getChildren().get(2);
+                    //String content = contentField.getText();
+                    System.out.println("content is " + content.getText());
                     
-                    String testStr = holdingStrings.get(i);
-                    //Switch statement
-                    switch (cond.getValue().toString()) {
-                        case "exactly matches":
-                            isMatch = strExactlyMatches(content, testStr);
+                    if (!cond.getValue().equals("")) {
+                        boolean tempMatch = false;
+                        for (int j = 0; j < anItem.size(); j++) {
+                            String testStr = anItem.get(j);
+                            System.out.println("test Str : " + testStr);
+                            //Switch statement
+                            boolean oneMatch = false;
+                            switch (cond.getValue().toString()) {
+                                case "exactly matches":
+                                    oneMatch = strExactlyMatches(content, testStr);
+                                    break;
+                                case "starts with":
+                                    oneMatch = strStartsWith(content, testStr);
+                                    break;
+                                case "contains":
+                                    oneMatch = strContains(content, testStr);
+                                    break;
+                                case "":
+                                    System.out.println("has QUOTES");
+                                    oneMatch = true;
+                            }
+                            System.out.println("oneMatch is " + oneMatch);
+                            tempMatch = tempMatch || oneMatch;
+                            System.out.println("temp match is now " + tempMatch);
+                        }
+                        System.out.println("is match was " + isMatch);
+                        isMatch = isMatch && tempMatch;
+                        System.out.println("is match is now " + isMatch);
+                        if (!isMatch) {
                             break;
-                        case "starts with":
-                            isMatch = strStartsWith(content, testStr);
-                            break;
-                        case "contains":
-                            isMatch = strContains(content, testStr);
-                            break;
-                        case "":
-                            isMatch = true;
-                            break;
+                        }   
                     }
-                    
-                    if (!isMatch) {
-                        break;
-                    }
+                    System.out.println("isMathc is " + isMatch);
                     
                 }
                 if (isMatch) {
                     matches.add(e);
                 }
-                holdingStrings.clear();
             }
         setChanged();
         notifyObservers();

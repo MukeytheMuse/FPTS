@@ -17,7 +17,6 @@ public class SectorComposite {
     private List<Holding> surEquityList;
     private double currentValue;
     
-    
     //may only add a surEquity
     public SectorComposite(String sectorName, Holding se) {
         this.sectorName = sectorName;

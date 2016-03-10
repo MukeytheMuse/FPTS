@@ -23,6 +23,10 @@ import javafx.scene.layout.Pane;
  */
 public class Portfolio extends Observable {
     private ArrayList<Holding> portfolioHoldings;
+    private ArrayList<Searchable> portfolioSearchables;
+    private ArrayList<Simulatable> portfolioSimulatables;
+    
+    
     private double currentValue;
     private ArrayList<Equity> existingEquities;
     
@@ -34,24 +38,36 @@ public class Portfolio extends Observable {
      * @author ericepstein & Kaitlin
      */    
     public Portfolio(){
-                       
-
         //public CashAccount(String AccountName, float initialAmount, Date dateAdded) 
         portfolioHoldings = new ArrayList<Holding>();
+        portfolioSearchables = new ArrayList<Searchable>();
+        
+        portfolioSimulatables = new ArrayList<Simulatable>();
+        
         existingEquities = new ArrayList<Equity>();
         matches = new ArrayList<Holding>();
         //portfolioHoldings.add(new CashAccount("lala",200,new Date()));
         //portfolioHoldings.add(new CashAccount("moo",2,new Date()));
         
 //(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount )
-        portfolioHoldings.add(new Equity("ha", "haha", 2, 3, 4.3, new Date(), false));
-        portfolioHoldings.add(new Equity("mo", "momo", 2, 3, 5, new Date(), false));
-        portfolioHoldings.add(new Equity("lol", "lolol", 4, 4, 5, new Date(), false));
+//String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int sharesHeld, double currentPricePerShare, Date acquisitionDate
+        portfolioSimulatables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+        portfolioSimulatables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+        portfolioSimulatables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+
+        portfolioSearchables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+        portfolioSearchables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+        portfolioSearchables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
         
-        existingEquities.add(new Equity("ha", "haha", 2, 3, 4.3, new Date(), false));
-        existingEquities.add(new Equity("mo", "momo", 2, 3, 5, new Date(), false));
-        existingEquities.add(new Equity("lol", "lolol", 4, 4, 5, new Date(), false));
     }    
+    
+    public ArrayList<Simulatable> getPortfolioSimulatables() {
+        return portfolioSimulatables;
+    }
+    
+    public ArrayList<Searchable> getPortfolioSearchables() {
+        return portfolioSearchables;
+    }
     
     public void addHolding(Holding h) {
         portfolioHoldings.add(h);
@@ -66,8 +82,6 @@ public class Portfolio extends Observable {
     }
     
     public void setMatches(ObservableList<Node> queries) {
-   
-       
         //matches = new ArrayList<Holding>();
         matches.clear();
         //if (queries.size() == 2) {

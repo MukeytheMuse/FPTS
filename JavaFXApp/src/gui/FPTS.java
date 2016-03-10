@@ -53,6 +53,8 @@ public class FPTS extends Application implements Observer {
     
     private Portfolio p;
     
+    private PortfolioEquitySearcher pEqSearcher;
+    
     private Searcher s;
     
     private VBox matchDisplay;
@@ -66,8 +68,9 @@ public class FPTS extends Application implements Observer {
         thestage=primaryStage;
         matchDisplay = new VBox();
         p = new Portfolio();
-        s = new LoadedEquitySearcher();
-        this.p.addObserver(this);
+        //s = new LoadedEquitySearcher();
+        pEqSearcher = new PortfolioEquitySearcher();
+        this.pEqSearcher.addObserver(this);
         
         //LoadedEquities eq = new LoadedEquities();
         
@@ -142,8 +145,8 @@ public class FPTS extends Application implements Observer {
         */
         
         primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(createLogInPage().getScene());
-        //primaryStage.setScene(searchPage.getScene());
+        //primaryStage.setScene(createLogInPage().getScene());
+        primaryStage.setScene(searchPage.getScene());
         primaryStage.show();
     }
     
@@ -162,22 +165,27 @@ public class FPTS extends Application implements Observer {
         
         queries.getChildren().add(createInputField("Ticker symbol: ", tickerSymbolInput));
         queries.getChildren().add(createInputField("Equity name: ", new TextField()));
-        queries.getChildren().add(createInputField("Index/sector: ", new TextField()));
-        
+        queries.getChildren().add(createInputField("Index: ", new TextField()));
+        queries.getChildren().add(createInputField("Sector: ", new TextField()));
         
         //tickerSymbolInput.setText();
         ArrayList<Holding> holdings = p.getMatches();
+        ArrayList<Searchable> toBeSearched = p.getPortfolioSearchables();
 
         Button searchBtn = new Button();
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                
-                p.setMatches(queries.getChildren());
+                pEqSearcher.search(queries.getChildren(), toBeSearched);
+                //p.setMatches(queries.getChildren());
             }
         });
-             
-        searchPane.getChildren().addAll(queries, searchBtn, matchDisplay);
+        
+        HBox forAction = new HBox();
+        Button actionBtn = new Button();
+        forAction.getChildren().addAll(queries, actionBtn);
+        searchPane.getChildren().addAll(forAction, searchBtn, matchDisplay);
+        //searchPane.getChildren().addAll(queries, searchBtn, matchDisplay);
         
         splitPage.getChildren().addAll(nav, searchPane);
         
@@ -203,11 +211,13 @@ public class FPTS extends Application implements Observer {
         return aField;
     }
     
-    public void displayMatches(ArrayList<Holding> matches) {
+    public void displayMatches(ArrayList<Searchable> matches) {
         //given the list
+        
+        
         matchDisplay.getChildren().clear();
-        for (Holding h : matches) {
-            String symbol = h.getSymbol();
+        for (Searchable s : matches) {
+            String symbol = s.getDisplayName();
             Button item = new Button(symbol);
             item.setStyle("-fx-background-color: white; -fx-text-fill: black;");
             item.setOnAction(new EventHandler<ActionEvent>() {
@@ -224,7 +234,10 @@ public class FPTS extends Application implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         //displayMatches(ArrayList<)
-        displayMatches(this.p.getMatches());
+        //displayMatches(this.p.getMatches());
+        System.out.println("SIZE IS : " + pEqSearcher.getMatches().size());
+        displayMatches(pEqSearcher.getMatches());
+        System.out.println("UPDATED");
         //isplayMatches(this.s.getMatches());
     }
     
@@ -538,8 +551,6 @@ public class FPTS extends Application implements Observer {
         public String toString() {
             return title;
         }
-        
-
         
     }
     /*
