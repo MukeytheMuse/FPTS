@@ -150,15 +150,15 @@ public class FPTS extends Application implements Observer {
         
         Label aLabel = new Label("Ticker symbol:");
         tickerSymbolInput = new TextField ();
-        HBox aField = new HBox();
-        aField.getChildren().addAll(aLabel, tickerSymbolInput);
-        aField.setSpacing(10);
-        queries.getChildren().add(aField);
-         
-        //tickerSymbolInput.setText();
-        queries.getChildren().add(tickerSymbolInput);
         
-        //VBox listing = new VBox();
+        //createInputField("Ticker symbol: ", tickerSymbolInput);
+        
+        queries.getChildren().add(createInputField("Ticker symbol: ", tickerSymbolInput));
+        queries.getChildren().add(createInputField("Equity name: ", new TextField()));
+        queries.getChildren().add(createInputField("Index/sector: ", new TextField()));
+        
+        
+        //tickerSymbolInput.setText();
         ArrayList<Holding> holdings = p.getMatches();
 
         Button searchBtn = new Button();
@@ -177,6 +177,14 @@ public class FPTS extends Application implements Observer {
         //searchGroup.getChildren().add(searchPane);
         Group searchGroup = (Group) searchScene.getRoot();
         searchGroup.getChildren().add(splitPage);
+    }
+    
+    public HBox createInputField(String description, TextField input) {
+        HBox aField = new HBox();
+        Label aLabel = new Label(description);
+        aField.getChildren().addAll(aLabel, input);
+        aField.setSpacing(10);
+        return aField;
     }
     
     public void displayMatches(ArrayList<Holding> matches) {
@@ -257,26 +265,10 @@ public class FPTS extends Application implements Observer {
                     //need to establish condition checking for duplicate login ID
 
                     //should be a global variable
-                    ArrayList<User> users = new ArrayList<User>();
+
                     //users.add(new User("lala", "lol"));
 
                     fillUsers();
-
-                    try {
-                        scanner = new Scanner(new File("UserData.txt"));
-
-                        while (scanner.hasNextLine()) {
-                            String line = scanner.nextLine();
-                            //System.out.println(line);
-                            String[] splitLine = line.split(",");
-                            //System.out.println(splitLine[0]);
-                            User newUser = new User(splitLine[0], u.unHash(splitLine[1]));
-                            users.add(newUser);
-                        }
-
-                    } catch (FileNotFoundException e1) {
-                        e1.printStackTrace();
-                    }
 
                     for (User existingUser : users) {
                         if (u.equals(existingUser)) {
@@ -355,7 +347,12 @@ public class FPTS extends Application implements Observer {
         //Defining the Clear button
         Button clear = new Button("Clear");
         GridPane.setConstraints(clear, 1, 1);
-           grid.getChildren().add(clear);
+        grid.getChildren().add(clear);
+
+        //Defining the Back button
+        Button back = new Button("Back");
+        GridPane.setConstraints(back, 1, 2);
+        grid.getChildren().add(back);
 
         //Adding a Label
         final Label label = new Label();
@@ -373,34 +370,22 @@ public class FPTS extends Application implements Observer {
                    + "thank you for your comment!");
                     */
 
-                    FileWriter fileWriter = null;
-                    BufferedWriter bufferedWriter = null;
-                    User user = new User(loginID.getText(), password1.getText());
-
-                    try {
-                        fileWriter = new FileWriter("UserData.txt",true);
-                        bufferedWriter = new BufferedWriter(fileWriter);
-                        bufferedWriter.write(user.getLoginID() + ",");
-                        bufferedWriter.write(user.hash(password1.getText()));
-                        bufferedWriter.newLine();
-                        bufferedWriter.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-
                     //need to establish condition checking for duplicate login ID
                     boolean flag = false;
 
                     fillUsers();
-
-                    System.out.println("ARRAY LENGTH: " + users.size());
                     for( User usr : users){
-                        System.out.println("USER: " + usr.getLoginID());
                         if(usr.getLoginID().equals(loginID.getText())){
                             flag = true;
                             break;
                         }
                     }
+
+                    FileWriter fileWriter = null;
+                    BufferedWriter bufferedWriter = null;
+                    User user = new User(loginID.getText(), password1.getText());
+
+
 
                     if (flag) {
                         label.setText(loginID.getText() + " is an existing login ID. Please enter another one.");
@@ -408,6 +393,18 @@ public class FPTS extends Application implements Observer {
                     else if (password1.getText().equals(password2.getText())) {
                         User u = new User(loginID.getText(), password1.getText());
                         //add function to create User
+
+                        try {
+                            fileWriter = new FileWriter("UserData.txt",true);
+                            bufferedWriter = new BufferedWriter(fileWriter);
+                            bufferedWriter.write(user.getLoginID() + ",");
+                            bufferedWriter.write(user.hash(password1.getText()));
+                            bufferedWriter.newLine();
+                            bufferedWriter.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+
                         thestage.setScene(homePage.getScene());
                     } else {
                         password1.clear();
@@ -431,6 +428,17 @@ public class FPTS extends Application implements Observer {
                 label.setText(null);
             }
         });
+
+        //Setting an action for the Back button
+        back.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                thestage.setScene(createLogInPage().getScene());
+            }
+        });
+
+
         
         Group g = new Group();
         g.getChildren().add(grid);
@@ -484,6 +492,19 @@ public class FPTS extends Application implements Observer {
             visitBtn.setOnAction( visitPage );
             nav.getChildren().add(visitBtn);
         }
+        
+        Button logout = new Button("Logout");
+        GridPane.setConstraints(logout, 1, 1);
+        nav.getChildren().add(logout);
+        
+        logout.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                thestage.setScene(createLogInPage().getScene());
+                thestage.show();
+            }
+        });
+        
         return nav;
     }
     

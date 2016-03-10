@@ -79,7 +79,7 @@ public class CashAccount implements Holding{
         } else if( amount < 0){
             //return error message that you cannot withdraw a negative amount
         } else {
-            //The cash account does not have enouph funds to withdraw the amount requested.
+            //The cash account does not have enough funds to withdraw the amount requested.
             
             //RETURN AN ERROR HERE; INSUFFICIENT FUNDS
         }

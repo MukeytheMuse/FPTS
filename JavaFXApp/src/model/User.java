@@ -42,7 +42,7 @@ public class User {
         }
         
         public boolean equals(User u) {
-            return u.getPassword().equals(password) && u.getLoginID().equals(loginID);
+            return unHash(u.getPassword()).equals(password) && u.getLoginID().equals(loginID);
         }
         
         public String getLoginID() {

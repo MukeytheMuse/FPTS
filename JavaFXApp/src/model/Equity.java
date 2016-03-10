@@ -25,9 +25,9 @@ public class Equity implements Holding {
     * 
     * @author ericepstein & kaitlin
     */
-    public Equity(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount ){
+    public Equity(String tickerSymbol, String equityName, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount ){
         this.tickerSymbol = tickerSymbol;
-        //this.equityName = equityName;
+        this.equityName = equityName;
         this.sharesHeld = sharesHeld;
         this.currentPricePerShare = currentPricePerShare;
         this.currentValue = currentValue;
