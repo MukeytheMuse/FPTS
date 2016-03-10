@@ -65,7 +65,7 @@ public class FPTS extends Application implements Observer {
         matchDisplay = new VBox();
         p = new Portfolio();
         this.p.addObserver(this);
-        //LoadedEquities eq = new LoadedEquities();
+        //EquityList eq = new EquityList();
         
         //can now use the stage in other methods
        
@@ -111,7 +111,7 @@ public class FPTS extends Application implements Observer {
         ArrayList<Page> pages = new ArrayList<Page>();
         
         
-        homePage = new Page(scene1, "Home Page");
+        Page homePage = new Page(scene1, "Home Page");
         Page simPage = new Page(scene2, "Simulation");   
         Page searchPage = new Page(scene3, "Symbol Search");
         
@@ -500,11 +500,13 @@ public class FPTS extends Application implements Observer {
             visitBtn.setOnAction( visitPage );
             nav.getChildren().add(visitBtn);
         }
-        
+
+        //Define the logout button
         Button logout = new Button("Logout");
         GridPane.setConstraints(logout, 1, 1);
         nav.getChildren().add(logout);
-        
+
+        //Setting an action for the logout button
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -533,8 +535,6 @@ public class FPTS extends Application implements Observer {
             return title;
         }
         
-        
-
 
         
     }

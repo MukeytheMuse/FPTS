@@ -15,9 +15,24 @@ public class LoadedEquity {
     
     private String tickerSymbol;
     private String equityName;
-    double perShareValue; 
-    ArrayList<String> indices; 
+    double perShareValue;
+    ArrayList<String> indices;
     ArrayList<String> sectors;
+
+    //ArrayList of Equities for use within search functionality
+    private static ArrayList<LoadedEquity> EquityList;
+    private ArrayList<LoadedEquity> matches;
+
+    //Populate the Load
+    public ArrayList<LoadedEquity> makeEquityList() {
+        //PLEASE FILL ME IN
+        return EquityList;
+    }
+
+    //Return list of Equities to search through
+    public ArrayList<LoadedEquity> getEquityList() {
+        return EquityList;
+    }
     
     public LoadedEquity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
