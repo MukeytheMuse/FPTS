@@ -87,6 +87,8 @@ public class Portfolio extends Observable {
                     
                     String testStr = holdingStrings.get(i);
                     
+                    
+                    //Switch statement
                     switch (cond.getValue().toString()) {
                         case "exactly matches":
                             isMatch = strExactlyMatches(content, testStr);
