@@ -488,12 +488,6 @@ public class FPTS extends Application implements Observer {
             return title;
         }
         
-        /*
-        public void addNav(ArrayList<Page> pages) {
-            Group aGroup = (Group) scene.getRoot();
-            aGroup.getChildren().add(createNav(pages));
-        }
-        */
         
 
 
@@ -513,7 +507,7 @@ public class FPTS extends Application implements Observer {
                         //System.out.println(line);
                         String[] splitLine = line.split(",");
                         //System.out.println(splitLine[0]);
-                        User newUser = new User(splitLine[0], User.unHash(splitLine[1]));
+                        User newUser = new User(splitLine[0], splitLine[1]);
                         users.add(newUser);
                     }
                 }
