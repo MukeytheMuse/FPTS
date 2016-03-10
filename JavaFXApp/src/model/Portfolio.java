@@ -66,7 +66,7 @@ public class Portfolio extends Observable {
     }
     
     public void setMatches(ObservableList<Node> queries) {
-        LoadedEquities loadedEqs = new LoadedEquities();
+   
         //matches = new ArrayList<Holding>();
         matches.clear();
         //if (queries.size() == 2) {
@@ -86,8 +86,6 @@ public class Portfolio extends Observable {
                     TextField content = (TextField) p.getChildren().get(2);
                     
                     String testStr = holdingStrings.get(i);
-                    
-                    
                     //Switch statement
                     switch (cond.getValue().toString()) {
                         case "exactly matches":
