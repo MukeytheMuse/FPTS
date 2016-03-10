@@ -4,82 +4,56 @@
  * and open the template in the editor.
  */
 package model;
-import java.util.List;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Observable;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 /**
- * Portfolio is a collection of holdings.
- * 
- * @author ericepstein & Kaitlin
+ *
+ * @author ericepstein
  */
-public class Portfolio extends Observable {
-    private ArrayList<Holding> portfolioHoldings;
-    private double currentValue;
-    private ArrayList<Equity> existingEquities;
+abstract public class Searcher extends Observable {
     
-    private ArrayList<Holding> matches;
+    ObservableList<Node> queries;
+    ArrayList<Searchable> toBeSearched;
+    ArrayList<Searchable> matches;
+    ArrayList<String> holdingStrings;
+    //private T t;
     
-    
-    /**
-     * 
-     * @author ericepstein & Kaitlin
-     */    
-    public Portfolio(){
-                       
-
-        //public CashAccount(String AccountName, float initialAmount, Date dateAdded) 
-        portfolioHoldings = new ArrayList<Holding>();
-        existingEquities = new ArrayList<Equity>();
-        matches = new ArrayList<Holding>();
-        //portfolioHoldings.add(new CashAccount("lala",200,new Date()));
-        //portfolioHoldings.add(new CashAccount("moo",2,new Date()));
-        
-//(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount )
-        portfolioHoldings.add(new Equity("ha", "haha", 2, 3, 4.3, new Date(), false));
-        portfolioHoldings.add(new Equity("mo", "momo", 2, 3, 5, new Date(), false));
-        portfolioHoldings.add(new Equity("lol", "lolol", 4, 4, 5, new Date(), false));
-        
-        existingEquities.add(new Equity("ha", "haha", 2, 3, 4.3, new Date(), false));
-        existingEquities.add(new Equity("mo", "momo", 2, 3, 5, new Date(), false));
-        existingEquities.add(new Equity("lol", "lolol", 4, 4, 5, new Date(), false));
-    }    
-    
-    public void addHolding(Holding h) {
-        portfolioHoldings.add(h);
+    public void search(ObservableList<Node> queries, ArrayList<Searchable> toBeSearched) {
+        //define(queries, toBeSearched);
+        toBeSearched = getToBeSearched();
+        holdingStrings = getHoldingStrings();
+        generateMatches();
     }
     
-    public void removeHolding(Holding h) {
-        portfolioHoldings.remove(h);
-    }
+    //abstract void set(T t);
     
-    public ArrayList<Holding> getMatches() {
+    //abstract ArrayList<T> getMatches();
+    abstract ArrayList<Searchable> getToBeSearched();
+    abstract ArrayList<String> getHoldingStrings();
+    //abstract void define(ObservableList<Node> queries, ArrayList<T> toBeSearched);
+    
+    /*
+    public void redefine(ObservableList<Node> queries, ArrayList<Searchable> toBeSearched) {
+        this.queries = queries;
+        this.toBeSearched = toBeSearched;
+        matches = new ArrayList<>();
+    }
+*/
+    public ArrayList<Searchable> getMatches() {
         return matches;
     }
     
-    public void setMatches(ObservableList<Node> queries) {
-   
-       
-        //matches = new ArrayList<Holding>();
-        matches.clear();
-        //if (queries.size() == 2) {
-        if (true) {
-            
-            ArrayList<String> holdingStrings = new ArrayList<String>();
-            
-            for (Equity e : existingEquities) {
-                
-                holdingStrings.add(e.getTickerSymbol());
-                holdingStrings.add(e.getEquityName());
-                
+    //abstract public ArrayList<Searchable> getMatches();
+    
+    public void generateMatches() { 
+            for (Searchable e : toBeSearched) {          
                 boolean isMatch = false;
                 for (int i = 0; i < holdingStrings.size(); i++) {
                     Pane p = (Pane) queries.get(i);
@@ -109,11 +83,10 @@ public class Portfolio extends Observable {
                     
                 }
                 if (isMatch) {
-                    matches.add((Holding) e);
+                    matches.add(e);
                 }
                 holdingStrings.clear();
             }
-        }
         setChanged();
         notifyObservers();
         System.out.println("Notified");
@@ -136,5 +109,4 @@ public class Portfolio extends Observable {
         return (aField.getText() != null && !aField.getText().isEmpty());
     }
     
-    //public
 }
