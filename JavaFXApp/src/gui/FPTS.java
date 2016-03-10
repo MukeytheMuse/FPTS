@@ -5,6 +5,7 @@
  */
 package gui;
 
+import javafx.fxml.FXMLLoader;
 import model.User;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -54,9 +55,9 @@ public class FPTS extends Application implements Observer {
     private Portfolio p;
     
     private PortfolioEquitySearcher pEqSearcher;
-    
+
     private Searcher s;
-    
+
     private VBox matchDisplay;
     
     private TextField tickerSymbolInput; 
@@ -71,13 +72,16 @@ public class FPTS extends Application implements Observer {
         //s = new LoadedEquitySearcher();
         pEqSearcher = new PortfolioEquitySearcher();
         this.pEqSearcher.addObserver(this);
-        
+
         //LoadedEquities eq = new LoadedEquities();
         
         //can now use the stage in other methods
        
         //make things to put on panes
-        
+
+        //Fills the User static class with whats in the UserData.txt file
+        User.fillUsers();
+
         /*
         btnscene1=new Button("Click to go to Other Scene");
         btnscene2=new Button("Click to go back to First Scene");
@@ -145,8 +149,8 @@ public class FPTS extends Application implements Observer {
         */
         
         primaryStage.setTitle("Hello World!");
-        //primaryStage.setScene(createLogInPage().getScene());
-        primaryStage.setScene(searchPage.getScene());
+        primaryStage.setScene(createLogInPage().getScene());
+        //primaryStage.setScene(searchPage.getScene());
         primaryStage.show();
     }
     
@@ -180,7 +184,7 @@ public class FPTS extends Application implements Observer {
                 //p.setMatches(queries.getChildren());
             }
         });
-        
+
         HBox forAction = new HBox();
         Button actionBtn = new Button();
         forAction.getChildren().addAll(queries, actionBtn);
@@ -213,8 +217,8 @@ public class FPTS extends Application implements Observer {
     
     public void displayMatches(ArrayList<Searchable> matches) {
         //given the list
-        
-        
+
+
         matchDisplay.getChildren().clear();
         for (Searchable s : matches) {
             String symbol = s.getDisplayName();
@@ -244,99 +248,19 @@ public class FPTS extends Application implements Observer {
     //returns HBox of relevant scenes
 
     public Page createLogInPage() {
-        GridPane grid = new GridPane();
-        grid.setVgap(5);
-        grid.setHgap(5);
+        Scene scene = null;
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+            scene = new Scene(root, 658, 433);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        thestage.setScene(scene);
+        thestage.setTitle("Financial Portfolio Tracking System");
+        thestage.show();
         
-        //Defining a Register button
-        Button register = new Button("Register");
-        GridPane.setConstraints(register, 1, 2);
-        grid.getChildren().add(register);
-        
-        final TextField loginID = new TextField();
-        loginID.setPromptText("Enter your login id.");
-        loginID.setPrefColumnCount(10);
-        loginID.getText();
-        GridPane.setConstraints(loginID, 0, 0);
-        grid.getChildren().add(loginID);
-
-        //Defining the first Password text field
-        final PasswordField password1 = new PasswordField();
-        password1.setPromptText("Enter your password.");
-        GridPane.setConstraints(password1, 0, 1);
-        grid.getChildren().add(password1);
-        
-        //Defining the Submit button
-        Button submit = new Button("Submit");
-        GridPane.setConstraints(submit, 1, 0);
-        grid.getChildren().add(submit);
-        
-        //Defining the Clear button
-        Button clear = new Button("Clear");
-        GridPane.setConstraints(clear, 1, 1);
-        grid.getChildren().add(clear);
-
-        //Adding a Label
-        final Label label = new Label();
-        GridPane.setConstraints(label, 0, 3);
-        GridPane.setColumnSpan(label, 2);
-        grid.getChildren().add(label);
-
-        //Setting an action for the Submit button
-        submit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                if (fieldHasContent(loginID) && fieldHasContent(password1)) {
-                    /*label.setText(password1.getText() + " " + password2.getText() + ", "
-                   + "thank you for your comment!");
-                    */
-                    User u = new User(loginID.getText(), password1.getText());
-
-                    //users.add(new User("lala", "lol"));
-
-                    fillUsers();
-                    for (User existingUser : users) {
-                        if (u.equals(existingUser)) {
-                            thestage.setScene(homePage.getScene());
-                            break;
-                        }
-                    }
-
-                    password1.clear();
-                    label.setText("Not a valid combination of login ID and password");
-
-                } else {
-                    label.setText("You have missing fields.");
-                }
-            }
-        });
- 
-        //Setting an action for the Clear button
-        clear.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                loginID.clear();
-                password1.clear();
-                label.setText(null);
-            }
-        });
-        
-        //Setting an action for the Register button
-        register.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {  
-                thestage.setScene(createRegisterPage().getScene());
-            }
-        });
-        
-        Group g = new Group();
-        g.getChildren().add(grid);
-        
-        Scene logInScene = new Scene(g, 300, 200);
-        
-        Page logInPage = new Page(logInScene, "Register");
+        Page logInPage = new Page(scene, "Login");
         return logInPage;
     }
     
@@ -396,15 +320,10 @@ public class FPTS extends Application implements Observer {
                     */
 
                     //need to establish condition checking for duplicate login ID
-                    boolean flag = false;
+                    String id = loginID.getText();
+                    boolean flag = User.ValidLoginID(id);
 
-                    fillUsers();
-                    for( User usr : users){
-                        if(usr.getLoginID().equals(loginID.getText())){
-                            flag = true;
-                            break;
-                        }
-                    }
+
 
                     FileWriter fileWriter = null;
                     BufferedWriter bufferedWriter = null;
@@ -551,31 +470,8 @@ public class FPTS extends Application implements Observer {
         public String toString() {
             return title;
         }
-        
-    }
-    /*
-     * Private method used to populate the users ArrayList<User> from the UserData.txt file.
-     */
-    private void fillUsers(){
-        if(users.size() == 0){
-            try {
-                Scanner scanner = new Scanner(new File("UserData.txt"));
 
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if(line.length() != 0){
-                        //System.out.println(line);
-                        String[] splitLine = line.split(",");
-                        //System.out.println(splitLine[0]);
-                        User newUser = new User(splitLine[0], splitLine[1]);
-                        users.add(newUser);
-                    }
-                }
 
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            }
-        }
     }
 
 }
