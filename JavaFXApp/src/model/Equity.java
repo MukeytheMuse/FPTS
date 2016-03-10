@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package model;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,6 +20,7 @@ public class Equity implements Holding {
     private double currentValue;
     private boolean cashAccount;
     private Date acquisitionDate;
+    private ArrayList<String> extras;
     
     /**
     * Constructor used when a user manually adds a Equity.
@@ -33,6 +35,7 @@ public class Equity implements Holding {
         this.currentValue = currentValue;
         this.acquisitionDate = acquisitionDate;
         this.cashAccount = cashAccount;
+        extras = new ArrayList<String>();
     }
     
     /**

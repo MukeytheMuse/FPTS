@@ -12,16 +12,18 @@ import java.util.ArrayList;
  */
 public class LoadedEquities {
     private ArrayList<LoadedEquity> loadedEquities;
+    private ArrayList<LoadedEquity> matches;
     
     public LoadedEquities() {
         //convert each row to Equity objects
         loadedEquities = new ArrayList<LoadedEquity>();
-        
     }
     
     public ArrayList<LoadedEquity> getLoadedEquities() {
         return loadedEquities;
     }
+    
+    
     
     
     
