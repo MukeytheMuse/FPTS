@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author ericepstein
  */
-public class Equity implements Holding {
+public class Equity implements Holding, Searchable, Simulatable {
     
     private String tickerSymbol;
     private String equityName;
@@ -27,15 +27,15 @@ public class Equity implements Holding {
     * 
     * @author ericepstein & kaitlin
     */
-    public Equity(String tickerSymbol, String equityName, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount ){
+    public Equity(String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int sharesHeld, double currentPricePerShare, Date acquisitionDate){
         this.tickerSymbol = tickerSymbol;
         this.equityName = equityName;
         this.sharesHeld = sharesHeld;
         this.currentPricePerShare = currentPricePerShare;
-        this.currentValue = currentValue;
+        this.currentValue = sharesHeld * currentPricePerShare;
         this.acquisitionDate = acquisitionDate;
-        this.cashAccount = cashAccount;
-        extras = new ArrayList<String>();
+        //this.cashAccount = cashAccount;
+        //extras = new ArrayList<String>();
     }
     
     /**
@@ -48,6 +48,10 @@ public class Equity implements Holding {
         this.equityName = equityName;
         this.currentPricePerShare = currentPricePerShare;
         this.currentValue = currentValue;
+    }
+    
+    public String getDisplayName() {
+        return tickerSymbol;
     }
     
     public String getSymbol() {
@@ -66,6 +70,7 @@ public class Equity implements Holding {
         return equityName;
     }
     
+    @Override
     public int getSharesHeld(){
         return sharesHeld;
     }
@@ -74,9 +79,26 @@ public class Equity implements Holding {
         return currentPricePerShare;
     }
     
+    @Override
     public double getValue(){
         return currentValue;
     }
+    
+    @Override
+    public double getCurrentValue() {
+        return currentValue;
+    }
+    
+    @Override
+    public ArrayList<String> getSectors() {
+        return new ArrayList<String>();
+    }
+    
+    @Override
+    public ArrayList<String> getIndices() {
+        return new ArrayList<String>();
+    }
+    
     
     public void add(Holding h){
         //this is a leaf node so this method is not applicable to this class        
@@ -85,6 +107,14 @@ public class Equity implements Holding {
     public void delete(Holding h){
         //this is a leaf node so this method is not applicable to this class
         
+    }
+    
+    public void delete(Simulatable s) {
+        //none
+    }
+    
+    public void add(Simulatable s) {
+        //none
     }
     
     
