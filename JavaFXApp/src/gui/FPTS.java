@@ -138,8 +138,8 @@ public class FPTS extends Application implements Observer {
         */
         
         primaryStage.setTitle("Hello World!");
-        //primaryStage.setScene(createLogInPage().getScene());
-        primaryStage.setScene(searchPage.getScene());
+        primaryStage.setScene(createLogInPage().getScene());
+        //primaryStage.setScene(searchPage.getScene());
         primaryStage.show();
     }
     
@@ -274,14 +274,10 @@ public class FPTS extends Application implements Observer {
                    + "thank you for your comment!");
                     */
                     User u = new User(loginID.getText(), password1.getText());
-                    //need to establish condition checking for duplicate login ID
-
-                    //should be a global variable
 
                     //users.add(new User("lala", "lol"));
 
                     fillUsers();
-
                     for (User existingUser : users) {
                         if (u.equals(existingUser)) {
                             thestage.setScene(homePage.getScene());
@@ -361,6 +357,11 @@ public class FPTS extends Application implements Observer {
         GridPane.setConstraints(clear, 1, 1);
         grid.getChildren().add(clear);
 
+        //Defining the Back button
+        Button back = new Button("Back");
+        GridPane.setConstraints(back, 1, 2);
+        grid.getChildren().add(back);
+
         //Adding a Label
         final Label label = new Label();
         GridPane.setConstraints(label, 0, 3);
@@ -377,34 +378,22 @@ public class FPTS extends Application implements Observer {
                    + "thank you for your comment!");
                     */
 
-                    FileWriter fileWriter = null;
-                    BufferedWriter bufferedWriter = null;
-                    User user = new User(loginID.getText(), password1.getText());
-
-                    try {
-                        fileWriter = new FileWriter("UserData.txt",true);
-                        bufferedWriter = new BufferedWriter(fileWriter);
-                        bufferedWriter.write(user.getLoginID() + ",");
-                        bufferedWriter.write(user.hash(password1.getText()));
-                        bufferedWriter.newLine();
-                        bufferedWriter.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-
                     //need to establish condition checking for duplicate login ID
                     boolean flag = false;
 
                     fillUsers();
-
-                    System.out.println("ARRAY LENGTH: " + users.size());
                     for( User usr : users){
-                        System.out.println("USER: " + usr.getLoginID());
                         if(usr.getLoginID().equals(loginID.getText())){
                             flag = true;
                             break;
                         }
                     }
+
+                    FileWriter fileWriter = null;
+                    BufferedWriter bufferedWriter = null;
+                    User user = new User(loginID.getText(), password1.getText());
+
+
 
                     if (flag) {
                         label.setText(loginID.getText() + " is an existing login ID. Please enter another one.");
@@ -412,6 +401,18 @@ public class FPTS extends Application implements Observer {
                     else if (password1.getText().equals(password2.getText())) {
                         User u = new User(loginID.getText(), password1.getText());
                         //add function to create User
+
+                        try {
+                            fileWriter = new FileWriter("UserData.txt",true);
+                            bufferedWriter = new BufferedWriter(fileWriter);
+                            bufferedWriter.write(user.getLoginID() + ",");
+                            bufferedWriter.write(user.hash(password1.getText()));
+                            bufferedWriter.newLine();
+                            bufferedWriter.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+
                         thestage.setScene(homePage.getScene());
                     } else {
                         password1.clear();
@@ -435,6 +436,17 @@ public class FPTS extends Application implements Observer {
                 label.setText(null);
             }
         });
+
+        //Setting an action for the Back button
+        back.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                thestage.setScene(createLogInPage().getScene());
+            }
+        });
+
+
         
         Group g = new Group();
         g.getChildren().add(grid);
