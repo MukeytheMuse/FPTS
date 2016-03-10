@@ -14,8 +14,8 @@ public class CashAccount implements Holding{
     private String accountName;
     private double currentValue;
     private Date dateAdded;
-       
-    
+
+
     /**
     * The system shall allow the user to specify a new cash account. 
     * A user defines a cash account by specifying an account name, 

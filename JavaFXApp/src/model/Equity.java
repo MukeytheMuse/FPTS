@@ -13,8 +13,12 @@ import java.util.Date;
  */
 public class Equity implements Holding, Searchable, Simulatable {
     
-    private String tickerSymbol;
-    private String equityName;
+    private String tickerSymbol;//index 0 in the csv file
+    private String equityName;//index 1 in the csv file
+    private double initialPricePerShare;//index 2 in the csv file
+    //index 3 in the csv file: 0 or more market indices or sectors that the equity is in. (aka may not be there)
+
+    private String equityType;//STOCK, BOND OR MUTUAL FUND HOLDING
     private int sharesHeld;
     private double currentPricePerShare;
     private double currentValue;

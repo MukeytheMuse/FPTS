@@ -8,6 +8,7 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,14 +19,25 @@ import java.util.Scanner;
 public class User {
     private String loginID;
     private String password;
+        private Portfolio myPortfolio;
 
     private static ArrayList<User> userList = new ArrayList<User>();
 
+        /**
+         * When creating a new portfolio, the system shall allow the user to
+         * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
+         *
+         *
+         * @param loginID
+         * @param password
+         */
     public User(String loginID, String password) {
         this.loginID = loginID;
         this.password = hash(password);
         userList.add(this);
 
+
+        this.myPortfolio = new Portfolio();//*****************************
     }
 
     public String hash(String password) {
@@ -96,6 +108,13 @@ public class User {
             }
         }
         return false;
+    }
+
+    //A	The system shall allow the user to add holdings to a portfolio.
+    public void addHoldings(List<Holding> holdings){
+        for(Holding cur_h: holdings ){
+            myPortfolio.addHolding(cur_h);
+        }
     }
 
 }
