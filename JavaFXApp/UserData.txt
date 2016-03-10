@@ -7,3 +7,9 @@ a,b
 b,c
 b,c
 c,c
+a,b
+b,b
+b,c
+d,e
+t,u
+er,fs

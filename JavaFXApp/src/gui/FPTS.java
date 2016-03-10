@@ -30,10 +30,14 @@ import java.util.Observer;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -181,8 +185,17 @@ public class FPTS extends Application implements Observer {
     
     public HBox createInputField(String description, TextField input) {
         HBox aField = new HBox();
-        Label aLabel = new Label(description);
-        aField.getChildren().addAll(aLabel, input);
+        Label descriptionLabel = new Label(description);
+        ObservableList<String> attributes = 
+            FXCollections.observableArrayList(
+                "",
+                "contains",
+                "starts with",
+                "exactly matches"
+        );
+        ComboBox searchConditions = new ComboBox(attributes);
+        searchConditions.getSelectionModel().select(0);
+        aField.getChildren().addAll(descriptionLabel, searchConditions, input);
         aField.setSpacing(10);
         return aField;
     }
