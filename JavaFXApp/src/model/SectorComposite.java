@@ -37,6 +37,10 @@ public class SectorComposite {
         }        
     }
     
+    public String getSymbol() {
+        return sectorName;
+    }
+    
     public double getValue(){
         double count = 0;
         double curVal;

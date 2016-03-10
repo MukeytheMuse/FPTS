@@ -39,6 +39,13 @@ public class CashAccount implements Holding{
         return accountName;
     }
     
+    public String toString() {
+        return accountName + "\t" + currentValue + "\t" + dateAdded;
+    }
+    
+    public String getSymbol() {
+        return "";
+    }
     
     /**
     * Getter for the current balance

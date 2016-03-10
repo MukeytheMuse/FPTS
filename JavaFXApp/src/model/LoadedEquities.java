@@ -11,14 +11,15 @@ import java.util.ArrayList;
  * @author ericepstein
  */
 public class LoadedEquities {
-    private ArrayList<Equity> loadedEquities;
+    private ArrayList<LoadedEquity> loadedEquities;
     
     public LoadedEquities() {
-        //READ FILE
         //convert each row to Equity objects
+        loadedEquities = new ArrayList<LoadedEquity>();
+        
     }
     
-    public ArrayList<Equity> getLoadedEquities() {
+    public ArrayList<LoadedEquity> getLoadedEquities() {
         return loadedEquities;
     }
     
