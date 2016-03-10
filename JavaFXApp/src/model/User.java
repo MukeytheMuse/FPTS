@@ -32,7 +32,7 @@ public class User {
             return encryptedPW;
         }
 
-        public String unHash(String password) {
+        public static String unHash(String password) {
             String textPass = "";
             for (int i = 0; i < password.length(); i++) {
                 char encryptedChar = (char) (password.charAt(i) - 1);
