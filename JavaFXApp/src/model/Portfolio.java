@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 /**
  * Portfolio is a collection of holdings.
@@ -40,9 +41,9 @@ public class Portfolio extends Observable {
         //portfolioHoldings.add(new CashAccount("moo",2,new Date()));
         
 //(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount )
-        portfolioHoldings.add(new Equity("ha", 2, 3, 4.3, new Date(), false));
-        portfolioHoldings.add(new Equity("mo", 2, 3, 5, new Date(), false));
-        portfolioHoldings.add(new Equity("lol", 4, 4, 5, new Date(), false));
+        portfolioHoldings.add(new Equity("ha", "haha", 2, 3, 4.3, new Date(), false));
+        portfolioHoldings.add(new Equity("mo", "momo", 2, 3, 5, new Date(), false));
+        portfolioHoldings.add(new Equity("lol", "lolol", 4, 4, 5, new Date(), false));
     }    
     
     public void addHolding(Holding h) {
@@ -54,7 +55,7 @@ public class Portfolio extends Observable {
     }
     
     public ArrayList<Holding> getMatches() {
-        return portfolioHoldings;
+        return matches;
     }
     
     public void setMatches(ObservableList<Node> queries) {
@@ -63,17 +64,32 @@ public class Portfolio extends Observable {
         matches.clear();
         //if (queries.size() == 2) {
         if (true) {
-            TextField symbol = (TextField) queries.get(1);
+            Pane p = (Pane) queries.get(0);
+            TextField symbol = (TextField) p.getChildren().get(1);
+            p = (Pane) queries.get(1);
+            TextField equityName = (TextField) p.getChildren().get(1);
             for (Holding h : portfolioHoldings) {
-                if (h.getSymbol().contains(symbol.getText())) {
+                if (strContains(symbol, h.getSymbol()) /* && strContains(equityName, h.getEquityName())*/) {    
+                //if (h.getSymbol().contains(symbol.getText())) {
                     matches.add(h);
+                    System.out.println(symbol.getText());
                 }
+                
             }
         }
         setChanged();
         notifyObservers();
         System.out.println("Notified");
         
+    }
+    
+    private boolean strContains(TextField testField, String str) {
+        return fieldHasContent(testField) && str.contains(testField.getText());
+    }
+    
+    //Overloading fieldHasContent for TextField
+    private boolean fieldHasContent(TextField aField) {
+        return (aField.getText() != null && !aField.getText().isEmpty());
     }
     
     //public
