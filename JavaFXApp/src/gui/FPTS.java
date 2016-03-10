@@ -147,18 +147,17 @@ public class FPTS extends Application implements Observer {
         VBox searchPane = new VBox();
         
         VBox queries = new VBox();
-        
-        Label aLabel = new Label("Ticker symbol:");
+      
         tickerSymbolInput = new TextField ();
-        HBox aField = new HBox();
-        aField.getChildren().addAll(aLabel, tickerSymbolInput);
-        aField.setSpacing(10);
-        queries.getChildren().add(aField);
-         
-        //tickerSymbolInput.setText();
-        queries.getChildren().add(tickerSymbolInput);
         
-        //VBox listing = new VBox();
+        //createInputField("Ticker symbol: ", tickerSymbolInput);
+        
+        queries.getChildren().add(createInputField("Ticker symbol: ", tickerSymbolInput));
+        queries.getChildren().add(createInputField("Equity name: ", new TextField()));
+        queries.getChildren().add(createInputField("Index/sector: ", new TextField()));
+        
+        
+        //tickerSymbolInput.setText();
         ArrayList<Holding> holdings = p.getMatches();
 
         Button searchBtn = new Button();
@@ -177,6 +176,14 @@ public class FPTS extends Application implements Observer {
         //searchGroup.getChildren().add(searchPane);
         Group searchGroup = (Group) searchScene.getRoot();
         searchGroup.getChildren().add(splitPage);
+    }
+    
+    public HBox createInputField(String description, TextField input) {
+        HBox aField = new HBox();
+        Label aLabel = new Label(description);
+        aField.getChildren().addAll(aLabel, input);
+        aField.setSpacing(10);
+        return aField;
     }
     
     public void displayMatches(ArrayList<Holding> matches) {
@@ -468,6 +475,19 @@ public class FPTS extends Application implements Observer {
             visitBtn.setOnAction( visitPage );
             nav.getChildren().add(visitBtn);
         }
+        
+        Button logout = new Button("Logout");
+        GridPane.setConstraints(logout, 1, 1);
+        nav.getChildren().add(logout);
+        
+        logout.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                thestage.setScene(createLogInPage().getScene());
+                thestage.show();
+            }
+        });
+        
         return nav;
     }
     
