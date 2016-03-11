@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable{
+public class LoginController extends MenuController{
     @FXML private Label error;
     @FXML private PasswordField password;
     @FXML private TextField userid;

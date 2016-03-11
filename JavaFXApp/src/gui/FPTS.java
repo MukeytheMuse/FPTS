@@ -54,7 +54,7 @@ public class FPTS extends Application {
     
     EquityUpdater eqUpdater;
     
-    private final int WIDTH = 600;
+    private final int WIDTH = 800;
     private final int HEIGHT = 600;
 
     private Stage thestage;
@@ -82,8 +82,7 @@ public class FPTS extends Application {
     private Simulatable EquityOfInterest;
     private CashAccount CashAccountOfInterest;
     private CashAccount CashAccountOfInterest2;
-    
-    private ArrayList<User> users = new ArrayList<User>();
+
     
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -114,7 +113,7 @@ public class FPTS extends Application {
         Scene scene3 = new Scene(new Group(), WIDTH, HEIGHT);
 
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
-        Scene loginScene = new Scene(root, 658, 433);
+        Scene loginScene = new Scene(root, WIDTH, HEIGHT);
 
         thestage.setScene(loginScene);
         thestage.setTitle("Financial Portfolio Tracking System");
@@ -234,7 +233,7 @@ public class FPTS extends Application {
 
     public Scene createLogInPage() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
-        Scene scene = new Scene(root, 658, 433);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
 
         thestage.setScene(scene);
         thestage.setTitle("Financial Portfolio Tracking System");
@@ -244,7 +243,7 @@ public class FPTS extends Application {
     public Scene createRegisterPage() throws IOException{
 
         Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
-        Scene scene = new Scene(root, 658, 433);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
 
         thestage.setScene(scene);
         thestage.setTitle("Financial Portfolio Tracking System");
