@@ -11,13 +11,13 @@ import model.DataBase.ReadFile;
  *
  * @author ericepstein & Ian
  */
-public class LoadedEquity implements Searchable, EquityUpdatable {
+public class LoadedEquity implements Searchable, Holding, EquityUpdatable {
     
     private String tickerSymbol;
     private String equityName;
-    double perShareValue; 
-    ArrayList<String> indices; 
-    ArrayList<String> sectors;
+    double pricePerShare; //TODO: mark this private or public
+    public ArrayList<String> indices;
+    public ArrayList<String> sectors;
 
     //ArrayList of Equities for use within search functionality
     public static ArrayList<LoadedEquity> loadedEquityList;
@@ -36,7 +36,7 @@ public class LoadedEquity implements Searchable, EquityUpdatable {
     public LoadedEquity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.equityName = equityName;
-        this.perShareValue = perShareValue;
+        this.pricePerShare = perShareValue;
         this.indices = indices;
         this.sectors = sectors;
     }
@@ -47,7 +47,7 @@ public class LoadedEquity implements Searchable, EquityUpdatable {
     
     
     public float getValuePerShare() {
-        return (float) perShareValue;
+        return (float) pricePerShare;
     }
     
     public String getEquityName() {
@@ -94,4 +94,31 @@ public class LoadedEquity implements Searchable, EquityUpdatable {
         return matched;
         //TODO: Right now matched always returns true. We need to change this.
     }
+
+    @Override
+    public void add(Holding h) {
+
+    }
+
+    @Override
+    public void delete(Holding h) {
+
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
+    }
+
+    @Override
+    public String getSymbol() {
+        return null;
+    }
+
+
+    //From Eric's class diagram on drive
+    //getPricePerShare() - return pricePerShare
+    //add(Holding h)
+    //getSectors() - return sectors
+    //getIndices() - return indices
 }

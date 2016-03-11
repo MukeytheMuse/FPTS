@@ -6,24 +6,25 @@ import java.util.List;
  * Authors: Eric and Kaitlin
  */
 public class MarketComposite implements Holding {
-        private String indexName;
-        private List<Holding> surEquityList;
+        //TODO: the composite should be an abstract class*********
+        private String name;
+        private List<Holding> internalEquityList;
         private double currentValue;
 
         //may only add a surEquity
-        public MarketComposite(String indexName, Holding se){
-            this.indexName = indexName;
-            surEquityList = new ArrayList<Holding>();
-            surEquityList.add(se);
+        public MarketComposite(String marketName, Holding se){
+            this.name = marketName;
+            internalEquityList = new ArrayList<Holding>();
+            internalEquityList.add(se);
         }
 
         public void add(Holding h){
-            surEquityList.add(h);
+            internalEquityList.add(h);
         }
 
         public void delete(Holding h){
-            if(surEquityList.contains(h)){
-                surEquityList.remove(h);
+            if(internalEquityList.contains(h)){
+                internalEquityList.remove(h);
             } else {
                 //return error stating this equity is not in the collection.
             }
@@ -32,7 +33,7 @@ public class MarketComposite implements Holding {
         public double getValue(){
             double count = 0;
             double curVal;
-            for(Holding se : surEquityList ) {
+            for(Holding se : internalEquityList ) {
                 curVal = se.getValue();
                 count += curVal;
             }
@@ -41,7 +42,18 @@ public class MarketComposite implements Holding {
         }
 
         public String getSymbol() {
-            return indexName;
+            return name;
         }
+
+
+
+            //From Eric's diagram.
+//        public List<?????> getPricePerShare(){
+//
+//        }
+        //getTickerSymbol() : name
+        //getEquityName(): same as ticker symbol
+        //getIndices(): returns empty ArrayList<String>
+        //getSectors(): returns empty ArrayList<String>
 
 }
