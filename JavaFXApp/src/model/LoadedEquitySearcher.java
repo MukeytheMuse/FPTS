@@ -13,7 +13,7 @@ import javafx.scene.Node;
  *
  * @author ericepstein
  */
-public class LoadedEquitySearcher extends Searcher {
+public class LoadedEquitySearcher /* extends Searcher */ {
     
     /*
     public void define(ObservableList<Node> queries, ArrayList<T> toBeSearched) {
@@ -27,12 +27,13 @@ public class LoadedEquitySearcher extends Searcher {
     
    
     
-    public ArrayList<String> getHoldingStrings() {
-        ArrayList<String> holdingStrings = new ArrayList<String>();
-        for (LoadedEquity eq : (ArrayList<LoadedEquity>)(Object)toBeSearched) {
+    public ArrayList<ArrayList<String>> getHoldingStrings(Searchable s) {
+        
+        ArrayList<ArrayList<String>> holdingStrings = new ArrayList<ArrayList<String>>();
+        /* for (LoadedEquity eq : (ArrayList<LoadedEquity>)(Object)toBeSearched) {
             holdingStrings.add(eq.getTickerSymbol());
             holdingStrings.add(eq.getEquityName());
-        }
+        }*/
         return holdingStrings;
     }
     

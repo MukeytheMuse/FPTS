@@ -10,11 +10,10 @@ import java.util.Date;
  *
  * @author ericepstein
  */
-public class CashAccount implements Holding{
+public class CashAccount implements Holding, Searchable {
     private String accountName;
     private double currentValue;
     private Date dateAdded;
-       
     
     /**
     * The system shall allow the user to specify a new cash account. 
@@ -45,6 +44,10 @@ public class CashAccount implements Holding{
     
     public String getSymbol() {
         return "";
+    }
+    
+    public String getDisplayName() {
+        return accountName;
     }
     
     /**

@@ -26,6 +26,9 @@ public class Portfolio extends Observable {
     private ArrayList<Searchable> portfolioSearchables;
     private ArrayList<Simulatable> portfolioSimulatables;
     
+    private ArrayList<CashAccount> cashAccounts;
+    
+    private ArrayList<Searchable> cashAccountSearchables;
     
     private double currentValue;
     private ArrayList<Equity> existingEquities;
@@ -41,6 +44,10 @@ public class Portfolio extends Observable {
         //public CashAccount(String AccountName, float initialAmount, Date dateAdded) 
         portfolioHoldings = new ArrayList<Holding>();
         portfolioSearchables = new ArrayList<Searchable>();
+        
+        cashAccounts = new ArrayList<CashAccount>();
+        
+        cashAccountSearchables = new ArrayList<Searchable>();
         
         portfolioSimulatables = new ArrayList<Simulatable>();
         
@@ -58,8 +65,11 @@ public class Portfolio extends Observable {
         portfolioSearchables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
         portfolioSearchables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
         portfolioSearchables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+     
+        cashAccountSearchables.add(new CashAccount("lala", 3, new Date()));
+        cashAccountSearchables.add(new CashAccount("rofl", 3, new Date()));
         
-    }    
+    }
     
     public ArrayList<Simulatable> getPortfolioSimulatables() {
         return portfolioSimulatables;
@@ -67,6 +77,10 @@ public class Portfolio extends Observable {
     
     public ArrayList<Searchable> getPortfolioSearchables() {
         return portfolioSearchables;
+    }
+    
+    public ArrayList<Searchable> getCashAccountSearchables() {
+        return cashAccountSearchables;
     }
     
     public void addHolding(Holding h) {

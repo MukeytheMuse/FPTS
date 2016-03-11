@@ -29,7 +29,6 @@ abstract public class Searcher extends Observable {
     public void search(ObservableList<Node> queries, ArrayList<Searchable> toBeSearched) {
         //define(queries, toBeSearched);
         this.toBeSearched = toBeSearched;
-        
         this.queries = queries;
         matches = new ArrayList<Searchable>();
         generateMatches();
@@ -41,6 +40,17 @@ abstract public class Searcher extends Observable {
     abstract ArrayList<ArrayList<String>> getHoldingStrings(Searchable e);
     //abstract void define(ObservableList<Node> queries, ArrayList<T> toBeSearched);
     
+    public Searchable getMatch(String keyword) {
+        if (toBeSearched != null) {
+            for (Searchable s : toBeSearched) {
+                if (s.getDisplayName().toUpperCase().equals(keyword.toUpperCase())) {
+                    return s;
+                }
+            }
+        }
+        return null;
+    }
+      
     /*
     public void redefine(ObservableList<Node> queries, ArrayList<Searchable> toBeSearched) {
         this.queries = queries;
@@ -106,7 +116,7 @@ abstract public class Searcher extends Observable {
                             break;
                         }   
                     }
-                    System.out.println("isMathc is " + isMatch);
+                    System.out.println("isMatch is " + isMatch);
                     
                 }
                 if (isMatch) {
