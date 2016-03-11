@@ -28,7 +28,7 @@ public class RegisterController extends MenuController {
     @FXML private PasswordField password1;
     @FXML private TextField userid;
 
-
+    @FXML
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
         if (userid.getText().length() != 0 && password.getText().length() != 0){
             if (User.ValidLoginID(userid.getText())){
