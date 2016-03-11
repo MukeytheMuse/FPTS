@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Brockway on 3/11/16.
+ * Authors: Eric and Kaitlin
  */
 public class MarketComposite implements Holding {
         private String indexName;
