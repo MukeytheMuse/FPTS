@@ -22,11 +22,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegisterController implements Initializable{
+public class RegisterController extends MenuController {
     @FXML private Label error;
     @FXML private PasswordField password;
     @FXML private PasswordField password1;
     @FXML private TextField userid;
+
 
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
         if (userid.getText().length() != 0 && password.getText().length() != 0){
@@ -62,11 +63,7 @@ public class RegisterController implements Initializable{
 
     @FXML
     protected void handleBackButtonPressed(ActionEvent event) throws IOException{
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/LoginPage.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        goToLoginPage(event);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class RegisterController implements Initializable{
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
-            fileWriter = new FileWriter("UserData.txt",true);
+            fileWriter = new FileWriter("src/DataBase/UserData.txt",true);
             bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(usr.getLoginID() + ",");
             bufferedWriter.write(usr.hash(password1.getText()));

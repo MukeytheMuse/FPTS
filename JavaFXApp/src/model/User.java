@@ -75,7 +75,7 @@ public class User {
      */
     public static void fillUsers(){
         try {
-            Scanner scanner = new Scanner(new File("UserData.txt"));
+            Scanner scanner = new Scanner(new File("src/DataBase/UserData.txt"));
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();

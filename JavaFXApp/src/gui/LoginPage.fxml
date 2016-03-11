@@ -6,32 +6,33 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <MenuBar layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="657.0" AnchorPane.topAnchor="2.0">
+      <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
+               prefWidth="800.0" AnchorPane.topAnchor="2.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Logout" />
-                  <MenuItem mnemonicParsing="false" text="Exit" />
+              <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                  <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="405.0" prefWidth="665.0">
+      <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="805.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="361.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="304.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="456.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0" minWidth="10.0" prefWidth="349.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="198.0" minHeight="10.0" prefHeight="168.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="306.00001525878906" minHeight="10.0" prefHeight="201.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="285.0" minHeight="10.0" prefHeight="251.66665649414062" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="131.00003051757812" minHeight="10.0" prefHeight="116.33334350585938" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label prefHeight="27.0" prefWidth="298.0" text="Finacial Portfolio Tracking System" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
