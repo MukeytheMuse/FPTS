@@ -104,10 +104,10 @@ public class User {
     public static boolean ValidLoginID(String id){
         for(User usr : userList){
             if(usr.getLoginID().equals(id)){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     //A	The system shall allow the user to add holdings to a portfolio.
