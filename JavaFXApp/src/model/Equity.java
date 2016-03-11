@@ -129,6 +129,10 @@ public class Equity implements Holding, Searchable, Simulatable, EquityUpdatable
         
     }
     
+    public void add(EquityUpdatable e) {
+        //leaf node, does nothing
+    }
+    
     public void delete(Simulatable s) {
         //none
     }

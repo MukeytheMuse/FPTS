@@ -13,7 +13,6 @@ package model;
  */
 public interface Holding {
     public void add(Holding h);
-    public void delete(Holding h);
     public double getValue();
     public String getSymbol();
 }

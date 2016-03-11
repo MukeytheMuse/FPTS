@@ -79,7 +79,6 @@ public class FPTS extends Application {
     private Scene homeScene;
     private Scene searchCashAccount;
     
-    private Simulatable EquityOfInterest;
     private CashAccount CashAccountOfInterest;
     private CashAccount CashAccountOfInterest2;
 

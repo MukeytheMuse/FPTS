@@ -5,43 +5,49 @@ import java.util.List;
 /**
  * Authors: Eric and Kaitlin
  */
-public class MarketComposite implements Holding {
-        private String indexName;
-        private List<Holding> surEquityList;
+public class MarketComposite implements EquityUpdatable, Searchable {
+        private String name;
+        private List<EquityUpdatable> childEquities;
         private double currentValue;
 
         //may only add a surEquity
-        public MarketComposite(String indexName, Holding se){
-            this.indexName = indexName;
-            surEquityList = new ArrayList<Holding>();
-            surEquityList.add(se);
+        public MarketComposite(String name){
+            this.name = name;
+            childEquities = new ArrayList<EquityUpdatable>();
+        }
+        
+        public String getDisplayName() {
+            return name;
         }
 
-        public void add(Holding h){
-            surEquityList.add(h);
+        public String getTickerSymbol() {
+            return name;
+        }
+        
+        public String getEquityName() {
+            return name;
         }
 
-        public void delete(Holding h){
-            if(surEquityList.contains(h)){
-                surEquityList.remove(h);
-            } else {
-                //return error stating this equity is not in the collection.
-            }
+        public void add(EquityUpdatable e) {
+            childEquities.add(e);
         }
 
-        public double getValue(){
+        public float getValuePerShare(){
             double count = 0;
             double curVal;
-            for(Holding se : surEquityList ) {
-                curVal = se.getValue();
+            for(EquityUpdatable se : childEquities ) {
+                curVal = se.getValuePerShare();
                 count += curVal;
             }
-
-            return count;
+            return (float) count / childEquities.size();
         }
-
-        public String getSymbol() {
-            return indexName;
+        
+        public ArrayList<String> getSectors() {
+            return new ArrayList<String>();
+        }
+        
+        public ArrayList<String> getIndices() {
+            return new ArrayList<String>();
         }
 
 }

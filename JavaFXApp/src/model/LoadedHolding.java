@@ -9,6 +9,10 @@ package model;
  *
  * @author ericepstein
  */
-public class LoadedComposite {
+public interface LoadedHolding {
+    public void add(Holding h);
+    public double getValue();
+    public String getSymbol();
+    
     
 }

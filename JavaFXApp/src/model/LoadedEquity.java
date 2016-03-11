@@ -94,4 +94,8 @@ public class LoadedEquity implements Searchable, EquityUpdatable {
         return matched;
         //TODO: Right now matched always returns true. We need to change this.
     }
+    
+    public void add(EquityUpdatable e) {
+        //do nothing
+    }
 }
