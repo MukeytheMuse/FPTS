@@ -15,8 +15,8 @@ public class LoadedEquity implements Searchable {
     
     private String tickerSymbol;
     private String equityName;
-    double perShareValue;
-    ArrayList<String> indices;
+    double perShareValue; 
+    ArrayList<String> indices; 
     ArrayList<String> sectors;
 
     //ArrayList of Equities for use within search functionality
@@ -25,7 +25,7 @@ public class LoadedEquity implements Searchable {
 
     //Populate the Load
     public ArrayList<LoadedEquity> makeEquityList() {
-        //PLEASE FILL ME IN
+        //TODO: PLEASE FILL ME IN
         
         //placeholder
         

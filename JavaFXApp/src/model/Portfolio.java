@@ -23,6 +23,9 @@ import javafx.scene.layout.Pane;
  */
 public class Portfolio extends Observable {
     private ArrayList<Holding> portfolioHoldings;
+    //for the simulation
+    //The system can simulate market conditions to show the effect on the user's portfolio.
+    //TODO: ADD "private ArrayList<Trasaction> myTransactions;" B	REQ: The system shall persist holdings and transactions in a portfolio across invocations of the system.
     private ArrayList<Searchable> portfolioSearchables;
     private ArrayList<Simulatable> portfolioSimulatables;
     
@@ -34,10 +37,20 @@ public class Portfolio extends Observable {
     private ArrayList<Equity> existingEquities;
     
     private ArrayList<Holding> matches;
-    
-    
+    //this is observable. I missed the first thing, as i enter a search from the FPTS (gui),
+    // it will tell the controller (ActionEvent in the button) to empty the "matches' array
+    // and add elements that match, then after it finishes, the function in "Portfolio"
+    // notifies the observer FPTS to update the search results on the view
+
+    private ArrayList<CashAccount> existingCashAccounts;
+    //TODO: MAKE SURE TO ADD TO portfolioHoldings EACH TIME YOU ADD TO "existingEquities" or "existingCashAccounts" & update the value
+
     /**
-     * 
+     * When creating a new portfolio, the system shall allow the user to
+     * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
+     *
+     * Method called when a user is constructed.
+     *
      * @author ericepstein & Kaitlin
      */    
     public Portfolio(){
@@ -71,10 +84,23 @@ public class Portfolio extends Observable {
         
     }
     
+
+    /**
+     * When creating a new portfolio, the system shall allow the user to
+     * import holdings and transactions to initialize the new portfolio.
+     *
+     * @return
+     */
     public ArrayList<Simulatable> getPortfolioSimulatables() {
         return portfolioSimulatables;
     }
     
+    /**
+     * When creating a new portfolio, the system shall allow the user to
+     * import holdings and transactions to initialize the new portfolio.
+     *
+     * @return
+     */
     public ArrayList<Searchable> getPortfolioSearchables() {
         return portfolioSearchables;
     }
@@ -96,6 +122,7 @@ public class Portfolio extends Observable {
     }
     
     public void setMatches(ObservableList<Node> queries) {
+        //LoadedEquities loadedEqs = new LoadedEquities();
         //matches = new ArrayList<Holding>();
         matches.clear();
         //if (queries.size() == 2) {
@@ -162,6 +189,19 @@ public class Portfolio extends Observable {
     //Overloading fieldHasContent for TextField
     private boolean fieldHasContent(TextField aField) {
         return (aField.getText() != null && !aField.getText().isEmpty());
+    }
+
+    /**
+     * Check to see if the Portfolio is Empty.
+     *
+     * @return
+     */
+    private boolean isEmpty(){
+        if(currentValue == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
     
     //public
