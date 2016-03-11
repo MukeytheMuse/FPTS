@@ -37,6 +37,10 @@ public class SpecializedEquity implements Simulatable {
         this.cashAccount = cashAccount;
     }
     
+    public double getPricePerShare() {
+        return currentPricePerShare;
+    }
+    
     public String getEquityName() {
         return equityName;
     }
