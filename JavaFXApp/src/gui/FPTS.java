@@ -55,6 +55,8 @@ public class FPTS extends Application implements Observer {
     private Stage thestage;
     private Page homePage;
     
+    private Scene buyEquity;
+    
     private Portfolio p;
     
     private Pane nav;
@@ -70,6 +72,7 @@ public class FPTS extends Application implements Observer {
     private FPTS self;
     
     private Scene homeScene;
+    private Scene searchCashAccount;
     
     private Simulatable EquityOfInterest;
     private CashAccount CashAccountOfInterest;
@@ -127,6 +130,8 @@ public class FPTS extends Application implements Observer {
         //Group g2 = new Group();
         //Group g3 = new Group();
         
+        
+        
         Scene scene1 = new Scene(new Group(), WIDTH, HEIGHT);
         Scene scene2 = new Scene(new Group(), WIDTH, HEIGHT);
         Scene scene3 = new Scene(new Group(), WIDTH, HEIGHT);
@@ -164,8 +169,6 @@ public class FPTS extends Application implements Observer {
         VBox queries = getEquityQueries();
         designSearchScene(searchPage.getScene(), toBeSearched, queries, goToSearchCashAccount());
         
-        
-        
         /*
         Group aGroup = (Group) scene1.getRoot();
         aGroup.getChildren().addAll(createNav(pages), new Label("s1"));
@@ -174,10 +177,12 @@ public class FPTS extends Application implements Observer {
         */
         
         primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(createLogInPage().getScene());
-        //primaryStage.setScene(searchPage.getScene());
+        //primaryStage.setScene(createLogInPage().getScene());
+        primaryStage.setScene(searchPage.getScene());
         primaryStage.show();
     }
+    
+    
     
     
     public Button buyEquity() {
@@ -194,7 +199,9 @@ public class FPTS extends Application implements Observer {
                     VBox queries = getCashAccountQueries();
                     displayMatches(new ArrayList<Searchable>());
                     mainInput.setText("");
+                    
                     Scene nextSearchScene = new Scene(new Group(), WIDTH, HEIGHT);
+                    
                     //designSearchScene(nextSearchScene, toBeSearched, queries, buyEquity() );
                     thestage.setScene(nextSearchScene);
         } else if (mainInput.getText() != null && !mainInput.getText().isEmpty()) {
@@ -203,6 +210,7 @@ public class FPTS extends Application implements Observer {
         return actionBtn;
     }
   
+    
     
     public Button goToSearchCashAccount() {
         
@@ -277,6 +285,48 @@ public class FPTS extends Application implements Observer {
         VBox queries = new VBox();
         queries.getChildren().add(createInputField("Account name: ", mainInput));
         return queries;
+    }
+   
+    
+    /*
+    
+    Precondition: EquityOfInterest must have already been identified
+    */
+    public Scene getEqInfo() {
+        VBox queries = new VBox();
+        
+        HBox aField = new HBox();
+        Label descriptionLabel = new Label("Price per share: ");
+        TextField pricePerShare = new TextField();
+        pricePerShare.setText(""+EquityOfInterest.getPricePerShare());
+        aField.getChildren().addAll(descriptionLabel, pricePerShare);
+        
+        queries.getChildren().add(aField);
+        
+        aField = new HBox();
+        descriptionLabel = new Label("Number of shares: ");
+        TextField numOfShares = new TextField();
+        aField.getChildren().addAll(descriptionLabel, numOfShares);
+        
+        queries.getChildren().add(aField);
+        
+        Button actionBtn = new Button();
+        actionBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                //START HERE
+                
+                /* if ()
+                
+                thestage.set();
+                */
+                //p.setMatches(queries.getChildren());
+            }
+        });
+        
+        Group eqInfoGroup = new Group();
+        Scene eqInfoScene = new Scene(eqInfoGroup, WIDTH, HEIGHT);
+        return eqInfoScene;
     }
     
     public HBox createInputField(String description, TextField input) {

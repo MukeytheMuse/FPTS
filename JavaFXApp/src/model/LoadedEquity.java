@@ -50,6 +50,10 @@ public class LoadedEquity implements Searchable {
         return tickerSymbol;
     }
     
+    public double getPricePerShare() {
+        return perShareValue;
+    }
+    
     public String getEquityName() {
         return equityName;
     }

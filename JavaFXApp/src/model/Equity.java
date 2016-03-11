@@ -54,6 +54,10 @@ public class Equity implements Holding, Searchable, Simulatable {
         this.currentValue = currentValue;
     }
     
+    public double getPricePerShare() {
+        return currentPricePerShare;
+    }
+    
     public String getDisplayName() {
         return tickerSymbol;
     }

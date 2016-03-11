@@ -22,6 +22,7 @@ public interface Simulatable extends Searchable {
     public ArrayList<String> getIndices();
     public ArrayList<String> getSectors();
     public String getTickerSymbol();
+    public double getPricePerShare();
     public double getCurrentValue();
     public int getSharesHeld();
     

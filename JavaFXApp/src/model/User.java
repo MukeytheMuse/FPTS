@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class User {
     private String loginID;
     private String password;
-        private Portfolio myPortfolio;
+    private Portfolio myPortfolio;
 
     private static ArrayList<User> userList = new ArrayList<User>();
 
