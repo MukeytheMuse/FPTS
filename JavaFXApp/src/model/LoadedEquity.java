@@ -26,8 +26,7 @@ public class LoadedEquity implements Searchable {
     //Populate the Load
     public ArrayList<LoadedEquity> makeEquityList() {
         //TODO: PLEASE FILL ME IN
-        
-        //placeholder
+
         
         //
         return loadedEquityList;
@@ -63,26 +62,27 @@ public class LoadedEquity implements Searchable {
         
         boolean tickerSymbolMatched = false;
         if (! tickerSymbol.isEmpty()) {
-            this.tickerSymbol.contains(tickerSymbol);
+            this.tickerSymbol.contains(tickerSymbol);//RIGHT NOW .contains is ignored
             tickerSymbolMatched = true;
         }
         
         boolean equityNameMatched = false;
         if (! equityName.isEmpty()) {
-            this.equityName.contains(equityName);
+            this.equityName.contains(equityName);//RIGHT NOW .contains is ignored
             equityNameMatched = true;
         }
         if (! index.isEmpty()) {
             for (String anIndex : indices) {
-                anIndex.contains(index);
+                anIndex.contains(index);//RIGHT NOW .contains is ignored
             }
         }
         if (! sector.isEmpty()) {
             for (String aSector : sectors) {
-                aSector.contains(sector);
+                aSector.contains(sector);//RIGHT NOW .contains is ignored
             }
         }
         
         return matched;
+        //TODO: Right now matched always returns true. We need to change this.
     }
 }
