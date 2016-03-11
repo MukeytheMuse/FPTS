@@ -25,7 +25,6 @@ public class LoadedEquitySearcher /* extends Searcher */ {
         return new ArrayList<Searchable>();
     }
     
-   
     
     public ArrayList<ArrayList<String>> getHoldingStrings(Searchable s) {
         

@@ -11,20 +11,10 @@ import java.util.ArrayList;
  *
  * @author ericepstein
  */
-public interface Simulatable extends Searchable {
-    
-    public void add(Simulatable s);
-    public void delete(Simulatable s);
-    public double getValue();
-    public String getSymbol();
-    
+public interface EquityUpdatable {
+    public float getValuePerShare();
+    public String getTickerSymbol();
     public String getEquityName();
     public ArrayList<String> getIndices();
     public ArrayList<String> getSectors();
-    public String getTickerSymbol();
-    public float getValuePerShare();
-    public double getCurrentValue();
-    public int getNumOfShares();
-    
-    
 }

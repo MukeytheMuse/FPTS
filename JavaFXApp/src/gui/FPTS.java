@@ -15,6 +15,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import model.*;
 
+import controller.*;
+
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -48,7 +50,9 @@ import javafx.scene.layout.VBox;
  *
  * @author ericepstein
  */
-public class FPTS extends Application implements Observer {
+public class FPTS extends Application {
+    
+    EquityUpdater eqUpdater;
     
     private final int WIDTH = 600;
     private final int HEIGHT = 600;
@@ -88,9 +92,6 @@ public class FPTS extends Application implements Observer {
         matchDisplay = new VBox();
         p = new Portfolio();
         //s = new LoadedEquitySearcher();
-        pEqSearcher = new CashAccountSearcher();
-
-        this.pEqSearcher.addObserver(this);
 
         //LoadedEquities eq = new LoadedEquities();
         
@@ -143,14 +144,7 @@ public class FPTS extends Application implements Observer {
         //simPage.addNav(pages);
         //searchPage.addNav(pages);
         
-
-        ArrayList<Searchable> toBeSearched = p.getPortfolioSearchables();
-        s = new PortfolioEquitySearcher();
-        s.addObserver(self);
-        VBox queries = getEquityQueries();
-        designSearchScene(searchPage.getScene(), toBeSearched, queries, goToSearchCashAccount());
-
-
+        
         
         /*
         Group aGroup = (Group) scene1.getRoot();
@@ -165,174 +159,48 @@ public class FPTS extends Application implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //primaryStage.setScene(searchPage.getScene());
+        
+        primaryStage.setScene(searchPage.getScene());
         primaryStage.show();
+        
+        self = this;
+        
+        thestage.setScene(getHomeScene());
+        
+        /*
+        goToBuyEquity = new BuyEquityUpdater();
+        goToBuyEquity.process(self);
+        */
+        
+        
+    }
+    
+    public Scene getHomeScene() {
+        VBox split = new VBox();
+        Label l = new Label("Welcome to FPTS");
+        split.getChildren().addAll(getNav(), l);
+        Scene homeSc = new Scene(split, WIDTH, HEIGHT);
+        return homeSc;
     }
     
     
     
     
-    public Button buyEquity() {
-        Button actionBtn = new Button();
 
-        if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
-
-            CashAccountOfInterest = (CashAccount) s.getMatch(mainInput.getText());
-            //EquityOfInterest = (Simulatable) s.getMatch(mainInput.getText());
-
-                    ArrayList<Searchable> toBeSearched = p.getCashAccountSearchables();
-                    s = new CashAccountSearcher();
-                    s.addObserver(self);
-                    VBox queries = getCashAccountQueries();
-                    displayMatches(new ArrayList<Searchable>());
-                    mainInput.setText("");
-                    
-                    Scene nextSearchScene = new Scene(new Group(), WIDTH, HEIGHT);
-                    
-                    //designSearchScene(nextSearchScene, toBeSearched, queries, buyEquity() );
-                    thestage.setScene(nextSearchScene);
-        } else if (mainInput.getText() != null && !mainInput.getText().isEmpty()) {
-            mainInput.setText("INVALID");
-        }
-        return actionBtn;
-    }
-
-
-    public Button goToSearchCashAccount() {
-
-        Button actionBtn = new Button();
-        actionBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                //(mainInput, toBeSearched);
-
-                if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
-
-                    EquityOfInterest = (Simulatable) s.getMatch(mainInput.getText());
-                    //EquityOfInterest = (Simulatable) s.getMatch(mainInput.getText());
-
-                    ArrayList<Searchable> toBeSearched = p.getCashAccountSearchables();
-                    s = new CashAccountSearcher();
-                    s.addObserver(self);
-                    VBox queries = getCashAccountQueries();
-                    displayMatches(new ArrayList<Searchable>());
-                    mainInput.setText("");
-                    Scene nextSearchScene = new Scene(new Group(), WIDTH, HEIGHT);
-                    designSearchScene(nextSearchScene, toBeSearched, queries, buyEquity() );
-                    thestage.setScene(nextSearchScene);
-                } else {
-                    mainInput.setText("INVALID");
-                }
-            }
-        });
-        return actionBtn;
-    }
-
-    public void designSearchScene(Scene searchScene, ArrayList<Searchable> toBeSearched, VBox queries, Button actionBtn) {
-  
-        VBox splitPage = new VBox();
-        
-        VBox searchPane = new VBox();
-
-        //Button actionBtn = new Button();
-        actionBtn.setVisible(false);
-
-        Button searchBtn = new Button();
-        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                s.search(queries.getChildren(), toBeSearched);
-                actionBtn.setVisible(true);
-                //p.setMatches(queries.getChildren());
-            }
-        });
-
-        HBox forAction = new HBox();
-
-        forAction.getChildren().addAll(queries, actionBtn);
-        searchPane.getChildren().addAll(forAction, searchBtn, matchDisplay);
-        
-        splitPage.getChildren().addAll(nav, searchPane);
-
-        Group searchGroup = (Group) searchScene.getRoot();
-        searchGroup.getChildren().clear();
-        searchGroup.getChildren().add(splitPage);
+    public int getHeight() {
+        return HEIGHT;
     }
     
-    public VBox getEquityQueries() {
-        VBox queries = new VBox();
-        queries.getChildren().add(createInputField("Ticker symbol: ", mainInput));
-        queries.getChildren().add(createInputField("Equity name: ", new TextField()));
-        queries.getChildren().add(createInputField("Index: ", new TextField()));
-        queries.getChildren().add(createInputField("Sector: ", new TextField()));
-        return queries;
+    public int getWidth() {
+        return WIDTH;
     }
 
-    public VBox getCashAccountQueries() {
-        VBox queries = new VBox();
-        queries.getChildren().add(createInputField("Account name: ", mainInput));
-        return queries;
+    
+    public Stage getStage() {
+        return thestage;
     }
-   
-    
-    /*
-    
-    Precondition: EquityOfInterest must have already been identified
-    */
-    public Scene getEqInfo() {
-        VBox queries = new VBox();
-        
-        HBox aField = new HBox();
-        Label descriptionLabel = new Label("Price per share: ");
-        TextField pricePerShare = new TextField();
-        pricePerShare.setText(""+EquityOfInterest.getPricePerShare());
-        aField.getChildren().addAll(descriptionLabel, pricePerShare);
-        
-        queries.getChildren().add(aField);
-        
-        aField = new HBox();
-        descriptionLabel = new Label("Number of shares: ");
-        TextField numOfShares = new TextField();
-        aField.getChildren().addAll(descriptionLabel, numOfShares);
-        
-        queries.getChildren().add(aField);
-        
-        Button actionBtn = new Button();
-        actionBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                //START HERE
-                
-                /* if ()
-                
-                thestage.set();
-                */
-                //p.setMatches(queries.getChildren());
-            }
-        });
-        
-        Group eqInfoGroup = new Group();
-        Scene eqInfoScene = new Scene(eqInfoGroup, WIDTH, HEIGHT);
-        return eqInfoScene;
-    }
-    
-    public HBox createInputField(String description, TextField input) {
-        HBox aField = new HBox();
-        Label descriptionLabel = new Label(description);
-        ObservableList<String> attributes = 
-            FXCollections.observableArrayList(
-                "",
-                "contains",
-                "starts with",
-                "exactly matches"
-        );
-        ComboBox searchConditions = new ComboBox(attributes);
-        searchConditions.getSelectionModel().select(0);
-        aField.getChildren().addAll(descriptionLabel, searchConditions, input);
-        aField.setSpacing(10);
-        return aField;
-    }
-    
+
+/*
     public void displayMatches(ArrayList<Searchable> matches) {
         //given the list
         matchDisplay.getChildren().clear();
@@ -361,6 +229,7 @@ public class FPTS extends Application implements Observer {
         //isplayMatches(this.s.getMatches());
     }
 
+   */
     //returns HBox of relevant scenes
 
     public Scene createLogInPage() throws IOException{
@@ -412,6 +281,57 @@ public class FPTS extends Application implements Observer {
     }
     
     
+    public Portfolio getPortfolio() {
+        return p;
+    }
+    
+    public HBox getNav() {
+        HBox nav = new HBox();
+        Button aButton;
+        
+        aButton = new Button();
+        aButton.setText("Home");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                thestage.setScene(getHomeScene());
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+        aButton = new Button();
+        aButton.setText("Buy");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                eqUpdater = new BuyEquityUpdater();
+                eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+        aButton = new Button();
+        aButton.setText("Sell");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                eqUpdater = new SellEquityUpdater();
+                eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+
+        
+        return nav;
+    }
+    
+    
+    
+    /*
+    *
+    * TERRIBLE - DO NOT USE
+    */
     public HBox createNav(ArrayList<Page> pages) {
         HBox nav = new HBox();
         for (Page aPage : pages) {
@@ -429,11 +349,17 @@ public class FPTS extends Application implements Observer {
         }
 
         //Define the logout button
-        Button logout = new Button("Logout");
+        Button logout = getLogoutButton();
         GridPane.setConstraints(logout, 1, 1);
         nav.getChildren().add(logout);
-
-        //Setting an action for the logout button
+        
+        return nav;
+    }
+    
+    public Button getLogoutButton() {
+        Button logout = new Button();
+        
+         //Setting an action for the logout button
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e){
@@ -445,9 +371,10 @@ public class FPTS extends Application implements Observer {
                 thestage.show();
             }
         });
-        
-        return nav;
+        return logout;
     }
+    
+    
     
     class Page {
         private Scene scene;

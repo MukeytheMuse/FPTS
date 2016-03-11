@@ -27,6 +27,8 @@ public class Portfolio extends Observable {
     //The system can simulate market conditions to show the effect on the user's portfolio.
     //TODO: ADD "private ArrayList<Trasaction> myTransactions;" B	REQ: The system shall persist holdings and transactions in a portfolio across invocations of the system.
     private ArrayList<Searchable> portfolioSearchables;
+    private ArrayList<Searchable> loadedSearchables;
+    
     private ArrayList<Simulatable> portfolioSimulatables;
     
     private ArrayList<CashAccount> cashAccounts;
@@ -64,6 +66,8 @@ public class Portfolio extends Observable {
         
         portfolioSimulatables = new ArrayList<Simulatable>();
         
+        loadedSearchables = new ArrayList<Searchable>();
+        
         existingEquities = new ArrayList<Equity>();
         matches = new ArrayList<Holding>();
         //portfolioHoldings.add(new CashAccount("lala",200,new Date()));
@@ -71,16 +75,19 @@ public class Portfolio extends Observable {
         
 //(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount )
 //String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int sharesHeld, double currentPricePerShare, Date acquisitionDate
-        portfolioSimulatables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
-        portfolioSimulatables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
-        portfolioSimulatables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+        portfolioSimulatables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.2, new Date()));
+        portfolioSimulatables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.1, new Date()));
+        portfolioSimulatables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
 
-        portfolioSearchables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
-        portfolioSearchables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
-        portfolioSearchables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, 3, new Date()));
+        portfolioSearchables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
+        portfolioSearchables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+        portfolioSearchables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
      
         cashAccountSearchables.add(new CashAccount("lala", 3, new Date()));
         cashAccountSearchables.add(new CashAccount("rofl", 3, new Date()));
+        
+        loadedSearchables.add(new LoadedEquity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
+        
         
     }
     
@@ -105,6 +112,10 @@ public class Portfolio extends Observable {
         return portfolioSearchables;
     }
     
+    public ArrayList<Searchable> getLoadedSearchables() {
+        return loadedSearchables;
+    }
+    
     public ArrayList<Searchable> getCashAccountSearchables() {
         return cashAccountSearchables;
     }
@@ -119,6 +130,25 @@ public class Portfolio extends Observable {
     
     public ArrayList<Holding> getMatches() {
         return matches;
+    }
+    
+    public Equity getEquity(String keyword) {
+        for (Equity e : existingEquities) {
+            if (e.getTickerSymbol().equals(keyword)) {
+                return e;
+            }
+        }
+        return null;
+    }
+    
+    public void addEquity(Equity e) {
+        existingEquities.add(e);
+        portfolioSearchables.add(e);
+    }
+    
+    public void removeEquity(Equity e) {
+        existingEquities.remove(e);
+        portfolioSearchables.remove(e);
     }
     
     public void setMatches(ObservableList<Node> queries) {

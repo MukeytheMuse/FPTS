@@ -23,7 +23,7 @@ public class PortfolioEquitySearcher extends Searcher {
         ArrayList<String> anItem = new ArrayList<String>();
         
         ArrayList<String> holdingStrings = new ArrayList<String>();
-        Simulatable eq = (Simulatable)(Object)s;
+        EquityUpdatable eq = (EquityUpdatable)(Object)s;
         //for (Simulatable eq : (ArrayList<Simulatable>)(Object)toBeSearched) {
             ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>(); 
             

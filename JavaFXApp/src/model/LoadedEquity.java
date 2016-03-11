@@ -11,7 +11,7 @@ import model.DataBase.ReadFile;
  *
  * @author ericepstein & Ian
  */
-public class LoadedEquity implements Searchable {
+public class LoadedEquity implements Searchable, EquityUpdatable {
     
     private String tickerSymbol;
     private String equityName;
@@ -45,8 +45,9 @@ public class LoadedEquity implements Searchable {
         return tickerSymbol;
     }
     
-    public double getPricePerShare() {
-        return perShareValue;
+    
+    public float getValuePerShare() {
+        return (float) perShareValue;
     }
     
     public String getEquityName() {
@@ -55,6 +56,14 @@ public class LoadedEquity implements Searchable {
     
     public String getTickerSymbol() {
         return tickerSymbol;
+    }
+    
+    public ArrayList<String> getSectors() {
+        return sectors;
+    }
+    
+    public ArrayList<String> getIndices() {
+        return indices;
     }
     
     public boolean isMatch(String tickerSymbol, String equityName, String index, String sector) {
