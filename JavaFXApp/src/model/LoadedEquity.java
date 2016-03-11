@@ -6,10 +6,10 @@
 package model;
 
 import java.util.ArrayList;
-
+import model.DataBase.ReadFile;
 /**
  *
- * @author ericepstein
+ * @author ericepstein & Ian
  */
 public class LoadedEquity implements Searchable {
     
@@ -20,17 +20,12 @@ public class LoadedEquity implements Searchable {
     ArrayList<String> sectors;
 
     //ArrayList of Equities for use within search functionality
-    private static ArrayList<LoadedEquity> loadedEquityList;
+    public static ArrayList<LoadedEquity> loadedEquityList;
     private ArrayList<LoadedEquity> matches;
 
-    //Populate the Load
-    public ArrayList<LoadedEquity> makeEquityList() {
-        //TODO: PLEASE FILL ME IN
-        
-        //placeholder
-        
-        //
-        return loadedEquityList;
+    //Populate the loadedEquityList
+    public static void makeEquityList() {
+        loadedEquityList = ReadFile.loadEquityList();
     }
 
     //Return list of Equities to search through

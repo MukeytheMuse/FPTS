@@ -21,7 +21,7 @@ public class LoadedEquitySearcher /* extends Searcher */ {
     }
     */
     public ArrayList<Searchable> getToBeSearched() {
-        //change such thatit may get the toBeSearched
+        //change such that it may get the toBeSearched
         return new ArrayList<Searchable>();
     }
     
