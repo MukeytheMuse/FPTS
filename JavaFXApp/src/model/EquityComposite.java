@@ -6,54 +6,60 @@ import java.util.List;
  * Authors: Eric and Kaitlin
  */
 public class EquityComposite implements Searchable, EquityComponent {
-        private String name;
-        private List<HoldingUpdatable> childEquities;
-        private double currentValue;
+    private String name;
+    private String type;
+    private List<HoldingUpdatable> childEquities;
+    private double currentValue;
 
-        public EquityComposite(String name){
-            this.name = name;
-            childEquities = new ArrayList<HoldingUpdatable>();
+    public EquityComposite(String name, String type){
+        this.name = name;
+        this.type = type;
+        childEquities = new ArrayList<HoldingUpdatable>();
+    }
+        
+    public String getDisplayName() {
+            return name;
+        }
+
+    public String getTickerSymbol() {
+            return name;
         }
         
-        public String getDisplayName() {
-            return name;
-        }
+    public String getEquityName() {
+        return name;
+    }
 
-        public String getTickerSymbol() {
-            return name;
-        }
-        
-        public String getEquityName() {
-            return name;
-        }
+    public String getEquityType() {
+        return type;
+    }
 
-        public void add(HoldingUpdatable e) {
+    public void add(HoldingUpdatable e) {
             childEquities.add(e);
         }
 
-        public double getValuePerShare(){
-            double count = 0;
-            double curVal;
-            for(HoldingUpdatable se : childEquities ) {
-                curVal = se.getValuePerShare();
-                count += curVal;
-            }
-            return (float) count / childEquities.size();
+    public double getValuePerShare(){
+        double count = 0;
+        double curVal;
+        for(HoldingUpdatable se : childEquities ) {
+            curVal = se.getValuePerShare();
+            count += curVal;
         }
+        return (float) count / childEquities.size();
+    }
         
-        public ArrayList<String> getSectors() {
+    public ArrayList<String> getSectors() {
             return new ArrayList<String>();
         }
-        
-        public ArrayList<String> getIndices() {
+
+    public ArrayList<String> getIndices() {
             return new ArrayList<String>();
         }
-        
-        public void remove(EquityComponent ec) {
+
+    public void remove(EquityComponent ec) {
             childEquities.remove((HoldingUpdatable) ec);
         }
         
-        public void add(EquityComponent ec) {
+    public void add(EquityComponent ec) {
             childEquities.add( (HoldingUpdatable) ec);
         }
         

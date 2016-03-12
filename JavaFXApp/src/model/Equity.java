@@ -21,11 +21,12 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
 
     //ArrayList of Equities for use within search functionality
     public static ArrayList<EquityComponent> loadedEquityList;
+
     private ArrayList<Equity> matches;
 
     //Populate the loadedEquityList
     public static void makeEquityList() {
-        loadedEquityList = ReadFile.loadEquityList();
+        loadedEquityList = ReadFile.readEquity();
     }
 
     //Return list of Equities to search through
