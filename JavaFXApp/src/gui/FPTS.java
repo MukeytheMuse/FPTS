@@ -53,6 +53,7 @@ import javafx.scene.layout.VBox;
 public class FPTS extends Application {
     
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
+    CashAccountAlgorithm cashAccountAlgorithm;
     
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
@@ -90,8 +91,7 @@ public class FPTS extends Application {
         
         self = this;
         
-        //thestage.setScene(loginScene);
-        thestage.setScene(getHomeScene());
+        thestage.setScene(loginScene);
         thestage.show();
         
     }
@@ -112,14 +112,12 @@ public class FPTS extends Application {
     //returns HBox of relevant scenes
 
     public Scene getHomeScene() {
-               
         Scene scene = null;
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
             scene = new Scene(parent);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            
         }
         return scene;
     }
@@ -156,6 +154,25 @@ public class FPTS extends Application {
 
         return scene;
     }
+
+    //Overloading fieldHasContent for PasswordField
+    public boolean fieldHasContent(PasswordField aField) {
+        return (aField.getText() != null && !aField.getText().isEmpty());
+    }
+    
+    //Overloading fieldHasContent for TextField
+    public boolean fieldHasContent(TextField aField) {
+        return (aField.getText() != null && !aField.getText().isEmpty());
+    }
+    
+    public HBox createField(String name) {
+        Label aLabel = new Label(name + ":");
+        TextField textField = new TextField ();
+        HBox aField = new HBox();
+        aField.getChildren().addAll(aLabel, textField);
+        aField.setSpacing(10);
+        return aField;
+    }
   
     /**
      * @param args the command line arguments
@@ -183,6 +200,8 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
+        
+
 
         //Buy Button
         aButton = new Button();
@@ -191,7 +210,7 @@ public class FPTS extends Application {
             @Override
             public void handle( ActionEvent event ) {
                 eqUpdater = new BuyHoldingAlgorithm();
-                eqUpdater.process(getSelf());
+                eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
@@ -203,7 +222,7 @@ public class FPTS extends Application {
             @Override
             public void handle( ActionEvent event ) {
                 eqUpdater = new SellHoldingAlgorithm();
-                eqUpdater.process(getSelf());
+                eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
@@ -215,7 +234,7 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
+
             }
 
         });
@@ -227,8 +246,9 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                CashAccountAlgorithm rmCashAc = new RemoveCashAccountAlgorithm();
-                rmCashAc.process(getSelf());
+                cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
@@ -239,8 +259,9 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                CashAccountAlgorithm dpCashAc = new DepositCashAccountAlgorithm();
-                dpCashAc.process(getSelf());
+                cashAccountAlgorithm = new DepositCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
@@ -251,8 +272,9 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                CashAccountAlgorithm wdCashAc = new WithdrawCashAccountAlgorithm();
-                wdCashAc.process(getSelf());
+                cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
@@ -263,24 +285,13 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                CashAccountAlgorithm transCashAc = new TransferCashAccountAlgorithm();
-                transCashAc.process(getSelf());
+                cashAccountAlgorithm = new TransferCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
        
-        //Create Button
-        aButton = new Button();
-        aButton.setText("Create");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle( ActionEvent event ) {
-                CashAccountCreator cac = new CashAccountCreator(getSelf());
-                //eqUpdater.process(getSelf());
-            }
-        });
-        nav.getChildren().add(aButton);
-        
         //Logout Button
          aButton = new Button();
         aButton.setText("Log out");

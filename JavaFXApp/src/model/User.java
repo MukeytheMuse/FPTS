@@ -6,6 +6,9 @@
 package model;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -67,11 +70,11 @@ public class User {
     }
 
     /**
-     * Private method used to populate the users ArrayList<User> from the UserData.csv file.
+     * Public method used to populate the users ArrayList<User> from the UserData.csv file.
      */
     public static void fillUsers(){
         try {
-            Scanner scanner = new Scanner(new File("src/DataBase/UserData.csv"));
+            Scanner scanner = new Scanner(new File("UserData.txt"));
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -109,33 +112,57 @@ public class User {
     /*
     Private method that checks to see if customer has a portfolio
     */
-    public boolean hasPortfolio() {
+    public boolean hasPortfolio() throws FileNotFoundException {
         boolean created = false;
 
         for (User user : userList) {
 
             if (this.equals(user)) {
 
-                try {
-                    Scanner scanner = new Scanner(new File("Portfolios.txt"));
+                Scanner scanner = new Scanner(new File(user.getLoginID() + ".txt").getAbsolutePath());
 
-                    while (scanner.hasNextLine()) {
-                        String line = scanner.nextLine();
-                        if (line.length() != 0) {
-                            String[] splitLine = line.split(",");
-                            if (splitLine[0].equals(user.getLoginID())) {
-                                created = true;
-                            }
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (line.length() != 0) {
+                        String[] splitLine = line.split(",");
+                        if (splitLine[0].equals(user.getLoginID())) {
+                            created = true;
                         }
                     }
-
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
                 }
+
             }
         }
 
         return created;
+    }
+
+    /*
+   Public method that creates portfolio for customer.
+   */
+    public void createPortfolioForUser() throws IOException {
+        BufferedWriter bufferedWriter = null;
+
+        for (User user : userList) {
+            if (this.equals(user)) {
+                try {
+                    File directory = new File("Portfolios");
+                    directory.mkdir();
+                    File file = new File(directory, this.getLoginID() + ".txt");
+                    file.createNewFile();
+                    FileWriter writer = new FileWriter(file);
+                    bufferedWriter = new BufferedWriter(writer);
+                    bufferedWriter.write(user.getLoginID() + ",");
+                    bufferedWriter.write("true");
+                    bufferedWriter.newLine();
+                    bufferedWriter.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                System.out.println("Created");
+            }
+        }
     }
 
 }
