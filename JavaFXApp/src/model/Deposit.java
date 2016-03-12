@@ -35,4 +35,8 @@ public class Deposit implements Transaction {
         return "Deposited " + amount + " to " + c.getAccountName() + " on " + theDateString;
     }
     
+    public CashAccount getCashAccount() {
+        return c;
+    }
+    
 }

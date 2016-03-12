@@ -90,8 +90,6 @@ public class FPTS extends Application {
         }
         
         self = this;
-        
-        thestage.setScene(getHomeScene());
         thestage.show();
         
         
@@ -313,6 +311,18 @@ public class FPTS extends Application {
             @Override
             public void handle( ActionEvent event ) {
                 PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+        //View transaction Button
+        aButton = new Button();
+        aButton.setText("History");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                TransactionDisplayer td = new TransactionDisplayer(getSelf());
+                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
