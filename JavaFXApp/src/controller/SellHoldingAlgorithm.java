@@ -7,9 +7,12 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import model.Deposit;
 import model.Holding;
 import model.Portfolio;
 import model.Searchable;
+import model.Transaction;
+import model.Withdrawal;
 
 /**
  *
@@ -46,7 +49,8 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
        double accountVal = cashAccountOfInterest.getValue();
 
        if ( (numOfShares * pricePerShare) > 0 && e.getNumOfShares() >= numOfShares ) {
-           cashAccountOfInterest.deposit(numOfShares * pricePerShare);
+           Transaction t = new Deposit(cashAccountOfInterest, numOfShares * pricePerShare);
+            p.add(t);
            e.subtractShares(numOfShares);
            if (e.getNumOfShares() == 0) {
                p.removeHolding(e);

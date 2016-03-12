@@ -8,6 +8,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.Observable;
 import model.CashAccount;
+import model.Deposit;
+import model.Transaction;
+import model.Withdrawal;
 
 /**
  *
@@ -50,8 +53,10 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
        
         double amount = amounts.get(0);
         if (c.getValue() >= amount) {
-            c.withdraw(amount);
-            c2.deposit(amount);
+            Transaction t = new Withdrawal(c, amount);
+            theFPTS.getPortfolio().add(t);
+            t = new Deposit(c2, amount);
+            theFPTS.getPortfolio().add(t);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {
             theFPTS.getStage().setScene(theFPTS.getErrorScene());

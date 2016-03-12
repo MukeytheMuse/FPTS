@@ -54,8 +54,10 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
        double accountVal = cashAccountOfInterest.getValue();
 
        if (accountVal >= (numOfShares * pricePerShare) ) {
-            cashAccountOfInterest.withdraw(numOfShares * pricePerShare);
+            Transaction t = new Withdrawal(cashAccountOfInterest, numOfShares * pricePerShare);
+            p.add(t);
             e.addShares(numOfShares);
+            
             theStage.setScene(getConfirmationScene());
        } else {
             mainInput.setText("INVALID");

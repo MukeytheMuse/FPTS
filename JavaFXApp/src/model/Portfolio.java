@@ -28,7 +28,7 @@ public class Portfolio extends Observable {
     
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
-    //private ArrayList<Transaction> Transaction;
+    private ArrayList<Transaction> transactions;
     private ArrayList<EquityComponent> equityComponents;  // lists what you can buy
     
     private double currentValue;
@@ -125,6 +125,15 @@ public class Portfolio extends Observable {
     
     public void remove(CashAccount e) {
         cashAccounts.remove(e);
+    }
+    
+    public void add(Transaction t) {
+        t.execute();
+        transactions.add(t);
+    }
+    
+    public void remove(Transaction t) {
+        transactions.remove(t);
     }
     
     public ArrayList<Searchable> getMatches() {

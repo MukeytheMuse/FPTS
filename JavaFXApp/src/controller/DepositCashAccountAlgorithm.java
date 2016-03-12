@@ -5,6 +5,9 @@
  */
 package controller;
 
+import model.Deposit;
+import model.Transaction;
+
 /**
  *
  * @author ericepstein
@@ -15,6 +18,8 @@ public class DepositCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         double amount = amounts.get(0);
         c.deposit(amount);
         
+        Transaction t = new Deposit(c, amount);
+        theFPTS.getPortfolio().add(t);
         theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
     }
     
