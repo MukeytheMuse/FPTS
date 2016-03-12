@@ -209,7 +209,7 @@ public class FPTS extends Application {
         aButton.setText("Buy Holding");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 eqUpdater = new BuyHoldingAlgorithm();
                 eqUpdater.process(self);
             }
@@ -221,7 +221,7 @@ public class FPTS extends Application {
         aButton.setText("Sell Holding");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 eqUpdater = new SellHoldingAlgorithm();
                 eqUpdater.process(self);
             }
@@ -232,10 +232,10 @@ public class FPTS extends Application {
         Button portfolio = new Button();
         portfolio.setText("Portfolio");
         //TODO:Action to be set
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
+        portfolio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                p = new Portfolio();
+                PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
             }
 
         });
