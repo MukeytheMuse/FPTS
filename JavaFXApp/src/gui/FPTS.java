@@ -134,6 +134,20 @@ public class FPTS extends Application {
         return homeSc;
     }
     
+    public Scene getConfirmationScene() {
+        Label confirmation = new Label("Update completed");
+        VBox split = new VBox();
+        split.getChildren().addAll(getNav(), confirmation);
+        return new Scene(split, WIDTH, HEIGHT);
+    }
+    
+    public Scene getErrorScene() {
+        Label confirmation = new Label("Error");
+        VBox split = new VBox();
+        split.getChildren().addAll(getNav(), confirmation);
+        return new Scene(split, WIDTH, HEIGHT);
+    }
+    
     public Scene createLogInScene() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, WIDTH, HEIGHT);

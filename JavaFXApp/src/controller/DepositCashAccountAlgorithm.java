@@ -15,7 +15,7 @@ public class DepositCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         double amount = amounts.get(0);
         c.deposit(amount);
         
-        theFPTS.getStage().setScene(theFPTS.getHomeScene());
+        theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
     }
     
 }

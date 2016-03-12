@@ -18,11 +18,11 @@ import java.util.Observer;
  *
  * @author ericepstein
  */
-public class RemoveCashAccountAlgorithm extends CashAccountAlgorithm /* implements Observer */ {
+public class RemoveCashAccountAlgorithm extends CashAccountAlgorithm {
     
     public void action() {
         theFPTS.getPortfolio().remove(c);
-        theFPTS.getStage().setScene(theFPTS.getHomeScene());
+        theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
     }
     
 }

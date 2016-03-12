@@ -45,15 +45,15 @@ abstract public class HoldingAlgorithm implements Observer {
      protected TextField mainInput;
      
      protected FPTS theFPTS;
+     protected Stage theStage;
      private double HEIGHT;
      private double WIDTH;
-     protected Stage theStage;
      
      protected Searcher s;
      
-     protected float pricePerShare;
+     protected double pricePerShare;
      protected int numOfShares;
-     protected float valuePerShare;
+     protected double valuePerShare;
      
      protected HoldingUpdatable equityOfInterest;
      protected CashAccount cashAccountOfInterest;
@@ -124,7 +124,6 @@ abstract public class HoldingAlgorithm implements Observer {
             public void handle(ActionEvent e) {
                 s.search(queries.getChildren(), toBeSearched);
                 actionBtn.setVisible(true);
-                //p.setMatches(queries.getChildren());
             }
         });
 
@@ -171,30 +170,14 @@ abstract public class HoldingAlgorithm implements Observer {
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                String pricePerShareString = pricePerShareField.getText();
-                String numOfSharesString = numOfSharesField.getText();
-            
-                try {
-                    Double.parseDouble(pricePerShareString);
-                } catch (Exception ex) {
-                       
-                } 
+
+                boolean isValid = isValid(pricePerShareField) && isValid(numOfSharesField);
                 
-                //pricePerShare = Double.parseDouble
-                numOfShares = Integer.parseInt(numOfSharesString);
-;                /*
-                
-                CHECK FOR VALIDITY IN BOTH, THEN ADD TO GLOBAL VARIABLE
-                
-                if ( isFloat(pricePerShareString) && isInt(numOfSharesString) ) {
-                    
+                if (isValid) {
+                    pricePerShare = Double.parseDouble(pricePerShareField.getText());
+                    numOfShares = Integer.parseInt(numOfSharesField.getText());
                 }
-                
-                    */
-                
-                pricePerShare = 3;
-                numOfShares= 5;
-                
+                                
                 switch (searchConditions.getValue().toString()) {
                     case ("Outside FPTS"):
                         //place buy/sell command to be factored in, EXECUTE COMMAND
@@ -210,6 +193,7 @@ abstract public class HoldingAlgorithm implements Observer {
             }
         });
         
+        
         searchPane.getChildren().addAll(queries, submitButton);
         splitPage.getChildren().addAll(theFPTS.getNav(), searchPane);
         
@@ -217,6 +201,29 @@ abstract public class HoldingAlgorithm implements Observer {
         Scene additionalInfoScene = new Scene(splitPage, WIDTH, HEIGHT);
         return additionalInfoScene;
         
+    }
+    
+    public boolean isValid(TextField inputAmount) {
+        if (inputAmount.getText() == null || inputAmount.getText().equals("")) {
+            return false;
+        }
+        
+        String inputAmountString = inputAmount.getText();
+        
+        try {
+            Double.parseDouble(inputAmountString);
+        } catch (Exception e) {
+            return false;
+        }
+        
+        Double inputAmountDouble = Double.parseDouble(inputAmountString);
+        
+        if (inputAmountDouble < 0) {
+            return false;
+        }
+        
+        return true;
+         
     }
     
     public Scene getConfirmationScene() {
@@ -287,12 +294,7 @@ abstract public class HoldingAlgorithm implements Observer {
     
     @Override
     public void update(Observable o, Object arg) {
-        //displayMatches(ArrayList<)
-        //displayMatches(this.p.getMatches());
-        System.out.println("SIZE IS : " + s.getMatches().size());
         displayMatches(s.getMatches());
-        System.out.println("UPDATED");
-        //isplayMatches(this.s.getMatches());
     }
     
     public void displayMatches(ArrayList<Searchable> matches) {

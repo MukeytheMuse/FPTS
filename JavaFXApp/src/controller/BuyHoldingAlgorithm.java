@@ -27,19 +27,13 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     
     @Override
     public void establishContext() {
-        //this.theFPTS = theFPTS;
         p = theFPTS.getPortfolio();
         toBeSearched = p.getEquityComponentSearchables();
-        //System.out.println(""+theFPTS.getWidth());
     }
  
     public ArrayList<Searchable> getToBeSearched() {
-        //Portfolio p = copyFPTS.getPortfolio();
-        //return p.getLoadedSearchables();
         return toBeSearched;
     }
-    
- 
     
     /*
     *
@@ -65,13 +59,14 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             theStage.setScene(getConfirmationScene());
        } else {
             mainInput.setText("INVALID");
-       }
-        
+       }  
        
     }
    
    public void processOutsideFPTS() {
+       
        String keyword = mainInput.getText();
+       
        for (Searchable s : toBeSearched ){
           if (keyword.equals(s.getDisplayName())) {
               

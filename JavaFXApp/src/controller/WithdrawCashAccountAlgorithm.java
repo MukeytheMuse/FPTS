@@ -12,10 +12,15 @@ package controller;
 public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
     
     public void performTransaction() {
-        double amount = amounts.get(0);
-        c.withdraw(amount);
         
-        theFPTS.getStage().setScene(theFPTS.getHomeScene());
+        double amount = amounts.get(0);
+        
+        if ( c.getValue() >= amount) {
+            c.withdraw(amount);
+            theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
+        } else {
+            theFPTS.getStage().setScene(theFPTS.getErrorScene());
+        }
     }
     
 }
