@@ -7,7 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import model.Equity;
+import model.Holding;
 import model.Portfolio;
 import model.Searchable;
 
@@ -15,7 +15,7 @@ import model.Searchable;
  *
  * @author ericepstein
  */
-public class SellEquityUpdater extends EquityUpdater {
+public class SellHoldingAlgorithm extends HoldingAlgorithm {
  
     private Portfolio p;
     private ArrayList<Searchable> toBeSearched;
@@ -41,7 +41,7 @@ public class SellEquityUpdater extends EquityUpdater {
     checked for valid numOfShares & pricePerShare
     */
     public void processInsideFPTS() {
-       Equity e = (Equity) equityOfInterest; 
+       Holding e = (Holding) equityOfInterest; 
        
        double accountVal = cashAccountOfInterest.getValue();
 
@@ -49,7 +49,7 @@ public class SellEquityUpdater extends EquityUpdater {
            cashAccountOfInterest.deposit(numOfShares * pricePerShare);
            e.subtractShares(numOfShares);
            if (e.getNumOfShares() == 0) {
-               p.removeEquity(e);
+               p.removeHolding(e);
                theStage.setScene(getConfirmationScene());
            }  
        } else {
@@ -58,11 +58,11 @@ public class SellEquityUpdater extends EquityUpdater {
     }
      
     public void processOutsideFPTS() {
-        Equity e = (Equity) equityOfInterest; 
+        Holding e = (Holding) equityOfInterest; 
         if (e.getNumOfShares() > numOfShares) {
             e.subtractShares(numOfShares);
         } else if (e.getNumOfShares() == numOfShares) {
-            p.removeEquity(e);
+            p.removeHolding(e);
             theStage.setScene(getConfirmationScene());
         } else {
             mainInput.setText("INVALID");

@@ -110,11 +110,14 @@ public class User {
         return true;
     }
 
+    /*
+    INVALID NOW
     //A	The system shall allow the user to add holdings to a portfolio.
     public void addHoldings(List<Holding> holdings){
         for(Holding cur_h: holdings ){
             myPortfolio.addHolding(cur_h);
         }
     }
+    */
 
 }

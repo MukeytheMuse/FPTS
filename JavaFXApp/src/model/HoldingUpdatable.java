@@ -11,10 +11,11 @@ import java.util.ArrayList;
  *
  * @author ericepstein
  */
-public interface EquityUpdatable {
-    public float getValuePerShare();
+public interface HoldingUpdatable {
     public String getTickerSymbol();
-    public String getEquityName();
+    public String getHoldingName();
+    public double getValuePerShare();
     public ArrayList<String> getIndices();
     public ArrayList<String> getSectors();
+    //public void add(HoldingUpdatable e);
 }

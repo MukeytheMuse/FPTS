@@ -1,6 +1,7 @@
 package model.DataBase;
 
-import model.LoadedEquity;
+import model.EquityComponent;
+import model.Equity;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,9 +21,9 @@ public class ReadFile {
         this.splitFile = new ArrayList<String[]>();
     }
 
-    public static ArrayList<LoadedEquity> loadEquityList(){
+    public static ArrayList<EquityComponent> loadEquityList(){
         readFile();
-        ArrayList<LoadedEquity> loadedList = new ArrayList<LoadedEquity>();
+        ArrayList<EquityComponent> loadedList = new ArrayList<EquityComponent>();
         // iterate through each line representing an equity
         for( String[] line : splitFile){
             ArrayList<String> indices = new ArrayList<String>();
@@ -38,7 +39,7 @@ public class ReadFile {
                     sectors.add(line[i]);
                 }
             }
-            loadedList.add( new LoadedEquity(line[0], line[1], Double.parseDouble(line[2]), indices, sectors));
+            loadedList.add( new Equity(line[0], line[1], Double.parseDouble(line[2]), indices, sectors));
         }
         return loadedList;
     }

@@ -22,23 +22,20 @@ import javafx.scene.layout.Pane;
  * @author ericepstein & Kaitlin
  */
 public class Portfolio extends Observable {
-    private ArrayList<Holding> portfolioHoldings;
     //for the simulation
     //The system can simulate market conditions to show the effect on the user's portfolio.
     //TODO: ADD "private ArrayList<Trasaction> myTransactions;" B	REQ: The system shall persist holdings and transactions in a portfolio across invocations of the system.
     private ArrayList<Searchable> portfolioSearchables;
     private ArrayList<Searchable> loadedSearchables;
     
-    private ArrayList<Simulatable> portfolioSimulatables;
-    
     private ArrayList<CashAccount> cashAccounts;
     
     private ArrayList<Searchable> cashAccountSearchables;
     
     private double currentValue;
-    private ArrayList<Equity> existingEquities;
+    private ArrayList<Holding> existingHoldings;
     
-    private ArrayList<Holding> matches;
+    private ArrayList<Searchable> matches;
     //this is observable. I missed the first thing, as i enter a search from the FPTS (gui),
     // it will tell the controller (ActionEvent in the button) to empty the "matches' array
     // and add elements that match, then after it finishes, the function in "Portfolio"
@@ -57,36 +54,31 @@ public class Portfolio extends Observable {
      */    
     public Portfolio(){
         //public CashAccount(String AccountName, float initialAmount, Date dateAdded) 
-        portfolioHoldings = new ArrayList<Holding>();
         portfolioSearchables = new ArrayList<Searchable>();
         
         cashAccounts = new ArrayList<CashAccount>();
         
         cashAccountSearchables = new ArrayList<Searchable>();
         
-        portfolioSimulatables = new ArrayList<Simulatable>();
         
         loadedSearchables = new ArrayList<Searchable>();
         
-        existingEquities = new ArrayList<Equity>();
-        matches = new ArrayList<Holding>();
+        existingHoldings = new ArrayList<Holding>();
+        matches = new ArrayList<Searchable>();
         //portfolioHoldings.add(new CashAccount("lala",200,new Date()));
         //portfolioHoldings.add(new CashAccount("moo",2,new Date()));
         
 //(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount )
 //String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int sharesHeld, double currentPricePerShare, Date acquisitionDate
-        portfolioSimulatables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.2, new Date()));
-        portfolioSimulatables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.1, new Date()));
-        portfolioSimulatables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
-
-        portfolioSearchables.add(new Equity("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
-        portfolioSearchables.add(new Equity("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
-        portfolioSearchables.add(new Equity("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+ 
+        portfolioSearchables.add(new Holding("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
+        portfolioSearchables.add(new Holding("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+        portfolioSearchables.add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
      
         cashAccountSearchables.add(new CashAccount("lala", 3, new Date()));
         cashAccountSearchables.add(new CashAccount("rofl", 3, new Date()));
         
-        loadedSearchables.add(new LoadedEquity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
+        loadedSearchables.add(new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
         
         
     }
@@ -98,9 +90,7 @@ public class Portfolio extends Observable {
      *
      * @return
      */
-    public ArrayList<Simulatable> getPortfolioSimulatables() {
-        return portfolioSimulatables;
-    }
+
     
     /**
      * When creating a new portfolio, the system shall allow the user to
@@ -120,20 +110,12 @@ public class Portfolio extends Observable {
         return cashAccountSearchables;
     }
     
-    public void addHolding(Holding h) {
-        portfolioHoldings.add(h);
-    }
-    
-    public void removeHolding(Holding h) {
-        portfolioHoldings.remove(h);
-    }
-    
-    public ArrayList<Holding> getMatches() {
+    public ArrayList<Searchable> getMatches() {
         return matches;
     }
     
-    public Equity getEquity(String keyword) {
-        for (Equity e : existingEquities) {
+    public Holding getHolding(String keyword) {
+        for (Holding e : existingHoldings) {
             if (e.getTickerSymbol().equals(keyword)) {
                 return e;
             }
@@ -141,13 +123,13 @@ public class Portfolio extends Observable {
         return null;
     }
     
-    public void addEquity(Equity e) {
-        existingEquities.add(e);
+    public void addHolding(Holding e) {
+        existingHoldings.add(e);
         portfolioSearchables.add(e);
     }
     
-    public void removeEquity(Equity e) {
-        existingEquities.remove(e);
+    public void removeHolding(Holding e) {
+        existingHoldings.remove(e);
         portfolioSearchables.remove(e);
     }
     
@@ -160,10 +142,10 @@ public class Portfolio extends Observable {
             
             ArrayList<String> holdingStrings = new ArrayList<String>();
             
-            for (Equity e : existingEquities) {
+            for (Holding e : existingHoldings) {
                 
                 holdingStrings.add(e.getTickerSymbol());
-                holdingStrings.add(e.getEquityName());
+                holdingStrings.add(e.getHoldingName());
                 
                 boolean isMatch = false;
                 for (int i = 0; i < holdingStrings.size(); i++) {
@@ -194,7 +176,7 @@ public class Portfolio extends Observable {
                     
                 }
                 if (isMatch) {
-                    matches.add((Holding) e);
+                    matches.add((Searchable) e);
                 }
                 holdingStrings.clear();
             }

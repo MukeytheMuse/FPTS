@@ -17,8 +17,10 @@ import javafx.scene.layout.VBox;
 /**
  *
  * @author ericepstein
+ 
+  Extends HoldingAlgorithm
  */
-public class BuyEquityUpdater extends EquityUpdater {
+public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     
     private Portfolio p;
     private ArrayList<Searchable> toBeSearched;
@@ -48,11 +50,11 @@ public class BuyEquityUpdater extends EquityUpdater {
     public void processInsideFPTS() {
         
        String aTickerSymbol = equityOfInterest.getTickerSymbol();
-       Equity e;
-       if ( p.getEquity(aTickerSymbol) != null ) {
-           e = p.getEquity(aTickerSymbol);
+       Holding e;
+       if ( p.getHolding(aTickerSymbol) != null ) {
+           e = p.getHolding(aTickerSymbol);
        } else {
-           e = new Equity(equityOfInterest.getTickerSymbol(), equityOfInterest.getEquityName(), equityOfInterest.getSectors(), equityOfInterest.getIndices(), numOfShares, equityOfInterest.getValuePerShare(), new Date());
+           e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getSectors(), equityOfInterest.getIndices(), numOfShares, equityOfInterest.getValuePerShare(), new Date());
        }
        
        double accountVal = cashAccountOfInterest.getValue();
@@ -73,14 +75,14 @@ public class BuyEquityUpdater extends EquityUpdater {
        for (Searchable s : toBeSearched ){
           if (keyword.equals(s.getDisplayName())) {
               
-              //If the equity exists in the collection, increase # of shares  
-              if(p.getEquity(keyword) != null) {
-                  Equity e = p.getEquity(keyword);
+              //If the holding exists in the collection, increase # of shares  
+              if(p.getHolding(keyword) != null) {
+                  Holding e = p.getHolding(keyword);
                   e.addShares(numOfShares);
-              //If equity does not exist in the collection, create a new Equity & add to collection
+              //If equity does not exist in the collection, create a new Holding & add to collection
               } else {
-                  Equity e = new Equity(equityOfInterest.getTickerSymbol(), equityOfInterest.getEquityName(), equityOfInterest.getSectors(), equityOfInterest.getIndices(), numOfShares, equityOfInterest.getValuePerShare(), new Date());
-                  p.addEquity(e);
+                  Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getSectors(), equityOfInterest.getIndices(), numOfShares, equityOfInterest.getValuePerShare(), new Date());
+                  p.addHolding(e);
               }
               
               theStage.setScene(getConfirmationScene());
