@@ -41,6 +41,8 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
         this.sectors = sectors;
     }
     
+
+    
     public String getDisplayName() {
         return tickerSymbol;
     }

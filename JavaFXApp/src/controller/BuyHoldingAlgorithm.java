@@ -79,7 +79,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
               //If equity does not exist in the collection, create a new Holding & add to collection
               } else {
                   Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getSectors(), equityOfInterest.getIndices(), numOfShares, equityOfInterest.getValuePerShare(), new Date());
-                  p.addHolding(e);
+                  p.add(e);
               }
               
               theStage.setScene(getConfirmationScene());

@@ -26,6 +26,7 @@ public class Portfolio extends Observable {
     //The system can simulate market conditions to show the effect on the user's portfolio.
     //TODO: ADD "private ArrayList<Trasaction> myTransactions;" B	REQ: The system shall persist holdings and transactions in a portfolio across invocations of the system.
     
+    private ArrayList<Searchable> portfolioElements;
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
     private ArrayList<Transaction> transactions;
@@ -50,23 +51,26 @@ public class Portfolio extends Observable {
      */    
     public Portfolio(){
         
-        
+        portfolioElements = new ArrayList<Searchable>();
         equityComponents = new ArrayList<EquityComponent>();
         cashAccounts = new ArrayList<CashAccount>();        
         holdings = new ArrayList<Holding>();
         
         matches = new ArrayList<Searchable>();
 
-        holdings.add(new Holding("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
-        holdings.add(new Holding("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
-        holdings.add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+        add(new Holding("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
+        
+        add(new CashAccount("rofl", 3, new Date()));
+        
+        add(new Holding("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+        add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
      
-        cashAccounts.add(new CashAccount("lala", 3, new Date()));
-        cashAccounts.add(new CashAccount("rofl", 3, new Date()));
+        add(new CashAccount("lala", 3, new Date()));
+       
         
         System.out.println(new Withdrawal(new CashAccount("lala", 3, new Date()), 3));
         
-        equityComponents.add((EquityComponent) new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
+        add((EquityComponent) new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
         
     }
     
@@ -110,6 +114,11 @@ public class Portfolio extends Observable {
         return temp;
     }
     
+    public ArrayList<Searchable> getPortfolioElements() {
+        return portfolioElements;
+    }
+   
+    
     public ArrayList<CashAccount> getCashAccounts() {
         return cashAccounts;
     }
@@ -122,11 +131,21 @@ public class Portfolio extends Observable {
         return equityComponents;
     }
     
+    public void add(EquityComponent e) {
+        equityComponents.add(e);
+    }
+    
+    public void remove(EquityComponent e) {
+        equityComponents.remove(e);
+    }
+    
     public void add(CashAccount e) {
+        portfolioElements.add((Searchable) e);
         cashAccounts.add(e);
     }
     
     public void remove(CashAccount e) {
+        portfolioElements.remove((Searchable) e);
         cashAccounts.remove(e);
     }
     
@@ -152,11 +171,13 @@ public class Portfolio extends Observable {
         return null;
     }
     
-    public void addHolding(Holding e) {
+    public void add(Holding e) {
+        portfolioElements.add((Searchable) e);
         holdings.add(e);
     }
     
-    public void removeHolding(Holding e) {
+    public void remove(Holding e) {
+        portfolioElements.remove((Searchable) e);
         holdings.remove(e);
     }
     

@@ -73,7 +73,7 @@ public class Holding implements Searchable, HoldingUpdatable {
     }
     
     public String toString() {
-        return tickerSymbol + "\t" + holdingName + "\t" + valuePerShare; 
+        return tickerSymbol + ", " + holdingName + ", " + numOfShares + " shares, $" + valuePerShare + " per share, $" + currentValue + " current value"; 
     }
     
     public String getTickerSymbol(){

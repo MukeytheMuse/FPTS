@@ -39,7 +39,7 @@ public class CashAccount implements  Searchable {
     }
     
     public String toString() {
-        return accountName + "\t" + currentValue + "\t" + dateAdded;
+        return "" + currentValue;
     }
     
     public String getSymbol() {

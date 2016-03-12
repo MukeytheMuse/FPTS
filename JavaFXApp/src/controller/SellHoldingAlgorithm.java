@@ -53,7 +53,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             p.add(t);
            e.subtractShares(numOfShares);
            if (e.getNumOfShares() == 0) {
-               p.removeHolding(e);
+               p.remove(e);
                theStage.setScene(getConfirmationScene());
            }  
        } else {
@@ -66,7 +66,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
         if (e.getNumOfShares() > numOfShares) {
             e.subtractShares(numOfShares);
         } else if (e.getNumOfShares() == numOfShares) {
-            p.removeHolding(e);
+            p.remove(e);
             theStage.setScene(getConfirmationScene());
         } else {
             mainInput.setText("INVALID");
