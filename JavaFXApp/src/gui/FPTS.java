@@ -238,7 +238,7 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                p = new Portfolio();
             }
 
         });

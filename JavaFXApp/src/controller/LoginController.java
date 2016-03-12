@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import model.User;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -150,7 +151,7 @@ public class LoginController extends LoginMenuController{
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
-            fileWriter = new FileWriter("src/model/DataBase/UserData.csv",true);
+            fileWriter = new FileWriter(new File("JavaFXApp/src/model/Database/UserData.csv").getAbsolutePath(),true);
             bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(usr.getLoginID() + ",");
             bufferedWriter.write(usr.hash(password1.getText()));

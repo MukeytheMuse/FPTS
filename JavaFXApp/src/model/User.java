@@ -73,22 +73,18 @@ public class User {
      * Public method used to populate the users ArrayList<User> from the UserData.csv file.
      */
     public static void fillUsers(){
-        try {
-            Scanner scanner = new Scanner(new File("UserData.txt"));
+        Scanner scanner = new Scanner(new File("UserData.txt").getAbsolutePath());
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if(line.length() != 0){
-                    //System.out.println(line);
-                    String[] splitLine = line.split(",");
-                    //System.out.println(splitLine[0]);
-                    User newUser = new User(splitLine[0], splitLine[1]);
-                }
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if(line.length() != 0){
+                //System.out.println(line);
+                String[] splitLine = line.split(",");
+                //System.out.println(splitLine[0]);
+                User newUser = new User(splitLine[0], splitLine[1]);
             }
-
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
         }
+
     }
 
     public boolean validateUser(){
@@ -147,7 +143,9 @@ public class User {
             if (this.equals(user)) {
                 try {
                     File directory = new File("Portfolios");
-                    directory.mkdir();
+                    if (!directory.exists()) {
+                        directory.mkdir();
+                    }
                     File file = new File(directory, this.getLoginID() + ".txt");
                     file.createNewFile();
                     FileWriter writer = new FileWriter(file);
