@@ -91,12 +91,8 @@ public class FPTS extends Application {
         
         self = this;
         
-        thestage.setScene(loginScene);
+        thestage.setScene(getHomeScene());
         thestage.show();
-        
-      
-        
-        CashAccountCreator lala = new CashAccountCreator(this);
         
     }
 
@@ -118,7 +114,7 @@ public class FPTS extends Application {
     public Scene getHomeScene() {
         Scene scene = null;
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             scene = new Scene(parent);
         } catch (IOException e) {
             e.printStackTrace();
