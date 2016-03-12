@@ -58,6 +58,14 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
+    public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("../gui/PortfolioPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {
         HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
         eqUpdater.process(FPTS.getSelf());

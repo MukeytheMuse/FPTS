@@ -19,8 +19,13 @@ import java.util.ResourceBundle;
 public class HomeController extends MenuController {
 
     @FXML
-    protected void handlePortfolioButtonPressed(ActionEvent event){
-        //TODO
+    protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("../gui/PortfolioPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        app_stage.setScene(scene);
+        app_stage.show();
     }
 
     @FXML
@@ -41,6 +46,6 @@ public class HomeController extends MenuController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        //TODO
     }
 }
