@@ -24,10 +24,8 @@ public class User {
         /**
          * When creating a new portfolio, the system shall allow the user to
          * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
-         *
-         *
-         * @param loginID
-         * @param password
+         * @param loginID - String - Login ID of of the User.
+         * @param password - String - Password of the User, stored in a hashed setting.
          */
     public User(String loginID, String password) {
         this.loginID = loginID;
@@ -68,12 +66,12 @@ public class User {
         return password;
     }
 
-    /*
-     * Private method used to populate the users ArrayList<User> from the UserData.txt file.
+    /**
+     * Private method used to populate the users ArrayList<User> from the UserData.csv file.
      */
     public static void fillUsers(){
         try {
-            Scanner scanner = new Scanner(new File("UserData.txt"));
+            Scanner scanner = new Scanner(new File("src/DataBase/UserData.csv"));
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();

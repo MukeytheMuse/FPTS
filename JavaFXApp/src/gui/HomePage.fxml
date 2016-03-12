@@ -12,10 +12,28 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
+                  <MenuItem fx:id="home" mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
               <MenuItem fx:id="Logout" mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Equities">
+              <items>
+                <MenuItem fx:id="showPortfolio" mnemonicParsing="false" text="Show Portfolio" />
+                  <MenuItem fx:id="buyEquities" mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
+                  <MenuItem fx:id="sellEquities" mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Cash Account">
+              <items>
+                <MenuItem fx:id="deposit" mnemonicParsing="false" text="Deposit" onAction="#handleDepositMenuItemPressed"/>
+                  <MenuItem fx:id="withdraw" mnemonicParsing="false" text="Withdraw" onAction="#handleWithdrawMenuItemPressed"/>
+                  <MenuItem fx:id="transfer" mnemonicParsing="false" text="Transfer" onAction="#handleTransferMenuItemPressed"/>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="remove" mnemonicParsing="false" text="Remove Account" onAction="#handleRemoveMenuItemPressed"/>
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
@@ -49,19 +67,19 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="75.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="75.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
                <children>
                   <Button fx:id="pinfo" mnemonicParsing="false" onAction="#handlePortfolioButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Portfolio Info">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="search" mnemonicParsing="false" onAction="#handleSearchButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Search Equities">
+                  <Button fx:id="buyEquity" mnemonicParsing="false" onAction="#handleBuyEquityButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Buy Equities">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="other" mnemonicParsing="false" onAction="#handleOtherButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Other Stuff">
+                  <Button fx:id="simulate" mnemonicParsing="false" onAction="#handleSimulateButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Run Simulation">
                      <font>
                         <Font size="14.0" />
                      </font>
