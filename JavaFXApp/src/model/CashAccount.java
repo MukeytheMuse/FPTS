@@ -22,7 +22,7 @@ public class CashAccount implements  Searchable {
     * 
     * @author ericepstein & kaitlin
     */
-    public CashAccount(String AccountName, float initialAmount, Date dateAdded) {
+    public CashAccount(String AccountName, double initialAmount, Date dateAdded) {
         this.accountName = AccountName;
         currentValue = initialAmount;
         this.dateAdded = dateAdded;
@@ -60,6 +60,11 @@ public class CashAccount implements  Searchable {
         return currentValue;
     }
     
+    @Override
+    public boolean equals(java.lang.Object obj) {
+        CashAccount c = (CashAccount) obj;
+        return (accountName.equals(c.getAccountName()));
+    }
     
     /**
     * Getter for the date that the cash account was created/added.
@@ -99,6 +104,12 @@ public class CashAccount implements  Searchable {
         } else {
             //return an error message that deposit amount cannot be negative
         }
+    }
+    
+    public void overwrite(CashAccount c) {
+        this.accountName = c.getAccountName();
+        this.currentValue = c.getValue();
+        this.dateAdded = c.getDateAdded();
     }
     
 

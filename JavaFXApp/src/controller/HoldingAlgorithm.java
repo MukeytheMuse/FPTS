@@ -210,7 +210,6 @@ abstract public class HoldingAlgorithm implements Observer {
             }
         });
         
-        
         searchPane.getChildren().addAll(queries, submitButton);
         splitPage.getChildren().addAll(theFPTS.getNav(), searchPane);
         

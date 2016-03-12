@@ -68,6 +68,7 @@ import static javafx.application.Application.launch;
 public class FPTS extends Application {
     
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
+    CashAccountAlgorithm cashAccountAlgorithm;
     
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
@@ -202,7 +203,7 @@ public class FPTS extends Application {
         
         //Buy Button
         aButton = new Button();
-        aButton.setText("Buy");
+        aButton.setText("Buy Holding");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
@@ -214,7 +215,7 @@ public class FPTS extends Application {
         
         //Sell Button
         aButton = new Button();
-        aButton.setText("Sell");
+        aButton.setText("Sell Holding");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
@@ -224,6 +225,58 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
         
+        //Remove Cash Account Button
+        aButton = new Button();
+        aButton.setText("Remove Cash Account");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+        //Deposit CashAccount
+        aButton = new Button();
+        aButton.setText("Deposit");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                cashAccountAlgorithm = new DepositCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+        //Withdraw CashAccount
+        aButton = new Button();
+        aButton.setText("Withdraw");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+        
+        //Transfer CashAccount
+        aButton = new Button();
+        aButton.setText("Transfer");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                cashAccountAlgorithm = new TransferCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+       
         //Logout Button
          aButton = new Button();
         aButton.setText("Log out");

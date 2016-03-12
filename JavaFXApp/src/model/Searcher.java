@@ -65,13 +65,9 @@ abstract public class Searcher extends Observable {
     //abstract public ArrayList<Searchable> getMatches();
     
     public void generateMatches() { 
-          
-        //System.out.println("SIZE OF HOLDING STIRNGS IS " + holdingStrings.size());
-        //System.out.println("SIZE OF QUERIES IS " + queries.size());
         
             for (Searchable e : toBeSearched) {
                 boolean isMatch = true;
-                System.out.println("NEW SEARCHABLE");
                 ArrayList<ArrayList<String>> allItems = getSearchableStrings(e);
                
                 for (int i = 0; i < allItems.size(); i++) {

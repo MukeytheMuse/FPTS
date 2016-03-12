@@ -24,7 +24,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     public void establishContext() {
         //this.theFPTS = theFPTS;
         p = theFPTS.getPortfolio();
-        toBeSearched = p.getPortfolioSearchables();
+        toBeSearched = p.getHoldingSearchables();
         //System.out.println(""+theFPTS.getWidth());
     }
  

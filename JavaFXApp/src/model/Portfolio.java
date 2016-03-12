@@ -25,23 +25,19 @@ public class Portfolio extends Observable {
     //for the simulation
     //The system can simulate market conditions to show the effect on the user's portfolio.
     //TODO: ADD "private ArrayList<Trasaction> myTransactions;" B	REQ: The system shall persist holdings and transactions in a portfolio across invocations of the system.
-    private ArrayList<Searchable> portfolioSearchables;
-    private ArrayList<Searchable> loadedSearchables;
     
     private ArrayList<CashAccount> cashAccounts;
-    
-    private ArrayList<Searchable> cashAccountSearchables;
+    private ArrayList<Holding> holdings;
+    //private ArrayList<Transaction> Transaction;
+    private ArrayList<EquityComponent> equityComponents;  // lists what you can buy
     
     private double currentValue;
-    private ArrayList<Holding> existingHoldings;
     
     private ArrayList<Searchable> matches;
     //this is observable. I missed the first thing, as i enter a search from the FPTS (gui),
     // it will tell the controller (ActionEvent in the button) to empty the "matches' array
     // and add elements that match, then after it finishes, the function in "Portfolio"
     // notifies the observer FPTS to update the search results on the view
-
-    private ArrayList<CashAccount> existingCashAccounts;
     //TODO: MAKE SURE TO ADD TO portfolioHoldings EACH TIME YOU ADD TO "existingEquities" or "existingCashAccounts" & update the value
 
     /**
@@ -53,33 +49,21 @@ public class Portfolio extends Observable {
      * @author ericepstein & Kaitlin
      */    
     public Portfolio(){
-        //public CashAccount(String AccountName, float initialAmount, Date dateAdded) 
-        portfolioSearchables = new ArrayList<Searchable>();
         
-        cashAccounts = new ArrayList<CashAccount>();
+        equityComponents = new ArrayList<EquityComponent>();
+        cashAccounts = new ArrayList<CashAccount>();        
+        holdings = new ArrayList<Holding>();
         
-        cashAccountSearchables = new ArrayList<Searchable>();
-        
-        
-        loadedSearchables = new ArrayList<Searchable>();
-        
-        existingHoldings = new ArrayList<Holding>();
         matches = new ArrayList<Searchable>();
-        //portfolioHoldings.add(new CashAccount("lala",200,new Date()));
-        //portfolioHoldings.add(new CashAccount("moo",2,new Date()));
-        
-//(String tickerSymbol, int sharesHeld, double currentPricePerShare, double currentValue, Date acquisitionDate, boolean cashAccount )
-//String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int sharesHeld, double currentPricePerShare, Date acquisitionDate
- 
-        portfolioSearchables.add(new Holding("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
-        portfolioSearchables.add(new Holding("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
-        portfolioSearchables.add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+
+        holdings.add(new Holding("ham", "haha", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3.0, new Date()));
+        holdings.add(new Holding("mo", "momo", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
+        holdings.add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
      
-        cashAccountSearchables.add(new CashAccount("lala", 3, new Date()));
-        cashAccountSearchables.add(new CashAccount("rofl", 3, new Date()));
+        cashAccounts.add(new CashAccount("lala", 3, new Date()));
+        cashAccounts.add(new CashAccount("rofl", 3, new Date()));
         
-        loadedSearchables.add(new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
-        
+        equityComponents.add((EquityComponent) new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
         
     }
     
@@ -98,16 +82,47 @@ public class Portfolio extends Observable {
      *
      * @return
      */
-    public ArrayList<Searchable> getPortfolioSearchables() {
-        return portfolioSearchables;
+    
+    public ArrayList<Searchable> getHoldingSearchables() {
+        ArrayList<Searchable> temp = new ArrayList<Searchable>();
+        for (Holding h : holdings) {
+            temp.add((Searchable) h);
+        }
+        return temp;
     }
     
-    public ArrayList<Searchable> getLoadedSearchables() {
-        return loadedSearchables;
+    public ArrayList<Searchable> getEquityComponentSearchables() {
+        ArrayList<Searchable> temp = new ArrayList<Searchable>();
+        for (EquityComponent ec : equityComponents) {
+            temp.add((Searchable) ec);
+        }
+        return temp;
     }
     
     public ArrayList<Searchable> getCashAccountSearchables() {
-        return cashAccountSearchables;
+        ArrayList<Searchable> temp = new ArrayList<Searchable>();
+        for (CashAccount c : cashAccounts) {
+            temp.add((Searchable) c);
+        }
+        return temp;
+    }
+    
+    public ArrayList<CashAccount> getCashAccounts() {
+        return cashAccounts;
+    }
+    
+    public ArrayList<Holding> getHoldings() {
+        return holdings;
+    }
+    
+    public ArrayList<EquityComponent> getEquityComponents() {
+        return equityComponents;
+    }
+    
+    public void remove(CashAccount e) {
+        System.out.println("in REMOVE AND CONTAISN: " + cashAccounts.contains(e));
+        System.out.println("e is " + e.getAccountName());
+        cashAccounts.remove(e);
     }
     
     public ArrayList<Searchable> getMatches() {
@@ -115,7 +130,7 @@ public class Portfolio extends Observable {
     }
     
     public Holding getHolding(String keyword) {
-        for (Holding e : existingHoldings) {
+        for (Holding e : holdings) {
             if (e.getTickerSymbol().equals(keyword)) {
                 return e;
             }
@@ -124,25 +139,22 @@ public class Portfolio extends Observable {
     }
     
     public void addHolding(Holding e) {
-        existingHoldings.add(e);
-        portfolioSearchables.add(e);
+        holdings.add(e);
     }
     
     public void removeHolding(Holding e) {
-        existingHoldings.remove(e);
-        portfolioSearchables.remove(e);
+        holdings.remove(e);
     }
-    
+    /*
     public void setMatches(ObservableList<Node> queries) {
         //LoadedEquities loadedEqs = new LoadedEquities();
         //matches = new ArrayList<Holding>();
         matches.clear();
-        //if (queries.size() == 2) {
         if (true) {
             
             ArrayList<String> holdingStrings = new ArrayList<String>();
             
-            for (Holding e : existingHoldings) {
+            for (Holding e : holdings) {
                 
                 holdingStrings.add(e.getTickerSymbol());
                 holdingStrings.add(e.getHoldingName());
@@ -185,6 +197,7 @@ public class Portfolio extends Observable {
         notifyObservers();
         System.out.println("Notified");
     }
+    */
     
     private boolean strContains(TextField testField, String str) {
         return fieldHasContent(testField) && str.toUpperCase().contains(testField.getText().toUpperCase());

@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class CashAccountSearcher extends Searcher {
         public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
-            ArrayList<String> anItem = new ArrayList<String>();
             ArrayList<String> searchableStrings = new ArrayList<String>();
             CashAccount ac = (CashAccount)(Object)s;
             ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>(); 
