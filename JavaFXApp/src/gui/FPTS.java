@@ -94,6 +94,10 @@ public class FPTS extends Application {
         thestage.setScene(loginScene);
         thestage.show();
         
+      
+        
+        CashAccountCreator lala = new CashAccountCreator(this);
+        
     }
 
     public int getHeight() {

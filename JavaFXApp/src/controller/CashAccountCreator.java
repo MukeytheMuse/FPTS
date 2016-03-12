@@ -6,6 +6,7 @@
 package controller;
 
 import gui.FPTS;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class CashAccountCreator {
         Label aLabel = new Label("Amount: ");
         aField.getChildren().addAll(aLabel, amountInputField);
         
-        DatePicker dateField = new DatePicker();
+        DatePicker dateField = new DatePicker(LocalDate.now());
         aLabel = new Label("Date: ");
         aField.getChildren().addAll(aLabel, dateField);
         
@@ -57,21 +58,16 @@ public class CashAccountCreator {
                 @Override
                 public void handle(ActionEvent e) {
                     
-                    
                     boolean isValid = isValidAccountName(nameInputField) && isValidDouble(amountInputField); 
                     
                     Date theDate = Date.from(dateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    
-                    CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate); 
-                    
+                     
                     if ( isValid ) {
-                        boolean isStillValid = theFPTS.getPortfolio().getCashAccounts().contains(c);
-                        if ( isStillValid ) {
-                            theFPTS.getPortfolio().add(c);
-                        }
-                        else mainInput.setText("EXISTING ACCOUNT NAME");
+                        CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate);
+                        theFPTS.getPortfolio().add(c);
+                        theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
                     } else {
-                        mainInput.setText("INVALID");
+                        nameInputField.setText("INVALID");
                     }  
                     
                
@@ -85,23 +81,17 @@ public class CashAccountCreator {
         
     }
     
-    public boolean isValidAccountName(TextField inputAmount) {
-        if (inputAmount.getText() == null || inputAmount.getText().equals("")) {
+    public boolean isValidAccountName(TextField inputAccountName) {
+        if (inputAccountName.getText() == null || inputAccountName.getText().equals("")) {
             return false;
         }
         
-        String inputAmountString = inputAmount.getText();
+        String inputAccountString = inputAccountName.getText();
         
-        try {
-            Double.parseDouble(inputAmountString);
-        } catch (Exception e) {
-            return false;
-        }
-        
-        Double inputAmountDouble = Double.parseDouble(inputAmountString);
-        
-        if (inputAmountDouble < 0) {
-            return false;
+        for (CashAccount c : theFPTS.getPortfolio().getCashAccounts() ) {
+            if (c.getAccountName().equals(inputAccountString)) {
+                return false;
+            }
         }
         
         return true;    
