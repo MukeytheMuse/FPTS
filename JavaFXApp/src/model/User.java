@@ -5,9 +5,7 @@
  */
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -75,7 +73,7 @@ public class User {
      */
     public static void fillUsers(){
         try {
-            Scanner scanner = new Scanner(new File("src/DataBase/UserData.txt"));
+            Scanner scanner = new Scanner(new File("UserData.txt"));
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -111,6 +109,40 @@ public class User {
     }
 
     /*
+    Private method that checks to see if customer has a portfolio
+    */
+    public boolean hasPortfolio() {
+        boolean created = false;
+
+        for (User user : userList) {
+
+            if (this.equals(user)) {
+
+                try {
+                    Scanner scanner = new Scanner(new File("Portfolios.txt"));
+
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        if (line.length() != 0) {
+                            String[] splitLine = line.split(",");
+                            if (splitLine[0].equals(user.getLoginID())) {
+                                created = true;
+                            }
+                        }
+                    }
+
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+
+        return created;
+    }
+
+}
+
+    /*
     INVALID NOW
     //A	The system shall allow the user to add holdings to a portfolio.
     public void addHoldings(List<Holding> holdings){
@@ -120,4 +152,3 @@ public class User {
     }
     */
 
-}
