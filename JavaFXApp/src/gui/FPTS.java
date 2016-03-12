@@ -91,7 +91,7 @@ public class FPTS extends Application {
         
         self = this;
         
-        thestage.setScene(loginScene);
+        thestage.setScene(getHomeScene());
         thestage.show();
         
         
