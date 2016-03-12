@@ -20,18 +20,19 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Equities">
               <items>
-                <MenuItem fx:id="showPortfolio" mnemonicParsing="false" text="Show Portfolio" />
+                <MenuItem fx:id="showPortfolio" mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
                   <MenuItem fx:id="buyEquities" mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
                   <MenuItem fx:id="sellEquities" mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Cash Account">
               <items>
-                <MenuItem fx:id="deposit" mnemonicParsing="false" text="Deposit" onAction="#handleDepositMenuItemPressed"/>
-                  <MenuItem fx:id="withdraw" mnemonicParsing="false" text="Withdraw" onAction="#handleWithdrawMenuItemPressed"/>
-                  <MenuItem fx:id="transfer" mnemonicParsing="false" text="Transfer" onAction="#handleTransferMenuItemPressed"/>
+                  <MenuItem fx:id="createCA" mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                  <MenuItem fx:id="deposit" mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
+                  <MenuItem fx:id="withdraw" mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
+                  <MenuItem fx:id="transfer" mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="remove" mnemonicParsing="false" text="Remove Account" onAction="#handleRemoveMenuItemPressed"/>
+                  <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -53,20 +54,12 @@
           <RowConstraints maxHeight="132.33334350585938" minHeight="10.0" prefHeight="132.33334350585938" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="27.0" prefWidth="298.0" text="Finacial Portfolio Tracking System" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="329.0" text="Financial Portfolio Tracking System" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
             <Label fx:id="label" mouseTransparent="true" prefHeight="17.0" prefWidth="404.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <LineChart fx:id="graph" prefHeight="283.0" prefWidth="409.0" title="Portfolio Value" GridPane.columnIndex="1" GridPane.rowSpan="2">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="75.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
                <children>
                   <Button fx:id="pinfo" mnemonicParsing="false" onAction="#handlePortfolioButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Portfolio Info">
@@ -91,6 +84,8 @@
                   </Button>
                </children>
             </HBox>
+            <PieChart fx:id="valueChart" title="Portfolio" GridPane.columnIndex="1" GridPane.rowSpan="2" />
+            <Label fx:id="valueLabel" prefHeight="17.0" prefWidth="171.0" text="Portfolio Current Value: " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

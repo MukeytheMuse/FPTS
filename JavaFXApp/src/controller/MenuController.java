@@ -59,11 +59,7 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/PortfolioPage.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) myMenuBar.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        PortfolioDisplayer pd = new PortfolioDisplayer(FPTS.getSelf());
     }
 
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {
@@ -84,6 +80,11 @@ public abstract class MenuController implements Initializable {
     public void handleDepositMenuItemPressed(ActionEvent event) {
         CashAccountAlgorithm cashAcctAlgor = new DepositCashAccountAlgorithm();
         cashAcctAlgor.process(FPTS.getSelf());
+    }
+
+    public void handleCreateMenuItemPressed(ActionEvent event) {
+        CashAccountCreator cashAcctAlgor = new CashAccountCreator(FPTS.getSelf());
+        cashAcctAlgor.getCashAccountCreatorScene();
     }
 
     public void handleTransferMenuItemPressed(ActionEvent event) {
