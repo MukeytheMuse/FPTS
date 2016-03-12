@@ -85,7 +85,7 @@
                </children>
             </HBox>
             <PieChart fx:id="valueChart" title="Portfolio" GridPane.columnIndex="1" GridPane.rowSpan="2" />
-            <Label fx:id="valueLabel" prefHeight="17.0" prefWidth="171.0" text="Portfolio Current Value: " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label fx:id="valueLabel" alignment="CENTER" prefHeight="17.0" prefWidth="255.0" text="Portfolio Current Value: " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
