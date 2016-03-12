@@ -12,9 +12,9 @@ import gui.FPTS;
  *
  * @author ericepstein
  */
-public class PortfolioEquitySearcher extends Searcher {
+public class SearchedHoldingSearcher extends Searcher {
     
-    public ArrayList<ArrayList<String>> getHoldingStrings(Searchable s) {
+    public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
         
         //ArrayList<ArrayList<ArrayList<String>>> allObjects = new ArrayList<ArrayList<ArrayList<String>>>();
         
@@ -23,7 +23,7 @@ public class PortfolioEquitySearcher extends Searcher {
         ArrayList<String> anItem = new ArrayList<String>();
         
         ArrayList<String> holdingStrings = new ArrayList<String>();
-        EquityUpdatable eq = (EquityUpdatable)(Object)s;
+        HoldingUpdatable eq = (HoldingUpdatable)(Object)s;
         //for (Simulatable eq : (ArrayList<Simulatable>)(Object)toBeSearched) {
             ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>(); 
             
@@ -32,17 +32,15 @@ public class PortfolioEquitySearcher extends Searcher {
             tickerSymbolItem.add(eq.getTickerSymbol());
             anObject.add(tickerSymbolItem);
             
-            ArrayList<String> equityNameItem = new ArrayList<String>();
-            equityNameItem.add(eq.getEquityName());
-            anObject.add(equityNameItem);
+            ArrayList<String> holdingNameItem = new ArrayList<String>();
+            holdingNameItem.add(eq.getHoldingName());
+            anObject.add(holdingNameItem);
             
             ArrayList<String> indices = eq.getIndices();
             anObject.add(indices);
             ArrayList<String> sectors = eq.getSectors();
             anObject.add(sectors);
-            //allObjects.add(anObject);
-        //}
-        //return allObjects;
+            
         return anObject;
     }
     

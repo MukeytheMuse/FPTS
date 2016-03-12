@@ -23,7 +23,7 @@ abstract public class Searcher extends Observable {
     ObservableList<Node> queries;
     ArrayList<Searchable> toBeSearched;
     ArrayList<Searchable> matches;
-    ArrayList<ArrayList<String>> holdingStrings;
+    ArrayList<ArrayList<String>> searchableStrings;
     //private T t;
     
     public void search(ObservableList<Node> queries, ArrayList<Searchable> toBeSearched) {
@@ -37,7 +37,7 @@ abstract public class Searcher extends Observable {
     //abstract void set(T t);
     
     //abstract ArrayList<T> getMatches();
-    abstract ArrayList<ArrayList<String>> getHoldingStrings(Searchable e);
+    abstract ArrayList<ArrayList<String>> getSearchableStrings(Searchable e);
     //abstract void define(ObservableList<Node> queries, ArrayList<T> toBeSearched);
     
     public Searchable getMatch(String keyword) {
@@ -72,7 +72,7 @@ abstract public class Searcher extends Observable {
             for (Searchable e : toBeSearched) {
                 boolean isMatch = true;
                 System.out.println("NEW SEARCHABLE");
-                ArrayList<ArrayList<String>> allItems = getHoldingStrings(e);
+                ArrayList<ArrayList<String>> allItems = getSearchableStrings(e);
                
                 for (int i = 0; i < allItems.size(); i++) {
                     

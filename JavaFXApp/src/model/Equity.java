@@ -4,138 +4,106 @@
  * and open the template in the editor.
  */
 package model;
-import java.util.ArrayList;
-import java.util.Date;
 
+import java.util.ArrayList;
+import model.DataBase.ReadFile;
 /**
  *
- * @author ericepstein
+ * @author ericepstein & Ian
  */
-public class Equity implements Holding, Searchable, Simulatable, EquityUpdatable {
+public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     
-    private String tickerSymbol;//index 0 in the csv file
-    private String equityName;//index 1 in the csv file
-    private double initialPricePerShare;//index 2 in the csv file
-    //index 3 in the csv file: 0 or more market indices or sectors that the equity is in. (aka may not be there)
+    private String tickerSymbol;
+    private String equityName;
+    double pricePerShare; //TODO: mark this private or public
+    public ArrayList<String> indices;
+    public ArrayList<String> sectors;
 
-    private int numOfShares;
-    private float valuePerShare;
-    private double currentValue;
-    private boolean cashAccount;
-    private Date acquisitionDate;
-    private ArrayList<String> indices;
-    private ArrayList<String> sectors;
-    
-    /**
-    * Constructor used when a user manually adds a Equity.
-    * 
-    * @author ericepstein & kaitlin
-    */
-    public Equity(String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int numOfShares, float valuePerShare, Date acquisitionDate){
-        this.tickerSymbol = tickerSymbol;
-        this.equityName = equityName;
-        this.numOfShares = numOfShares;
-        this.valuePerShare = valuePerShare;
-        this.currentValue = numOfShares * valuePerShare;
-        this.acquisitionDate = acquisitionDate;
-        //this.cashAccount = cashAccount;
-        //extras = new ArrayList<String>();
+    //ArrayList of Equities for use within search functionality
+    public static ArrayList<EquityComponent> loadedEquityList;
+    private ArrayList<Equity> matches;
+
+    //Populate the loadedEquityList
+    public static void makeEquityList() {
+        loadedEquityList = ReadFile.loadEquityList();
+    }
+
+    //Return list of Equities to search through
+    public ArrayList<EquityComponent> getEquityList() {
+        return loadedEquityList;
     }
     
-    
-    /**
-    * Constructor that is used when this object is created from reading the CSV file.
-    * 
-    * 
-    * THIS IS FOR LOADEDEQUITY OBJECT
-    * 
-    * @author ericepstein & kaitlin
-    */
-    /*
-    public Equity(String tickerSymbol, String equityName, float currentPricePerShare, double currentValue){
+    public Equity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.equityName = equityName;
-        this.currentPricePerShare = currentPricePerShare;
-        this.currentValue = currentValue;
-    }
-    */
-    
-    public float getValuePerShare() {
-        return valuePerShare;
+        this.pricePerShare = perShareValue;
+        this.indices = indices;
+        this.sectors = sectors;
     }
     
     public String getDisplayName() {
         return tickerSymbol;
     }
     
-    public String getSymbol() {
-        return tickerSymbol;
+    
+    public double getValuePerShare() {
+        return pricePerShare;
     }
     
-    public String toString() {
-        return tickerSymbol + "\t" + equityName + "\t" + valuePerShare; 
-    }
-    
-    public String getTickerSymbol(){
-        return tickerSymbol;
-    }
-    
-    public String getEquityName(){
+    public String getEquityName() {
         return equityName;
     }
     
-    @Override
-    public int getNumOfShares(){
-        return numOfShares;
+    public String getHoldingName() {
+        return equityName;
     }
     
-    @Override
-    public double getValue(){
-        return currentValue;
+    public String getTickerSymbol() {
+        return tickerSymbol;
     }
     
-    @Override
-    public double getCurrentValue() {
-        return currentValue;
-    }
-    
-    @Override
     public ArrayList<String> getSectors() {
-        return new ArrayList<String>();
+        return sectors;
     }
     
-    @Override
     public ArrayList<String> getIndices() {
-        return new ArrayList<String>();
+        return indices;
     }
     
-    public void addShares(int numOfSharesAdded) {
-        numOfShares += numOfSharesAdded;
-        currentValue += (numOfSharesAdded * valuePerShare);
-    }
-    
-    public void subtractShares(int numOfSharesSubtracted) {
-        numOfShares -= numOfSharesSubtracted;
-        currentValue -= (numOfSharesSubtracted * valuePerShare);
-    }
-    
-    
-    public void add(Holding h){
-        //this is a leaf node so this method is not applicable to this class        
-    }
-    
-    public void delete(Holding h){
-        //this is a leaf node so this method is not applicable to this class
+    public boolean isMatch(String tickerSymbol, String equityName, String index, String sector) {
+        boolean matched = true;
         
+        boolean tickerSymbolMatched = false;
+        if (! tickerSymbol.isEmpty()) {
+            this.tickerSymbol.contains(tickerSymbol);//RIGHT NOW .contains is ignored
+            tickerSymbolMatched = true;
+        }
+        
+        boolean equityNameMatched = false;
+        if (! equityName.isEmpty()) {
+            this.equityName.contains(equityName);//RIGHT NOW .contains is ignored
+            equityNameMatched = true;
+        }
+        if (! index.isEmpty()) {
+            for (String anIndex : indices) {
+                anIndex.contains(index);//RIGHT NOW .contains is ignored
+            }
+        }
+        if (! sector.isEmpty()) {
+            for (String aSector : sectors) {
+                aSector.contains(sector);//RIGHT NOW .contains is ignored
+            }
+        }
+        
+        return matched;
+        //TODO: Right now matched always returns true. We need to change this.
     }
     
-    public void delete(Simulatable s) {
-        //none
+    public void add(EquityComponent e) {
+        //do nothing
     }
     
-    public void add(Simulatable s) {
-        //none
+    public void remove(EquityComponent e) {
+        //do nothing
     }
-    
-    
 }

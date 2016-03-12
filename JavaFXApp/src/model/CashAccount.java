@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author ericepstein
  */
-public class CashAccount implements Holding, Searchable {
+public class CashAccount implements  Searchable {
     private String accountName;
     private double currentValue;
     private Date dateAdded;
@@ -99,14 +99,6 @@ public class CashAccount implements Holding, Searchable {
         } else {
             //return an error message that deposit amount cannot be negative
         }
-    }
-    
-    public void add(Holding h){
-        //this is a leaf node so this method is not applicable to this class        
-    }
-    
-    public void delete(Holding h){
-        //this is a leaf node so this method is not applicable to this class
     }
     
 
