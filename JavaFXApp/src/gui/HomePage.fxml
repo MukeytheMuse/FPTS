@@ -25,6 +25,15 @@
                   <MenuItem fx:id="sellEquities" mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Cash Account">
+              <items>
+                <MenuItem fx:id="deposit" mnemonicParsing="false" text="Deposit" onAction="#handleDepositMenuItemPressed"/>
+                  <MenuItem fx:id="withdraw" mnemonicParsing="false" text="Withdraw" onAction="#handleWithdrawMenuItemPressed"/>
+                  <MenuItem fx:id="transfer" mnemonicParsing="false" text="Transfer" onAction="#handleTransferMenuItemPressed"/>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="remove" mnemonicParsing="false" text="Remove Account" onAction="#handleRemoveMenuItemPressed"/>
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />

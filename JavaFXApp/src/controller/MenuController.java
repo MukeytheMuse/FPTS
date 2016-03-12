@@ -58,14 +58,34 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
-    public void handleBuyEquitiesMenuItemPressed(ActionEvent event) throws IOException {
+    public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {
         HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
         eqUpdater.process(FPTS.getSelf());
     }
 
-    public void handleSellEquitiesMenuItemPressed(ActionEvent event) throws IOException {
+    public void handleSellEquitiesMenuItemPressed(ActionEvent event){
         HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm();
         eqUpdater.process(FPTS.getSelf());
+    }
+
+    public void handleWithdrawMenuItemPressed(ActionEvent event) {
+        CashAccountAlgorithm cashAcctAlgor = new WithdrawCashAccountAlgorithm();
+        cashAcctAlgor.process(FPTS.getSelf());
+    }
+
+    public void handleDepositMenuItemPressed(ActionEvent event) {
+        CashAccountAlgorithm cashAcctAlgor = new DepositCashAccountAlgorithm();
+        cashAcctAlgor.process(FPTS.getSelf());
+    }
+
+    public void handleTransferMenuItemPressed(ActionEvent event) {
+        CashAccountAlgorithm cashAcctAlgor = new TransferCashAccountAlgorithm();
+        cashAcctAlgor.process(FPTS.getSelf());
+    }
+
+    public void handleRemoveMenuItemPressed(ActionEvent event) {
+        CashAccountAlgorithm cashAcctAlgor = new RemoveCashAccountAlgorithm();
+        cashAcctAlgor.process(FPTS.getSelf());
     }
 
     /**
