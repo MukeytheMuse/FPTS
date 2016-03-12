@@ -176,17 +176,20 @@ abstract public class HoldingAlgorithm implements Observer {
                 if (isValid) {
                     pricePerShare = Double.parseDouble(pricePerShareField.getText());
                     numOfShares = Integer.parseInt(numOfSharesField.getText());
-                }
+                
                                 
-                switch (searchConditions.getValue().toString()) {
-                    case ("Outside FPTS"):
-                        //place buy/sell command to be factored in, EXECUTE COMMAND
-                        processOutsideFPTS();
-                        theStage.setScene(getConfirmationScene());
-                        break;
-                    case("Use existing cash account"):
-                        theStage.setScene(getSecondSearchScene());
-                        break;
+                    switch (searchConditions.getValue().toString()) {
+                        case ("Outside FPTS"):
+                            //place buy/sell command to be factored in, EXECUTE COMMAND
+                            processOutsideFPTS();
+                            theStage.setScene(getConfirmationScene());
+                            break;
+                        case("Use existing cash account"):
+                            theStage.setScene(getSecondSearchScene());
+                            break;
+                    }
+                } else {
+                    pricePerShareField.setText("INVALID");
                 }
                 
             

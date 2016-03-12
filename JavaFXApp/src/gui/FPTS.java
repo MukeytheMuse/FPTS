@@ -53,7 +53,6 @@ import javafx.scene.layout.VBox;
 public class FPTS extends Application {
     
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
-    CashAccountAlgorithm cashAccountAlgorithm;
     
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
@@ -216,7 +215,7 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                
             }
 
         });
@@ -228,9 +227,8 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
-                cashAccountAlgorithm.process(getSelf());
-                //eqUpdater.process(self);
+                CashAccountAlgorithm rmCashAc = new RemoveCashAccountAlgorithm();
+                rmCashAc.process(getSelf());
             }
         });
         nav.getChildren().add(aButton);
@@ -241,9 +239,8 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                cashAccountAlgorithm = new DepositCashAccountAlgorithm();
-                cashAccountAlgorithm.process(getSelf());
-                //eqUpdater.process(self);
+                CashAccountAlgorithm dpCashAc = new DepositCashAccountAlgorithm();
+                dpCashAc.process(getSelf());
             }
         });
         nav.getChildren().add(aButton);
@@ -254,9 +251,8 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
-                cashAccountAlgorithm.process(getSelf());
-                //eqUpdater.process(self);
+                CashAccountAlgorithm wdCashAc = new WithdrawCashAccountAlgorithm();
+                wdCashAc.process(getSelf());
             }
         });
         nav.getChildren().add(aButton);
@@ -267,13 +263,24 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle( ActionEvent event ) {
-                cashAccountAlgorithm = new TransferCashAccountAlgorithm();
-                cashAccountAlgorithm.process(getSelf());
-                //eqUpdater.process(self);
+                CashAccountAlgorithm transCashAc = new TransferCashAccountAlgorithm();
+                transCashAc.process(getSelf());
             }
         });
         nav.getChildren().add(aButton);
        
+        //Create Button
+        aButton = new Button();
+        aButton.setText("Create");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                CashAccountCreator cac = new CashAccountCreator(getSelf());
+                //eqUpdater.process(getSelf());
+            }
+        });
+        nav.getChildren().add(aButton);
+        
         //Logout Button
          aButton = new Button();
         aButton.setText("Log out");

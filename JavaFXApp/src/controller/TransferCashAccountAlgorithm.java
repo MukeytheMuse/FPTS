@@ -56,7 +56,8 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         } else {
             theFPTS.getStage().setScene(theFPTS.getErrorScene());
         }
-        
+    
+        numCalled = 0;
         
         
     }

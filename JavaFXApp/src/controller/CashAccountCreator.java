@@ -62,9 +62,14 @@ public class CashAccountCreator {
                     
                     Date theDate = Date.from(dateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
                     
+                    CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate); 
+                    
                     if ( isValid ) {
-                        CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate); 
-                        theFPTS.getPortfolio().add(c);
+                        boolean isStillValid = theFPTS.getPortfolio().getCashAccounts().contains(c);
+                        if ( isStillValid ) {
+                            theFPTS.getPortfolio().add(c);
+                        }
+                        else mainInput.setText("EXISTING ACCOUNT NAME");
                     } else {
                         mainInput.setText("INVALID");
                     }  
@@ -99,8 +104,7 @@ public class CashAccountCreator {
             return false;
         }
         
-        return true;
-         
+        return true;    
     }
     
     public boolean isValidDouble(TextField inputAmount) {
