@@ -108,25 +108,30 @@ public class User {
     /*
     Private method that checks to see if customer has a portfolio
     */
-    public boolean hasPortfolio() throws FileNotFoundException {
+    public boolean hasPortfolio() throws IOException {
         boolean created = false;
+        String line;
 
         for (User user : userList) {
 
             if (this.equals(user)) {
 
-                Scanner scanner = new Scanner(new File(user.getLoginID() + ".txt").getAbsolutePath());
+                try {
 
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if (line.length() != 0) {
-                        String[] splitLine = line.split(",");
-                        if (splitLine[0].equals(user.getLoginID())) {
-                            created = true;
+                    BufferedReader reader = new BufferedReader(new FileReader(new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID() + ".txt").getAbsolutePath()));
+                    while ((line = reader.readLine()) != null) {
+                        if (line.length() != 0) {
+                            String[] splitLine = line.split(",");
+                            System.out.println(splitLine[0]);
+                            if (splitLine[0].equals(user.getLoginID())) {
+                                created = true;
+                            }
                         }
                     }
-                }
 
+                } catch (FileNotFoundException e) {
+                    System.out.println("Not found! Creating new file!");
+                }
             }
         }
 
@@ -142,13 +147,13 @@ public class User {
         for (User user : userList) {
             if (this.equals(user)) {
                 try {
-                    File directory = new File("Portfolios");
+                    File directory = new File("JavaFXApp/src/model/Database/Portfolios");
                     if (!directory.exists()) {
                         directory.mkdir();
                     }
                     File file = new File(directory, this.getLoginID() + ".txt");
                     file.createNewFile();
-                    FileWriter writer = new FileWriter(file);
+                    FileWriter writer = new FileWriter(file,true);
                     bufferedWriter = new BufferedWriter(writer);
                     bufferedWriter.write(user.getLoginID() + ",");
                     bufferedWriter.write("true");
