@@ -6,12 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <MenuBar layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0"
-               AnchorPane.topAnchor="2.0" fx:id="myMenuBar">
+      <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -37,7 +34,7 @@
           <RowConstraints maxHeight="132.33334350585938" minHeight="10.0" prefHeight="132.33334350585938" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="27.0" prefWidth="298.0" text="Finacial Portfolio Tracking System" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="350.0" text="Financial Portfolio Tracking System" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>

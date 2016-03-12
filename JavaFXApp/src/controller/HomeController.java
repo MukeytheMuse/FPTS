@@ -1,13 +1,24 @@
 package controller;
 
 import gui.FPTS;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.CashAccount;
+import model.Holding;
+import model.Portfolio;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,14 +29,13 @@ import java.util.ResourceBundle;
  */
 public class HomeController extends MenuController {
 
+    FPTS fpts = FPTS.getSelf();
+    @FXML private PieChart valueChart;
+    @FXML private Label valueLabel;
+
     @FXML
     protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/PortfolioPage.fxml"));
-        Scene scene = new Scene(parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        app_stage.setScene(scene);
-        app_stage.show();
+        PortfolioDisplayer pd = new PortfolioDisplayer(fpts);
     }
 
     @FXML
@@ -35,8 +45,12 @@ public class HomeController extends MenuController {
     }
 
     @FXML
-    protected void handleSimulateButtonPressed(ActionEvent event){
-        //TODO
+    protected void handleSimulateButtonPressed(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("../gui/SimulatePage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene);
+        app_stage.show();
     }
 
     @FXML
@@ -46,6 +60,21 @@ public class HomeController extends MenuController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO
+        Portfolio p = fpts.getPortfolio();
+        double cashAccountValue = 0.0;
+        for (CashAccount c : p.getCashAccounts()){
+            cashAccountValue += c.getValue();
+        }
+        double equityTotalValue = 0.0;
+        for (Holding h : p.getHoldings()){
+            equityTotalValue += h.getValue();
+        }
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Cash Accounts", cashAccountValue),
+                        new PieChart.Data("Equities", equityTotalValue));
+        valueChart.setData(pieChartData);
+        valueLabel.setText("Current Portfolio Value: $" + (cashAccountValue + equityTotalValue));
+
     }
 }
