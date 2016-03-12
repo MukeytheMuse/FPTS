@@ -16,6 +16,7 @@ import java.util.Scanner;
 /**
  *
  * @author ericepstein
+ * Modified by: Kimberly Sookoo
  */
 public class User {
     private String loginID;
@@ -154,8 +155,9 @@ public class User {
                     File file = new File(directory, this.getLoginID() + ".txt");
                     file.createNewFile();
                     FileWriter writer = new FileWriter(file,true);
+                    Portfolio p = new Portfolio();
                     bufferedWriter = new BufferedWriter(writer);
-                    bufferedWriter.write(user.getLoginID() + ",");
+                    bufferedWriter.write(user.getLoginID() + "," + p + ",");
                     bufferedWriter.write("true");
                     bufferedWriter.newLine();
                     bufferedWriter.close();
@@ -169,14 +171,3 @@ public class User {
     }
 
 }
-
-    /*
-    INVALID NOW
-    //A	The system shall allow the user to add holdings to a portfolio.
-    public void addHoldings(List<Holding> holdings){
-        for(Holding cur_h: holdings ){
-            myPortfolio.addHolding(cur_h);
-        }
-    }
-    */
-

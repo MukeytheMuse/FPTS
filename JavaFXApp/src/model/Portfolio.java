@@ -198,6 +198,4 @@ public class Portfolio extends Observable {
             return false;
         }
     }
-    
-    //public
 }

@@ -48,7 +48,6 @@ public class LoginController extends LoginMenuController{
             if (u.validateUser()) {
                 //Checks if user has a portfolio
                 if (!(u.hasPortfolio())) {
-                    System.out.println("Running on t so it should have portfolio.");
                     u.createPortfolioForUser();
                 }
                 //HOME PAGE

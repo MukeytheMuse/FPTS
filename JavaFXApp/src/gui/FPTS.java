@@ -91,9 +91,8 @@ public class FPTS extends Application {
         
         self = this;
         
-        thestage.setScene(loginScene);
+        thestage.setScene(getHomeScene());
         thestage.show();
-        
         
     }
 
@@ -304,19 +303,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
-        
-        //Create view all portfolio elements
-        aButton = new Button();
-        aButton.setText("View Portfolio");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle( ActionEvent event ) {
-                PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
-            }
-        });
-        nav.getChildren().add(aButton);
-        
+       
         //Logout Button
          aButton = new Button();
         aButton.setText("Log out");
