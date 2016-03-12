@@ -1,7 +1,13 @@
 package controller;
 
+import gui.FPTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,21 +20,22 @@ public class HomeController extends MenuController {
 
     @FXML
     protected void handlePortfolioButtonPressed(ActionEvent event){
-
+        //TODO
     }
 
     @FXML
-    protected void handleSearchButtonPressed(ActionEvent event){
-
+    protected void handleBuyEquityButtonPressed(ActionEvent event) throws IOException {
+        HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
+        eqUpdater.process(FPTS.getSelf());
     }
 
     @FXML
-    protected void handleOtherButtonPressed(ActionEvent event){
-
+    protected void handleSimulateButtonPressed(ActionEvent event){
+        //TODO
     }
 
     @FXML
-    protected void handleLogoutButtonPressed(ActionEvent event) throws IOException{
+    protected void handleLogoutButtonPressed(ActionEvent event) throws IOException {
         goToLoginPage(event);
     }
 

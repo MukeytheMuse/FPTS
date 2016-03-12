@@ -38,9 +38,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         //return p.getLoadedSearchables();
         return toBeSearched;
     }
-    
- 
-    
+
     /*
     *
     *    precondition - cashAccountOfInterest is already set up

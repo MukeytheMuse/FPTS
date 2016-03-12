@@ -45,21 +45,6 @@ import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
 
 /**
  *
@@ -77,9 +62,12 @@ public class FPTS extends Application {
 
     private Portfolio p;
 
-    private FPTS self;
+    private static FPTS self;
 
-    
+    public static FPTS getSelf(){
+        return self;
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         self = this;
@@ -91,13 +79,9 @@ public class FPTS extends Application {
         
         //User.fillUsers();
         */
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, WIDTH, HEIGHT);
-
-        thestage.setScene(loginScene);
-        thestage.setTitle("Financial Portfolio Tracking System");
-        thestage.show();
 
         try {
             thestage.setScene(createLogInScene());
@@ -107,9 +91,10 @@ public class FPTS extends Application {
         
         self = this;
         
-        thestage.setScene(getHomeScene());
+        thestage.setScene(loginScene);
+        thestage.show();
         
-    }    
+    }
 
     public int getHeight() {
         return HEIGHT;
@@ -127,17 +112,20 @@ public class FPTS extends Application {
     //returns HBox of relevant scenes
 
     public Scene getHomeScene() {
-        VBox split = new VBox();
-        Label l = new Label("Welcome to FPTS");
-        split.getChildren().addAll(getNav(), l);
-        Scene homeSc = new Scene(split, WIDTH, HEIGHT);
-        return homeSc;
+        Scene scene = null;
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
+            scene = new Scene(parent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return scene;
     }
-    
+
     public Scene createLogInScene() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-        
+
         thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
     }
@@ -199,8 +187,8 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
         
-        
-        
+
+
         //Buy Button
         aButton = new Button();
         aButton.setText("Buy Holding");
@@ -309,7 +297,7 @@ public class FPTS extends Application {
 
 
         return nav;
-    } 
+    }
 }
 
 
