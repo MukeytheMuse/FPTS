@@ -224,6 +224,19 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
+
+        //Portfolio Button
+        Button portfolio = new Button();
+        portfolio.setText("Portfolio");
+        //TODO:Action to be set
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+
+        });
+        nav.getChildren().add(portfolio);
         
         //Remove Cash Account Button
         aButton = new Button();
@@ -283,7 +296,7 @@ public class FPTS extends Application {
          //Setting an action for the logout button
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 try {
                     thestage.setScene(createLogInScene());
                 } catch (Exception ex) {
@@ -293,6 +306,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
+
 
         return nav;
     } 
