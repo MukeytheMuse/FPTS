@@ -50,6 +50,7 @@ public class Portfolio extends Observable {
      */    
     public Portfolio(){
         
+        
         equityComponents = new ArrayList<EquityComponent>();
         cashAccounts = new ArrayList<CashAccount>();        
         holdings = new ArrayList<Holding>();
@@ -62,6 +63,8 @@ public class Portfolio extends Observable {
      
         cashAccounts.add(new CashAccount("lala", 3, new Date()));
         cashAccounts.add(new CashAccount("rofl", 3, new Date()));
+        
+        System.out.println(new Withdrawal(new CashAccount("lala", 3, new Date()), 3));
         
         equityComponents.add((EquityComponent) new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
         

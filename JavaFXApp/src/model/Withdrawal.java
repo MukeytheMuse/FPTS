@@ -5,6 +5,10 @@
  */
 package model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 /**
  *
  * @author ericepstein
@@ -21,6 +25,15 @@ public class Withdrawal implements Transaction {
     
     public void execute() {
         c.withdraw(amount);
+    }
+    
+    public String toString() {
+        Date theDate = c.getDateAdded();
+        LocalDate localDate = theDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String theDateString = ( localDate.getMonthValue() + "/" + 
+                localDate.getDayOfMonth()+ 
+                "/" + localDate.getYear() );
+        return "Withdrew " + amount + " from " + c.getAccountName() + " on " + theDateString;
     }
     
 }
