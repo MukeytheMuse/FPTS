@@ -5,10 +5,15 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ericepstein
  */
-public class LoadedComposite {
+public interface Searchable {
     
+    public String getDisplayName();
+    //public boolean containsElem(String keyword);
+    //public Searchable getSearchable(String keyword); 
 }
