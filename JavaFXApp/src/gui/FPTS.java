@@ -291,6 +291,18 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
+        
+         //Create CashAccount
+        aButton = new Button();
+        aButton.setText("Create Cash Account");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle( ActionEvent event ) {
+                CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
+                //eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
        
         //Logout Button
          aButton = new Button();
