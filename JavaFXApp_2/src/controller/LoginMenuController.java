@@ -1,6 +1,5 @@
 package controller;
 
-import gui.FPTS;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,14 +10,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 /**
  * This class is the base implementation of the Menu Bar used in this application.
- * Holds code to add implementation to the Menu bar on the pages past logging into the system.
+ * Holds code to go to the LoginPage, Exit the Application, and Open the About page.
  * Created by nveil_000 on 3/11/2016.
  */
-public abstract class MenuController implements Initializable {
+public abstract class LoginMenuController implements Initializable {
     /**
      * A Local variable to access the MenuBar located in the FXML documents for this FPTS application.
      */
@@ -47,53 +47,7 @@ public abstract class MenuController implements Initializable {
      * @param event - ActionEvent - Event that caused this function to be called.
      */
     public void handleAboutMenuItemPressed(ActionEvent event) {
-        //TODO
-    }
 
-    public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) myMenuBar.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/PortfolioPage.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) myMenuBar.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {
-        HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
-        eqUpdater.process(FPTS.getSelf());
-    }
-
-    public void handleSellEquitiesMenuItemPressed(ActionEvent event){
-        HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm();
-        eqUpdater.process(FPTS.getSelf());
-    }
-
-    public void handleWithdrawMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new WithdrawCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
-    }
-
-    public void handleDepositMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new DepositCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
-    }
-
-    public void handleTransferMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new TransferCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
-    }
-
-    public void handleRemoveMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new RemoveCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
     }
 
     /**

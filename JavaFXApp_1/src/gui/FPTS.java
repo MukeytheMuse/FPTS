@@ -113,12 +113,14 @@ public class FPTS extends Application {
     //returns HBox of relevant scenes
 
     public Scene getHomeScene() {
+               
         Scene scene = null;
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             scene = new Scene(parent);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            
         }
         return scene;
     }
@@ -182,8 +184,6 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
-
 
         //Buy Button
         aButton = new Button();
