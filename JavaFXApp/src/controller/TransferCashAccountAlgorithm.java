@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * 
- * Implements final step in CashAccountAlgorithm by specifying amount and another 
+ * Implements final step in CashAccountAlgorithm by specifying amount and another
  * CashAccount to which the previously specified CashAccount is transfered.
- * 
+ *
  * @author ericepstein
  */
 public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {

@@ -21,14 +21,12 @@ import javafx.stage.Stage;
 import model.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * 
  * Defines steps that are common to buying Equity and selling Holding objects.
- * 
+ *
  * @author Eric Epstein
  */
 abstract public class HoldingAlgorithm implements Observer {
@@ -42,7 +40,7 @@ abstract public class HoldingAlgorithm implements Observer {
     * Display of matches
     */
     private VBox matchDisplay;
-    
+
     /*
     * Input field from the user
     */
@@ -85,11 +83,11 @@ abstract public class HoldingAlgorithm implements Observer {
     abstract ArrayList<Searchable> getToBeSearched();
 
     /**
-    * Establishes context derived from child algorithms then constructs
-    * search scene with specialized context.
-    * 
-    * @param anFPTS - FPTS
-    */
+     * Establishes context derived from child algorithms then constructs
+     * search scene with specialized context.
+     *
+     * @param anFPTS - FPTS
+     */
     public void process(FPTS anFPTS) {
         theFPTS = anFPTS;
         establishContext();
@@ -127,11 +125,10 @@ abstract public class HoldingAlgorithm implements Observer {
     */
 
     /**
-     * 
      * Constructs Scene where the user searches and selects Equity or Holding,
      * depending on context established previously in given subclass.
-     * 
-     * @return 
+     *
+     * @return
      */
     public Scene getFirstSearchScene() {
         ArrayList<Searchable> toBeSearched = getToBeSearched();
@@ -142,10 +139,9 @@ abstract public class HoldingAlgorithm implements Observer {
     }
 
     /**
-     * 
      * Constructs Scene where the user searches and selects CashAccount
-     * 
-     * @return Scene 
+     *
+     * @return Scene
      */
     public Scene getSecondSearchScene() {
         s = new CashAccountSearcher();
@@ -158,16 +154,15 @@ abstract public class HoldingAlgorithm implements Observer {
     }
 
     /**
-     * 
      * Helper scene constructor for the user to select and search any given
      * Searchable type.
-     * 
+     * <p>
      * Precondition: Searcher algorithm is preset
-     * 
+     *
      * @param toBeSearched - ArrayList<Searchable>
-     * @param queries - VBox of text field
-     * @param actionBtn - controller that determines what to do next
-     * @return 
+     * @param queries      - VBox of text field
+     * @param actionBtn    - controller that determines what to do next
+     * @return
      */
     private Scene getSearchScene(ArrayList<Searchable> toBeSearched, VBox queries, Button actionBtn) {
         VBox splitPage = new VBox();
@@ -198,14 +193,13 @@ abstract public class HoldingAlgorithm implements Observer {
 
 
     /**
-    * 
-    * Constructs Scene to get the following user input:
-    * -price per share
-    * -number of shares
-    * -whether purchase/sale was made outside or inside the FPTS
-    * 
-    * @return Scene
-    */
+     * Constructs Scene to get the following user input:
+     * -price per share
+     * -number of shares
+     * -whether purchase/sale was made outside or inside the FPTS
+     *
+     * @return Scene
+     */
     public Scene getAdditionalInfoScene() {
 
         VBox splitPage = new VBox();
@@ -293,11 +287,10 @@ abstract public class HoldingAlgorithm implements Observer {
     }
 
     /**
-     * 
      * Helper method to validate numerical value from user input
-     * 
+     *
      * @param inputAmount
-     * @return 
+     * @return
      */
     private boolean isValid(TextField inputAmount) {
         if (inputAmount.getText() == null || inputAmount.getText().equals("")) {
@@ -330,7 +323,7 @@ abstract public class HoldingAlgorithm implements Observer {
 
     /**
      * Defines behavior for submit button after selecting CashAccount
-     * 
+     *
      * @return Button
      */
     public Button getTransitionAfterCashAccount() {
@@ -358,9 +351,9 @@ abstract public class HoldingAlgorithm implements Observer {
     }
 
     /**
-     * Defines button action to update equityOfInterest, which may reflect 
+     * Defines button action to update equityOfInterest, which may reflect
      * Equity or Holding to be bought or sold, respectively.
-     * 
+     *
      * @return Button
      */
     public Button getTransitionAfterHolding() {
@@ -382,7 +375,7 @@ abstract public class HoldingAlgorithm implements Observer {
                 }
             }
         });
-        
+
         return actionBtn;
     }
     
@@ -393,11 +386,10 @@ abstract public class HoldingAlgorithm implements Observer {
     */
 
     /**
-     * 
      * On update, calls method to display new set of matches.
-     * 
+     *
      * @param o
-     * @param arg 
+     * @param arg
      */
     @Override
     public void update(Observable o, Object arg) {
@@ -405,10 +397,9 @@ abstract public class HoldingAlgorithm implements Observer {
     }
 
     /**
-     * 
      * Helper method to display matches produced by Searcher algorithm
-     * 
-     * @param matches 
+     *
+     * @param matches
      */
     private void displayMatches(ArrayList<Searchable> matches) {
         /**
@@ -437,12 +428,11 @@ abstract public class HoldingAlgorithm implements Observer {
     *
     */
 
-    
+
     /**
-     * 
      * Helper method to create uniquely formatted fields for user input.
-     * These fields have a description, search options, and a TextField. 
-     * 
+     * These fields have a description, search options, and a TextField.
+     *
      * @param description
      * @param input
      * @return HBox
@@ -471,7 +461,7 @@ abstract public class HoldingAlgorithm implements Observer {
     /**
      * This helper method returns queries in relation to searching/selecting an
      * Equity or a Holding.
-     * 
+     *
      * @return VBox
      */
     private VBox getHoldingQueries() {
@@ -483,10 +473,10 @@ abstract public class HoldingAlgorithm implements Observer {
         return queries;
     }
 
-     /**
+    /**
      * This helper method returns queries in relation to searching/selecting a
      * CashAccount.
-     * 
+     *
      * @return VBox
      */
     private VBox getCashAccountQueries() {

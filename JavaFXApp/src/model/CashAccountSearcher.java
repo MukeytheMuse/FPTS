@@ -8,21 +8,19 @@ package model;
 import java.util.ArrayList;
 
 /**
- * 
  * Defines one step in the Searcher that converts the object being
  * searched into a string representation of a CashAccount.
- * 
+ *
  * @author Eric Epstein
  */
 public class CashAccountSearcher extends Searcher {
-    
+
     /**
-     * 
      * Casts the Searchable object into CashAccount and provides information
      * as strings in ArrayList of one-element ArrayLists.
-     * 
+     *
      * @param s - Searchable
-     * @return 
+     * @return
      */
     public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
         ArrayList<String> searchableStrings = new ArrayList<String>();

@@ -9,15 +9,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
- * 
  * Stores attributes of User, generates list of Users, and validates User
- * 
+ *
  * @author Kimberly Sookoo and Ian London
- *         
  */
 public class User {
     private String loginID;
@@ -39,12 +36,11 @@ public class User {
     }
 
     /**
-    * 
-    * Ensures encryption by incrementing each password character by 1
-    * 
-    * @param password - String
-    * @return String of password
-    */
+     * Ensures encryption by incrementing each password character by 1
+     *
+     * @param password - String
+     * @return String of password
+     */
     public String hash(String password) {
         String encryptedPW = "";
         for (int i = 0; i < password.length(); i++) {
@@ -55,9 +51,8 @@ public class User {
     }
 
     /**
-     * 
      * Ensures decryption by decrementing each password character by 1
-     * 
+     *
      * @param password
      * @return String of password
      */
@@ -72,40 +67,39 @@ public class User {
 
     /**
      * Equality function that matches user and password
-     * 
+     *
      * @param u
      * @return boolean
      */
     public boolean equals(User u) {
         return u.getLoginID().equals(loginID) && u.getPassword().equals(password);
     }
-    
+
     /**
-     * 
      * Overrides equals() method
-     * 
+     * <p>
      * Precondition - object passed must be a User object
-     * 
+     *
      * @param o
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(Object o) {
-        return equals((User) o);        
+        return equals((User) o);
     }
 
     /**
-    * Returns login ID
-    * 
-    * @return String
-    */
+     * Returns login ID
+     *
+     * @return String
+     */
     public String getLoginID() {
         return loginID;
     }
 
     /**
-     * Returns password 
-     * 
+     * Returns password
+     *
      * @return String
      */
     private String getPassword() {
@@ -124,7 +118,7 @@ public class User {
             reader = new BufferedReader(new FileReader(csv));
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(",");
-                User newUser = new User (split[0], unHash(split[1]));
+                User newUser = new User(split[0], unHash(split[1]));
                 userList.add(newUser);
             }
         } catch (FileNotFoundException e) {
@@ -145,7 +139,7 @@ public class User {
     /**
      * Returns validation by testing a User object against a list of existing
      * User objects
-     * 
+     *
      * @return boolean
      */
     public boolean validateUser() {
@@ -158,11 +152,10 @@ public class User {
     }
 
     /**
-    * 
-    * Returns whether the login ID exists in a collection of User objects
-    * 
-    * @return boolean
-    */
+     * Returns whether the login ID exists in a collection of User objects
+     *
+     * @return boolean
+     */
     public static boolean ValidLoginID(String id) {
         for (User usr : userList) {
             if (usr.getLoginID().equals(id)) {
@@ -173,19 +166,17 @@ public class User {
     }
 
     /**
-     * 
      * Adds a User object to list of users
-     * 
-     * @param u 
+     *
+     * @param u
      */
     public static void addToList(User u) {
         userList.add(u);
     }
 
     /**
-     * 
      * returns Portfolio
-     * 
+     *
      * @return Portfolio
      */
     public Portfolio getMyPortfolio() {

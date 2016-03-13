@@ -6,19 +6,8 @@
 package model;
 
 import javafx.scene.control.TextField;
-import java.text.ParseException;
-import java.util.List;
+
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Observable;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import model.DataBase.ReadFile;
 
 import static model.DataBase.ReadFile.readCash;
 import static model.DataBase.ReadFile.readHoldings;
@@ -41,7 +30,7 @@ public class Portfolio {
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
-     *
+     * <p>
      * Method called when a user is constructed.
      *
      * @author ericepstein & Kaitlin
@@ -54,18 +43,9 @@ public class Portfolio {
         holdings = readHoldings(); //new ArrayList<Holding>(); <--replaced
         transactions = new ArrayList<Transaction>();
 
-
-        //add(new CashAccount("rofl", 3, new Date()));
-
-        //add(new Holding("mo", "momo", (float) 3.0, 2, new Date(), new ArrayList<String>(), new ArrayList<String>()));
-        //add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
-
-        //add(new CashAccount("lala", 3, new Date()));
-        //add((EquityComponent) new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
-
     }
 
-     /**
+    /**
      * Returns Holding that matches given name
      *
      * @param keyword - String
@@ -131,11 +111,10 @@ public class Portfolio {
     }
 
     /**
-    *
-    * Returns collection of portfolio elements
-    *
-    * @return ArrayList<Searchable>
-    */
+     * Returns collection of portfolio elements
+     *
+     * @return ArrayList<Searchable>
+     */
     public ArrayList<Searchable> getPortfolioElements() {
         return portfolioElements;
     }

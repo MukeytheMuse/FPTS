@@ -88,7 +88,8 @@ public class WriteFile {
 
             System.out.println("Has anything extra been written?");
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     /*

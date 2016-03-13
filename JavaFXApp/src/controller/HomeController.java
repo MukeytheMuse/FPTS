@@ -35,6 +35,7 @@ public class HomeController extends MenuController {
 
     /**
      * Method that is called if the BuyEquities button is pressed on the HomePage. Loads the buy equities page.
+     *
      * @param event - ActionEvent - the event that caused this method to run.
      */
     @FXML
@@ -45,6 +46,7 @@ public class HomeController extends MenuController {
 
     /**
      * Method that is called if the BuyEquities button is pressed on the HomePage. Loads the buy equities page.
+     *
      * @param event - ActionEvent - the event that caused this method to run.
      */
     @FXML
@@ -55,6 +57,7 @@ public class HomeController extends MenuController {
 
     /**
      * Method that is called when the Simulate button is pressed on the HomePage. Loads the Simulation page.
+     *
      * @param event - ActionEvent - the event that caused this method to run
      * @throws IOException - Exception is thrown if the SimulatePage.fxml is not found.
      */
@@ -70,6 +73,7 @@ public class HomeController extends MenuController {
     /**
      * Method that is called when the Logout button is pressed on the HomePage. Loads the Logout pop-up window
      * which in turn will logout the user depending on what option they select.
+     *
      * @param event - ActionEvent - the event that caused this method to run
      * @throws IOException - Exception is thrown if the LogoutPage.fxml is not found.
      */
@@ -87,7 +91,7 @@ public class HomeController extends MenuController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(fpts.hasPortfolio(fpts.getCurrentUser())) {
+        if (fpts.hasPortfolio(fpts.getCurrentUser())) {
             Portfolio p = fpts.getPortfolio();
             double cashAccountValue = 0.0;
             double equityTotalValue = 0.0;
@@ -98,8 +102,7 @@ public class HomeController extends MenuController {
                 for (Holding h : p.getHoldings()) {
                     equityTotalValue += h.getValue();
                 }
-            }
-            catch(NullPointerException e){
+            } catch (NullPointerException e) {
             }
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(

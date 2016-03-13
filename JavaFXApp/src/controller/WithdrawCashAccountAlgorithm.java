@@ -9,9 +9,8 @@ import model.Transaction;
 import model.Withdrawal;
 
 /**
- * 
  * Implements final step in CashAccountAlgorithm by creating a Withdraw object.
- * 
+ *
  * @author Eric Epstein
  */
 public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {

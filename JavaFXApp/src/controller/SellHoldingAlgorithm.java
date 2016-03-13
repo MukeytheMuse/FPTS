@@ -5,12 +5,10 @@ import model.*;
 import java.util.ArrayList;
 
 /**
- *
- * Extends the Holding Algorithm by defining methods to sell a Holding 
+ * Extends the Holding Algorithm by defining methods to sell a Holding
  * from outside and inside the FPTS.
- * 
+ *
  * @author Eric Epstein
- *    
  */
 public class SellHoldingAlgorithm extends HoldingAlgorithm {
 
@@ -18,40 +16,38 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     * context data
     */
     private Portfolio p;
-    
+
     /*
     * collection of interest from which element of interest is identified
     */
     private ArrayList<Searchable> toBeSearched;
 
     /**
-    * defines step in HoldingAlgorithm to establish context 
-    */
+     * defines step in HoldingAlgorithm to establish context
+     */
     @Override
     public void establishContext() {
         p = theFPTS.getPortfolio();
         toBeSearched = p.getHoldingSearchables();
     }
-    
+
     /**
-    * returns a list of Holding that is searchable
-    * for possible sale
-    */
+     * returns a list of Holding that is searchable
+     * for possible sale
+     */
     public ArrayList<Searchable> getToBeSearched() {
         return toBeSearched;
     }
 
     /**
-    * 
-    * Implements algorithm of a sale that is made inside FPTS.
-    * 
-    * Precondition - the following variables have already been assigned:
-    *   equityOfInterest
-    *   numOfShares
-    *   pricePerShare
-    *   cashAccountOfInterest
-    *
-    */
+     * Implements algorithm of a sale that is made inside FPTS.
+     * <p>
+     * Precondition - the following variables have already been assigned:
+     * equityOfInterest
+     * numOfShares
+     * pricePerShare
+     * cashAccountOfInterest
+     */
     @Override
     public void processInsideFPTS() {
         Holding e = (Holding) equityOfInterest;
@@ -83,10 +79,8 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     }
 
     /**
-    * 
-    * Implements algorithm of a sale that is made outside FPTS.
-    *
-    */
+     * Implements algorithm of a sale that is made outside FPTS.
+     */
     @Override
     public void processOutsideFPTS() {
         Holding e = (Holding) equityOfInterest;

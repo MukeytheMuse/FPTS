@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Portfolio;
 import model.User;
 
 import java.io.BufferedWriter;
@@ -131,6 +130,7 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Controls the program when the register button is clicked on the Login page.
+     *
      * @param event - ActionEvent - event that caused this method to be called.
      * @throws IOException - Exception thrown if the RegisterPage.fxml is not found where the program expects.
      */
@@ -146,6 +146,7 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Method used to handle the when the Logout Save and Exit button is clicked on the Logout window.
+     *
      * @param event - ActionEvent - The event that caused this action to occur.
      * @throws IOException - Throws IO exception if the the LoginPage.fxml file is not in the gui folder.
      */
@@ -160,6 +161,7 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Method used to handle the when the Logout Exit without Saving button is clicked on the Logout window.
+     *
      * @param event - ActionEvent - The event that caused this action to occur.
      * @throws IOException - Throws IO exception if the the LoginPage.fxml file is not in the gui folder.
      */

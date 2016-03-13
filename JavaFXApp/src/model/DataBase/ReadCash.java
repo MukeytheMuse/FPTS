@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by iLondon on 3/13/16.
  */
 public class ReadCash {
-    public static ArrayList<String[]> readInFile(){
+    public static ArrayList<String[]> readInFile() {
         return ReadFile.readInUser("/Cash.csv");
     }
 
@@ -28,10 +28,10 @@ public class ReadCash {
         allCash = new ArrayList<>();
 
         // iterate through each line representing an Holding
-        for( String[] line : splitFile){
+        for (String[] line : splitFile) {
             Date date = null;
             try {
-                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[3]);
+                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[2]);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -9,7 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.BearSimulator;
 import model.BullSimulator;
@@ -74,6 +76,7 @@ public class SimulationController extends MenuController {
      * but if the simulation is a bull or bear market simulation the user
      * will be asked to input a percentage for price increase or decrease
      * per year.
+     *
      * @param event - ActionEvent - The event that is created when Simulate button is pressed.
      * @throws java.io.IOException - Exception thrown if the SimulationPage.fxml is not found.
      */
@@ -92,28 +95,28 @@ public class SimulationController extends MenuController {
                     currentSimulator = new NoGrowthSimulator(numberOfSteps, curInterval, hasSteps);
                     System.out.println("NOGROWTH");
                 } else {
-                        if (priceAnnum.getText().length() != 0) {
-                            String pricePerAnum = priceAnnum.getText();
-                            try {
-                                double pricePerYearAsDouble = Double.parseDouble(pricePerAnum);
-                                if (pricePerYearAsDouble < 1.00 && pricePerYearAsDouble > 0) {
-                                    if (simulation.equals("BEAR")) {
-                                        System.out.println("BEARSIM");
-                                        currentSimulator = new BearSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
-                                    } else {
-                                        System.out.println("BULLSIM");
-                                        currentSimulator = new BullSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
-                                    }
+                    if (priceAnnum.getText().length() != 0) {
+                        String pricePerAnum = priceAnnum.getText();
+                        try {
+                            double pricePerYearAsDouble = Double.parseDouble(pricePerAnum);
+                            if (pricePerYearAsDouble < 1.00 && pricePerYearAsDouble > 0) {
+                                if (simulation.equals("BEAR")) {
+                                    System.out.println("BEARSIM");
+                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
                                 } else {
-                                    error.setText("Please Enter a value between 0 and 1 for the Price per Annum.");
+                                    System.out.println("BULLSIM");
+                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
                                 }
-                            } catch (NumberFormatException x) {
-                                error.setText("Invalid Format. Please enter a percent value for the number of steps.");
+                            } else {
+                                error.setText("Please Enter a value between 0 and 1 for the Price per Annum.");
                             }
-                        } else {
-                            error.setText("Please enter a percent value for the Price Per Annum.");
+                        } catch (NumberFormatException x) {
+                            error.setText("Invalid Format. Please enter a percent value for the number of steps.");
                         }
+                    } else {
+                        error.setText("Please enter a percent value for the Price Per Annum.");
                     }
+                }
                 FPTS.setCurrentSimulator(currentSimulator);
                 if (hasSteps) {
                     FPTS.setSimulationValue(currentSimulator.simulate(1));
@@ -174,7 +177,7 @@ public class SimulationController extends MenuController {
             pValue.setText("$" + FPTS.getSimulationValue());
             stepNumber.setText("" + FPTS.getCurrentSimulator().getCurrentStep());
             currentSimulator = FPTS.getCurrentSimulator();
-            if (currentSimulator.getCurrentStep() >= currentSimulator.getTotalSteps()){
+            if (currentSimulator.getCurrentStep() >= currentSimulator.getTotalSteps()) {
                 stepButton.setDisable(true);
             }
 

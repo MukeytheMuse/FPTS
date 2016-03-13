@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * 
  * Defines view and controller to obtain any number of numerical inputs, validates
  * such inputs, and notifies observers.
- * 
- * @author Eric Epstein 
+ *
+ * @author Eric Epstein
  */
 public class AmountInput extends Observable {
 
@@ -26,18 +25,18 @@ public class AmountInput extends Observable {
     * ArrayList of amounts, often just one element
     */
     ArrayList<Double> amounts;
-    
+
     /*
     * context data
     */
     private FPTS theFPTS;
 
     /**
-    * Stores context data in construction
-    *
-    * @param theFPTS - FPTS
-    * @param amounts - ArrayList<Double> - often empty
-    */
+     * Stores context data in construction
+     *
+     * @param theFPTS - FPTS
+     * @param amounts - ArrayList<Double> - often empty
+     */
     public AmountInput(FPTS theFPTS, ArrayList<Double> amounts) {
 
         this.theFPTS = theFPTS;
@@ -48,7 +47,7 @@ public class AmountInput extends Observable {
 
     /**
      * Constructs Scene to process input
-     * 
+     *
      * @return Scene
      */
     public Scene getAmountInputScene() {
@@ -72,7 +71,7 @@ public class AmountInput extends Observable {
             @Override
             public void handle(ActionEvent e) {
                 boolean isValid = true;
-                
+
                 /**
                  * For each input amount from the user, all must be true
                  */
@@ -109,9 +108,8 @@ public class AmountInput extends Observable {
     }
 
     /**
-     * 
      * Validates user input
-     * 
+     *
      * @param inputAmount
      * @return boolean
      */

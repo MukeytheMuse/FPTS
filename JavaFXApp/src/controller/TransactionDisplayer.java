@@ -22,7 +22,7 @@ import java.util.Date;
 
 /**
  * Displays Transaction objects in one Scene.
- * 
+ *
  * @author Eric Epstein
  */
 public class TransactionDisplayer implements Displayer {
@@ -48,15 +48,15 @@ public class TransactionDisplayer implements Displayer {
     /**
      * Helper method to construct Scene with controller functionality for
      * start and end dates.
-     * 
-     * @return 
+     *
+     * @return
      */
     private Scene getTransactionDisplayScene() {
 
         VBox split = new VBox();
         VBox queries = new VBox();
         HBox aField = new HBox();
-        
+
         /**
          * Field to select start date
          */

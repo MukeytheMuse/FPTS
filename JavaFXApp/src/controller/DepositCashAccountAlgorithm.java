@@ -4,16 +4,14 @@ import model.Deposit;
 import model.Transaction;
 
 /**
- * 
  * Implements final step in CashAccountAlgorithm by creating a Deposit object.
- * 
+ *
  * @author Eric Epstein
  */
 public class DepositCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
 
     /**
      * Creates a Deposit object with validated CashAccount at a validated amount.
-     * 
      */
     @Override
     public void performTransaction() {

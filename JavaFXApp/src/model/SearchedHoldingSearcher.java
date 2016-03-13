@@ -3,21 +3,19 @@ package model;
 import java.util.ArrayList;
 
 /**
- * 
  * Defines one step in the Searcher that converts the object being
  * searched into a string representation of an Equity or Holding, as both
  * are treated the same under the HoldingUpdatable interface.
- * 
+ *
  * @author Eric Epstein
  */
 public class SearchedHoldingSearcher extends Searcher {
 
     /**
-     * 
      * Casts Searchable into HoldingUpdatable to get information for either
      * Equity or Holding. The ArrayList contains one-element and multi-
      * element ArrayList, the latter representing indices and sectors.
-     * 
+     *
      * @param s - Searchable
      * @return ArrayList<ArrayList<String>>
      */

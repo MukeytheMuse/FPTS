@@ -20,11 +20,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * 
- * Defines the view and control for selecting CashAccount. Observes 
- * ashAccountSearcher, updates display, then notifies algorithms when a 
- * CashAccount has been selected.  
- * 
+ * Defines the view and control for selecting CashAccount. Observes
+ * ashAccountSearcher, updates display, then notifies algorithms when a
+ * CashAccount has been selected.
+ *
  * @author Eric Epstein
  */
 public class CashAccountFinder extends Observable implements Observer {
@@ -33,34 +32,33 @@ public class CashAccountFinder extends Observable implements Observer {
     * display of matches
     */
     VBox matchDisplay;
-    
+
     /*
     * context data
     */
     FPTS theFPTS;
-    
+
     /*
     * text field that user types in
     */
     TextField mainInput;
-    
+
     /*
     * searcher algorithm
     */
     Searcher s;
-    
+
     /*
     * CashAccount being found
     */
     CashAccount c;
 
     /**
-     * 
      * Establishes context data, adds itself as observer of CashAccountSearcher,
      * then calls for scene construction.
-     * 
+     *
      * @param theFPTS
-     * @param c 
+     * @param c
      */
     public CashAccountFinder(FPTS theFPTS, CashAccount c) {
         mainInput = new TextField();
@@ -81,12 +79,11 @@ public class CashAccountFinder extends Observable implements Observer {
     }
 
     /**
-     * 
      * Constructs view and control for searching and selecting CashAccount.
-     * 
+     *
      * @param toBeSearched
      * @param queries
-     * @return 
+     * @return
      */
     public Scene getSearchScene(ArrayList<Searchable> toBeSearched, VBox queries) {
 
@@ -138,7 +135,7 @@ public class CashAccountFinder extends Observable implements Observer {
 
     /**
      * Helper method to format text fields with description.
-     * 
+     *
      * @return HBox
      */
     private HBox createInputField(String description, TextField input) {
@@ -159,9 +156,8 @@ public class CashAccountFinder extends Observable implements Observer {
     }
 
     /**
-     * 
      * Helper method to define fields to be entered
-     * 
+     *
      * @return VBox
      */
     private VBox getCashAccountQueries() {
@@ -177,22 +173,21 @@ public class CashAccountFinder extends Observable implements Observer {
     */
 
     /**
-    * On update, the display of matches will change to reflect
-    * the next matches.
-    * 
-    * @param o - Observable
-    * @param arg - Object
-    */
+     * On update, the display of matches will change to reflect
+     * the next matches.
+     *
+     * @param o   - Observable
+     * @param arg - Object
+     */
     @Override
     public void update(Observable o, Object arg) {
         displayMatches(s.getMatches());
     }
 
     /**
-     * 
      * Displays the matches, one of which may be selected.
-     * 
-     * @param matches 
+     *
+     * @param matches
      */
     public void displayMatches(ArrayList<Searchable> matches) {
         matchDisplay.getChildren().clear();

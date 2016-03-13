@@ -7,10 +7,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *  
  * Defines the general steps of managing CashAccount. Implements the
- * first step of obtaining a CashAccount object. 
- * 
+ * first step of obtaining a CashAccount object.
+ *
  * @author Eric Epstein
  */
 abstract public class CashAccountAlgorithm implements Observer {
@@ -19,16 +18,17 @@ abstract public class CashAccountAlgorithm implements Observer {
     * CashAccount of interest, to be modified in further steps
     */
     protected CashAccount c;
-    
+
     /*
     * context data
     */
     protected FPTS theFPTS;
 
     /**
-    *  Stalls algorithm until a CashAccount is obtained from CashAccountFinder
-    *   @param theFPTS - FPTS
-    */
+     * Stalls algorithm until a CashAccount is obtained from CashAccountFinder
+     *
+     * @param theFPTS - FPTS
+     */
     public void process(FPTS theFPTS) {
         c = new CashAccount("", 0, null);
         this.theFPTS = theFPTS;
@@ -37,12 +37,11 @@ abstract public class CashAccountAlgorithm implements Observer {
     }
 
     /**
-     * 
-     * Upon update from CashAccountFinder (in this context), delegates 
+     * Upon update from CashAccountFinder (in this context), delegates
      * next step to child algorithms
-     * 
+     *
      * @param o
-     * @param args 
+     * @param args
      */
     public void update(Observable o, Object args) {
         action();

@@ -14,27 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
-
-import static javafx.application.Application.launch;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -44,8 +23,7 @@ import model.Portfolio;
 import model.Simulator;
 import model.User;
 
-import java.io.IOException;
-import java.io.File;
+import java.io.*;
 
 /**
  * Executes application and refers user to relevant functions.
@@ -131,12 +109,11 @@ public class FPTS extends Application {
     }
 
 
-
     /**
-    * Returns home page
-    *
-    * @return Scene
-    */
+     * Returns home page
+     *
+     * @return Scene
+     */
     public Scene getHomeScene() {
         Scene scene = null;
         try {
@@ -147,10 +124,10 @@ public class FPTS extends Application {
         }
         return scene;
     }
-    
+
     /**
      * Returns scene indicating confirmation of a user's action
-     * 
+     *
      * @return Scene
      */
 
@@ -160,13 +137,12 @@ public class FPTS extends Application {
         split.getChildren().addAll(getNav(), confirmation);
         return new Scene(split, WIDTH, HEIGHT);
     }
-    
+
     /**
-    *
-    * Returns scene indicating error on the part of the user
-    *
-    * @return Scene
-    */
+     * Returns scene indicating error on the part of the user
+     *
+     * @return Scene
+     */
     public Scene getErrorScene() {
         Label confirmation = new Label("Error");
         VBox split = new VBox();
@@ -175,10 +151,10 @@ public class FPTS extends Application {
     }
 
     /**
-    * Returns login page loaded in FXMLLoader
-    *
-    * @return Scene
-    */
+     * Returns login page loaded in FXMLLoader
+     *
+     * @return Scene
+     */
     public Scene createLogInScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -188,10 +164,10 @@ public class FPTS extends Application {
     }
 
     /**
-    * Returns register page loaded in FXMLLoader 
-    *
-    * @return Scene
-    */
+     * Returns register page loaded in FXMLLoader
+     *
+     * @return Scene
+     */
     public Scene createRegisterPage() throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
@@ -211,8 +187,8 @@ public class FPTS extends Application {
         if (args.length == 2) {
             if (args[0].equals("-delete")) {
                 String userID = args[1];
-                File csv = new File ("JavaFXApp/src/model/DataBase/UserData.csv");
-                File csvTemp = new File ("JavaFXApp/src/model/DataBase/UserDataTemp.csv");
+                File csv = new File("JavaFXApp/src/model/DataBase/UserData.csv");
+                File csvTemp = new File("JavaFXApp/src/model/DataBase/UserDataTemp.csv");
                 String line;
                 try {
                     BufferedReader reader = new BufferedReader(new FileReader(csv));
@@ -477,10 +453,10 @@ public class FPTS extends Application {
     }
 
     /**
-    * Sets simulation value
-    *
-    * @param value
-    */
+     * Sets simulation value
+     *
+     * @param value
+     */
     public static void setSimulationValue(double value) {
         simulationValue = value;
     }
@@ -511,26 +487,26 @@ public class FPTS extends Application {
     public static Simulator getCurrentSimulator() {
         return currentSimulator;
     }
-    
-     /**
+
+    /**
      * Returns current user
-     * 
+     *
      * @return User
      */
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return currentUser;
     }
 
     /**
      * Returns login ID of current user
-     * 
+     *
      * @return String
      */
-    public static String getCurrentUserID(){
+    public static String getCurrentUserID() {
         return currentUser.getLoginID();
     }
-    
-     /**
+
+    /**
      * Returns self
      *
      * @return FPTS
@@ -541,21 +517,21 @@ public class FPTS extends Application {
 
     /**
      * Returns indicator of portfolio existence
-     * 
+     *
      * @param user
      * @return boolean
      */
-    public boolean hasPortfolio(User user){
+    public boolean hasPortfolio(User user) {
         File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
         if (directory.exists()) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Sets user object to the current user
-     * 
+     *
      * @param user - User
      */
     public void setCurrentUser(User user) {
@@ -566,8 +542,8 @@ public class FPTS extends Application {
         }
         p = new Portfolio();
     }
-    
-     /**
+
+    /**
      * Returns height of stage
      *
      * @return int

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 /**
  * Displays portfolio elements like Holding and Cash Account in one Scene.
- * 
+ *
  * @author ericepstein
  */
 public class PortfolioDisplayer implements Displayer {
@@ -27,11 +27,10 @@ public class PortfolioDisplayer implements Displayer {
     ArrayList<Searchable> portfolioElements;
 
     /**
-     * 
      * Overrides the Displayer's display method to display specifically
      * the portfolio elements.
-     * 
-     * @param theFPTS 
+     *
+     * @param theFPTS
      */
     @Override
     public void display(FPTS theFPTS) {
@@ -41,10 +40,10 @@ public class PortfolioDisplayer implements Displayer {
     }
 
     /**
-    * Helper method to construct Scene of display given the elements.
-    * 
-    * @return Scene
-    */
+     * Helper method to construct Scene of display given the elements.
+     *
+     * @return Scene
+     */
     private Scene getDisplayScene() {
 
         VBox split = new VBox();

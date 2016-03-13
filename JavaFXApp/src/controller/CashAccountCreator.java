@@ -17,9 +17,8 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * 
  * Implements view and control to create a new CashAccount for a current portfolio.
- * 
+ *
  * @author Eric Epstein
  */
 public class CashAccountCreator {
@@ -30,20 +29,20 @@ public class CashAccountCreator {
     private FPTS theFPTS;
 
     /**
-    * Establishes context data and calls for scene construction
-    * 
-    * @param theFPTS - FPTS
-    */
+     * Establishes context data and calls for scene construction
+     *
+     * @param theFPTS - FPTS
+     */
     public CashAccountCreator(FPTS theFPTS) {
         this.theFPTS = theFPTS;
         theFPTS.getStage().setScene(getCashAccountCreatorScene());
     }
 
     /**
-    * Constructs scene with specified fields and input controls.
-    * 
-    * @return Scene
-    */
+     * Constructs scene with specified fields and input controls.
+     *
+     * @return Scene
+     */
     public Scene getCashAccountCreatorScene() {
         VBox split = new VBox();
 
@@ -102,11 +101,11 @@ public class CashAccountCreator {
     }
 
     /**
-    * Helper logic function to validate account name input
-    *
-    * @param inputAccountName - TextField
-    * @return boolean
-    */
+     * Helper logic function to validate account name input
+     *
+     * @param inputAccountName - TextField
+     * @return boolean
+     */
     private boolean isValidAccountName(TextField inputAccountName) {
         if (inputAccountName.getText() == null || inputAccountName.getText().equals("")) {
             return false;
@@ -124,9 +123,8 @@ public class CashAccountCreator {
     }
 
     /**
-     * 
      * Helper logic function to validate numerical input
-     * 
+     *
      * @param inputAmount - TextField
      * @return boolean
      */
@@ -143,7 +141,7 @@ public class CashAccountCreator {
 
         /*
         * Determine whether the input amount can be parsed to a double
-        */ 
+        */
         try {
             Double.parseDouble(inputAmountString);
         } catch (Exception e) {

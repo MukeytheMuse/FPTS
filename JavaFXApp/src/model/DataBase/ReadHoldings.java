@@ -4,9 +4,9 @@ import model.Holding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class ReadHoldings {
 
-    public static ArrayList<String[]> readInFile(){
+    public static ArrayList<String[]> readInFile() {
         return ReadFile.readInUser("/Holdings.csv");
     }
 
     public static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
-    public static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY","HEALTH CARE","TRANSPORTATION"));
+    public static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
     public static ArrayList<Holding> allHoldings;
     public static ArrayList<String[]> splitFile;
 
@@ -33,7 +33,7 @@ public class ReadHoldings {
         allHoldings = new ArrayList<>();
 
         // iterate through each line representing an Holding
-        for( String[] line : splitFile){
+        for (String[] line : splitFile) {
             ArrayList<String> indices = new ArrayList<String>();
             ArrayList<String> sectors = new ArrayList<String>();
             Date date = null;
@@ -45,13 +45,13 @@ public class ReadHoldings {
 
             Holding curHolding = new Holding(line[0], line[1], Double.parseDouble(line[2]), Integer.parseInt(line[3]), date, indices, sectors);
             // iterate through fields of current Holding
-            for( int i = 5; i < line.length; i++ ){
+            for (int i = 5; i < line.length; i++) {
                 // finance, technology, health care, transportation
-                if (sectorList.contains(line[i])){
+                if (sectorList.contains(line[i])) {
                     sectors.add(line[i]);
                 }
                 // dow, nasdaq100
-                else if (indexList.contains(line[i])){
+                else if (indexList.contains(line[i])) {
                     indices.add(line[i]);
                 }
             }

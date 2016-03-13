@@ -15,7 +15,7 @@ public interface Searchable {
 
     /**
      * Returns a displayable name
-     * 
+     *
      * @return String
      */
     public String getDisplayName();

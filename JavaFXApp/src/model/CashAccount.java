@@ -16,8 +16,8 @@ public class CashAccount implements Searchable {
     public static ArrayList<CashAccount> cashList = getCashList();
 
     /**
-    * getCashList() returns cash accounts
-    */
+     * getCashList() returns cash accounts
+     */
     public static ArrayList<CashAccount> getCashList() {
         return cashList;
     }

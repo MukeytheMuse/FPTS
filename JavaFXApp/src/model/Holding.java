@@ -66,11 +66,11 @@ public class Holding implements Searchable, HoldingUpdatable {
 
 
     /**
-    * Constructor used when a user manually adds a Holding.
-    * 
-    * @author Eric Epstein and Kaitlyn Brockway
-    */
-    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, Date acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors){
+     * Constructor used when a user manually adds a Holding.
+     *
+     * @author Eric Epstein and Kaitlyn Brockway
+     */
+    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, Date acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.holdingName = equityName;
         this.numOfShares = numOfShares;
