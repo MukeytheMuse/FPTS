@@ -55,7 +55,7 @@ public class FPTS extends Application {
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
     CashAccountAlgorithm cashAccountAlgorithm;
     
-    private final int WIDTH = 800;
+    private final int WIDTH = 1400;
     private final int HEIGHT = 600;
 
     private Stage thestage;

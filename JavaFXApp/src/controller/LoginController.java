@@ -24,12 +24,12 @@ import java.util.ResourceBundle;
 
 /**
  * This class controls the actions from button presses on the Login and Register page of this application.
- * Extends LoginMenuController becuase that class holds the code to handle events based on clicking items in the Menu.
+ * Extends LoginMenuController because that class holds the code to handle events based on clicking items in the Menu.
  */
 public class LoginController extends LoginMenuController{
     /**
      * Private variables representing the input of the user ID and password on both login and registration as well
-     * as a label thaat is used to output error messages to the user.
+     * as a label that is used to output error messages to the user.
      */
     @FXML private Label error;
     @FXML private PasswordField password;
