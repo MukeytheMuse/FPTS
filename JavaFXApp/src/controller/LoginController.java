@@ -81,6 +81,7 @@ public class LoginController extends LoginMenuController {
             if (User.ValidLoginID(userid.getText())){
                 if (password.getText().equals(password1.getText())){
                     User usr = new User(userid.getText(), password.getText());
+                    fpts.setCurrentUser(usr);
                     addUser(usr);
                     Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
                     Scene scene = new Scene(parent);
