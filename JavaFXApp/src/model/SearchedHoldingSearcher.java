@@ -10,21 +10,17 @@ import gui.FPTS;
 
 /**
  *
- * @author ericepstein
+ * 
+ * 
+ * @author Eric Epstein
  */
 public class SearchedHoldingSearcher extends Searcher {
     
     public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
         
-        //ArrayList<ArrayList<ArrayList<String>>> allObjects = new ArrayList<ArrayList<ArrayList<String>>>();
+
         
-        //ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>();
-        
-        ArrayList<String> anItem = new ArrayList<String>();
-        
-        ArrayList<String> holdingStrings = new ArrayList<String>();
         HoldingUpdatable eq = (HoldingUpdatable)(Object)s;
-        //for (Simulatable eq : (ArrayList<Simulatable>)(Object)toBeSearched) {
             ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>(); 
             
             //String tickerSymbol = eq.getTickerSymbol();

@@ -9,11 +9,17 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ericepstein
+ * Defines an interface that accesses a display name. Allows objects of 
+ * different types to be processed in the same algorithm.
+ * 
+ * @author Eric Epstein
  */
 public interface Searchable {
     
-    public String getDisplayName();
-    //public boolean containsElem(String keyword);
-    //public Searchable getSearchable(String keyword);
+    /**
+    * Returns a displayable name
+    *
+    * @param String
+    */
+    public String getDisplayName();;
 }

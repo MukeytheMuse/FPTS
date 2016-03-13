@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 import java.util.Date;
 
 /**
  *
- * @author ericepstein
+ * Holds a user’s cash account details, including the account name, 
+ * creation date and total value that may change depending on various operations. 
+ * 
+ * @author Eric Epstein and Kaitlyn Brockway
  */
 public class CashAccount implements  Searchable {
     private String accountName;
@@ -20,7 +18,10 @@ public class CashAccount implements  Searchable {
     * A user defines a cash account by specifying an account name, 
     * initial amount, and the date it was added.
     * 
-    * @author ericepstein & kaitlin
+    * @param accountName - String
+    * @param initialAmount - double
+    * @param dateAdded - Date
+    *
     */
     public CashAccount(String AccountName, double initialAmount, Date dateAdded) {
         this.accountName = AccountName;
@@ -29,48 +30,71 @@ public class CashAccount implements  Searchable {
     }
     
     /**
-    * Getter for the account name.
-    * 
-    * @author ericepstein & kaitlin
+    * Returns the account name.
+    *
     * returns: String accountName
     */
     public String getAccountName(){
         return accountName;
     }
     
-    public String toString() {
-        return "" + currentValue;
-    }
-    
-    public String getSymbol() {
-        return "";
-    }
-    
+     /**
+     * returns account name to override Searchable interface
+     * 
+     * @return String
+     */
+    @Override
     public String getDisplayName() {
         return accountName;
     }
     
     /**
-    * Getter for the current balance
-    * in the cash account.
+     * Returns value for display
+     * 
+     * @return String
+     */
+    public String toString() {
+        return "" + currentValue;
+    }
+    
+    /**
+     * 
+     * Returns empty string indicating lack of symbol
+     * 
+     * @return String
+     */
+    public String getSymbol() {
+        return "";
+    }
+    
+    /**
+    * returns current value
     * 
-    * @author ericepstein & kaitlin
+    * @return double
     */
     public double getValue(){
         return currentValue;
     }
     
+    /**
+     * 
+     * overrides default equals() method
+     * 
+     * Precondition: Object obj can be casted to CashAccount
+     * 
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(java.lang.Object obj) {
-        //TODO: should check to make sure this can be casted.
         CashAccount c = (CashAccount) obj;
         return (accountName.equals(c.getAccountName()));
     }
     
     /**
-    * Getter for the date that the cash account was created/added.
+    * Returns date the cash account was added
     * 
-    * @author ericepstein & kaitlin
+    * @return Date
     */
     public Date getDateAdded(){
         return dateAdded;
@@ -78,33 +102,36 @@ public class CashAccount implements  Searchable {
     
     
     /**
-    *
-    * @author ericepstein & kaitlin
+    * 
+    * subtracts current value by a specified amount
+    * 
+    * Precondition: the amount cannot exceed the total value of the cash account
+    * and the amount is non-negative
+    * 
+    * @param amount - double
     */
     public void withdraw(double amount){
-        
-        if((currentValue - amount) >= 0){
-            currentValue -= amount;
-        } else if( amount < 0){
-            System.out.println("Withdrawal amount cannot be negative.");
-        } else {
-            System.out.println("Insufficient funds in account. You do not have enough money to make this withdrawal.");
-        }
+        currentValue -= amount;
     }
     
     
     /**
     *
-    * @author ericepstein & kaitlin
+    * adds amount to current value
+    * 
+    * Precondition: the amount is a non-negative number
+    * 
+    * @param amount - double
     */
     public void deposit(double amount) {
-        if(amount > 0) {
-            currentValue += amount;
-        } else {
-            System.out.println("Deposit amount cannot be negative.");
-        }
+        currentValue += amount;
     }
     
+    /*
+    * mimics a copy function to maintain reference to the same cash account
+    *
+    * @param c - CashAccount
+    */
     public void overwrite(CashAccount c) {
         this.accountName = c.getAccountName();
         this.currentValue = c.getValue();

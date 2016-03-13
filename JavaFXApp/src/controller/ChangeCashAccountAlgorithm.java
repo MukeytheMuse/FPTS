@@ -25,7 +25,6 @@ abstract public class ChangeCashAccountAlgorithm extends CashAccountAlgorithm {
     public void update(Observable o, Object args) {
         if (amounts != null) {
             performTransaction();
-            
         } else {
             super.update(o, args);
         }
