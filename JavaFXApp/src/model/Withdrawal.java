@@ -36,4 +36,8 @@ public class Withdrawal implements Transaction {
         return "Withdrew " + amount + " from " + c.getAccountName() + " on " + theDateString;
     }
     
+    public CashAccount getCashAccount() {
+        return c;
+    }
+    
 }

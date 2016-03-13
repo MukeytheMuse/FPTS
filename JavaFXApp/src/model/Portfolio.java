@@ -55,6 +55,7 @@ public class Portfolio extends Observable {
         equityComponents = new ArrayList<EquityComponent>();
         cashAccounts = new ArrayList<CashAccount>();        
         holdings = new ArrayList<Holding>();
+        transactions = new ArrayList<Transaction>();
         
         matches = new ArrayList<Searchable>();
 
@@ -112,6 +113,10 @@ public class Portfolio extends Observable {
             temp.add((Searchable) c);
         }
         return temp;
+    }
+    
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
     
     public ArrayList<Searchable> getPortfolioElements() {
