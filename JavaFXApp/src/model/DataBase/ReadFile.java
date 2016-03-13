@@ -20,14 +20,15 @@ import java.util.List;
 public class ReadFile {
     public static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
     public static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY","HEALTH CARE","TRANSPORTATION"));
-    private static ArrayList<String[]> splitFile;
+    public static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
-    public ReadFile() {
-        this.splitFile = new ArrayList<String[]>();
-    }
-
+    /**
+     * Created by Ian
+     *
+     * @return list of all Equity objects
+     */
     public static ArrayList<EquityComponent> readEquity(){
-        readFile();
+        readInFile();
         ArrayList<EquityComponent> allEquities = new ArrayList<>();
         ArrayList<EquityComposite> CompositeEquities = loadCompositeList();
         allEquities.addAll(CompositeEquities);
@@ -73,8 +74,11 @@ public class ReadFile {
         return allEquities;
     }
 
+    /**
+     * Created by Ian
+     * @return list of composite Equities
+     */
     public static ArrayList<EquityComposite> loadCompositeList() {
-        readFile();
         ArrayList<EquityComposite> compositeList = new ArrayList<EquityComposite>();
         // create the bare index composites
         for( String index : indexList){
@@ -92,8 +96,8 @@ public class ReadFile {
     }
 
     // reads in CSV file
-    public static void readFile() {
-        String csv = "src/model/DataBase/equities.csv";
+    public static void readInFile() {
+        String csv = "JavaFXApp/src/model/DataBase/equities.csv";
         BufferedReader reader = null;
         String line;
 
@@ -106,7 +110,7 @@ public class ReadFile {
             }
         } catch (FileNotFoundException e) {
             System.out.println("src/model/DataBase/equities.csv not found! Please try again.");
-            readFile();
+            //readInFile();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
