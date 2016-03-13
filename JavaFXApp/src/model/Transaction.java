@@ -1,15 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 /**
- *
- * @author ericepstein
+ *  Interface that defines execute behaviors in association with CashAccount
+ * 
+ * @author Eric Epstein
  */
 public interface Transaction {
+    
+    /**
+    * Run operation on object
+    */
     public void execute();
+    
+    /**
+    * returns CashAccount unique to the realization
+    * 
+    * @return CashAccount
+    */
     public CashAccount getCashAccount();
 }

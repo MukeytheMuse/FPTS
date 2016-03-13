@@ -1,35 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.ArrayList;
 import model.DataBase.ReadFile;
+
 /**
- *
- * @author ericepstein & Ian
+ * Searchable and available to be purchased by the user. 
+ * Contains information about the ticker symbol, equity name, 
+ * the value per share, the market sector, and the index.
+ * 
+ * @author Epstein & Ian London
  */
 public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     
+    /*
+    * the identifying symbol
+    */
     private String tickerSymbol;
+    
+    /*
+    * the identifying name
+    */
     private String equityName;
-    double pricePerShare; //TODO: mark this private or public
+    
+    /*
+    * price per share
+    */
+    private double pricePerShare;
+    
+    /*
+    * collection of indices
+    */
     public ArrayList<String> indices;
+    
+    /*
+    * collection of sectors
+    */
     public ArrayList<String> sectors;
 
-    //ArrayList of Equities for use within search functionality
+    /*
+    * collection of Equity read from input
+    */
     public static ArrayList<EquityComponent> EquityList = ReadFile.readEquity();
 
+    /*
+    * collection of Equity that matches a search criteria
+    */
     private ArrayList<Equity> matches;
-
-    //Return list of Equities to search through
+    
+    /*
+    * getEquityList() returns equities 
+    */
     public static ArrayList<EquityComponent> getEquityList() {
         return EquityList;
     }
 
-    
+    /*
+    * Equity constructor takes 5 parameters
+    * 
+    * @params : tickerSymbol - str
+    *            equityName - str
+    *           perShareValue - double
+    *           indices - ArrayList<String>
+    *           sectors - ArrayList<String>
+    */
     public Equity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.equityName = equityName;
@@ -38,68 +71,88 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
         this.sectors = sectors;
     }
     
+    /*
+    * getDisplayName returns ticker symbol
+    *
+    * @return tickerSymbol - String
+    */
     public String getDisplayName() {
         return tickerSymbol;
     }
 
+    /**
+    * getValuePerShare returns price per share
+    *
+    * @return pricePerShare - double
+    */
+    @Override
     public double getValuePerShare() {
         return pricePerShare;
     }
-    
+   
+    /**
+    * getEquityName returns equity name
+    *
+    * @return equityName - String
+    */
+    @Override
     public String getEquityName() {
         return equityName;
     }
     
+    /**
+     * 
+     * @return equityName - String
+     */
+    @Override
     public String getHoldingName() {
         return equityName;
     }
     
+    /**
+     * 
+     * @return tickerSymbol - String 
+     */
+    @Override
     public String getTickerSymbol() {
         return tickerSymbol;
     }
     
+    /**
+     * 
+     * @return sectors - ArrayList<String>
+     */
+    @Override
     public ArrayList<String> getSectors() {
         return sectors;
     }
     
+    /**
+     * 
+     * @return  indices - ArrayList<String>
+     */
+    @Override
     public ArrayList<String> getIndices() {
         return indices;
     }
     
-    public boolean isMatch(String tickerSymbol, String equityName, String index, String sector) {
-        boolean matched = true;
-        
-        boolean tickerSymbolMatched = false;
-        if (! tickerSymbol.isEmpty()) {
-            this.tickerSymbol.contains(tickerSymbol);//RIGHT NOW .contains is ignored
-            tickerSymbolMatched = true;
-        }
-        
-        boolean equityNameMatched = false;
-        if (! equityName.isEmpty()) {
-            this.equityName.contains(equityName);//RIGHT NOW .contains is ignored
-            equityNameMatched = true;
-        }
-        if (! index.isEmpty()) {
-            for (String anIndex : indices) {
-                anIndex.contains(index);//RIGHT NOW .contains is ignored
-            }
-        }
-        if (! sector.isEmpty()) {
-            for (String aSector : sectors) {
-                aSector.contains(sector);//RIGHT NOW .contains is ignored
-            }
-        }
-        
-        return matched;
-        //TODO: Right now matched always returns true. We need to change this.
-    }
+    /**
+     * 
+     * @param e - EquityComponent
+     * 
+     * overrides EquityComponent but does nothing because
+     * Equity is a leaf node
+     */
+    @Override
+    public void add(EquityComponent e) { }
     
-    public void add(EquityComponent e) {
-        //do nothing
-    }
-    
-    public void remove(EquityComponent e) {
-        //do nothing
-    }
+    /**
+     * 
+     * @param e - EquityComponent
+     * 
+     * overrides EquityComponent but does nothing because
+     * Equity is a leaf node
+     */
+    @Override
+    public void remove(EquityComponent e) { }
 }

@@ -76,6 +76,13 @@ public class FPTS extends Application {
         this.currentUser = user;
     }
 
+     /**
+     * start displays the Financial Portfolio Tracking System
+     *
+     * @param none
+     * 
+     */
+    
     @Override
     public void start(Stage primaryStage) throws IOException {
         self = this;
