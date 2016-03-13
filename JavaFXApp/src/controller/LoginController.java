@@ -138,6 +138,25 @@ public class LoginController extends LoginMenuController {
         app_stage.show();
     }
 
+    @FXML
+    protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
+        Stage stg = FPTS.getSelf().getStage();
+        // TODO Save portfolio.
+        stg.setScene(FPTS.getSelf().createLogInScene());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    protected void handleExitExitButtonPressed(ActionEvent event) throws IOException {
+        Stage stg = FPTS.getSelf().getStage();
+        stg.setScene(FPTS.getSelf().createLogInScene());
+        stg.show();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //TODO

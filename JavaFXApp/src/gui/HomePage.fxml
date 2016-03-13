@@ -13,6 +13,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem fx:id="home" mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
+                <MenuItem fx:id="save" mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
               <MenuItem fx:id="Logout" mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />

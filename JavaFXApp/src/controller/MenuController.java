@@ -30,7 +30,11 @@ public abstract class MenuController implements Initializable {
      * @throws IOException - Throws IO Exception if the LoginPage.fxml is not found by the program.
      */
     public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
-        goToLoginPage(event);
+        Stage stage = new Stage();
+        Parent parent = FXMLLoader.load(getClass().getResource("../gui/LogoutPage.fxml"));
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -40,6 +44,10 @@ public abstract class MenuController implements Initializable {
     public void handleExitMenuItemPressed(ActionEvent event) {
         Platform.exit();
         System.exit(0);
+    }
+
+    public void handleSaveMenuItemPressed(ActionEvent event) {
+        //TODO Save Current Portfolio
     }
 
     /**
