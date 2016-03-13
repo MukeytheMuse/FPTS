@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Authors: Eric and Kaitlin
  */
-public class EquityComposite implements Searchable, EquityComponent {
+public class EquityComposite implements Searchable, EquityComponent, HoldingUpdatable {
     private String name;
     private String type;
     private List<HoldingUpdatable> childEquities;
@@ -29,6 +29,8 @@ public class EquityComposite implements Searchable, EquityComponent {
         return name;
     }
 
+    public String getHoldingName() { return name; }
+
     public String getEquityType() {
         return type;
     }
@@ -46,6 +48,8 @@ public class EquityComposite implements Searchable, EquityComponent {
         }
         return (float) count / childEquities.size();
     }
+
+
         
     public ArrayList<String> getSectors() {
             return new ArrayList<String>();

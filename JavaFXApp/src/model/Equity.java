@@ -20,19 +20,15 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     public ArrayList<String> sectors;
 
     //ArrayList of Equities for use within search functionality
-    public static ArrayList<EquityComponent> loadedEquityList;
+    public static ArrayList<EquityComponent> EquityList = ReadFile.readEquity();
 
     private ArrayList<Equity> matches;
 
-    //Populate the loadedEquityList
-    public static void makeEquityList() {
-        loadedEquityList = ReadFile.readEquity();
+    //Return list of Equities to search through
+    public static ArrayList<EquityComponent> getEquityList() {
+        return EquityList;
     }
 
-    //Return list of Equities to search through
-    public ArrayList<EquityComponent> getEquityList() {
-        return loadedEquityList;
-    }
     
     public Equity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
@@ -42,13 +38,10 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
         this.sectors = sectors;
     }
     
-
-    
     public String getDisplayName() {
         return tickerSymbol;
     }
-    
-    
+
     public double getValuePerShare() {
         return pricePerShare;
     }

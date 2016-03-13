@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import model.DataBase.ReadFile;
 
 /**
  * Portfolio is a collection of holdings.
@@ -30,7 +31,7 @@ public class Portfolio extends Observable {
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
     private ArrayList<Transaction> transactions;
-    private ArrayList<EquityComponent> equityComponents;  // lists what you can buy
+    private ArrayList<EquityComponent> equityComponents = Equity.getEquityList();  // lists what you can buy
     
     private double currentValue;
     
@@ -52,7 +53,7 @@ public class Portfolio extends Observable {
     public Portfolio(){
         
         portfolioElements = new ArrayList<Searchable>();
-        equityComponents = new ArrayList<EquityComponent>();
+        equityComponents = Equity.getEquityList();
         cashAccounts = new ArrayList<CashAccount>();        
         holdings = new ArrayList<Holding>();
         transactions = new ArrayList<Transaction>();
