@@ -186,6 +186,12 @@ public class FPTS extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if (args.length == 2) {
+            if (args[0].equals("-delete")) {
+                String userID = args[1];
+                //do deletion
+            }
+        }
         launch(args);
     }
     
