@@ -12,27 +12,9 @@ public class WriteFile {
     /*
     Private method that checks to see if customer has a portfolio
     */
-    public boolean hasPortfolio(User user)   {
-        boolean created = false;
-        String line;
-
-        try {
-            String directory = "JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID() + "/Trans.csv";
-            BufferedReader reader = new BufferedReader(new FileReader(directory));
-            while ((line = reader.readLine()) != null) {
-                if (line.length() != 0) {
-                    String[] splitLine = line.split(",");
-                    if (splitLine[0].equals(user.getLoginID())) {
-                        created = true;
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println("Not found! Creating new file!");
-        }
-
-        return created;
+    public boolean hasPortfolio(User user) {
+        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        return directory.exists();
     }
 
     /*
@@ -52,8 +34,12 @@ public class WriteFile {
             transFile.createNewFile();
             cashFile.createNewFile();
             holdingsFile.createNewFile();
-            FileWriter writer = new FileWriter(transFile,true);
-            bufferedWriter = new BufferedWriter(writer);
+            FileWriter writerT = new FileWriter(transFile,true);
+            FileWriter writerC = new FileWriter(cashFile, true);
+            FileWriter writerH = new FileWriter(holdingsFile, true);
+
+            this.holdingsWriter(user, writerH);
+            bufferedWriter = new BufferedWriter(writerT);
             bufferedWriter.write(user.getLoginID() + ",");
             bufferedWriter.write("true");
             bufferedWriter.newLine();
@@ -78,5 +64,17 @@ public class WriteFile {
         cashFile.delete();
         holdingsFile.delete();
         directory.delete();
+    }
+
+    /*
+    Private method for writing down holdings
+     */
+    private void holdingsWriter(User user, FileWriter writer) {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.write(user.getMyPortfolio().getHoldings() + ",");
+        } catch (Exception e) {
+
+        }
     }
 }
