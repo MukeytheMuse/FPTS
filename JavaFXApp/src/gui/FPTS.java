@@ -39,30 +39,40 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DataBase.WriteFile;
+import model.Equity;
 import model.Portfolio;
 import model.Simulator;
 import model.User;
 
 import java.io.IOException;
+import java.io.File;
 
 /**
- * Executes application and refers user to relevant functions. 
- * 
+ * Executes application and refers user to relevant functions.
+ *
  * @author Eric Epstein, Kimberly Sookoo, Ian London, Kaitlyn Brockway, Luke Veilleux
  */
 public class FPTS extends Application {
-    
+
     private static double simulationValue;
     private static Simulator currentSimulator;
-    
-    private final int WIDTH = 1000;
+
+    private final int WIDTH = 1200;
     private final int HEIGHT = 600;
 
     private Stage thestage;
 
-    private Portfolio p;
+    public Portfolio p;
 
-    private User currentUser;
+    private static User currentUser;
+
+    public User getCurrentUser(){
+        return currentUser;
+    }
+
+    public static String getCurrentUserID(){
+        return currentUser.getLoginID();
+    }
 
     LoginController loginController;
 
@@ -70,41 +80,50 @@ public class FPTS extends Application {
 
     /**
      * Returns self
-     * 
+     *
      * @return FPTS
      */
     public static FPTS getSelf() {
         return self;
     }
 
-    /**
-     * Sets current user to given object
-     * 
-     * @param user - User 
-     */
-    public void setCurrentUser(User user) {
-        this.currentUser = user;
+    public boolean hasPortfolio(User user){
+        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        if (directory.exists()) {
+            return true;
+        }
+        return false;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+        WriteFile writeFile = new WriteFile();
+        if (!hasPortfolio(currentUser)) {
+            writeFile.createPortfolioForUser(currentUser);
+        }
+        p = new Portfolio();
     }
+
 
     /**
      * Starts the application display and loads users
-     * 
+     *
      * @param primaryStage
      * @throws IOException
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
+        self = this;
         thestage = primaryStage;
-        p = new Portfolio();
+        //p = new Portfolio();
 
         /*
         * Fills the User static class
         */
         User.fillUsers();
+
+        // Fills the Equity static class with whats in the equities.csv file
+        Equity.getEquityList();
 
         /*
         * Sets homepage using FXML loader
@@ -112,15 +131,22 @@ public class FPTS extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, WIDTH, HEIGHT);
 
+        try {
+            thestage.setScene(createLogInScene());
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+
         self = this;
 
         thestage.setScene(loginScene);
         thestage.show();
+
     }
 
     /**
      * Returns height of stage
-     * 
+     *
      * @return int
      */
     public int getHeight() {
@@ -129,7 +155,7 @@ public class FPTS extends Application {
 
     /**
      * Returns width of stage
-     * 
+     *
      * @return int
      */
     public int getWidth() {
@@ -139,7 +165,7 @@ public class FPTS extends Application {
 
     /**
      * Returns primary stage
-     * 
+     *
      * @return Stage
      */
     public Stage getStage() {
@@ -241,7 +267,7 @@ public class FPTS extends Application {
 
     /**
      * Returns portfolio
-     * 
+     *
      * @return Portfolio
      */
     public Portfolio getPortfolio() {
@@ -250,7 +276,7 @@ public class FPTS extends Application {
 
     /**
      * Constructs navigation for relevant subsystems
-     * 
+     *
      * @return HBox
      */
     public HBox getNav() {
@@ -303,12 +329,14 @@ public class FPTS extends Application {
         */
         aButton = new Button();
         aButton.setText("Display Portfolio");
+        //TODO:Action to be set
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Displayer pd = new PortfolioDisplayer();
                 pd.display(getSelf());
             }
+
         });
         nav.getChildren().add(aButton);
 
@@ -391,18 +419,21 @@ public class FPTS extends Application {
         * Button to create CashAccount
         */
         aButton = new Button();
-        aButton.setText("Create Cash Account");
+        aButton.setText("Add Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
+                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        /*
-        * Button to add/remove Portfolio
-        */
+        /* Create/Delete Portfolio Button disabled
+        nav.getChildren().add(aButton);
+
+        //Button to add/remove Portfolio
+
         Button managePortfolio = new Button();
         WriteFile writeFile = new WriteFile();
         currentUser.setMyPortfolio(this.getPortfolio());
@@ -426,6 +457,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(managePortfolio);
+        */
 
         /*
         * Button to Logout
@@ -453,16 +485,16 @@ public class FPTS extends Application {
 
     /**
     * Sets simulation value
-    * 
+    *
     * @param value
     */
     public static void setSimulationValue(double value) {
         simulationValue = value;
     }
-    
+
     /**
      * Returns simulation value
-     * 
+     *
      * @return double
      */
     public static double getSimulationValue() {
@@ -471,16 +503,16 @@ public class FPTS extends Application {
 
     /**
      * Sets current simulation
-     * 
+     *
      * @param curSim - Simulator
      */
     public static void setCurrentSimulator(Simulator curSim) {
         currentSimulator = curSim;
     }
-    
+
     /**
      * Returns current simulation
-     * 
+     *
      * @return Simulator
      */
     public static Simulator getCurrentSimulator() {

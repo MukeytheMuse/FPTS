@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,6 +13,14 @@ public class CashAccount implements Searchable {
     private String accountName;
     private double currentValue;
     private Date dateAdded;
+    public static ArrayList<CashAccount> cashList = getCashList();
+
+    /**
+    * getCashList() returns cash accounts
+    */
+    public static ArrayList<CashAccount> getCashList() {
+        return cashList;
+    }
 
     /**
      * The system shall allow the user to specify a new cash account.

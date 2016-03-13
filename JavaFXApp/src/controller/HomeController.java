@@ -87,23 +87,29 @@ public class HomeController extends MenuController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Portfolio p = fpts.getPortfolio();
-        double cashAccountValue = 0.0;
-        for (CashAccount c : p.getCashAccounts()) {
-            cashAccountValue += c.getValue();
-        }
-        double equityTotalValue = 0.0;
-        for (Holding h : p.getHoldings()) {
-            equityTotalValue += h.getValue();
-        }
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Holdings", equityTotalValue),
-                        new PieChart.Data("Cash Accounts", cashAccountValue));
-        valueChart.setData(pieChartData);
-        valueChart.setTitle("Portfolio");
-        valueLabel.setText("Current Portfolio Value: $" + (cashAccountValue + equityTotalValue));
+        if(fpts.hasPortfolio(fpts.getCurrentUser())) {
+            Portfolio p = fpts.getPortfolio();
+            double cashAccountValue = 0.0;
+            double equityTotalValue = 0.0;
+            try {
+                for (CashAccount c : p.getCashAccounts()) {
+                    cashAccountValue += c.getValue();
+                }
+                for (Holding h : p.getHoldings()) {
+                    equityTotalValue += h.getValue();
+                }
+            }
+            catch(NullPointerException e){
+            }
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Holdings", equityTotalValue),
+                            new PieChart.Data("Cash Accounts", cashAccountValue));
+            valueChart.setData(pieChartData);
+            valueChart.setTitle("Portfolio");
+            valueLabel.setText("Current Portfolio Value: $" + (cashAccountValue + equityTotalValue));
 
+        }
 
     }
 }

@@ -1,8 +1,8 @@
 package model;
 
-import model.DataBase.ReadFile;
-
 import java.util.ArrayList;
+
+import static model.DataBase.ReadFile.readEquity;
 
 /**
  * Searchable and available to be purchased by the user.
@@ -41,7 +41,7 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     /*
     * collection of Equity read from input
     */
-    public static ArrayList<EquityComponent> EquityList = ReadFile.readEquity();
+    public static ArrayList<EquityComponent> EquityList = readEquity();
 
     /*
     * collection of Equity that matches a search criteria

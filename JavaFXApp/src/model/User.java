@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -34,7 +35,7 @@ public class User {
     public User(String loginID, String password) {
         this.loginID = loginID;
         this.password = hash(password);
-        this.myPortfolio = new Portfolio();//TODO: check if user wants to import holdings and transactions
+        //this.myPortfolio = new Portfolio(); //TODO: check if user wants to import holdings and transactions
     }
 
     /**
@@ -123,7 +124,7 @@ public class User {
             reader = new BufferedReader(new FileReader(csv));
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(",");
-                User newUser = new User(split[0], unHash(split[1]));
+                User newUser = new User (split[0], unHash(split[1]));
                 userList.add(newUser);
             }
         } catch (FileNotFoundException e) {
