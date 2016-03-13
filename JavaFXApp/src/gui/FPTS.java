@@ -14,6 +14,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Scanner;
+
+import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -174,7 +193,27 @@ public class FPTS extends Application {
         if (args.length == 2) {
             if (args[0].equals("-delete")) {
                 String userID = args[1];
-                //do deletion
+                File csv = new File ("JavaFXApp/src/model/DataBase/UserData.csv");
+                File csvTemp = new File ("JavaFXApp/src/model/DataBase/UserDataTemp.csv");
+                String line;
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(csv));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
+                    while ((line = reader.readLine()) != null) {
+                        String[] split = line.split(",");
+                        if (split[0].equals(userID)) {
+                            System.out.println("Deleting " + userID);
+                            continue;
+                        }
+                        writer.write(split[0] + "," + split[1]);
+                        writer.newLine();
+                    }
+                    writer.close();
+                    reader.close();
+                    csvTemp.renameTo(csv);
+                } catch (Exception e) {
+
+                }
             }
         }
         launch(args);

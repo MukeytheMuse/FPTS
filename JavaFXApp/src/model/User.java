@@ -120,5 +120,4 @@ public class User {
         return myPortfolio;
     }
 
-
 }
