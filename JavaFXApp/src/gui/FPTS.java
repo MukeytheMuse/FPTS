@@ -7,6 +7,7 @@ package gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
+import model.DataBase.WriteFile;
 import model.User;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -51,6 +52,8 @@ import javafx.scene.layout.VBox;
  * @author ericepstein
  */
 public class FPTS extends Application {
+    private static double simulationValue;
+    private static Simulator currentSimulator;
     
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
     CashAccountAlgorithm cashAccountAlgorithm;
@@ -276,14 +279,14 @@ public class FPTS extends Application {
             }
 
         });
-        nav.getChildren().add(portfolio);
+        //nav.getChildren().add(portfolio);
         
         //Remove Cash Account Button
         aButton = new Button();
         aButton.setText("Remove Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -296,7 +299,7 @@ public class FPTS extends Application {
         aButton.setText("Deposit");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new DepositCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -309,7 +312,7 @@ public class FPTS extends Application {
         aButton.setText("Withdraw");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -322,7 +325,7 @@ public class FPTS extends Application {
         aButton.setText("Transfer");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new TransferCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -335,12 +338,38 @@ public class FPTS extends Application {
         aButton.setText("Create Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
+
+        Button managePortfolio = new Button();
+        WriteFile writeFile = new WriteFile();
+
+        if (writeFile.hasPortfolio(currentUser)) {
+            managePortfolio.setText("Remove Portfolio");
+        } else {
+            managePortfolio.setText("Add Portfolio");
+        }
+
+        managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                if (writeFile.hasPortfolio(currentUser)) {
+                    writeFile.removePortfolioForUser(currentUser);
+                    managePortfolio.setText("Add Portfolio");
+                } else {
+                    writeFile.createPortfolioForUser(currentUser);
+                    managePortfolio.setText("Remove Portfolio");
+                }
+            }
+
+        });
+        nav.getChildren().add(managePortfolio);
+
        
         //Logout Button
          aButton = new Button();
@@ -361,6 +390,22 @@ public class FPTS extends Application {
 
 
         return nav;
+    }
+
+    public static void setSimulationValue(double value){
+        simulationValue = value;
+    }
+
+    public static double getSimulationValue(){
+        return simulationValue;
+    }
+
+    public static void setCurrentSimulator(Simulator curSim){
+        currentSimulator = curSim;
+    }
+
+    public static Simulator getCurrentSimulator(){
+        return currentSimulator;
     }
 }
 

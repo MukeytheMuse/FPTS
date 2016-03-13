@@ -15,5 +15,5 @@ public interface Searchable {
     
     public String getDisplayName();
     //public boolean containsElem(String keyword);
-    //public Searchable getSearchable(String keyword); 
+    //public Searchable getSearchable(String keyword);
 }
