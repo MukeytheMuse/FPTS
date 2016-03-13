@@ -9,14 +9,24 @@ import model.Transaction;
 import model.Withdrawal;
 
 /**
- * @author ericepstein
+ * 
+ * Implements final step in CashAccountAlgorithm by creating a Withdraw object.
+ * 
+ * @author Eric Epstein
  */
 public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
 
+    /**
+     * Creates a Withdraw object with validated CashAccount if the amount is validated.
+     */
+    @Override
     public void performTransaction() {
 
         double amount = amounts.get(0);
 
+        /*
+        * Validates whether amount withdrawn will lead to negative overall value.
+        */
         if (c.getValue() >= amount) {
             Transaction t = new Withdrawal(c, amount);
             theFPTS.getPortfolio().add(t);

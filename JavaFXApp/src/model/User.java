@@ -12,8 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * @author ericepstein
- *         Modified by: Kimberly Sookoo
+ * 
+ * Stores attributes of User, generates list of Users, and validates User
+ * 
+ * @author Kimberly Sookoo and Ian London
+ *         
  */
 public class User {
     private String loginID;
@@ -34,6 +37,13 @@ public class User {
         this.myPortfolio = new Portfolio();//TODO: check if user wants to import holdings and transactions
     }
 
+    /**
+    * 
+    * Ensures encryption by incrementing each password character by 1
+    * 
+    * @param password - String
+    * @return String of password
+    */
     public String hash(String password) {
         String encryptedPW = "";
         for (int i = 0; i < password.length(); i++) {
@@ -43,6 +53,13 @@ public class User {
         return encryptedPW;
     }
 
+    /**
+     * 
+     * Ensures decryption by decrementing each password character by 1
+     * 
+     * @param password
+     * @return String of password
+     */
     public static String unHash(String password) {
         String textPass = "";
         for (int i = 0; i < password.length(); i++) {
@@ -52,14 +69,44 @@ public class User {
         return textPass;
     }
 
+    /**
+     * Equality function that matches user and password
+     * 
+     * @param u
+     * @return boolean
+     */
     public boolean equals(User u) {
         return u.getLoginID().equals(loginID) && u.getPassword().equals(password);
     }
+    
+    /**
+     * 
+     * Overrides equals() method
+     * 
+     * Precondition - object passed must be a User object
+     * 
+     * @param o
+     * @return 
+     */
+    @Override
+    public boolean equals(Object o) {
+        return equals((User) o);        
+    }
 
+    /**
+    * Returns login ID
+    * 
+    * @return String
+    */
     public String getLoginID() {
         return loginID;
     }
 
+    /**
+     * Returns password 
+     * 
+     * @return String
+     */
     private String getPassword() {
         return password;
     }
@@ -94,6 +141,12 @@ public class User {
         }
     }
 
+    /**
+     * Returns validation by testing a User object against a list of existing
+     * User objects
+     * 
+     * @return boolean
+     */
     public boolean validateUser() {
         System.out.println("MY USER: " + this.getLoginID() + " " + this.getPassword());
         for (User usr : userList) {
@@ -105,6 +158,12 @@ public class User {
         return false;
     }
 
+    /**
+    * 
+    * Returns whether the login ID exists in a collection of User objects
+    * 
+    * @return boolean
+    */
     public static boolean ValidLoginID(String id) {
         for (User usr : userList) {
             if (usr.getLoginID().equals(id)) {
@@ -114,10 +173,22 @@ public class User {
         return true;
     }
 
+    /**
+     * 
+     * Adds a User object to list of users
+     * 
+     * @param u 
+     */
     public static void addToList(User u) {
         userList.add(u);
     }
 
+    /**
+     * 
+     * returns Portfolio
+     * 
+     * @return Portfolio
+     */
     public Portfolio getMyPortfolio() {
         return myPortfolio;
     }

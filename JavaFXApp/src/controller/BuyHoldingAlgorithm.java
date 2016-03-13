@@ -51,7 +51,11 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     * 
     * Implements algorithm of a purchase that is made inside FPTS.
     * 
-    * Precondition - cashAccountOfInterest is already identified.
+    * Precondition - the following variables have already been assigned:
+    *   equityOfInterest
+    *   numOfShares
+    *   pricePerShare
+    *   cashAccountOfInterest
     *
     */
     @Override
@@ -60,7 +64,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         
         String aTickerSymbol = equityOfInterest.getTickerSymbol();
         Holding e;
-        /**
+        /*
         * Checks whether shares are added to an existing Holding or a new Holding.
         */
         if (p.getHolding(aTickerSymbol) != null) {
@@ -85,7 +89,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             Transaction t = new Withdrawal(cashAccountOfInterest, numOfShares * pricePerShare);
             p.add(t);
             e.addShares(numOfShares);
-            theStage.setScene(getConfirmationScene());
+            theStage.setScene(theFPTS.getConfirmationScene());
         } else {
             mainInput.setText("INVALID");
         }
@@ -122,7 +126,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                 }
 
                 //Breaks the loop by transitioning user to confirmation scene
-                theStage.setScene(getConfirmationScene());
+                theStage.setScene(theFPTS.getConfirmationScene());
 
             } else {
                 mainInput.setText("INVALID");

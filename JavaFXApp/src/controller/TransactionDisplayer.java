@@ -21,33 +21,53 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * @author ericepstein
+ * Displays Transaction objects in one Scene.
+ * 
+ * @author Eric Epstein
  */
 public class TransactionDisplayer implements Displayer {
 
+    /*
+    * context data
+    */
     FPTS theFPTS;
     ArrayList<Transaction> transactions;
     VBox results;
 
+    /*
+    * Establishes context data and overrides Displayer's display method
+    * by calling a scene constructor.
+    */
+    @Override
     public void display(FPTS theFPTS) {
         this.theFPTS = theFPTS;
         transactions = theFPTS.getPortfolio().getTransactions();
         theFPTS.getStage().setScene(getTransactionDisplayScene());
     }
 
-    public Scene getTransactionDisplayScene() {
+    /**
+     * Helper method to construct Scene with controller functionality for
+     * start and end dates.
+     * 
+     * @return 
+     */
+    private Scene getTransactionDisplayScene() {
 
         VBox split = new VBox();
-
-
         VBox queries = new VBox();
         HBox aField = new HBox();
+        
+        /**
+         * Field to select start date
+         */
         DatePicker startDate = new DatePicker();
         Label aLabel = new Label("Start date: ");
         aField.getChildren().addAll(aLabel, startDate);
-
         queries.getChildren().add(aField);
-
+        
+        /*
+        * Field to select end date
+        */
         aField = new HBox();
         DatePicker endDate = new DatePicker();
         aLabel = new Label("End date: ");
@@ -55,6 +75,9 @@ public class TransactionDisplayer implements Displayer {
 
         queries.getChildren().add(aField);
 
+        /*
+        * Initially displays all Transaction objects.
+        */
         VBox results = new VBox();
         for (Transaction t : transactions) {
             results.getChildren().add(new Label(t.toString()));
@@ -62,6 +85,10 @@ public class TransactionDisplayer implements Displayer {
 
         Button submitBtn = new Button();
         submitBtn.setText("Search");
+        /*
+         * Filters list of Transaction in case user inputs two valid start and end
+         * dates. 
+         */
         submitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -69,8 +96,15 @@ public class TransactionDisplayer implements Displayer {
                 if (startDate.getValue() != null && endDate.getValue() != null) {
                     Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
                     Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    /*
+                    * Update display to represent filtered Transaction objects
+                    */
                     for (Transaction t : transactions) {
                         Date aDate = t.getCashAccount().getDateAdded();
+                        /*
+                        * Add to display if Transaction object is after the start
+                        * date and before the end date.
+                        */
                         if (aDate.after(start) && aDate.before(end)) {
                             results.getChildren().add(new Label(t.toString()));
                         }
@@ -78,8 +112,6 @@ public class TransactionDisplayer implements Displayer {
                 }
             }
         });
-
-
         split.getChildren().addAll(theFPTS.getNav(), queries, submitBtn, results);
         Scene transactionDisplayScene = new Scene(split, theFPTS.getWidth(), theFPTS.getHeight());
         return transactionDisplayScene;

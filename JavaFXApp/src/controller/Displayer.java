@@ -1,17 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.FPTS;
 
 /**
- * @author ericepstein
+ * 
+ * Defines the interface for displaying contents in a portfolio.
+ * 
+ * @author Eric Epstein
  */
 public interface Displayer {
 
+    /**
+     * 
+     * Displays information given context data.
+     * 
+     * @param theFPTS - the FPTS
+     */
     public void display(FPTS theFPTS);
 
 }

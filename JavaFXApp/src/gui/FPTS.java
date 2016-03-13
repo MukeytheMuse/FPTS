@@ -27,15 +27,15 @@ import model.User;
 import java.io.IOException;
 
 /**
- * @author ericepstein
+ * Executes application and refers user to relevant functions. 
+ * 
+ * @author Eric Epstein, Kimberly Sookoo, Ian London, Kaitlyn Brockway, Luke Veilleux
  */
 public class FPTS extends Application {
+    
     private static double simulationValue;
     private static Simulator currentSimulator;
-
-    HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
-    CashAccountAlgorithm cashAccountAlgorithm;
-
+    
     private final int WIDTH = 1000;
     private final int HEIGHT = 600;
 
@@ -49,55 +49,76 @@ public class FPTS extends Application {
 
     private static FPTS self;
 
+    /**
+     * Returns self
+     * 
+     * @return FPTS
+     */
     public static FPTS getSelf() {
         return self;
     }
 
+    /**
+     * Sets current user to given object
+     * 
+     * @param user - User 
+     */
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
 
     /**
+     * Starts the application display and loads users
+     * 
      * @param primaryStage
      * @throws IOException
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        self = this;
         thestage = primaryStage;
         p = new Portfolio();
 
-
-        //Fills the User static class with whats in the UserData.txt file
-
+        /*
+        * Fills the User static class
+        */
         User.fillUsers();
 
-
+        /*
+        * Sets homepage using FXML loader
+        */
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, WIDTH, HEIGHT);
-
-        try {
-            thestage.setScene(createLogInScene());
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
 
         self = this;
 
         thestage.setScene(loginScene);
         thestage.show();
-
     }
 
+    /**
+     * Returns height of stage
+     * 
+     * @return int
+     */
     public int getHeight() {
         return HEIGHT;
     }
 
+    /**
+     * Returns width of stage
+     * 
+     * @return int
+     */
     public int getWidth() {
         return WIDTH;
     }
 
 
+    /**
+     * Returns primary stage
+     * 
+     * @return Stage
+     */
     public Stage getStage() {
         return thestage;
     }
@@ -148,24 +169,6 @@ public class FPTS extends Application {
         return scene;
     }
 
-    //Overloading fieldHasContent for PasswordField
-    public boolean fieldHasContent(PasswordField aField) {
-        return (aField.getText() != null && !aField.getText().isEmpty());
-    }
-
-    //Overloading fieldHasContent for TextField
-    public boolean fieldHasContent(TextField aField) {
-        return (aField.getText() != null && !aField.getText().isEmpty());
-    }
-
-    public HBox createField(String name) {
-        Label aLabel = new Label(name + ":");
-        TextField textField = new TextField();
-        HBox aField = new HBox();
-        aField.getChildren().addAll(aLabel, textField);
-        aField.setSpacing(10);
-        return aField;
-    }
 
     /**
      * @param args the command line arguments
@@ -181,17 +184,27 @@ public class FPTS extends Application {
     }
 
 
+    /**
+     * Returns portfolio
+     * 
+     * @return Portfolio
+     */
     public Portfolio getPortfolio() {
         return p;
     }
 
+    /**
+     * Constructs navigation for relevant subsystems
+     * 
+     * @return HBox
+     */
     public HBox getNav() {
         HBox nav = new HBox();
         Button aButton;
-        Button createPortfolio;
-        Button removePortfolio;
 
-        //Home button
+        /*
+        * Button to visit Home
+        */
         aButton = new Button();
         aButton.setText("Home");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -202,49 +215,53 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
 
-
-        //Buy Button
+        /*
+        * Button to buy Equity
+        */
         aButton = new Button();
         aButton.setText("Buy Holding");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                eqUpdater = new BuyHoldingAlgorithm();
+                HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
                 eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        //Sell Button
+        /*
+        * Button to sell equity
+        */
         aButton = new Button();
         aButton.setText("Sell Holding");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                eqUpdater = new SellHoldingAlgorithm();
+                HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm();
                 eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        //Portfolio Button
+        /*
+        * Button to display portfolio
+        */
         aButton = new Button();
         aButton.setText("Display Portfolio");
-        //TODO:Action to be set
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Displayer pd = new PortfolioDisplayer();
                 pd.display(getSelf());
             }
-
         });
         nav.getChildren().add(aButton);
 
-        //History Button
+        /*
+        * Button to view Transaction history
+        */
         aButton = new Button();
         aButton.setText("History");
-        //TODO:Action to be set
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -255,70 +272,82 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
 
-        //Remove Cash Account Button
+        /*
+        * Button to remove CashAccount
+        */
         aButton = new Button();
         aButton.setText("Remove Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
+                CashAccountAlgorithm cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        //Deposit CashAccount
+        /*
+        * Button to Deposit CashAccount
+        */
         aButton = new Button();
         aButton.setText("Deposit");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                cashAccountAlgorithm = new DepositCashAccountAlgorithm();
+                CashAccountAlgorithm cashAccountAlgorithm = new DepositCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        //Withdraw CashAccount
+        /*
+        * Button to withdraw from CashAccout
+        */
         aButton = new Button();
         aButton.setText("Withdraw");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
+                CashAccountAlgorithm cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        //Transfer CashAccount
+        /*
+        * Button to transfer from one CashAccount to another
+        */
         aButton = new Button();
         aButton.setText("Transfer");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                cashAccountAlgorithm = new TransferCashAccountAlgorithm();
+                CashAccountAlgorithm cashAccountAlgorithm = new TransferCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        //Create CashAccount
+        /*
+        * Button to create CashAccount
+        */
         aButton = new Button();
         aButton.setText("Create Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
-                //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
+        /*
+        * Button to add/remove Portfolio
+        */
         Button managePortfolio = new Button();
         WriteFile writeFile = new WriteFile();
 
@@ -327,7 +356,6 @@ public class FPTS extends Application {
         } else {
             managePortfolio.setText("Add Portfolio");
         }
-
         managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -340,12 +368,12 @@ public class FPTS extends Application {
                     managePortfolio.setText("Remove Portfolio");
                 }
             }
-
         });
         nav.getChildren().add(managePortfolio);
 
-
-        //Logout Button
+        /*
+        * Button to Logout
+        */
         aButton = new Button();
         aButton.setText("Log out");
         //Setting an action for the logout button
@@ -358,29 +386,47 @@ public class FPTS extends Application {
                     stage.setScene(scene);
                     stage.show();
                 } catch (Exception ex) {
-                    //e1.printStackTrace();
                 }
                 thestage.show();
             }
         });
         nav.getChildren().add(aButton);
 
-
         return nav;
     }
 
+    /**
+    * Sets simulation value
+    * 
+    * @param value
+    */
     public static void setSimulationValue(double value) {
         simulationValue = value;
     }
-
+    
+    /**
+     * Returns simulation value
+     * 
+     * @return double
+     */
     public static double getSimulationValue() {
         return simulationValue;
     }
 
+    /**
+     * Sets current simulation
+     * 
+     * @param curSim - Simulator
+     */
     public static void setCurrentSimulator(Simulator curSim) {
         currentSimulator = curSim;
     }
-
+    
+    /**
+     * Returns current simulation
+     * 
+     * @return Simulator
+     */
     public static Simulator getCurrentSimulator() {
         return currentSimulator;
     }
