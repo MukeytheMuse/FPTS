@@ -27,7 +27,7 @@ public class BearSimulator implements Simulator {
      * @param hasSteps
      * @param pricePerYearPercentage
      */
-    public BearSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage){
+    public BearSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage) {
         this.interval = interval;
         this.hasSteps = hasSteps;
         this.numSteps = numSteps;
@@ -37,6 +37,7 @@ public class BearSimulator implements Simulator {
 
 
     //TODO: CHECK IF IT HAS STEPS.
+
     /**
      * DECREASE
      *
@@ -45,14 +46,14 @@ public class BearSimulator implements Simulator {
     @Override
     public double simulate() {
         double valueCount = 0;
-        if(interval.equals("Day")){
+        if (interval.equals("Day")) {
             currentPercentDecrease = pricePerYear / 365;
-        } else if(interval.equals("Month")){
+        } else if (interval.equals("Month")) {
             currentPercentDecrease = pricePerYear / 12;
         } else {
             currentPercentDecrease = pricePerYear;
         }
-        for(Holding h: holdings){
+        for (Holding h : holdings) {
             valueCount -= currentPercentDecrease * h.getValue();
         }
         return valueCount;

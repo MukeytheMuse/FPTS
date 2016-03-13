@@ -5,50 +5,28 @@
  */
 package gui;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.*;
-import model.DataBase.WriteFile;
-import model.User;
-import java.awt.Insets;
-import java.awt.event.MouseEvent;
+import controller.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import model.*;
-
-import controller.*;
-
-import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
-
-import static javafx.application.Application.launch;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import model.DataBase.WriteFile;
+import model.Portfolio;
+import model.Simulator;
+import model.User;
+
+import java.io.IOException;
 
 /**
- *
  * @author ericepstein
  */
 public class FPTS extends Application {
@@ -57,8 +35,8 @@ public class FPTS extends Application {
 
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
     CashAccountAlgorithm cashAccountAlgorithm;
-    
-    private final int WIDTH = 900;
+
+    private final int WIDTH = 1000;
     private final int HEIGHT = 600;
 
     private Stage thestage;
@@ -71,7 +49,7 @@ public class FPTS extends Application {
 
     private static FPTS self;
 
-    public static FPTS getSelf(){
+    public static FPTS getSelf() {
         return self;
     }
 
@@ -80,19 +58,18 @@ public class FPTS extends Application {
     }
 
     /**
-     *
      * @param primaryStage
      * @throws IOException
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
         self = this;
-        thestage=primaryStage;
+        thestage = primaryStage;
         p = new Portfolio();
 
 
         //Fills the User static class with whats in the UserData.txt file
-        
+
         User.fillUsers();
 
 
@@ -104,23 +81,23 @@ public class FPTS extends Application {
         } catch (Exception e) {
             //e.printStackTrace();
         }
-        
+
         self = this;
-        
+
         thestage.setScene(loginScene);
         thestage.show();
-        
+
     }
 
     public int getHeight() {
         return HEIGHT;
     }
-    
+
     public int getWidth() {
         return WIDTH;
     }
 
-    
+
     public Stage getStage() {
         return thestage;
     }
@@ -137,22 +114,22 @@ public class FPTS extends Application {
         }
         return scene;
     }
-    
+
     public Scene getConfirmationScene() {
         Label confirmation = new Label("Update completed");
         VBox split = new VBox();
         split.getChildren().addAll(getNav(), confirmation);
         return new Scene(split, WIDTH, HEIGHT);
     }
-    
+
     public Scene getErrorScene() {
         Label confirmation = new Label("Error");
         VBox split = new VBox();
         split.getChildren().addAll(getNav(), confirmation);
         return new Scene(split, WIDTH, HEIGHT);
     }
-    
-    public Scene createLogInScene() throws IOException{
+
+    public Scene createLogInScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -160,7 +137,7 @@ public class FPTS extends Application {
         return scene;
     }
 
-    public Scene createRegisterPage() throws IOException{
+    public Scene createRegisterPage() throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -175,21 +152,21 @@ public class FPTS extends Application {
     public boolean fieldHasContent(PasswordField aField) {
         return (aField.getText() != null && !aField.getText().isEmpty());
     }
-    
+
     //Overloading fieldHasContent for TextField
     public boolean fieldHasContent(TextField aField) {
         return (aField.getText() != null && !aField.getText().isEmpty());
     }
-    
+
     public HBox createField(String name) {
         Label aLabel = new Label(name + ":");
-        TextField textField = new TextField ();
+        TextField textField = new TextField();
         HBox aField = new HBox();
         aField.getChildren().addAll(aLabel, textField);
         aField.setSpacing(10);
         return aField;
     }
-  
+
     /**
      * @param args the command line arguments
      */
@@ -202,29 +179,28 @@ public class FPTS extends Application {
         }
         launch(args);
     }
-    
-    
+
+
     public Portfolio getPortfolio() {
         return p;
     }
-    
+
     public HBox getNav() {
         HBox nav = new HBox();
         Button aButton;
         Button createPortfolio;
         Button removePortfolio;
-        
+
         //Home button
         aButton = new Button();
         aButton.setText("Home");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 thestage.setScene(getHomeScene());
             }
         });
         nav.getChildren().add(aButton);
-        
 
 
         //Buy Button
@@ -238,7 +214,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
+
         //Sell Button
         aButton = new Button();
         aButton.setText("Sell Holding");
@@ -264,7 +240,7 @@ public class FPTS extends Application {
 
         });
         nav.getChildren().add(aButton);
-        
+
         //History Button
         aButton = new Button();
         aButton.setText("History");
@@ -278,7 +254,7 @@ public class FPTS extends Application {
 
         });
         nav.getChildren().add(aButton);
-        
+
         //Remove Cash Account Button
         aButton = new Button();
         aButton.setText("Remove Cash Account");
@@ -291,7 +267,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
+
         //Deposit CashAccount
         aButton = new Button();
         aButton.setText("Deposit");
@@ -304,7 +280,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
+
         //Withdraw CashAccount
         aButton = new Button();
         aButton.setText("Withdraw");
@@ -317,7 +293,7 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
+
         //Transfer CashAccount
         aButton = new Button();
         aButton.setText("Transfer");
@@ -330,8 +306,8 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
-         //Create CashAccount
+
+        //Create CashAccount
         aButton = new Button();
         aButton.setText("Create Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -370,9 +346,9 @@ public class FPTS extends Application {
 
 
         //Logout Button
-         aButton = new Button();
+        aButton = new Button();
         aButton.setText("Log out");
-         //Setting an action for the logout button
+        //Setting an action for the logout button
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -393,19 +369,19 @@ public class FPTS extends Application {
         return nav;
     }
 
-    public static void setSimulationValue(double value){
+    public static void setSimulationValue(double value) {
         simulationValue = value;
     }
 
-    public static double getSimulationValue(){
+    public static double getSimulationValue() {
         return simulationValue;
     }
 
-    public static void setCurrentSimulator(Simulator curSim){
+    public static void setCurrentSimulator(Simulator curSim) {
         currentSimulator = curSim;
     }
 
-    public static Simulator getCurrentSimulator(){
+    public static Simulator getCurrentSimulator() {
         return currentSimulator;
     }
 }

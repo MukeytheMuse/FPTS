@@ -5,19 +5,15 @@
  */
 package model;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
- *
  * @author ericepstein
- * Modified by: Kimberly Sookoo
+ *         Modified by: Kimberly Sookoo
  */
 public class User {
     private String loginID;
@@ -25,12 +21,13 @@ public class User {
     private Portfolio myPortfolio;
     private static ArrayList<User> userList = new ArrayList<User>();//Holds All Registered Users
 
-        /**
-         * When creating a new portfolio, the system shall allow the user to
-         * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
-         * @param loginID - String - Login ID of of the User.
-         * @param password - String - Password of the User, stored in a hashed setting.
-         */
+    /**
+     * When creating a new portfolio, the system shall allow the user to
+     * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
+     *
+     * @param loginID  - String - Login ID of of the User.
+     * @param password - String - Password of the User, stored in a hashed setting.
+     */
     public User(String loginID, String password) {
         this.loginID = loginID;
         this.password = hash(password);
@@ -70,41 +67,54 @@ public class User {
     /**
      * Public method used to populate the users ArrayList<User> from the UserData.csv file.
      */
-    public static void fillUsers(){
-        Scanner scanner = new Scanner(new File("JavaFXApp/src/model/Database/UserData.csv").getAbsolutePath());
+    public static void fillUsers() {
+        String csv = "JavaFXApp/src/model/DataBase/UserData.csv";
+        BufferedReader reader = null;
+        String line;
 
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if(line.contains(",")){
-                //System.out.println(line);
-                String[] splitLine = line.split(",");
-                //System.out.println(splitLine[0]);
-                User newUser = new User(splitLine[0], splitLine[1]);
+        try {
+            reader = new BufferedReader(new FileReader(csv));
+            while ((line = reader.readLine()) != null) {
+                String[] split = line.split(",");
+                User newUser = new User(split[0], unHash(split[1]));
                 userList.add(newUser);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("src/model/DataBase/UserData.csv not found! Please try again.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
     }
 
-    public boolean validateUser(){
-        for(User usr : userList){
-            if(this.equals(usr)){
+    public boolean validateUser() {
+        System.out.println("MY USER: " + this.getLoginID() + " " + this.getPassword());
+        for (User usr : userList) {
+            System.out.println("USER: " + usr.getLoginID() + " " + usr.getPassword());
+            if (this.equals(usr)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean ValidLoginID(String id){
-        for(User usr : userList){
-            if(usr.getLoginID().equals(id)){
+    public static boolean ValidLoginID(String id) {
+        for (User usr : userList) {
+            if (usr.getLoginID().equals(id)) {
                 return false;
             }
         }
         return true;
     }
 
-    public static void addToList(User u){
+    public static void addToList(User u) {
         userList.add(u);
     }
 

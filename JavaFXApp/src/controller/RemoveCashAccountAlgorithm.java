@@ -6,23 +6,14 @@
 package controller;
 
 
-import java.util.Date;
-
-import model.CashAccount;
-import gui.FPTS;
-import java.util.Observable;
-import java.util.Observer;
-
-
 /**
- *
  * @author ericepstein
  */
 public class RemoveCashAccountAlgorithm extends CashAccountAlgorithm {
-    
+
     public void action() {
         theFPTS.getPortfolio().remove(c);
         theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
     }
-    
+
 }

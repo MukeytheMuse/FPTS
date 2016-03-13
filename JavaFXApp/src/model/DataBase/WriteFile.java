@@ -5,7 +5,9 @@ import model.Holding;
 import model.Transaction;
 import model.User;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,7 @@ public class WriteFile {
             transFile.createNewFile();
             cashFile.createNewFile();
             holdingsFile.createNewFile();
-            FileWriter writerT = new FileWriter(transFile,true);
+            FileWriter writerT = new FileWriter(transFile, true);
             FileWriter writerC = new FileWriter(cashFile, true);
             FileWriter writerH = new FileWriter(holdingsFile, true);
 
@@ -74,8 +76,8 @@ public class WriteFile {
             ArrayList<Holding> holding = user.getMyPortfolio().getHoldings();
             for (int i = 0; i < holding.size(); i++) {
                 bufferedWriter.write("\"" + holding.get(i).getSymbol() + "\",\"" + holding.get(i).getHoldingName() + "\",\"" +
-                holding.get(i).getValuePerShare() + "\"," + holding.get(i).getNumOfShares() + "\",\"" +
-                holding.get(i).getAcquisitionDate() + "\",\"" + holding.get(i).getIndices() + "\",\"" +
+                        holding.get(i).getValuePerShare() + "\"," + holding.get(i).getNumOfShares() + "\",\"" +
+                        holding.get(i).getAcquisitionDate() + "\",\"" + holding.get(i).getIndices() + "\",\"" +
                         holding.get(i).getSectors() + "\"");
                 bufferedWriter.newLine();
             }
@@ -94,7 +96,7 @@ public class WriteFile {
             ArrayList<CashAccount> cashAccounts = user.getMyPortfolio().getCashAccounts();
             for (int i = 0; i < cashAccounts.size(); i++) {
                 bufferedWriter.write("\"" + cashAccounts.get(i).getAccountName() + "\",\"" + cashAccounts.get(i).getValue() +
-                "\",\"" + cashAccounts.get(i).getDateAdded() + "\"");
+                        "\",\"" + cashAccounts.get(i).getDateAdded() + "\"");
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();

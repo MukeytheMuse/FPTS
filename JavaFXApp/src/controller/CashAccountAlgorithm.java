@@ -6,30 +6,30 @@
 package controller;
 
 import gui.FPTS;
-import java.util.Observable;
-import java.util.Observer;
 import model.CashAccount;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
- *
  * @author ericepstein
  */
 abstract public class CashAccountAlgorithm implements Observer {
-    
+
     protected CashAccount c;
     protected FPTS theFPTS;
-    
+
     public void process(FPTS theFPTS) {
-        c = new CashAccount("",0,null);
+        c = new CashAccount("", 0, null);
         this.theFPTS = theFPTS;
         CashAccountFinder caFinder = new CashAccountFinder(theFPTS, c);
         caFinder.addObserver(this);
     }
-  
+
     public void update(Observable o, Object args) {
         action();
     }
-    
+
     abstract void action();
-    
+
 }

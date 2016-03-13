@@ -1,7 +1,7 @@
 package model.DataBase;
 
-import model.EquityComponent;
 import model.Equity;
+import model.EquityComponent;
 import model.EquityComposite;
 
 import java.io.BufferedReader;
@@ -15,11 +15,10 @@ import java.util.List;
 /**
  * Created by kimberlysookoo on 2/17/16.
  * Re-purposed by Ian
- *
  */
 public class ReadFile {
     public static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
-    public static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY","HEALTH CARE","TRANSPORTATION"));
+    public static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
     public static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     /**
@@ -27,41 +26,41 @@ public class ReadFile {
      *
      * @return list of all Equity objects
      */
-    public static ArrayList<EquityComponent> readEquity(){
+    public static ArrayList<EquityComponent> readEquity() {
         readInFile();
         ArrayList<EquityComponent> allEquities = new ArrayList<>();
         ArrayList<EquityComposite> CompositeEquities = loadCompositeList();
         allEquities.addAll(CompositeEquities);
 
         // iterate through each line representing an equity
-        for( String[] line : splitFile){
+        for (String[] line : splitFile) {
             ArrayList<String> indices = new ArrayList<String>();
             ArrayList<String> sectors = new ArrayList<String>();
             Equity curEquity = new Equity(line[0], line[1], Double.parseDouble(line[2]), indices, sectors);
             // iterate through fields of current equity
-            for( int i = 3; i < line.length; i++ ){
+            for (int i = 3; i < line.length; i++) {
                 // finance, technology, health care, transportation
-                if (sectorList.contains(line[i])){
+                if (sectorList.contains(line[i])) {
                     sectors.add(line[i]);
                     // add to sector composite
                     try {
-                        for(EquityComposite ec : CompositeEquities ){
-                            if(ec.getEquityType().equals("Sector") & ec.getEquityName().equals(line[i])){
-                                ec.add((EquityComponent)curEquity);
+                        for (EquityComposite ec : CompositeEquities) {
+                            if (ec.getEquityType().equals("Sector") & ec.getEquityName().equals(line[i])) {
+                                ec.add((EquityComponent) curEquity);
                             }
                         }
                     } catch (Exception e) {
                         System.out.println("sector composite object not found! Please try again.");
-                }
+                    }
                 }
                 // dow, nasdaq100
-                else if (indexList.contains(line[i])){
+                else if (indexList.contains(line[i])) {
                     indices.add(line[i]);
                     //add to index composite
                     try {
-                        for(EquityComposite ec : CompositeEquities ){
-                            if(ec.getEquityType().equals("Index") & ec.getEquityName().equals(line[i])){
-                                ec.add((EquityComponent)curEquity);
+                        for (EquityComposite ec : CompositeEquities) {
+                            if (ec.getEquityType().equals("Index") & ec.getEquityName().equals(line[i])) {
+                                ec.add((EquityComponent) curEquity);
                             }
                         }
                     } catch (Exception e) {
@@ -76,21 +75,22 @@ public class ReadFile {
 
     /**
      * Created by Ian
+     *
      * @return list of composite Equities
      */
     public static ArrayList<EquityComposite> loadCompositeList() {
         ArrayList<EquityComposite> compositeList = new ArrayList<EquityComposite>();
         // create the bare index composites
-        for( String index : indexList){
+        for (String index : indexList) {
             ArrayList<String> indices = new ArrayList<String>();
             ArrayList<String> sectors = new ArrayList<String>();
-            compositeList.add( new EquityComposite(index, "Index"));
+            compositeList.add(new EquityComposite(index, "Index"));
         }
         // create the bare index composites
-        for( String sector : sectorList){
+        for (String sector : sectorList) {
             ArrayList<String> indices = new ArrayList<String>();
             ArrayList<String> sectors = new ArrayList<String>();
-            compositeList.add( new EquityComposite(sector, "Sector"));
+            compositeList.add(new EquityComposite(sector, "Sector"));
         }
         return compositeList;
     }
@@ -104,7 +104,7 @@ public class ReadFile {
         try {
             reader = new BufferedReader(new FileReader(csv));
             while ((line = reader.readLine()) != null) {
-                line = line.substring(1,line.length()-1);
+                line = line.substring(1, line.length() - 1);
                 String[] split = line.split("\",\"");
                 splitFile.add(split);
             }

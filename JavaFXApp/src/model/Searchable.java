@@ -5,21 +5,18 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 /**
- *
- * Defines an interface that accesses a display name. Allows objects of 
+ * Defines an interface that accesses a display name. Allows objects of
  * different types to be processed in the same algorithm.
- * 
+ *
  * @author Eric Epstein
  */
 public interface Searchable {
-    
+
     /**
-    * Returns a displayable name
-    *
-    * @param String
-    */
-    public String getDisplayName();;
+     * Returns a displayable name
+     */
+    public String getDisplayName();
+
+    ;
 }

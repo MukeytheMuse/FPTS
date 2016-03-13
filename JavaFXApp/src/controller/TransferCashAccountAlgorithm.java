@@ -5,53 +5,55 @@
  */
 package controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Observable;
 import model.CashAccount;
 import model.Deposit;
 import model.Transaction;
 import model.Withdrawal;
 
+import java.util.ArrayList;
+import java.util.Observable;
+
 /**
- *
  * @author ericepstein
  */
 public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
-    
+
     CashAccount c2;
     protected ArrayList<Double> amounts;
-   
+
     static int numCalled = 0;
-    
+
     public void action() {
-        c2 = new CashAccount("",0,null);
+        c2 = new CashAccount("", 0, null);
         CashAccountFinder caFinder = new CashAccountFinder(theFPTS, c2);
-        caFinder.addObserver(this);  
+        caFinder.addObserver(this);
     }
-    
+
     public void update(Observable o, Object args) {
-        
+
         numCalled++;
-        
+
         switch (numCalled) {
-            case(1) :   super.update(o, args);
-                        break;
-            case(2) :   getAmountInput();
-                        break;
-            case(3) :   performTransaction();
-                        break;
+            case (1):
+                super.update(o, args);
+                break;
+            case (2):
+                getAmountInput();
+                break;
+            case (3):
+                performTransaction();
+                break;
         }
     }
-  
+
     public void getAmountInput() {
         amounts = new ArrayList<Double>();
         AmountInput amountInput = new AmountInput(theFPTS, amounts);
         amountInput.addObserver(this);
     }
-    
+
     public void performTransaction() {
-       
+
         double amount = amounts.get(0);
         if (c.getValue() >= amount) {
             Transaction t = new Withdrawal(c, amount);
@@ -62,10 +64,10 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         } else {
             theFPTS.getStage().setScene(theFPTS.getErrorScene());
         }
-    
+
         numCalled = 0;
-        
-        
+
+
     }
-    
+
 }

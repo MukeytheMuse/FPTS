@@ -18,7 +18,7 @@ public class NoGrowthSimulator implements Simulator {
     /**
      *
      */
-    public NoGrowthSimulator(int numSteps, String interval, boolean hasSteps){
+    public NoGrowthSimulator(int numSteps, String interval, boolean hasSteps) {
         this.interval = interval;
         this.hasSteps = hasSteps;
         this.numSteps = numSteps;
@@ -26,8 +26,8 @@ public class NoGrowthSimulator implements Simulator {
     }
 
     //TODO: CHECK IF IT HAS STEPS.
+
     /**
-     *
      * @return
      */
     public double simulate() {

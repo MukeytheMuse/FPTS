@@ -18,13 +18,12 @@ public class BullSimulator implements Simulator {
     private double currentPercentIncrease;
 
     /**
-     *
      * @param numSteps
      * @param interval
      * @param hasSteps
      * @param pricePerYearPercentage
      */
-    public BullSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage){
+    public BullSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage) {
         this.interval = interval;
         this.hasSteps = hasSteps;
         this.numSteps = numSteps;
@@ -34,26 +33,26 @@ public class BullSimulator implements Simulator {
 
 
     //TODO: CHECK IF IT HAS STEPS.
+
     /**
-     *
      * @return
      */
     public double simulate() {
         double valueCount = 0;
         //Finds the percentage increase based on the time interval.
-        if(interval.equals("Day")){
+        if (interval.equals("Day")) {
             currentPercentIncrease = pricePerYear / 365;
-        } else if(interval.equals("Month")){
+        } else if (interval.equals("Month")) {
             currentPercentIncrease = pricePerYear / 12;
         } else {
             currentPercentIncrease = pricePerYear;
         }
 
 
-        if(hasSteps){
+        if (hasSteps) {
 
         } else {//This simulation has no steps
-            for(Holding h: holdings){
+            for (Holding h : holdings) {
                 valueCount += currentPercentIncrease * h.getValue();
             }
         }

@@ -1,37 +1,38 @@
 package model;
 
-import java.util.ArrayList;
 import model.DataBase.ReadFile;
 
+import java.util.ArrayList;
+
 /**
- * Searchable and available to be purchased by the user. 
- * Contains information about the ticker symbol, equity name, 
+ * Searchable and available to be purchased by the user.
+ * Contains information about the ticker symbol, equity name,
  * the value per share, the market sector, and the index.
- * 
+ *
  * @author Epstein & Ian London
  */
 public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
-    
+
     /*
     * the identifying symbol
     */
     private String tickerSymbol;
-    
+
     /*
     * the identifying name
     */
     private String equityName;
-    
+
     /*
     * price per share
     */
     private double pricePerShare;
-    
+
     /*
     * collection of indices
     */
     public ArrayList<String> indices;
-    
+
     /*
     * collection of sectors
     */
@@ -46,7 +47,7 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     * collection of Equity that matches a search criteria
     */
     private ArrayList<Equity> matches;
-    
+
     /*
     * getEquityList() returns equities 
     */
@@ -70,7 +71,7 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
         this.indices = indices;
         this.sectors = sectors;
     }
-    
+
     /*
     * getDisplayName returns ticker symbol
     *
@@ -81,78 +82,74 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     }
 
     /**
-    * getValuePerShare returns price per share
-    *
-    * @return pricePerShare - double
-    */
+     * getValuePerShare returns price per share
+     *
+     * @return pricePerShare - double
+     */
     @Override
     public double getValuePerShare() {
         return pricePerShare;
     }
-   
+
     /**
-    * getEquityName returns equity name
-    *
-    * @return equityName - String
-    */
+     * getEquityName returns equity name
+     *
+     * @return equityName - String
+     */
     @Override
     public String getEquityName() {
         return equityName;
     }
-    
+
     /**
-     * 
      * @return equityName - String
      */
     @Override
     public String getHoldingName() {
         return equityName;
     }
-    
+
     /**
-     * 
-     * @return tickerSymbol - String 
+     * @return tickerSymbol - String
      */
     @Override
     public String getTickerSymbol() {
         return tickerSymbol;
     }
-    
+
     /**
-     * 
      * @return sectors - ArrayList<String>
      */
     @Override
     public ArrayList<String> getSectors() {
         return sectors;
     }
-    
+
     /**
-     * 
-     * @return  indices - ArrayList<String>
+     * @return indices - ArrayList<String>
      */
     @Override
     public ArrayList<String> getIndices() {
         return indices;
     }
-    
+
     /**
-     * 
      * @param e - EquityComponent
-     * 
-     * overrides EquityComponent but does nothing because
-     * Equity is a leaf node
+     *          <p>
+     *          overrides EquityComponent but does nothing because
+     *          Equity is a leaf node
      */
     @Override
-    public void add(EquityComponent e) { }
-    
+    public void add(EquityComponent e) {
+    }
+
     /**
-     * 
      * @param e - EquityComponent
-     * 
-     * overrides EquityComponent but does nothing because
-     * Equity is a leaf node
+     *          <p>
+     *          overrides EquityComponent but does nothing because
+     *          Equity is a leaf node
      */
     @Override
-    public void remove(EquityComponent e) { }
+    public void remove(EquityComponent e) {
+    }
 }

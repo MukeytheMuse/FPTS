@@ -5,24 +5,18 @@
  */
 package controller;
 
+import model.*;
+
 import java.util.ArrayList;
-import java.util.Date;
-import model.Deposit;
-import model.Holding;
-import model.Portfolio;
-import model.Searchable;
-import model.Transaction;
-import model.Withdrawal;
 
 /**
- *
  * @author ericepstein
  */
 public class SellHoldingAlgorithm extends HoldingAlgorithm {
- 
+
     private Portfolio p;
     private ArrayList<Searchable> toBeSearched;
-    
+
     @Override
     public void establishContext() {
         //this.theFPTS = theFPTS;
@@ -30,13 +24,13 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
         toBeSearched = p.getHoldingSearchables();
         //System.out.println(""+theFPTS.getWidth());
     }
- 
+
     public ArrayList<Searchable> getToBeSearched() {
         //Portfolio p = copyFPTS.getPortfolio();
         //return p.getLoadedSearchables();
         return toBeSearched;
     }
-    
+
     /*
     
     PRECONDITION: CashAccountOfInterest would have already been identified,
@@ -44,25 +38,25 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     checked for valid numOfShares & pricePerShare
     */
     public void processInsideFPTS() {
-       Holding e = (Holding) equityOfInterest; 
-       
-       double accountVal = cashAccountOfInterest.getValue();
+        Holding e = (Holding) equityOfInterest;
 
-       if ( (numOfShares * pricePerShare) > 0 && e.getNumOfShares() >= numOfShares ) {
-           Transaction t = new Deposit(cashAccountOfInterest, numOfShares * pricePerShare);
+        double accountVal = cashAccountOfInterest.getValue();
+
+        if ((numOfShares * pricePerShare) > 0 && e.getNumOfShares() >= numOfShares) {
+            Transaction t = new Deposit(cashAccountOfInterest, numOfShares * pricePerShare);
             p.add(t);
-           e.subtractShares(numOfShares);
-           if (e.getNumOfShares() == 0) {
-               p.remove(e);
-               theStage.setScene(getConfirmationScene());
-           }  
-       } else {
-           mainInput.setText("INVALID");
-       }
+            e.subtractShares(numOfShares);
+            if (e.getNumOfShares() == 0) {
+                p.remove(e);
+                theStage.setScene(getConfirmationScene());
+            }
+        } else {
+            mainInput.setText("INVALID");
+        }
     }
-     
+
     public void processOutsideFPTS() {
-        Holding e = (Holding) equityOfInterest; 
+        Holding e = (Holding) equityOfInterest;
         if (e.getNumOfShares() > numOfShares) {
             e.subtractShares(numOfShares);
         } else if (e.getNumOfShares() == numOfShares) {
@@ -72,7 +66,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             mainInput.setText("INVALID");
         }
 
-       
-   }
-    
+
+    }
+
 }

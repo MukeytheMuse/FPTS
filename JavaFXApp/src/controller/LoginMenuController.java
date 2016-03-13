@@ -22,10 +22,12 @@ public abstract class LoginMenuController implements Initializable {
     /**
      * A Local variable to access the MenuBar located in the FXML documents for this FPTS application.
      */
-    @FXML MenuBar myMenuBar;
+    @FXML
+    MenuBar myMenuBar;
 
     /**
      * Handler for when the Logout button is pressed in the Menu Bar
+     *
      * @param event - ActionEvent - Event that caused this function to be called.
      * @throws IOException - Throws IO Exception if the LoginPage.fxml is not found by the program.
      */
@@ -35,6 +37,7 @@ public abstract class LoginMenuController implements Initializable {
 
     /**
      * Handler for when the Exit button is pressed in the Menu Bar
+     *
      * @param event - ActionEvent - Event that caused this function to be called.
      */
     public void handleExitMenuItemPressed(ActionEvent event) {
@@ -44,6 +47,7 @@ public abstract class LoginMenuController implements Initializable {
 
     /**
      * Handler for when the About button is pressed in the Menu Bar
+     *
      * @param event - ActionEvent - Event that caused this function to be called.
      */
     public void handleAboutMenuItemPressed(ActionEvent event) {
@@ -52,6 +56,7 @@ public abstract class LoginMenuController implements Initializable {
 
     /**
      * Additional function used in this application to return the application to the Login Page.
+     *
      * @param event - ActionEvent - Event that caused the super function to be called, used to get the current Stage.
      * @throws IOException - Throws IO Exception if the LoginPage.fxml cannot be found.
      */
@@ -60,7 +65,7 @@ public abstract class LoginMenuController implements Initializable {
         Stage stage = new Stage();
         try {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        }catch (ClassCastException c) {
+        } catch (ClassCastException c) {
             stage = (Stage) myMenuBar.getScene().getWindow();
 
         }

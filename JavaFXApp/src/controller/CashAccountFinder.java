@@ -6,10 +6,6 @@
 package controller;
 
 import gui.FPTS;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,18 +18,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.CashAccount;
-import model.CashAccountSearcher;
-import model.Portfolio;
-import model.Searchable;
-import model.Searcher;
+import model.*;
+
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
- *
  * @author ericepstein
  */
 public class CashAccountFinder extends Observable implements Observer {
-    
+
     VBox matchDisplay;
     FPTS theFPTS;
     int WIDTH;
@@ -41,15 +36,15 @@ public class CashAccountFinder extends Observable implements Observer {
     TextField mainInput;
     Searcher s;
     CashAccount c;
-    
+
     public CashAccountFinder(FPTS theFPTS, CashAccount c) {
         mainInput = new TextField();
         matchDisplay = new VBox();
         s = new CashAccountSearcher();
         this.s.addObserver(this);
-        
+
         this.c = c;
-        
+
         WIDTH = theFPTS.getWidth();
         HEIGHT = theFPTS.getHeight();
         this.theFPTS = theFPTS;
@@ -57,26 +52,26 @@ public class CashAccountFinder extends Observable implements Observer {
         Stage theStage = theFPTS.getStage();
         matchDisplay.getChildren().clear();
         mainInput.setText("");
-        
+
         Scene searchScene = getSearchScene(p.getCashAccountSearchables(), getCashAccountQueries());
         theStage.setScene(searchScene);
-        
+
     }
-    
+
     public Scene getSearchScene(ArrayList<Searchable> toBeSearched, VBox queries) {
-       
+
         VBox splitPage = new VBox();
-        
+
         VBox searchPane = new VBox();
-        
+
         Button actionBtn = new Button();
         actionBtn.setVisible(false);
         actionBtn.setText("Proceed");
         actionBtn.setOnAction(new EventHandler<ActionEvent>() {
-               @Override
-               public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
                 if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
-                    
+
                     c.overwrite((CashAccount) s.getMatch(mainInput.getText()));
                     setChanged();
                     notifyObservers();
@@ -94,7 +89,7 @@ public class CashAccountFinder extends Observable implements Observer {
                 //p.setMatches(queries.getChildren());
             }
         });
-        
+
         HBox forAction = new HBox();
         forAction.getChildren().addAll(queries, actionBtn);
         searchPane.getChildren().addAll(forAction, searchBtn, matchDisplay);
@@ -107,24 +102,24 @@ public class CashAccountFinder extends Observable implements Observer {
     * Define methods related to creation for parts of views
     *
     */
-    
+
     public HBox createInputField(String description, TextField input) {
         HBox aField = new HBox();
         Label descriptionLabel = new Label(description);
-        ObservableList<String> attributes = 
-            FXCollections.observableArrayList(
-                "",
-                "contains",
-                "starts with",
-                "exactly matches"
-        );
+        ObservableList<String> attributes =
+                FXCollections.observableArrayList(
+                        "",
+                        "contains",
+                        "starts with",
+                        "exactly matches"
+                );
         ComboBox searchConditions = new ComboBox(attributes);
         searchConditions.getSelectionModel().select(0);
         aField.getChildren().addAll(descriptionLabel, searchConditions, input);
         aField.setSpacing(10);
         return aField;
     }
-    
+
     public VBox getCashAccountQueries() {
         VBox queries = new VBox();
         queries.getChildren().add(createInputField("Account name: ", mainInput));
@@ -136,12 +131,12 @@ public class CashAccountFinder extends Observable implements Observer {
     * Defines methods related to the Observer pattern
     *
     */
-    
+
     @Override
     public void update(Observable o, Object arg) {
         displayMatches(s.getMatches());
     }
-    
+
     public void displayMatches(ArrayList<Searchable> matches) {
         //given the list
         matchDisplay.getChildren().clear();
@@ -156,7 +151,7 @@ public class CashAccountFinder extends Observable implements Observer {
                 }
             });
             matchDisplay.getChildren().add(item);
-        }   
-        
+        }
+
     }
 }

@@ -8,11 +8,10 @@ package controller;
 import gui.FPTS;
 
 /**
- *
  * @author ericepstein
  */
 public interface Displayer {
-    
+
     public void display(FPTS theFPTS);
-    
+
 }

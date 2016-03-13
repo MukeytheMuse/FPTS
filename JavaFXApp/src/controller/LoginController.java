@@ -2,6 +2,7 @@ package controller;
 /**
  * Created by nveil_000 on 3/10/2016.
  */
+
 import gui.FPTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,23 +32,30 @@ public class LoginController extends LoginMenuController {
      * Private variables representing the input of the user ID and password on both login and registration as well
      * as a label that is used to output error messages to the user.
      */
-    @FXML private Label error;
-    @FXML private PasswordField password;
-    @FXML private TextField userid;
-    @FXML private PasswordField password1;
+    @FXML
+    private Label error;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private TextField userid;
+    @FXML
+    private PasswordField password1;
     FPTS fpts = FPTS.getSelf();
 
     /**
      * Controls the program when the Login button is pressed on the Login page of the application. Validates the user
      * entered correct credentials, and if so logs them in, otherwise one of a few different errors will appear.
+     *
      * @param event - ActionEvent - event that caused this method to be called.
      * @throws IOException - Exception thrown if the HomePage.fxml is not found where it should be.
      */
     @FXML
-    protected void handleLoginButtonPressed(ActionEvent event) throws IOException{
+    protected void handleLoginButtonPressed(ActionEvent event) throws IOException {
         if (userid.getText().length() != 0 && password.getText().length() != 0) {
             User u = new User(userid.getText(), password.getText());
+            System.out.println("BEFORE");
             if (u.validateUser()) {
+                System.out.println("AFTER");
                 fpts.setCurrentUser(u);
                 error.setText("Logging in...");
 
@@ -70,14 +78,15 @@ public class LoginController extends LoginMenuController {
      * Controls the programs actions if the register button is pressed on the Registration page.
      * The user id is checked to ensure it is not already in use in the system, and the registers a new user.
      * A few different error messages are displayed based on different criteria not being met.
+     *
      * @param event - ActionEvent - event that caused this method to be called.
      * @throws IOException - Exception thrown if the HomePage.fxml is not found where it should be.
      */
     @FXML
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
-        if (userid.getText().length() != 0 && password.getText().length() != 0){
-            if (User.ValidLoginID(userid.getText())){
-                if (password.getText().equals(password1.getText())){
+        if (userid.getText().length() != 0 && password.getText().length() != 0) {
+            if (User.ValidLoginID(userid.getText())) {
+                if (password.getText().equals(password1.getText())) {
                     User usr = new User(userid.getText(), password.getText());
                     fpts.setCurrentUser(usr);
                     addUser(usr);
@@ -103,6 +112,7 @@ public class LoginController extends LoginMenuController {
     /**
      * Controls the program if the clear button is pressed on either of the Login or Registration pages.
      * Clears the text entered in the userid and password fields.
+     *
      * @param event - ActionEvent - event that caused this method to be called.
      */
     @FXML
@@ -114,6 +124,7 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Controls the program when the back button is clicked on the Registration page.
+     *
      * @param event - ActionEvent - event that caused this method to be called.
      * @throws IOException - Exception thrown if the LoginPage.fxml is not found where the program expects.
      */
@@ -124,6 +135,7 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Controls the program when the register button is clicked on the Login page.
+     *
      * @param event - ActionEvent - event that caused this method to be called.
      * @throws IOException - Exception thrown if the RegisterPage.fxml is not found where the program expects.
      */
@@ -163,14 +175,15 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Adds a new user into the UserData.csv file for use in later uses of this application.
+     *
      * @param usr - User - New user object to be added into the text file.
      */
-    private void addUser(User usr){
+    private void addUser(User usr) {
         User.addToList(usr);
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
-            fileWriter = new FileWriter(new File("JavaFXApp/src/model/Database/UserData.csv").getAbsolutePath(),true);
+            fileWriter = new FileWriter(new File("JavaFXApp/src/model/Database/UserData.csv").getAbsolutePath(), true);
             bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(usr.getLoginID() + ",");
             bufferedWriter.write(usr.hash(password1.getText()));

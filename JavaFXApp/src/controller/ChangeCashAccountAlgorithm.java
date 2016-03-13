@@ -9,19 +9,18 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- *
  * @author ericepstein
  */
 abstract public class ChangeCashAccountAlgorithm extends CashAccountAlgorithm {
-    
+
     protected ArrayList<Double> amounts;
-    
+
     public void action() {
         amounts = new ArrayList<Double>();
         AmountInput amountInput = new AmountInput(theFPTS, amounts);
         amountInput.addObserver(this);
     }
-    
+
     public void update(Observable o, Object args) {
         if (amounts != null) {
             performTransaction();
@@ -29,7 +28,7 @@ abstract public class ChangeCashAccountAlgorithm extends CashAccountAlgorithm {
             super.update(o, args);
         }
     }
-    
+
     abstract void performTransaction();
-    
+
 }
