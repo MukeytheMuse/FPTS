@@ -34,7 +34,6 @@ public class User {
     public User(String loginID, String password) {
         this.loginID = loginID;
         this.password = hash(password);
-        userList.add(this);
         this.myPortfolio = new Portfolio();//TODO: check if user wants to import holdings and transactions
     }
 
@@ -72,15 +71,16 @@ public class User {
      * Public method used to populate the users ArrayList<User> from the UserData.csv file.
      */
     public static void fillUsers(){
-        Scanner scanner = new Scanner(new File("UserData.txt").getAbsolutePath());
+        Scanner scanner = new Scanner(new File("JavaFXApp/src/model/Database/UserData.csv").getAbsolutePath());
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if(line.length() != 0){
+            if(line.contains(",")){
                 //System.out.println(line);
                 String[] splitLine = line.split(",");
                 //System.out.println(splitLine[0]);
                 User newUser = new User(splitLine[0], splitLine[1]);
+                userList.add(newUser);
             }
         }
 
@@ -102,6 +102,10 @@ public class User {
             }
         }
         return true;
+    }
+
+    public static void addToList(User u){
+        userList.add(u);
     }
 
     public Portfolio getMyPortfolio() {

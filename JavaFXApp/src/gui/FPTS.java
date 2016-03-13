@@ -79,24 +79,22 @@ public class FPTS extends Application {
         this.currentUser = user;
     }
 
-     /**
-     * start displays the Financial Portfolio Tracking System
+    /**
      *
-     * @param none
-     * 
+     * @param primaryStage
+     * @throws IOException
      */
-    
     @Override
     public void start(Stage primaryStage) throws IOException {
         self = this;
         thestage=primaryStage;
         p = new Portfolio();
 
-        /*
+
         //Fills the User static class with whats in the UserData.txt file
         
-        //User.fillUsers();
-        */
+        User.fillUsers();
+
 
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, WIDTH, HEIGHT);

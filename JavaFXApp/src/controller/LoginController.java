@@ -47,9 +47,7 @@ public class LoginController extends LoginMenuController {
     protected void handleLoginButtonPressed(ActionEvent event) throws IOException{
         if (userid.getText().length() != 0 && password.getText().length() != 0) {
             User u = new User(userid.getText(), password.getText());
-            System.out.println("Before if");
             if (u.validateUser()) {
-                System.out.println("Lalal");
                 fpts.setCurrentUser(u);
                 error.setText("Logging in...");
 
@@ -168,6 +166,7 @@ public class LoginController extends LoginMenuController {
      * @param usr - User - New user object to be added into the text file.
      */
     private void addUser(User usr){
+        User.addToList(usr);
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
