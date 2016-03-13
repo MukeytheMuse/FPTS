@@ -245,12 +245,27 @@ public class FPTS extends Application {
 
         //Portfolio Button
         Button portfolio = new Button();
-        portfolio.setText("Portfolio");
+        portfolio.setText("Display Portfolio");
         //TODO:Action to be set
         portfolio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
+                Displayer pd = new PortfolioDisplayer();
+                pd.display(getSelf());
+            }
+
+        });
+        nav.getChildren().add(portfolio);
+        
+        //History Button
+        aButton = new Button();
+        aButton.setText("History");
+        //TODO:Action to be set
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Displayer td = new TransactionDisplayer();
+                td.display(getSelf());
             }
 
         });
