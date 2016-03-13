@@ -186,6 +186,12 @@ public class FPTS extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if (args.length == 2) {
+            if (args[0].equals("-delete")) {
+                String userID = args[1];
+                //do deletion
+            }
+        }
         launch(args);
     }
     
@@ -205,7 +211,7 @@ public class FPTS extends Application {
         aButton.setText("Home");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle( ActionEvent event ) {
                 thestage.setScene(getHomeScene());
             }
         });
@@ -237,13 +243,25 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
 
+        //Portfolio Button
+        Button portfolio = new Button();
+        portfolio.setText("Portfolio");
+        //TODO:Action to be set
+        portfolio.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
+            }
+
+        });
+        nav.getChildren().add(portfolio);
         
         //Remove Cash Account Button
         aButton = new Button();
         aButton.setText("Remove Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle( ActionEvent event ) {
                 cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -256,7 +274,7 @@ public class FPTS extends Application {
         aButton.setText("Deposit");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle( ActionEvent event ) {
                 cashAccountAlgorithm = new DepositCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -269,7 +287,7 @@ public class FPTS extends Application {
         aButton.setText("Withdraw");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle( ActionEvent event ) {
                 cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -282,7 +300,7 @@ public class FPTS extends Application {
         aButton.setText("Transfer");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle( ActionEvent event ) {
                 cashAccountAlgorithm = new TransferCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -295,52 +313,12 @@ public class FPTS extends Application {
         aButton.setText("Create Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle( ActionEvent event ) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
-
-
-        //Portfolio Button
-        createPortfolio = new Button();
-        removePortfolio = new Button();
-
-        createPortfolio.setText("Create Portfolio");
-        removePortfolio.setText("Remove Portfolio");
-        try {
-            if (!(currentUser.hasPortfolio())) {
-                nav.getChildren().add(createPortfolio);
-                //TODO:Action to be set
-                createPortfolio.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        nav.getChildren().add(removePortfolio);
-                        nav.getChildren().remove(createPortfolio);
-                        try {
-                            currentUser.createPortfolioForUser();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                });
-            }
-        } catch (IOException e) {
-
-        }
-
-        removePortfolio.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                nav.getChildren().add(createPortfolio);
-                nav.getChildren().remove(removePortfolio);
-                currentUser.removePortfolioForUser();
-            }
-
-        });
-
        
         //Logout Button
          aButton = new Button();
