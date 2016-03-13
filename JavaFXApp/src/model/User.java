@@ -110,7 +110,7 @@ public class User {
     /*
     Private method that checks to see if customer has a portfolio
     */
-    public boolean hasPortfolio() throws IOException {
+    public boolean hasPortfolio()   {
         boolean created = false;
         String line;
 
@@ -119,11 +119,12 @@ public class User {
             if (this.equals(user)) {
 
                 try {
-
-                    BufferedReader reader = new BufferedReader(new FileReader(new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID() + ".txt").getAbsolutePath()));
+                    String directory = "JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID() + "/Trans.csv";
+                    System.out.println(directory);
+                    BufferedReader reader = new BufferedReader(new FileReader(directory));
                     while ((line = reader.readLine()) != null) {
                         if (line.length() != 0) {
-                            String[] splitLine = line.split("\n");
+                            String[] splitLine = line.split(",");
                             System.out.println(splitLine[0]);
                             if (splitLine[0].equals(user.getLoginID())) {
                                 created = true;
@@ -131,7 +132,7 @@ public class User {
                         }
                     }
 
-                } catch (FileNotFoundException e) {
+                } catch (Exception e) {
                     System.out.println("Not found! Creating new file!");
                 }
             }
@@ -143,7 +144,7 @@ public class User {
     /*
    Public method that creates portfolio for customer.
    */
-    public void createPortfolioForUser() throws IOException {
+    public void createPortfolioForUser() {
         BufferedWriter bufferedWriter = null;
 
         for (User user : userList) {
@@ -165,12 +166,11 @@ public class User {
                     holdingsFile.createNewFile();
                     FileWriter writer = new FileWriter(transFile,true);
                     bufferedWriter = new BufferedWriter(writer);
-                    bufferedWriter.write(user.getLoginID());
-                    bufferedWriter.newLine();
+                    bufferedWriter.write(user.getLoginID() + ",");
                     bufferedWriter.write("true");
                     bufferedWriter.newLine();
                     bufferedWriter.close();
-                } catch (IOException e1) {
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
 
@@ -187,16 +187,15 @@ public class User {
 
         for (User user : userList) {
             if (this.equals(user)) {
-                File directory = new File("JavaFXApp/src/model/Database/Portfolios");
-                File userDir = new File(directory, "/" + this.getLoginID());
-                File transFile = new File(userDir, "Trans.csv");
-                File cashFile = new File(userDir, "Cash.csv");
-                File holdingsFile = new File(userDir, "Holdings.csv");
+                File directory = new File("JavaFXApp/src/model/Database/Portfolios/");
+                File userDir = new File(directory, this.getLoginID());
+                File transFile = new File(userDir, "/Trans.csv");
+                File cashFile = new File(userDir, "/Cash.csv");
+                File holdingsFile = new File(userDir, "/Holdings.csv");
                 transFile.delete();
                 cashFile.delete();
                 holdingsFile.delete();
                 userDir.delete();
-                System.out.println("Check to see if file is gone.");
 
             }
         }

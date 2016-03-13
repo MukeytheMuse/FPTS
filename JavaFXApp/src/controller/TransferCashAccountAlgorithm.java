@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import model.CashAccount;
@@ -39,7 +40,7 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
             case(2) :   getAmountInput();
                         break;
             case(3) :   performTransaction();
-                        break; 
+                        break;
         }
     }
   

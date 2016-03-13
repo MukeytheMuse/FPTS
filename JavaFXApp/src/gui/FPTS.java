@@ -269,7 +269,7 @@ public class FPTS extends Application {
             }
 
         });
-        nav.getChildren().add(portfolio);
+        //nav.getChildren().add(portfolio);
         
         //Remove Cash Account Button
         aButton = new Button();
@@ -315,7 +315,7 @@ public class FPTS extends Application {
         aButton.setText("Transfer");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new TransferCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -334,6 +334,26 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
+
+        Button managePortfolio = new Button();
+        managePortfolio.setText("Add Portfolio");
+
+        managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                if (currentUser.hasPortfolio()) {
+                    currentUser.removePortfolioForUser();
+                    managePortfolio.setText("Add portfolio");
+                } else {
+                    currentUser.createPortfolioForUser();
+                    managePortfolio.setText("Remove portfolio");
+                }
+            }
+
+        });
+        nav.getChildren().add(managePortfolio);
+
        
         //Logout Button
          aButton = new Button();
