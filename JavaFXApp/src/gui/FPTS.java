@@ -339,8 +339,13 @@ public class FPTS extends Application {
         nav.getChildren().add(aButton);
 
         Button managePortfolio = new Button();
-        managePortfolio.setText("Add Portfolio");
         WriteFile writeFile = new WriteFile();
+
+        if (writeFile.hasPortfolio(currentUser)) {
+            managePortfolio.setText("Remove Portfolio");
+        } else {
+            managePortfolio.setText("Add Portfolio");
+        }
 
         managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -348,10 +353,10 @@ public class FPTS extends Application {
 
                 if (writeFile.hasPortfolio(currentUser)) {
                     writeFile.removePortfolioForUser(currentUser);
-                    managePortfolio.setText("Add portfolio");
+                    managePortfolio.setText("Add Portfolio");
                 } else {
                     writeFile.createPortfolioForUser(currentUser);
-                    managePortfolio.setText("Remove portfolio");
+                    managePortfolio.setText("Remove Portfolio");
                 }
             }
 
