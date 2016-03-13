@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Portfolio;
 import model.User;
 
 import java.io.BufferedWriter;
@@ -54,7 +55,6 @@ public class LoginController extends LoginMenuController {
             if (u.validateUser()) {
                 fpts.setCurrentUser(u);
                 error.setText("Logging in...");
-
                 Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
                 Scene scene = new Scene(parent);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

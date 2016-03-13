@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static model.DataBase.ReadFile.readHoldings;
+
 /**
  * Holds an individual equity acquisition made by the user of the application.
  * Stores the ticker symbol, name, sectors, and indices, value per share,
@@ -57,12 +59,18 @@ public class Holding implements Searchable, HoldingUpdatable {
     */
     private ArrayList<String> sectors;
 
+    /*
+    *
+    */
+    public static ArrayList<Holding> holdingArrayList = readHoldings();
+
+
     /**
-     * Constructor used when a user manually adds a Holding.
-     *
-     * @author Eric Epstein and Kaitlyn Brockway
-     */
-    public Holding(String tickerSymbol, String equityName, ArrayList<String> indices, ArrayList<String> sectors, int numOfShares, double valuePerShare, Date acquisitionDate) {
+    * Constructor used when a user manually adds a Holding.
+    * 
+    * @author Eric Epstein and Kaitlyn Brockway
+    */
+    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, Date acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors){
         this.tickerSymbol = tickerSymbol;
         this.holdingName = equityName;
         this.numOfShares = numOfShares;
