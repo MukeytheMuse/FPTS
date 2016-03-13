@@ -7,6 +7,7 @@ package gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
+import model.DataBase.WriteFile;
 import model.User;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -278,7 +279,7 @@ public class FPTS extends Application {
         aButton.setText("Remove Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -291,7 +292,7 @@ public class FPTS extends Application {
         aButton.setText("Deposit");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new DepositCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -304,7 +305,7 @@ public class FPTS extends Application {
         aButton.setText("Withdraw");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
                 cashAccountAlgorithm.process(self);
                 //eqUpdater.process(self);
@@ -330,7 +331,7 @@ public class FPTS extends Application {
         aButton.setText("Create Cash Account");
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle( ActionEvent event ) {
+            public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
                 //eqUpdater.process(self);
             }
@@ -339,16 +340,17 @@ public class FPTS extends Application {
 
         Button managePortfolio = new Button();
         managePortfolio.setText("Add Portfolio");
+        WriteFile writeFile = new WriteFile();
 
         managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                if (currentUser.hasPortfolio()) {
-                    currentUser.removePortfolioForUser();
+                if (writeFile.hasPortfolio(currentUser)) {
+                    writeFile.removePortfolioForUser(currentUser);
                     managePortfolio.setText("Add portfolio");
                 } else {
-                    currentUser.createPortfolioForUser();
+                    writeFile.createPortfolioForUser(currentUser);
                     managePortfolio.setText("Remove portfolio");
                 }
             }
