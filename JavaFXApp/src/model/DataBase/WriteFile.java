@@ -18,12 +18,10 @@ public class WriteFile {
 
         try {
             String directory = "JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID() + "/Trans.csv";
-            System.out.println(directory);
             BufferedReader reader = new BufferedReader(new FileReader(directory));
             while ((line = reader.readLine()) != null) {
                 if (line.length() != 0) {
                     String[] splitLine = line.split(",");
-                    System.out.println(splitLine[0]);
                     if (splitLine[0].equals(user.getLoginID())) {
                         created = true;
                     }
@@ -44,17 +42,13 @@ public class WriteFile {
         BufferedWriter bufferedWriter = null;
 
         try {
-            File directory = new File("JavaFXApp/src/model/Database/Portfolios");
+            File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
             if (!directory.exists()) {
                 directory.mkdir();
             }
-            File userDir = new File(directory, "/" + user.getLoginID());
-            if (!userDir.exists()) {
-                userDir.mkdir();
-            }
-            File transFile = new File(userDir, "Trans.csv");
-            File cashFile = new File(userDir, "Cash.csv");
-            File holdingsFile = new File(userDir, "Holdings.csv");
+            File transFile = new File(directory, "Trans.csv");
+            File cashFile = new File(directory, "Cash.csv");
+            File holdingsFile = new File(directory, "Holdings.csv");
             transFile.createNewFile();
             cashFile.createNewFile();
             holdingsFile.createNewFile();
@@ -76,16 +70,13 @@ public class WriteFile {
   Public method that removes portfolio for customer.
   */
     public void removePortfolioForUser(User user) {
-
-        File directory = new File("JavaFXApp/src/model/Database/Portfolios/");
-        File userDir = new File(directory, user.getLoginID());
-        File transFile = new File(userDir, "/Trans.csv");
-        File cashFile = new File(userDir, "/Cash.csv");
-        File holdingsFile = new File(userDir, "/Holdings.csv");
+        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        File transFile = new File(directory, "/Trans.csv");
+        File cashFile = new File(directory, "/Cash.csv");
+        File holdingsFile = new File(directory, "/Holdings.csv");
         transFile.delete();
         cashFile.delete();
         holdingsFile.delete();
-        userDir.delete();
-
+        directory.delete();
     }
 }
