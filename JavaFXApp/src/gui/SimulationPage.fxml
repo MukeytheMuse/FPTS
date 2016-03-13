@@ -109,7 +109,7 @@
                         </Label>
                         <Label fx:id="stepNumber" prefHeight="53.0" prefWidth="137.0" GridPane.columnIndex="1"
                                GridPane.halignment="CENTER"/>
-                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="135.0" text="Portfolio Value: "
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="135.0" text="Change in Portfolio Value: "
                                GridPane.halignment="CENTER" GridPane.rowIndex="1">
                             <font>
                                 <Font size="14.0"/>
@@ -130,20 +130,23 @@
                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="1"
                       GridPane.rowIndex="2">
                     <children>
-                        <Button fx:id="step" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                                prefHeight="25.0" prefWidth="170.0" text="Next Step">
+                        <Button fx:id="stepButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                                prefHeight="25.0" prefWidth="170.0" text="Next Step"
+                                onAction="#handleStepButtonPressed">
                             <font>
                                 <Font size="13.0"/>
                             </font>
                         </Button>
-                        <Button fx:id="step1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                                prefHeight="25.0" prefWidth="170.0" text="Reset to Current Prices">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                                prefHeight="25.0" prefWidth="170.0" text="Reset to Current Prices"
+                                onAction="#handleResetToCurrentPricesButtonPressed">
                             <font>
                                 <Font size="13.0"/>
                             </font>
                         </Button>
-                        <Button fx:id="step2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                                prefHeight="25.0" prefWidth="170.0" text="Reset to Simulation Start">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                                prefHeight="25.0" prefWidth="170.0" text="Reset Simulation"
+                                onAction="#handleResetToStartButtonPressed">
                             <font>
                                 <Font size="13.0"/>
                             </font>
