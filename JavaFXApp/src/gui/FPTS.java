@@ -54,56 +54,42 @@ import java.io.File;
  */
 public class FPTS extends Application {
 
+    /*
+    * context data associated with simulation
+    */
     private static double simulationValue;
     private static Simulator currentSimulator;
 
+    /*
+    * constants that describe dimension of display
+    */
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
 
+    /*
+    * stage
+    */
     private Stage thestage;
 
+    /*
+    * associated portfolio
+    */
     public Portfolio p;
 
+    /*
+    * current user
+    */
     private static User currentUser;
 
-    public User getCurrentUser(){
-        return currentUser;
-    }
-
-    public static String getCurrentUserID(){
-        return currentUser.getLoginID();
-    }
-
+    /*
+    * global reference to loginController
+    */
     LoginController loginController;
 
+    /*
+    * copy of itself
+    */
     private static FPTS self;
-
-    /**
-     * Returns self
-     *
-     * @return FPTS
-     */
-    public static FPTS getSelf() {
-        return self;
-    }
-
-    public boolean hasPortfolio(User user){
-        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
-        if (directory.exists()) {
-            return true;
-        }
-        return false;
-    }
-
-    public void setCurrentUser(User user) {
-        this.currentUser = user;
-        WriteFile writeFile = new WriteFile();
-        if (!hasPortfolio(currentUser)) {
-            writeFile.createPortfolioForUser(currentUser);
-        }
-        p = new Portfolio();
-    }
-
 
     /**
      * Starts the application display and loads users
@@ -144,36 +130,13 @@ public class FPTS extends Application {
 
     }
 
-    /**
-     * Returns height of stage
-     *
-     * @return int
-     */
-    public int getHeight() {
-        return HEIGHT;
-    }
-
-    /**
-     * Returns width of stage
-     *
-     * @return int
-     */
-    public int getWidth() {
-        return WIDTH;
-    }
 
 
     /**
-     * Returns primary stage
-     *
-     * @return Stage
-     */
-    public Stage getStage() {
-        return thestage;
-    }
-
-    //returns HBox of relevant scenes
-
+    * Returns home page
+    *
+    * @return Scene
+    */
     public Scene getHomeScene() {
         Scene scene = null;
         try {
@@ -184,6 +147,12 @@ public class FPTS extends Application {
         }
         return scene;
     }
+    
+    /**
+     * Returns scene indicating confirmation of a user's action
+     * 
+     * @return Scene
+     */
 
     public Scene getConfirmationScene() {
         Label confirmation = new Label("Update completed");
@@ -191,7 +160,13 @@ public class FPTS extends Application {
         split.getChildren().addAll(getNav(), confirmation);
         return new Scene(split, WIDTH, HEIGHT);
     }
-
+    
+    /**
+    *
+    * Returns scene indicating error on the part of the user
+    *
+    * @return Scene
+    */
     public Scene getErrorScene() {
         Label confirmation = new Label("Error");
         VBox split = new VBox();
@@ -199,6 +174,11 @@ public class FPTS extends Application {
         return new Scene(split, WIDTH, HEIGHT);
     }
 
+    /**
+    * Returns login page loaded in FXMLLoader
+    *
+    * @return Scene
+    */
     public Scene createLogInScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -207,6 +187,11 @@ public class FPTS extends Application {
         return scene;
     }
 
+    /**
+    * Returns register page loaded in FXMLLoader 
+    *
+    * @return Scene
+    */
     public Scene createRegisterPage() throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
@@ -429,7 +414,15 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
 
-        /* Create/Delete Portfolio Button disabled
+        /* 
+        The following code is commented out
+        because it complies with our current
+        design decision that will be revisited
+        in the next release. 
+        
+        Create/Delete Portfolio Button disabled
+        
+        
         nav.getChildren().add(aButton);
 
         //Button to add/remove Portfolio
@@ -517,6 +510,88 @@ public class FPTS extends Application {
      */
     public static Simulator getCurrentSimulator() {
         return currentSimulator;
+    }
+    
+     /**
+     * Returns current user
+     * 
+     * @return User
+     */
+    public User getCurrentUser(){
+        return currentUser;
+    }
+
+    /**
+     * Returns login ID of current user
+     * 
+     * @return String
+     */
+    public static String getCurrentUserID(){
+        return currentUser.getLoginID();
+    }
+    
+     /**
+     * Returns self
+     *
+     * @return FPTS
+     */
+    public static FPTS getSelf() {
+        return self;
+    }
+
+    /**
+     * Returns indicator of portfolio existence
+     * 
+     * @param user
+     * @return boolean
+     */
+    public boolean hasPortfolio(User user){
+        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        if (directory.exists()) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Sets user object to the current user
+     * 
+     * @param user - User
+     */
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+        WriteFile writeFile = new WriteFile();
+        if (!hasPortfolio(currentUser)) {
+            writeFile.createPortfolioForUser(currentUser);
+        }
+        p = new Portfolio();
+    }
+    
+     /**
+     * Returns height of stage
+     *
+     * @return int
+     */
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    /**
+     * Returns width of stage
+     *
+     * @return int
+     */
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    /**
+     * Returns primary stage
+     *
+     * @return Stage
+     */
+    public Stage getStage() {
+        return thestage;
     }
 }
 
