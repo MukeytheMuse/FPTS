@@ -1,5 +1,6 @@
 package model.DataBase;
 
+import gui.FPTS;
 import model.CashAccount;
 import model.Holding;
 import model.Transaction;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
  * Created by Kimberly Sookoo on 3/2/16.
  */
 public class WriteFile {
+
+    FPTS fpts;
 
     /*
     Public method that checks to see if customer has a portfolio
@@ -65,6 +68,27 @@ public class WriteFile {
         cashFile.delete();
         holdingsFile.delete();
         directory.delete();
+    }
+
+    /*
+    Public method that updates portfolio for given user.
+     */
+    public void updatePortfolioForUser(User user) {
+        try {
+            File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+            File transFile = new File(directory, "Trans.csv");
+            File cashFile = new File(directory, "Cash.csv");
+            File holdingsFile = new File(directory, "Holdings.csv");
+            FileWriter writerT = new FileWriter(transFile, true);
+            FileWriter writerC = new FileWriter(cashFile, true);
+            FileWriter writerH = new FileWriter(holdingsFile, true);
+
+            cashAccountsWriter(user, writerC);
+            holdingsWriter(user, writerH);
+
+            System.out.println("Has anything extra been written?");
+
+        } catch (Exception e) {}
     }
 
     /*

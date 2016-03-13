@@ -120,4 +120,8 @@ public class User {
         return myPortfolio;
     }
 
+    public void setMyPortfolio(Portfolio portfolio) {
+        this.myPortfolio = portfolio;
+    }
+
 }

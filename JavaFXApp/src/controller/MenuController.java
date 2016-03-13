@@ -26,6 +26,7 @@ public abstract class MenuController implements Initializable {
      */
     @FXML
     MenuBar myMenuBar;
+    FPTS fpts = FPTS.getSelf();
 
     /**
      * Handler for when the Logout button is pressed in the Menu Bar
@@ -52,7 +53,8 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleSaveMenuItemPressed(ActionEvent event) {
-        //TODO Save Current Portfolio
+        WriteFile writeFile = new WriteFile();
+        writeFile.updatePortfolioForUser(fpts.getCurrentUser());
     }
 
     /**

@@ -76,6 +76,10 @@ public class FPTS extends Application {
         this.currentUser = user;
     }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
     /**
      * @param primaryStage
      * @throws IOException
@@ -370,6 +374,7 @@ public class FPTS extends Application {
 
         Button managePortfolio = new Button();
         WriteFile writeFile = new WriteFile();
+        currentUser.setMyPortfolio(this.getPortfolio());
 
         if (writeFile.hasPortfolio(currentUser)) {
             managePortfolio.setText("Remove Portfolio");
