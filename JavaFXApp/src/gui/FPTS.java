@@ -62,10 +62,18 @@ public class FPTS extends Application {
 
     private Portfolio p;
 
+    private User currentUser;
+
+    LoginController loginController;
+
     private static FPTS self;
 
     public static FPTS getSelf(){
         return self;
+    }
+
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
     }
 
     @Override
@@ -93,7 +101,6 @@ public class FPTS extends Application {
         
         thestage.setScene(loginScene);
         thestage.show();
-        
         
     }
 
@@ -190,6 +197,8 @@ public class FPTS extends Application {
     public HBox getNav() {
         HBox nav = new HBox();
         Button aButton;
+        Button createPortfolio;
+        Button removePortfolio;
         
         //Home button
         aButton = new Button();
@@ -304,31 +313,6 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-        
-        
-        //Create view all portfolio elements
-        aButton = new Button();
-        aButton.setText("View Portfolio");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle( ActionEvent event ) {
-                PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
-            }
-        });
-        nav.getChildren().add(aButton);
-        
-        //View transaction Button
-        aButton = new Button();
-        aButton.setText("History");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle( ActionEvent event ) {
-                TransactionDisplayer td = new TransactionDisplayer(getSelf());
-                //eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-        
        
         //Logout Button
          aButton = new Button();

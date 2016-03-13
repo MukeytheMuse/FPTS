@@ -2,6 +2,7 @@ package controller;
 /**
  * Created by nveil_000 on 3/10/2016.
  */
+import gui.FPTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,7 @@ public class LoginController extends LoginMenuController{
     @FXML private PasswordField password;
     @FXML private TextField userid;
     @FXML private PasswordField password1;
+    FPTS fpts = FPTS.getSelf();
 
     /**
      * Controls the program when the Login button is pressed on the Login page of the application. Validates the user
@@ -45,12 +47,10 @@ public class LoginController extends LoginMenuController{
     protected void handleLoginButtonPressed(ActionEvent event) throws IOException{
         if (userid.getText().length() != 0 && password.getText().length() != 0) {
             User u = new User(userid.getText(), password.getText());
+            System.out.println("Before if");
             if (u.validateUser()) {
-                //Checks if user has a portfolio
-                if (!(u.hasPortfolio())) {
-                    u.createPortfolioForUser();
-                }
-                //HOME PAGE
+                System.out.println("Lalal");
+                fpts.setCurrentUser(u);
                 error.setText("Logging in...");
 
                 Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
@@ -161,5 +161,4 @@ public class LoginController extends LoginMenuController{
             e1.printStackTrace();
         }
     }
-
 }

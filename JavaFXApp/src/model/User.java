@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -122,7 +123,7 @@ public class User {
                     BufferedReader reader = new BufferedReader(new FileReader(new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID() + ".txt").getAbsolutePath()));
                     while ((line = reader.readLine()) != null) {
                         if (line.length() != 0) {
-                            String[] splitLine = line.split(",");
+                            String[] splitLine = line.split("\n");
                             System.out.println(splitLine[0]);
                             if (splitLine[0].equals(user.getLoginID())) {
                                 created = true;
@@ -155,9 +156,9 @@ public class User {
                     File file = new File(directory, this.getLoginID() + ".txt");
                     file.createNewFile();
                     FileWriter writer = new FileWriter(file,true);
-                    Portfolio p = new Portfolio();
                     bufferedWriter = new BufferedWriter(writer);
-                    bufferedWriter.write(user.getLoginID() + "," + p + ",");
+                    bufferedWriter.write(user.getLoginID());
+                    bufferedWriter.newLine();
                     bufferedWriter.write("true");
                     bufferedWriter.newLine();
                     bufferedWriter.close();
@@ -166,6 +167,23 @@ public class User {
                 }
 
                 System.out.println("Created");
+            }
+        }
+    }
+
+    /*
+  Public method that removes portfolio for customer.
+  */
+    public void removePortfolioForUser() {
+        BufferedWriter bufferedWriter = null;
+
+        for (User user : userList) {
+            if (this.equals(user)) {
+                File directory = new File("JavaFXApp/src/model/Database/Portfolios");
+                File file = new File(directory, this.getLoginID() + ".txt");
+                file.delete();
+                System.out.println("Check to see if file is gone.");
+
             }
         }
     }
