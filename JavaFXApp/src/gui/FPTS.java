@@ -211,6 +211,18 @@ public class FPTS extends Application {
                     writer.close();
                     reader.close();
                     csvTemp.renameTo(csv);
+
+                    File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + userID);
+                    if (directory.exists()) {
+                        System.out.println("Has " + userID + " been deleted?");
+                        File transFile = new File(directory, "/Trans.csv");
+                        File cashFile = new File(directory, "/Cash.csv");
+                        File holdingsFile = new File(directory, "/Holdings.csv");
+                        transFile.delete();
+                        cashFile.delete();
+                        holdingsFile.delete();
+                        directory.delete();
+                    }
                 } catch (Exception e) {
 
                 }
