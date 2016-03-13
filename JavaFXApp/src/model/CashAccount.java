@@ -62,6 +62,7 @@ public class CashAccount implements  Searchable {
     
     @Override
     public boolean equals(java.lang.Object obj) {
+        //TODO: should check to make sure this can be casted.
         CashAccount c = (CashAccount) obj;
         return (accountName.equals(c.getAccountName()));
     }
@@ -85,11 +86,9 @@ public class CashAccount implements  Searchable {
         if((currentValue - amount) >= 0){
             currentValue -= amount;
         } else if( amount < 0){
-            //return error message that you cannot withdraw a negative amount
+            System.out.println("Withdrawal amount cannot be negative.");
         } else {
-            //The cash account does not have enough funds to withdraw the amount requested.
-            
-            //RETURN AN ERROR HERE; INSUFFICIENT FUNDS
+            System.out.println("Insufficient funds in account. You do not have enough money to make this withdrawal.");
         }
     }
     
@@ -102,7 +101,7 @@ public class CashAccount implements  Searchable {
         if(amount > 0) {
             currentValue += amount;
         } else {
-            //return an error message that deposit amount cannot be negative
+            System.out.println("Deposit amount cannot be negative.");
         }
     }
     

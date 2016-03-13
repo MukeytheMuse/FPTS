@@ -51,6 +51,8 @@ import javafx.scene.layout.VBox;
  * @author ericepstein
  */
 public class FPTS extends Application {
+    private static double simulationValue;
+    private static Simulator currentSimulator;
     
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
     CashAccountAlgorithm cashAccountAlgorithm;
@@ -374,6 +376,22 @@ public class FPTS extends Application {
 
 
         return nav;
+    }
+
+    public static void setSimulationValue(double value){
+        simulationValue = value;
+    }
+
+    public static double getSimulationValue(){
+        return simulationValue;
+    }
+
+    public static void setCurrentSimulator(Simulator curSim){
+        currentSimulator = curSim;
+    }
+
+    public static Simulator getCurrentSimulator(){
+        return currentSimulator;
     }
 }
 

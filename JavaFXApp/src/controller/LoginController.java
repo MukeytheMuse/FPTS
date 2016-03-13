@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * This class controls the actions from button presses on the Login and Register page of this application.
  * Extends LoginMenuController because that class holds the code to handle events based on clicking items in the Menu.
  */
-public class LoginController extends LoginMenuController{
+public class LoginController extends LoginMenuController {
     /**
      * Private variables representing the input of the user ID and password on both login and registration as well
      * as a label that is used to output error messages to the user.

@@ -30,7 +30,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         p = theFPTS.getPortfolio();
         toBeSearched = p.getEquityComponentSearchables();
     }
- 
+
     public ArrayList<Searchable> getToBeSearched() {
         return toBeSearched;
     }

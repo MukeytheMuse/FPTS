@@ -23,8 +23,7 @@ public class User {
     private String loginID;
     private String password;
     private Portfolio myPortfolio;
-
-    private static ArrayList<User> userList = new ArrayList<User>();
+    private static ArrayList<User> userList = new ArrayList<User>();//Holds All Registered Users
 
         /**
          * When creating a new portfolio, the system shall allow the user to
@@ -36,9 +35,7 @@ public class User {
         this.loginID = loginID;
         this.password = hash(password);
         userList.add(this);
-
-
-        this.myPortfolio = new Portfolio();//*****************************
+        this.myPortfolio = new Portfolio();//TODO: check if user wants to import holdings and transactions
     }
 
     public String hash(String password) {

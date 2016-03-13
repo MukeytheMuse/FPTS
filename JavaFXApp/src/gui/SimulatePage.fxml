@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.HomeController">
+            fx:controller="controller.SimulationController">
    <children>
       <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
         <menus>
@@ -97,7 +97,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="interval" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="interval" value="Day" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <RadioButton fx:id="stepYes" mnemonicParsing="false" selected="true" text="Yes">
@@ -127,8 +127,8 @@
                   <TextField fx:id="priceAnnum" promptText="Price-Per-Annum" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
-            <Button fx:id="simulate" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Simulate" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <Label fx:id="errors" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button fx:id="simulate" onAction="#handleSimulateButtonPressed" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Simulate" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>
