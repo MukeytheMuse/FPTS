@@ -184,7 +184,7 @@ public class FPTS extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (args.length == 2) {
+        if (args.length >= 2) {
             if (args[0].equals("-delete")) {
                 String userID = args[1];
                 File csv = new File("JavaFXApp/src/model/DataBase/UserData.csv");
@@ -537,7 +537,7 @@ public class FPTS extends Application {
     public void setCurrentUser(User user) {
         this.currentUser = user;
         WriteFile writeFile = new WriteFile();
-        if (!hasPortfolio(currentUser)) {
+        if (!(hasPortfolio(currentUser))) {
             writeFile.createPortfolioForUser(currentUser);
         }
         p = new Portfolio();

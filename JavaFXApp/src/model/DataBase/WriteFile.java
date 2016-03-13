@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class WriteFile {
 
-    FPTS fpts;
+    FPTS fpts = FPTS.getSelf();
 
     /*
     Public method that checks to see if customer has a portfolio
@@ -46,8 +46,8 @@ public class WriteFile {
             FileWriter writerH = new FileWriter(holdingsFile, true);
 
             //this.transactionsWriter(user, writerT);
-            this.cashAccountsWriter(user, writerC);
-            this.holdingsWriter(user, writerH);
+            this.cashAccountsWriter(writerC);
+            this.holdingsWriter(writerH);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -83,8 +83,8 @@ public class WriteFile {
             FileWriter writerC = new FileWriter(cashFile, true);
             FileWriter writerH = new FileWriter(holdingsFile, true);
 
-            cashAccountsWriter(user, writerC);
-            holdingsWriter(user, writerH);
+            cashAccountsWriter(writerC);
+            holdingsWriter(writerH);
 
             System.out.println("Has anything extra been written?");
 
@@ -95,13 +95,13 @@ public class WriteFile {
     /*
     Private method for writing down holdings
      */
-    private void holdingsWriter(User user, FileWriter writer) {
+    private void holdingsWriter(FileWriter writer) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            ArrayList<Holding> holding = user.getMyPortfolio().getHoldings();
+            ArrayList<Holding> holding = fpts.getPortfolio().getHoldings();
             for (int i = 0; i < holding.size(); i++) {
                 bufferedWriter.write("\"" + holding.get(i).getSymbol() + "\",\"" + holding.get(i).getHoldingName() + "\",\"" +
-                        holding.get(i).getValuePerShare() + "\"," + holding.get(i).getNumOfShares() + "\",\"" +
+                        holding.get(i).getValuePerShare() + "\",\"" + holding.get(i).getNumOfShares() + "\",\"" +
                         holding.get(i).getAcquisitionDate() + "\",\"" + holding.get(i).getIndices() + "\",\"" +
                         holding.get(i).getSectors() + "\"");
                 bufferedWriter.newLine();
@@ -115,10 +115,10 @@ public class WriteFile {
     /*
     Private method for writing down cash accounts
      */
-    private void cashAccountsWriter(User user, FileWriter writer) {
+    private void cashAccountsWriter(FileWriter writer) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            ArrayList<CashAccount> cashAccounts = user.getMyPortfolio().getCashAccounts();
+            ArrayList<CashAccount> cashAccounts = fpts.getPortfolio().getCashAccounts();
             for (int i = 0; i < cashAccounts.size(); i++) {
                 bufferedWriter.write("\"" + cashAccounts.get(i).getAccountName() + "\",\"" + cashAccounts.get(i).getValue() +
                         "\",\"" + cashAccounts.get(i).getDateAdded() + "\"");
