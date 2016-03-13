@@ -153,9 +153,17 @@ public class User {
                     if (!directory.exists()) {
                         directory.mkdir();
                     }
-                    File file = new File(directory, this.getLoginID() + ".txt");
-                    file.createNewFile();
-                    FileWriter writer = new FileWriter(file,true);
+                    File userDir = new File(directory, "/" + this.getLoginID());
+                    if (!userDir.exists()) {
+                        userDir.mkdir();
+                    }
+                    File transFile = new File(userDir, "Trans.csv");
+                    File cashFile = new File(userDir, "Cash.csv");
+                    File holdingsFile = new File(userDir, "Holdings.csv");
+                    transFile.createNewFile();
+                    cashFile.createNewFile();
+                    holdingsFile.createNewFile();
+                    FileWriter writer = new FileWriter(transFile,true);
                     bufferedWriter = new BufferedWriter(writer);
                     bufferedWriter.write(user.getLoginID());
                     bufferedWriter.newLine();
@@ -180,8 +188,14 @@ public class User {
         for (User user : userList) {
             if (this.equals(user)) {
                 File directory = new File("JavaFXApp/src/model/Database/Portfolios");
-                File file = new File(directory, this.getLoginID() + ".txt");
-                file.delete();
+                File userDir = new File(directory, "/" + this.getLoginID());
+                File transFile = new File(userDir, "Trans.csv");
+                File cashFile = new File(userDir, "Cash.csv");
+                File holdingsFile = new File(userDir, "Holdings.csv");
+                transFile.delete();
+                cashFile.delete();
+                holdingsFile.delete();
+                userDir.delete();
                 System.out.println("Check to see if file is gone.");
 
             }
