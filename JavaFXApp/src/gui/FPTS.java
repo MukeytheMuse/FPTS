@@ -188,8 +188,6 @@ public class FPTS extends Application {
     public HBox getNav() {
         HBox nav = new HBox();
         Button aButton;
-        Button createPortfolio;
-        Button removePortfolio;
 
         //Home button
         aButton = new Button();

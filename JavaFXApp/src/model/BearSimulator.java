@@ -16,6 +16,7 @@ public class BearSimulator implements Simulator {
     private int numSteps;
     private double pricePerYear;
     private double currentPercentDecrease;
+    private int stepNumber;
 
     /**
      * Bear Market Constructor. Input values are converted
@@ -33,6 +34,7 @@ public class BearSimulator implements Simulator {
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
         this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+        this.stepNumber = 0;
     }
 
 
@@ -44,7 +46,7 @@ public class BearSimulator implements Simulator {
      * @return
      */
     @Override
-    public double simulate() {
+    public double simulate(int numberOfSteps) {
         double valueCount = 0;
         if (interval.equals("Day")) {
             currentPercentDecrease = pricePerYear / 365;
@@ -53,9 +55,24 @@ public class BearSimulator implements Simulator {
         } else {
             currentPercentDecrease = pricePerYear;
         }
-        for (Holding h : holdings) {
-            valueCount -= currentPercentDecrease * h.getValue();
+        for (int i = 0; i < numberOfSteps; i++) {
+            for (Holding h : holdings) {
+                valueCount -= currentPercentDecrease * h.getValue();
+            }
         }
+        stepNumber += numberOfSteps;
         return valueCount;
     }
+
+    @Override
+    public int getCurrentStep() {
+        return stepNumber;
+    }
+
+    @Override
+    public int getTotalSteps() {
+        return numSteps;
+    }
+
+
 }

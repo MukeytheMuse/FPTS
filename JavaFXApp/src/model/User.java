@@ -95,9 +95,7 @@ public class User {
     }
 
     public boolean validateUser() {
-        System.out.println("MY USER: " + this.getLoginID() + " " + this.getPassword());
         for (User usr : userList) {
-            System.out.println("USER: " + usr.getLoginID() + " " + usr.getPassword());
             if (this.equals(usr)) {
                 return true;
             }

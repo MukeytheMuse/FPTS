@@ -14,6 +14,7 @@ public class NoGrowthSimulator implements Simulator {
     private String interval;
     private boolean hasSteps;
     private int numSteps;
+    private int stepNumber;
 
     /**
      *
@@ -30,7 +31,18 @@ public class NoGrowthSimulator implements Simulator {
     /**
      * @return
      */
-    public double simulate() {
+    public double simulate(int numberOfSteps) {
+        stepNumber += numberOfSteps;
         return 0;
+    }
+
+    @Override
+    public int getCurrentStep() {
+        return stepNumber;
+    }
+
+    @Override
+    public int getTotalSteps() {
+        return numSteps;
     }
 }
