@@ -81,6 +81,7 @@ public class LoginController extends LoginMenuController {
             if (User.ValidLoginID(userid.getText())){
                 if (password.getText().equals(password1.getText())){
                     User usr = new User(userid.getText(), password.getText());
+                    fpts.setCurrentUser(usr);
                     addUser(usr);
                     Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
                     Scene scene = new Scene(parent);
@@ -137,6 +138,25 @@ public class LoginController extends LoginMenuController {
         app_stage.setScene(register_scene);
         app_stage.show();
     }
+
+    @FXML
+    protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
+        Stage stg = FPTS.getSelf().getStage();
+        // TODO Save portfolio.
+        stg.setScene(FPTS.getSelf().createLogInScene());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    protected void handleExitExitButtonPressed(ActionEvent event) throws IOException {
+        Stage stg = FPTS.getSelf().getStage();
+        stg.setScene(FPTS.getSelf().createLogInScene());
+        stg.show();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

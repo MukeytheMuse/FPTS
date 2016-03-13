@@ -112,8 +112,6 @@ public class SimulationController extends MenuController {
     }
 
 
-
-
     public void displaySimulation(){
 
     }

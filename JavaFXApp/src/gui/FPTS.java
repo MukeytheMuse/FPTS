@@ -54,11 +54,11 @@ import javafx.scene.layout.VBox;
 public class FPTS extends Application {
     private static double simulationValue;
     private static Simulator currentSimulator;
-    
+
     HoldingAlgorithm eqUpdater; // for updates & nav, MUST KEEP
     CashAccountAlgorithm cashAccountAlgorithm;
     
-    private final int WIDTH = 1400;
+    private final int WIDTH = 900;
     private final int HEIGHT = 600;
 
     private Stage thestage;
@@ -254,10 +254,10 @@ public class FPTS extends Application {
         nav.getChildren().add(aButton);
 
         //Portfolio Button
-        Button portfolio = new Button();
-        portfolio.setText("Display Portfolio");
+        aButton = new Button();
+        aButton.setText("Display Portfolio");
         //TODO:Action to be set
-        portfolio.setOnAction(new EventHandler<ActionEvent>() {
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Displayer pd = new PortfolioDisplayer();
@@ -265,7 +265,7 @@ public class FPTS extends Application {
             }
 
         });
-        nav.getChildren().add(portfolio);
+        nav.getChildren().add(aButton);
         
         //History Button
         aButton = new Button();
@@ -279,7 +279,7 @@ public class FPTS extends Application {
             }
 
         });
-        //nav.getChildren().add(portfolio);
+        nav.getChildren().add(aButton);
         
         //Remove Cash Account Button
         aButton = new Button();
@@ -370,7 +370,7 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(managePortfolio);
 
-       
+
         //Logout Button
          aButton = new Button();
         aButton.setText("Log out");
@@ -379,7 +379,10 @@ public class FPTS extends Application {
             @Override
             public void handle(ActionEvent e) {
                 try {
-                    thestage.setScene(createLogInScene());
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("../gui/LogoutPage.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
                 } catch (Exception ex) {
                     //e1.printStackTrace();
                 }

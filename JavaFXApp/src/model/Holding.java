@@ -157,6 +157,8 @@ public class Holding implements Searchable, HoldingUpdatable {
     public double getValue(){
         return currentValue;
     }
+
+    public Date getAcquisitionDate() {return acquisitionDate;}
     
 /**
  * 

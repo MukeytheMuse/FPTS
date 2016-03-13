@@ -56,7 +56,10 @@ public class HomeController extends MenuController {
 
     @FXML
     protected void handleLogoutButtonPressed(ActionEvent event) throws IOException {
-        goToLoginPage(event);
+        Stage stage = new Stage();
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("../gui/LogoutPage.fxml")));
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

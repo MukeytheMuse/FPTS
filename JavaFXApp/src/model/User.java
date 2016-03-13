@@ -104,5 +104,9 @@ public class User {
         return true;
     }
 
+    public Portfolio getMyPortfolio() {
+        return myPortfolio;
+    }
+
 
 }
