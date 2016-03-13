@@ -250,7 +250,8 @@ public class FPTS extends Application {
         portfolio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                PortfolioDisplayer pd = new PortfolioDisplayer(getSelf());
+                Displayer pd = new PortfolioDisplayer();
+                pd.display(getSelf());
             }
 
         });
@@ -263,7 +264,8 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                TransactionDisplayer td = new TransactionDisplayer(getSelf());
+                Displayer td = new TransactionDisplayer();
+                td.display(getSelf());
             }
 
         });

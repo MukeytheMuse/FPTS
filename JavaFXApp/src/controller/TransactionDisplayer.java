@@ -23,17 +23,16 @@ import model.Transaction;
  *
  * @author ericepstein
  */
-public class TransactionDisplayer {
+public class TransactionDisplayer implements Displayer {
     
     FPTS theFPTS;
     ArrayList<Transaction> transactions;
     VBox results;
     
-    public TransactionDisplayer(FPTS theFPTS) {
+    public void display(FPTS theFPTS) {
         this.theFPTS = theFPTS;
         transactions = theFPTS.getPortfolio().getTransactions();
         theFPTS.getStage().setScene(getTransactionDisplayScene());
-        
     }
     
     public Scene getTransactionDisplayScene() {

@@ -31,7 +31,8 @@ public class HomeController extends MenuController {
 
     @FXML
     protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
-        PortfolioDisplayer pd = new PortfolioDisplayer(fpts);
+        Displayer pd = new PortfolioDisplayer();
+        pd.display(fpts);
     }
 
     @FXML

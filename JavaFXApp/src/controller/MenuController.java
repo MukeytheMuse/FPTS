@@ -59,7 +59,8 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        PortfolioDisplayer pd = new PortfolioDisplayer(FPTS.getSelf());
+        Displayer pd = new PortfolioDisplayer();
+        pd.display(FPTS.getSelf());
     }
 
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {

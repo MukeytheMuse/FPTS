@@ -16,12 +16,12 @@ import model.Searchable;
  *
  * @author ericepstein
  */
-public class PortfolioDisplayer {
+public class PortfolioDisplayer implements Displayer {
     
     FPTS theFPTS;
     ArrayList<Searchable> portfolioElements;
     
-    public PortfolioDisplayer(FPTS theFPTS) {
+    public void display(FPTS theFPTS) {
         this.theFPTS = theFPTS;
         portfolioElements = theFPTS.getPortfolio().getPortfolioElements();
         theFPTS.getStage().setScene(getDisplayScene());
