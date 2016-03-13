@@ -18,7 +18,7 @@ import java.util.Observable;
  * Defines view and controller to obtain any number of numerical inputs, validates
  * such inputs, and notifies observers.
  * 
- * @author Eric Epstein
+ * @author Eric Epstein 
  */
 public class AmountInput extends Observable {
 
@@ -33,7 +33,7 @@ public class AmountInput extends Observable {
     private FPTS theFPTS;
 
     /**
-    * stores context data in construction
+    * Stores context data in construction
     *
     * @param theFPTS - FPTS
     * @param amounts - ArrayList<Double> - often empty
