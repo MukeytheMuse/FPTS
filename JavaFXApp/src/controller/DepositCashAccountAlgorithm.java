@@ -1,24 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import model.Deposit;
 import model.Transaction;
 
 /**
- * @author ericepstein
+ * 
+ * Implements final step in CashAccountAlgorithm by creating a Deposit object.
+ * 
+ * @author Eric Epstein
  */
 public class DepositCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
 
+    /**
+     * Creates a Deposit object with validated CashAccount at a validated amount.
+     * 
+     */
+    @Override
     public void performTransaction() {
         double amount = amounts.get(0);
         c.deposit(amount);
 
         Transaction t = new Deposit(c, amount);
         theFPTS.getPortfolio().add(t);
+        /*
+        * Transitions to confirmation scene.
+        */
         theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
     }
 

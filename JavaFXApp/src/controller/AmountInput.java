@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.FPTS;
@@ -19,13 +14,30 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * @author ericepstein
+ * 
+ * Defines view and controller to obtain any number of numerical inputs, validates
+ * such inputs, and notifies observers.
+ * 
+ * @author Eric Epstein
  */
 public class AmountInput extends Observable {
 
+    /*
+    * ArrayList of amounts, often just one element
+    */
     ArrayList<Double> amounts;
+    
+    /*
+    * context data
+    */
     private FPTS theFPTS;
 
+    /**
+    * stores context data in construction
+    *
+    * @param theFPTS - FPTS
+    * @param amounts - ArrayList<Double> - often empty
+    */
     public AmountInput(FPTS theFPTS, ArrayList<Double> amounts) {
 
         this.theFPTS = theFPTS;
@@ -34,6 +46,11 @@ public class AmountInput extends Observable {
         theFPTS.getStage().setScene(getAmountInputScene());
     }
 
+    /**
+     * Constructs Scene to process input
+     * 
+     * @return Scene
+     */
     public Scene getAmountInputScene() {
         VBox split = new VBox();
 
@@ -47,24 +64,36 @@ public class AmountInput extends Observable {
 
         Button submitBtn = new Button();
         submitBtn.setText("Submit");
+        
+        /*
+        * Defines action event when the user presses "Submit"
+        */
         submitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
                 boolean isValid = true;
+                
+                /**
+                 * For each input amount from the user, all must be true
+                 */
                 for (TextField inputAmount : inputAmounts) {
                     isValid = isValid && isValid(inputAmount);
                 }
 
+                /*
+                * If each input is a valid numerical value, add to ArrayList of
+                * amounts.
+                */
                 if (isValid) {
-
                     for (TextField inputAmount : inputAmounts) {
                         double anAmount = Double.parseDouble(inputAmount.getText());
                         amounts.add(anAmount);
                     }
-
                     setChanged();
                     notifyObservers();
+                /*
+                * Else, do not proceed and inform user of invalid input.
+                */
                 } else {
                     inputAmount.setText("INVALID");
                 }
@@ -79,6 +108,13 @@ public class AmountInput extends Observable {
 
     }
 
+    /**
+     * 
+     * Validates user input
+     * 
+     * @param inputAmount
+     * @return boolean
+     */
     public boolean isValid(TextField inputAmount) {
         if (inputAmount.getText() == null || inputAmount.getText().equals("")) {
             return false;

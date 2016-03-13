@@ -1,24 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.ArrayList;
 
 /**
+ * 
+ * Defines one step in the Searcher that converts the object being
+ * searched into a string representation of an Equity or Holding, as both
+ * are treated the same under the HoldingUpdatable interface.
+ * 
  * @author Eric Epstein
  */
 public class SearchedHoldingSearcher extends Searcher {
 
+    /**
+     * 
+     * Casts Searchable into HoldingUpdatable to get information for either
+     * Equity or Holding. The ArrayList contains one-element and multi-
+     * element ArrayList, the latter representing indices and sectors.
+     * 
+     * @param s - Searchable
+     * @return ArrayList<ArrayList<String>>
+     */
     public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
-
-
         HoldingUpdatable eq = (HoldingUpdatable) (Object) s;
         ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>();
-
-        //String tickerSymbol = eq.getTickerSymbol();
         ArrayList<String> tickerSymbolItem = new ArrayList<String>();
         tickerSymbolItem.add(eq.getTickerSymbol());
         anObject.add(tickerSymbolItem);

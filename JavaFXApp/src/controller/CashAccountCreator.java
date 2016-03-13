@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.FPTS;
@@ -22,22 +17,39 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * @author ericepstein
+ * 
+ * Implements view and control to create a new CashAccount for a current portfolio.
+ * 
+ * @author Eric Epstein
  */
 public class CashAccountCreator {
 
+    /*
+    * context data
+    */
     private FPTS theFPTS;
 
+    /**
+    * Establishes context data and calls for scene construction
+    * 
+    * @param theFPTS - FPTS
+    */
     public CashAccountCreator(FPTS theFPTS) {
-
         this.theFPTS = theFPTS;
-
         theFPTS.getStage().setScene(getCashAccountCreatorScene());
     }
 
+    /**
+    * Constructs scene with specified fields and input controls.
+    * 
+    * @return Scene
+    */
     public Scene getCashAccountCreatorScene() {
         VBox split = new VBox();
 
+        /*
+        * Defines the search fields
+        */
         HBox aField = new HBox();
         TextField nameInputField = new TextField();
         Label mainInput = new Label("Account name: ");
@@ -53,23 +65,32 @@ public class CashAccountCreator {
 
         Button submitBtn = new Button();
         submitBtn.setText("Submit");
+        
+        /*
+        * Processes input 
+        */
         submitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
 
                 boolean isValid = isValidAccountName(nameInputField) && isValidDouble(amountInputField);
 
+                /*
+                * Converts dateField to Date object
+                */
                 Date theDate = Date.from(dateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
                 if (isValid) {
                     CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate);
                     theFPTS.getPortfolio().add(c);
+                    
+                    /*
+                    * Refers to confirmation scene
+                    */
                     theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
                 } else {
                     nameInputField.setText("INVALID");
                 }
-
-
             }
         });
 
@@ -80,7 +101,13 @@ public class CashAccountCreator {
 
     }
 
-    public boolean isValidAccountName(TextField inputAccountName) {
+    /**
+    * Helper logic function to validate account name input
+    *
+    * @param inputAccountName - TextField
+    * @return boolean
+    */
+    private boolean isValidAccountName(TextField inputAccountName) {
         if (inputAccountName.getText() == null || inputAccountName.getText().equals("")) {
             return false;
         }
@@ -96,13 +123,27 @@ public class CashAccountCreator {
         return true;
     }
 
-    public boolean isValidDouble(TextField inputAmount) {
+    /**
+     * 
+     * Helper logic function to validate numerical input
+     * 
+     * @param inputAmount - TextField
+     * @return boolean
+     */
+    private boolean isValidDouble(TextField inputAmount) {
+        
+        /*
+        * Determine whether the input amount is not empty
+        */
         if (inputAmount.getText() == null || inputAmount.getText().equals("")) {
             return false;
         }
 
         String inputAmountString = inputAmount.getText();
 
+        /*
+        * Determine whether the input amount can be parsed to a double
+        */ 
         try {
             Double.parseDouble(inputAmountString);
         } catch (Exception e) {
@@ -111,11 +152,10 @@ public class CashAccountCreator {
 
         Double inputAmountDouble = Double.parseDouble(inputAmountString);
 
-        if (inputAmountDouble < 0) {
-            return false;
-        }
-
-        return true;
+        /*
+        * Return whether the input amount is greater than 0
+        */
+        return (inputAmountDouble >= 0);
 
     }
 

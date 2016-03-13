@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.FPTS;
@@ -12,13 +7,28 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * @author ericepstein
+ *  
+ * Defines the general steps of managing CashAccount. Implements the
+ * first step of obtaining a CashAccount object. 
+ * 
+ * @author Eric Epstein
  */
 abstract public class CashAccountAlgorithm implements Observer {
 
+    /*
+    * CashAccount of interest, to be modified in further steps
+    */
     protected CashAccount c;
+    
+    /*
+    * context data
+    */
     protected FPTS theFPTS;
 
+    /**
+    *  Stalls algorithm until a CashAccount is obtained from CashAccountFinder
+    *   @param theFPTS - FPTS
+    */
     public void process(FPTS theFPTS) {
         c = new CashAccount("", 0, null);
         this.theFPTS = theFPTS;
@@ -26,10 +36,22 @@ abstract public class CashAccountAlgorithm implements Observer {
         caFinder.addObserver(this);
     }
 
+    /**
+     * 
+     * Upon update from CashAccountFinder (in this context), delegates 
+     * next step to child algorithms
+     * 
+     * @param o
+     * @param args 
+     */
     public void update(Observable o, Object args) {
         action();
     }
 
+    /*
+    * Abstract method that is proceeded once the current algorithm is notified
+    * of an update that assigns a CashAccount of interest.
+    */
     abstract void action();
 
 }
