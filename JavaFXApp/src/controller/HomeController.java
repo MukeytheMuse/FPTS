@@ -21,7 +21,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by nveil_000 on 3/11/2016.
+ * Controller class for the HomePage. Extends MenuController which holds all of the functionality for the MenuBar
+ * on the page. Controls the actions that occur when a button is pressed on the screen.
+ * Created by Luke on 3/02/2016.
  */
 public class HomeController extends MenuController {
 
@@ -31,18 +33,31 @@ public class HomeController extends MenuController {
     @FXML
     private Label valueLabel = new Label();
 
+    /**
+     * Method that is called if the BuyEquities button is pressed on the HomePage. Loads the buy equities page.
+     * @param event - ActionEvent - the event that caused this method to run.
+     */
     @FXML
-    protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
+    protected void handlePortfolioButtonPressed(ActionEvent event) {
         Displayer pd = new PortfolioDisplayer();
         pd.display(fpts);
     }
 
+    /**
+     * Method that is called if the BuyEquities button is pressed on the HomePage. Loads the buy equities page.
+     * @param event - ActionEvent - the event that caused this method to run.
+     */
     @FXML
-    protected void handleBuyEquityButtonPressed(ActionEvent event) throws IOException {
+    protected void handleBuyEquityButtonPressed(ActionEvent event) {
         HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
         eqUpdater.process(FPTS.getSelf());
     }
 
+    /**
+     * Method that is called when the Simulate button is pressed on the HomePage. Loads the Simulation page.
+     * @param event - ActionEvent - the event that caused this method to run
+     * @throws IOException - Exception is thrown if the SimulatePage.fxml is not found.
+     */
     @FXML
     protected void handleSimulateButtonPressed(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../gui/SimulatePage.fxml"));
@@ -52,6 +67,12 @@ public class HomeController extends MenuController {
         app_stage.show();
     }
 
+    /**
+     * Method that is called when the Logout button is pressed on the HomePage. Loads the Logout pop-up window
+     * which in turn will logout the user depending on what option they select.
+     * @param event - ActionEvent - the event that caused this method to run
+     * @throws IOException - Exception is thrown if the LogoutPage.fxml is not found.
+     */
     @FXML
     protected void handleLogoutButtonPressed(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -60,6 +81,10 @@ public class HomeController extends MenuController {
         stage.show();
     }
 
+    /**
+     * Method used to initialize items on the HomePage, mainly used to fill the PieChart on the page and
+     * put the current value of the portfolio into the label on the page.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Portfolio p = fpts.getPortfolio();

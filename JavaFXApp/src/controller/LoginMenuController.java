@@ -16,11 +16,11 @@ import java.io.IOException;
 /**
  * This class is the base implementation of the Menu Bar used in this application.
  * Holds code to go to the LoginPage, Exit the Application, and Open the About page.
- * Created by nveil_000 on 3/11/2016.
+ * Created by Luke Veilleux on 3/11/2016.
  */
 public abstract class LoginMenuController implements Initializable {
     /**
-     * A Local variable to access the MenuBar located in the FXML documents for this FPTS application.
+     * A Local variable to access the MenuBar located in the FXML documents for this application.
      */
     @FXML
     MenuBar myMenuBar;
@@ -61,15 +61,14 @@ public abstract class LoginMenuController implements Initializable {
      * @throws IOException - Throws IO Exception if the LoginPage.fxml cannot be found.
      */
     public void goToLoginPage(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/LoginPage.fxml"));
-        Stage stage = new Stage();
+        Stage stage;
         try {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         } catch (ClassCastException c) {
             stage = (Stage) myMenuBar.getScene().getWindow();
 
         }
-        Scene scene = new Scene(parent);
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("../gui/LoginPage.fxml")));
         stage.setScene(scene);
         stage.show();
     }

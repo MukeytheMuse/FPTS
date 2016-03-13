@@ -1,7 +1,4 @@
 package controller;
-/**
- * Created by nveil_000 on 3/10/2016.
- */
 
 import gui.FPTS;
 import javafx.event.ActionEvent;
@@ -26,6 +23,7 @@ import java.util.ResourceBundle;
 /**
  * This class controls the actions from button presses on the Login and Register page of this application.
  * Extends LoginMenuController because that class holds the code to handle events based on clicking items in the Menu.
+ * Created by Luke Veilleux on 3/01/2016.
  */
 public class LoginController extends LoginMenuController {
     /**
@@ -53,9 +51,7 @@ public class LoginController extends LoginMenuController {
     protected void handleLoginButtonPressed(ActionEvent event) throws IOException {
         if (userid.getText().length() != 0 && password.getText().length() != 0) {
             User u = new User(userid.getText(), password.getText());
-            System.out.println("BEFORE");
             if (u.validateUser()) {
-                System.out.println("AFTER");
                 fpts.setCurrentUser(u);
                 error.setText("Logging in...");
 
@@ -135,7 +131,6 @@ public class LoginController extends LoginMenuController {
 
     /**
      * Controls the program when the register button is clicked on the Login page.
-     *
      * @param event - ActionEvent - event that caused this method to be called.
      * @throws IOException - Exception thrown if the RegisterPage.fxml is not found where the program expects.
      */
@@ -149,6 +144,11 @@ public class LoginController extends LoginMenuController {
         app_stage.show();
     }
 
+    /**
+     * Method used to handle the when the Logout Save and Exit button is clicked on the Logout window.
+     * @param event - ActionEvent - The event that caused this action to occur.
+     * @throws IOException - Throws IO exception if the the LoginPage.fxml file is not in the gui folder.
+     */
     @FXML
     protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
@@ -158,6 +158,11 @@ public class LoginController extends LoginMenuController {
         stage.close();
     }
 
+    /**
+     * Method used to handle the when the Logout Exit without Saving button is clicked on the Logout window.
+     * @param event - ActionEvent - The event that caused this action to occur.
+     * @throws IOException - Throws IO exception if the the LoginPage.fxml file is not in the gui folder.
+     */
     @FXML
     protected void handleExitExitButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
@@ -167,7 +172,9 @@ public class LoginController extends LoginMenuController {
         stage.close();
     }
 
-
+    /**
+     * Method used to initialize items on the Login page. Currently not in use.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //TODO

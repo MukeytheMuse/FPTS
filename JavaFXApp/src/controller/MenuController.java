@@ -11,13 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
+import model.DataBase.WriteFile;
 
 import java.io.IOException;
 
 /**
  * This class is the base implementation of the Menu Bar used in this application.
- * Holds code to add implementation to the Menu bar on the pages past logging into the system.
- * Created by nveil_000 on 3/11/2016.
+ * Other Controllers will extend this class to gain functionality of the MenuBar in the application.
+ * Created by Luke on 3/01/2016.
  */
 public abstract class MenuController implements Initializable {
     /**
@@ -25,6 +26,7 @@ public abstract class MenuController implements Initializable {
      */
     @FXML
     MenuBar myMenuBar;
+    FPTS fpts = FPTS.getSelf();
 
     /**
      * Handler for when the Logout button is pressed in the Menu Bar
@@ -51,7 +53,8 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleSaveMenuItemPressed(ActionEvent event) {
-        //TODO Save Current Portfolio
+        WriteFile writeFile = new WriteFile();
+        writeFile.updatePortfolioForUser(fpts.getCurrentUser());
     }
 
     /**
@@ -75,6 +78,7 @@ public abstract class MenuController implements Initializable {
         Displayer pd = new PortfolioDisplayer();
         pd.display(FPTS.getSelf());
     }
+
 
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {
         HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();

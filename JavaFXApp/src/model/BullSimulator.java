@@ -16,6 +16,7 @@ public class BullSimulator implements Simulator {
     private int numSteps;
     private double pricePerYear;
     private double currentPercentIncrease;
+    private int stepNumber;
 
     /**
      * @param numSteps
@@ -29,6 +30,7 @@ public class BullSimulator implements Simulator {
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
         this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+        this.stepNumber = 0;
     }
 
 
@@ -37,9 +39,9 @@ public class BullSimulator implements Simulator {
     /**
      * @return
      */
-    public double simulate() {
+    @Override
+    public double simulate(int numberOfSteps) {
         double valueCount = 0;
-        //Finds the percentage increase based on the time interval.
         if (interval.equals("Day")) {
             currentPercentIncrease = pricePerYear / 365;
         } else if (interval.equals("Month")) {
@@ -47,15 +49,22 @@ public class BullSimulator implements Simulator {
         } else {
             currentPercentIncrease = pricePerYear;
         }
-
-
-        if (hasSteps) {
-
-        } else {//This simulation has no steps
+        for (int i = 0; i < numberOfSteps; i++) {
             for (Holding h : holdings) {
                 valueCount += currentPercentIncrease * h.getValue();
             }
         }
+        stepNumber += numberOfSteps;
         return valueCount;
+    }
+
+    @Override
+    public int getCurrentStep() {
+        return stepNumber;
+    }
+
+    @Override
+    public int getTotalSteps() {
+        return numSteps;
     }
 }
