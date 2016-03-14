@@ -164,23 +164,6 @@ public class FPTS extends Application {
     }
 
     /**
-     * Returns register page loaded in FXMLLoader
-     *
-     * @return Scene
-     */
-    public Scene createRegisterPage() throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-
-        thestage.setScene(scene);
-        thestage.setTitle("Financial Portfolio Tracking System");
-
-        return scene;
-    }
-
-
-    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -488,7 +471,7 @@ public class FPTS extends Application {
         return currentSimulator;
     }
 
-    /**
+     /**
      * Returns current user
      *
      * @return User
@@ -523,10 +506,7 @@ public class FPTS extends Application {
      */
     public boolean hasPortfolio(User user) {
         File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
-        if (directory.exists()) {
-            return true;
-        }
-        return false;
+        return directory.exists();
     }
 
     /**
@@ -535,7 +515,7 @@ public class FPTS extends Application {
      * @param user - User
      */
     public void setCurrentUser(User user) {
-        this.currentUser = user;
+        currentUser = user;
         WriteFile writeFile = new WriteFile();
         if (!(hasPortfolio(currentUser))) {
             writeFile.createPortfolioForUser(currentUser);

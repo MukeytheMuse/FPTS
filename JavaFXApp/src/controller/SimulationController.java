@@ -13,10 +13,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.BearSimulator;
-import model.BullSimulator;
-import model.NoGrowthSimulator;
-import model.Simulator;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,6 +36,8 @@ public class SimulationController extends MenuController {
     private Simulator currentSimulator;
     @FXML
     private Label pValue;
+    @FXML
+    private Label totalValue;
     @FXML
     private Label stepNumber;
     private String simulation = "NOGROWTH";
@@ -86,11 +85,7 @@ public class SimulationController extends MenuController {
                 int numberOfSteps = Integer.parseInt(numSteps.getText());
                 String curInterval = interval.getValue();
                 Boolean hasSteps;
-                if (steps) {
-                    hasSteps = true;
-                } else {
-                    hasSteps = false;
-                }
+                hasSteps = steps;
                 if (simulation.equals("NOGROWTH")) {
                     currentSimulator = new NoGrowthSimulator(numberOfSteps, curInterval, hasSteps);
                     System.out.println("NOGROWTH");
@@ -160,7 +155,7 @@ public class SimulationController extends MenuController {
 
     @FXML
     protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) {
-
+        //TODO Memento portfolio restoration
     }
 
     /**
@@ -169,7 +164,7 @@ public class SimulationController extends MenuController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (interval != null) {
-            interval.setItems(FXCollections.observableArrayList( //TODO: CHECK THIS CALL**
+            interval.setItems(FXCollections.observableArrayList(
                     "Day", "Month", "Year"
             ));
         }
@@ -180,6 +175,11 @@ public class SimulationController extends MenuController {
             if (currentSimulator.getCurrentStep() >= currentSimulator.getTotalSteps()) {
                 stepButton.setDisable(true);
             }
+            double value = 0;
+            for (Holding h : FPTS.getSelf().getPortfolio().getHoldings()) {
+                value += h.getValue();
+            }
+            totalValue.setText("$" + (value + FPTS.getSimulationValue()));
 
         }
 
