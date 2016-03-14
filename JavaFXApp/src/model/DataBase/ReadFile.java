@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class ReadFile {
 
-    public static ArrayList<String[]> splitFile = new ArrayList<String[]>();
+    protected static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     public static ArrayList<EquityComponent> readEquity() {
         return ReadEquity.read();
@@ -32,7 +32,7 @@ public class ReadFile {
 
 
     // reads in CSV file
-    public static ArrayList<String[]> readInFile() {
+    protected static ArrayList<String[]> readInFile() {
         String csv = "JavaFXApp/src/model/DataBase/equities.csv";
         splitFile = new ArrayList<String[]>();
         BufferedReader reader = null;
@@ -63,7 +63,7 @@ public class ReadFile {
     }
 
     // reads in CSV file
-    public static ArrayList<String[]> readInUser(String file) {
+    protected static ArrayList<String[]> readInUser(String file) {
         //System.out.println("CURRENT USER ID: " + FPTS.getCurrentUserID());
         String csv = "JavaFXApp/src/model/DataBase/Portfolios/" + FPTS.getCurrentUserID() + file;
         splitFile = new ArrayList<String[]>();

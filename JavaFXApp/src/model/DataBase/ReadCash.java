@@ -11,19 +11,19 @@ import java.util.Date;
  * Created by iLondon on 3/13/16.
  */
 public class ReadCash {
-    public static ArrayList<String[]> readInFile() {
+    protected static ArrayList<String[]> readInFile() {
         return ReadFile.readInUser("/Cash.csv");
     }
 
     public static ArrayList<CashAccount> allCash;
-    public static ArrayList<String[]> splitFile;
+    private static ArrayList<String[]> splitFile;
 
     /**
      * Created by Ian
      *
      * @return list of all Holding objects
      */
-    public static ArrayList<CashAccount> read() {
+    protected static ArrayList<CashAccount> read() {
         splitFile = readInFile();
         allCash = new ArrayList<>();
 

@@ -9,18 +9,18 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by iLondon on 3/2/16.
+ * Created by Ian on 3/2/16.
  */
 public class ReadEquity {
 
-    public static ArrayList<String[]> readInFile() {
+    protected static ArrayList<String[]> readInFile() {
         return ReadFile.readInFile();
     }
 
-    public static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
-    public static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
+    private static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
+    private static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
     public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
-    public static ArrayList<String[]> splitFile = new ArrayList<String[]>();
+    private static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     /**
      * Created by Ian
@@ -79,7 +79,7 @@ public class ReadEquity {
      *
      * @return list of composite Equities
      */
-    public static ArrayList<EquityComposite> loadCompositeList() {
+    private static ArrayList<EquityComposite> loadCompositeList() {
         ArrayList<EquityComposite> compositeList = new ArrayList<EquityComposite>();
         // create the bare index composites
         for (String index : indexList) {

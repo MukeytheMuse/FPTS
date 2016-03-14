@@ -62,7 +62,7 @@ public class CashAccount implements Searchable {
      * @return String
      */
     public String toString() {
-        return "" + currentValue;
+        return "The cash account \"" + accountName + "\" contains $" + currentValue;
     }
 
     /**
