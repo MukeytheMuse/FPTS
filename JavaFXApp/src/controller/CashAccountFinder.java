@@ -100,7 +100,8 @@ public class CashAccountFinder extends Observable implements Observer {
             @Override
             public void handle(ActionEvent e) {
                 if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
-                    c.overwrite((CashAccount) s.getMatch(mainInput.getText()));
+                    CashAccount aCashAccount = (CashAccount) s.getMatch(mainInput.getText());
+                    c.overwrite(aCashAccount);
                     setChanged();
                     notifyObservers();
                 }

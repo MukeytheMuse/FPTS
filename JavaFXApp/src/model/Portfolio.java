@@ -183,6 +183,7 @@ public class Portfolio {
      */
     public void add(CashAccount e) {
         portfolioElements.add((Searchable) e);
+        transactions.add((Transaction) new Deposit(e, e.getValue()));
         cashAccounts.add(e);
     }
 
@@ -202,8 +203,8 @@ public class Portfolio {
      * @param t - Transaction
      */
     public void add(Transaction t) {
-        t.execute();
         transactions.add(t);
+        t.execute();
     }
 
     /**
@@ -235,22 +236,14 @@ public class Portfolio {
         portfolioElements.remove((Searchable) e);
         holdings.remove(e);
     }
-
-    //Overloading fieldHasContent for TextField
-    private boolean fieldHasContent(TextField aField) {
-        return (aField.getText() != null && !aField.getText().isEmpty());
-    }
-
-    /**
-     * Check to see if the Portfolio is Empty.
-     *
-     * @return
-     */
-    private boolean isEmpty() {
-        if (currentValue == 0) {
-            return true;
-        } else {
-            return false;
+   
+    public CashAccount getCashAccount(CashAccount c) {
+        for (CashAccount aC : cashAccounts) {
+            if (aC.equals(c)) {
+                return aC;
+            }
         }
+        return null;
     }
+    
 }
