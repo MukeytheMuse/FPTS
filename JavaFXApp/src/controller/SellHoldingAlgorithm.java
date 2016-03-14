@@ -63,7 +63,8 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             /*
             * Creates Transaction that adds value to cashAccountOfInterest
             */
-            Transaction t = new Deposit(cashAccountOfInterest, numOfShares * pricePerShare);
+            CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
+            Transaction t = new Deposit(aC, numOfShares * pricePerShare);
             p.add(t);
             e.subtractShares(numOfShares);
             /*

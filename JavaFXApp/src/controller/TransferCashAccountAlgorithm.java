@@ -92,9 +92,13 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         * respective Transaction objects
         */
         if (c.getValue() >= amount) {
-            Transaction t = new Withdrawal(c, amount);
+            CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
+            
+            Transaction t = new Withdrawal(aC, amount);
             theFPTS.getPortfolio().add(t);
-            t = new Deposit(c2, amount);
+            
+            aC = theFPTS.getPortfolio().getCashAccount(c2);
+            t = new Deposit(aC, amount);
             theFPTS.getPortfolio().add(t);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {

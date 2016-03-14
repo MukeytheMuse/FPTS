@@ -49,7 +49,8 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         double accountVal = cashAccountOfInterest.getValue();
 
         if (accountVal >= (numOfShares * pricePerShare)) {
-            Transaction t = new Withdrawal(cashAccountOfInterest, numOfShares * pricePerShare);
+            CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
+            Transaction t = new Withdrawal(aC, numOfShares * pricePerShare);
             p.add(t);
             e.addShares(numOfShares);
 
