@@ -1,4 +1,0 @@
-# HelloWorld
-# Testing
-
-Testing
