@@ -6,9 +6,7 @@ import model.Holding;
 import model.Transaction;
 import model.User;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -43,11 +41,10 @@ public class WriteFile {
             holdingsFile.createNewFile();
             FileWriter writerT = new FileWriter(transFile, true);
             FileWriter writerC = new FileWriter(cashFile, true);
-            FileWriter writerH = new FileWriter(holdingsFile, true);
 
             //this.transactionsWriter(user, writerT);
             this.cashAccountsWriter(writerC);
-            this.holdingsWriter(writerH);
+            this.holdingsWriter(holdingsFile);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -81,10 +78,9 @@ public class WriteFile {
             File holdingsFile = new File(directory, "Holdings.csv");
             FileWriter writerT = new FileWriter(transFile, true);
             FileWriter writerC = new FileWriter(cashFile, true);
-            FileWriter writerH = new FileWriter(holdingsFile, true);
 
             cashAccountsWriter(writerC);
-            holdingsWriter(writerH);
+            holdingsWriter(holdingsFile);
 
             System.out.println("Has anything extra been written?");
 
@@ -95,10 +91,28 @@ public class WriteFile {
     /*
     Private method for writing down holdings
      */
-    private void holdingsWriter(FileWriter writer) {
+    private void holdingsWriter(File file) {
+
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            FileReader reader = new FileReader(file);
+            FileWriter writerH = new FileWriter(file, true);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            BufferedWriter bufferedWriter = new BufferedWriter(writerH);
             ArrayList<Holding> holding = fpts.getPortfolio().getHoldings();
+            String line = "";
+
+            for (int i = 0; i < holding.size(); i++) {
+                if ((line = bufferedReader.readLine()) != null) {
+                    line = line.substring(1, line.length() - 1);
+                    String[] split = line.split("\",\"");
+                    if (holding.get(i).getSymbol().equals(split[0])){
+                        System.out.println("Did I ever make it here?");
+                        holding.remove(i);
+                    }
+                }
+            }
+            bufferedReader.close();
+
             for (int i = 0; i < holding.size(); i++) {
                 bufferedWriter.write("\"" + holding.get(i).getSymbol() + "\",\"" + holding.get(i).getHoldingName() + "\",\"" +
                         holding.get(i).getValuePerShare() + "\",\"" + holding.get(i).getNumOfShares() + "\",\"" +
