@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Created by Brockway on 3/12/16.
+ * authors: Kaitlin Brockway & Luke
  */
 public interface Simulator {
     public double simulate(int numberOfSteps);

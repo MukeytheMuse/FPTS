@@ -14,16 +14,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Scanner;
+
+import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DataBase.WriteFile;
 import model.Equity;
+import model.Memento;
 import model.Portfolio;
 import model.Simulator;
 import model.User;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Executes application and refers user to relevant functions.
@@ -31,6 +54,7 @@ import java.io.*;
  * @author Eric Epstein, Kimberly Sookoo, Ian London, Kaitlyn Brockway, Luke Veilleux
  */
 public class FPTS extends Application {
+    private ArrayList<Memento> savedMementoPortfolioStates;//acts as a queue
 
     /*
     * context data associated with simulation
@@ -109,11 +133,12 @@ public class FPTS extends Application {
     }
 
 
+
     /**
-     * Returns home page
-     *
-     * @return Scene
-     */
+    * Returns home page
+    *
+    * @return Scene
+    */
     public Scene getHomeScene() {
         Scene scene = null;
         try {
@@ -124,10 +149,10 @@ public class FPTS extends Application {
         }
         return scene;
     }
-
+    
     /**
      * Returns scene indicating confirmation of a user's action
-     *
+     * 
      * @return Scene
      */
 
@@ -137,7 +162,7 @@ public class FPTS extends Application {
         split.getChildren().addAll(getNav(), confirmation);
         return new Scene(split, WIDTH, HEIGHT);
     }
-
+    
     /**
      * Returns scene indicating error on the part of the user
      *
@@ -162,6 +187,23 @@ public class FPTS extends Application {
         thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
     }
+
+    /**
+    * Returns register page loaded in FXMLLoader 
+    *
+    * @return Scene
+    */
+    public Scene createRegisterPage() throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+
+        thestage.setScene(scene);
+        thestage.setTitle("Financial Portfolio Tracking System");
+
+        return scene;
+    }
+
 
     /**
      * @param args the command line arguments
@@ -426,6 +468,7 @@ public class FPTS extends Application {
                     stage.setScene(scene);
                     stage.show();
                 } catch (Exception ex) {
+                    //e1.printStackTrace();
                 }
                 thestage.show();
             }
@@ -471,9 +514,25 @@ public class FPTS extends Application {
         return currentSimulator;
     }
 
+    /**
+     *
+     * @param m
+     */
+    public void addMemento(Memento m){
+        savedMementoPortfolioStates.add(m);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Memento getMemento(){
+        return savedMementoPortfolioStates.remove(0);
+    }
+    
      /**
      * Returns current user
-     *
+     * 
      * @return User
      */
     public User getCurrentUser() {
@@ -482,14 +541,14 @@ public class FPTS extends Application {
 
     /**
      * Returns login ID of current user
-     *
+     * 
      * @return String
      */
     public static String getCurrentUserID() {
         return currentUser.getLoginID();
     }
-
-    /**
+    
+     /**
      * Returns self
      *
      * @return FPTS
@@ -500,7 +559,7 @@ public class FPTS extends Application {
 
     /**
      * Returns indicator of portfolio existence
-     *
+     * 
      * @param user
      * @return boolean
      */
@@ -508,10 +567,10 @@ public class FPTS extends Application {
         File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
         return directory.exists();
     }
-
+    
     /**
      * Sets user object to the current user
-     *
+     * 
      * @param user - User
      */
     public void setCurrentUser(User user) {
@@ -522,8 +581,8 @@ public class FPTS extends Application {
         }
         p = new Portfolio();
     }
-
-    /**
+    
+     /**
      * Returns height of stage
      *
      * @return int

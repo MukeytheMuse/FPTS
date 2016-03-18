@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -15,12 +16,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- * Created by Brockway on 3/12/16.
+ * authors: Kaitlin Brockway & Luke
  */
 public class SimulationController extends MenuController {
     @FXML
@@ -69,13 +72,16 @@ public class SimulationController extends MenuController {
     }
 
 
+    private Portfolio currentPortfolioState;//For Memento
+    private Memento memento;
+    private ArrayList<Memento> savedStates = new ArrayList<>();
+ 
     /**
      * Checks to make sure the number of steps entered is valid.
      * If the simulation is no growth then the simulation will be called,
      * but if the simulation is a bull or bear market simulation the user
      * will be asked to input a percentage for price increase or decrease
      * per year.
-     *
      * @param event - ActionEvent - The event that is created when Simulate button is pressed.
      * @throws java.io.IOException - Exception thrown if the SimulationPage.fxml is not found.
      */
@@ -134,6 +140,11 @@ public class SimulationController extends MenuController {
         }
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     protected void handleStepButtonPressed(ActionEvent event) throws IOException {
         currentSimulator = FPTS.getCurrentSimulator();
@@ -146,6 +157,11 @@ public class SimulationController extends MenuController {
         }
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     protected void handleResetToStartButtonPressed(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -153,9 +169,16 @@ public class SimulationController extends MenuController {
         stage.show();
     }
 
+    /**
+     *
+     * @param event
+     * authors: Kaitlin
+     */
     @FXML
     protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) {
         //TODO Memento portfolio restoration
+        //currentPortfolioState.restoreFromMemento();
+        //System.out.println("Value returned = " + currentPortfolioState.getCurrentValue());
     }
 
     /**

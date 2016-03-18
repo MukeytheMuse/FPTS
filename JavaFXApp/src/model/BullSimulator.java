@@ -5,7 +5,7 @@ import gui.FPTS;
 import java.util.ArrayList;
 
 /**
- * Created by Brockway on 3/12/16.
+ * authors: Kaitlin Brockway & Luke
  */
 public class BullSimulator implements Simulator {
     public static String name = "Bull Market Simulator";
@@ -16,9 +16,11 @@ public class BullSimulator implements Simulator {
     private int numSteps;
     private double pricePerYear;
     private double currentPercentIncrease;
+    private double valueChangePerStep;//may not need
     private int stepNumber;
 
     /**
+     *
      * @param numSteps
      * @param interval
      * @param hasSteps
@@ -37,6 +39,7 @@ public class BullSimulator implements Simulator {
     //TODO: CHECK IF IT HAS STEPS.
 
     /**
+     *
      * @return
      */
     @Override

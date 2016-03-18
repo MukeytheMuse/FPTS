@@ -5,7 +5,7 @@ import gui.FPTS;
 import java.util.ArrayList;
 
 /**
- * Created by Brockway on 3/12/16.
+ * authors: Kaitlin Brockway & Luke
  */
 public class BearSimulator implements Simulator {
     public static String name = "Bear Market Simulator";
@@ -41,7 +41,11 @@ public class BearSimulator implements Simulator {
     //TODO: CHECK IF IT HAS STEPS.
 
     /**
-     * DECREASE
+     * The Bear Market simulation will decrease the equities
+     * based on the percentage that the user enters.
+     * If any equity value is calculated to drop below zero
+     * that equity will remain at 0 and will not decrease to
+     * a negative value.
      *
      * @return
      */
@@ -55,9 +59,15 @@ public class BearSimulator implements Simulator {
         } else {
             currentPercentDecrease = pricePerYear;
         }
+        double currentDecreaseValue;
         for (int i = 0; i < numberOfSteps; i++) {
             for (Holding h : holdings) {
-                valueCount -= currentPercentDecrease * h.getValue();
+                currentDecreaseValue = currentPercentDecrease * h.getValue();
+                //the system shall ensure that the simulation algorithm
+                // keeps all equity prices greater than or equal to zero.
+                if(h.getValue() - currentDecreaseValue > 0){
+                    valueCount -= currentDecreaseValue;
+                }
             }
         }
         stepNumber += numberOfSteps;
