@@ -64,8 +64,8 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             * Creates Transaction that adds value to cashAccountOfInterest
             */
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
-            Transaction t = new Deposit(aC, numOfShares * pricePerShare);
-            p.add(t);
+            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Deposit", aC.getAccountName()); //Deposit(aC, numOfShares * pricePerShare);
+            p.add(t, aC);//add to transactions list in the Portfolio class.
             e.subtractShares(numOfShares);
             /*
             * Portfolio removes Holding if the number of shares is equal to zero
@@ -86,17 +86,22 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     public void processOutsideFPTS() {
         Holding e = (Holding) equityOfInterest;
         /*
-        * Validates that the number of shares subtracted is less than 
+        * Validates that the number of shares subtracted is less than
         * the current number of shares before subtraction.
         */
         if (e.getNumOfShares() > numOfShares) {
             e.subtractShares(numOfShares);
         /*
         * Removes Holding if the number of shares subtracted is equal
-        * to the current number of shares. 
+        * to the current number of shares.
         */
         } else if (e.getNumOfShares() == numOfShares) {
             p.remove(e);
+            double pricePerShare = e.getValuePerShare();
+            double totalAmountTransaction = (pricePerShare * numOfShares);
+            Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0).getAccountName());
+            p.add(newTransaction, p.getCashAccounts().get(0));
+            newTransaction.execute(p.getCashAccounts().get(0),totalAmountTransaction, "Deposit");//operates on portfolio
             theStage.setScene(theFPTS.getConfirmationScene());
         /*
         * Warns the user of an invalid input.
@@ -106,3 +111,4 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
         }
     }
 }
+

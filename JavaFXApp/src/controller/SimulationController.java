@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 public class SimulationController extends MenuController {
     @FXML
     private Label error;
+    //TODO: Warning:(30, 19) [UnusedDeclaration] Private field 'error' is never assigned
     @FXML
     private TextField numSteps;
     @FXML
@@ -50,6 +51,7 @@ public class SimulationController extends MenuController {
     protected void handleBearSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "BEAR";
     }
+    //TODO: Warning:(55, 64) [UnusedDeclaration] Parameter 'event' is never used
 
     @FXML
     protected void handleStepYesRadioButtonPressed(ActionEvent event) {
@@ -60,22 +62,24 @@ public class SimulationController extends MenuController {
     protected void handleStepNoRadioButtonPressed(ActionEvent event) {
         steps = false;
     }
+    //TODO:Warning:(60, 63) [UnusedDeclaration] Parameter 'event' is never used
 
     @FXML
     protected void handleBullSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "BULL";
     }
+    //TODO:Warning:(65, 69) [UnusedDeclaration] Parameter 'event' is never used
+
 
     @FXML
     protected void handleNoSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "NOGROWTH";
     }
+    //TODO:Warning:(70, 67) [UnusedDeclaration] Parameter 'event' is never used
 
 
-    private Portfolio currentPortfolioState;//For Memento
-    private Memento memento;
-    private ArrayList<Memento> savedStates = new ArrayList<>();
- 
+
+
     /**
      * Checks to make sure the number of steps entered is valid.
      * If the simulation is no growth then the simulation will be called,
@@ -86,6 +90,12 @@ public class SimulationController extends MenuController {
      * @throws java.io.IOException - Exception thrown if the SimulationPage.fxml is not found.
      */
     public void handleSimulateButtonPressed(ActionEvent event) throws IOException {
+//        MementoCareTaker careTaker = new MementoCareTaker();
+//        Portfolio portfolio = new Portfolio();
+//        Memento cur_state = FPTS.getSelf().getPortfolio().createMemento();
+//
+//        portfolio.setMemento(portfolio);
+        //Portfolio cur_portfolio = FPTS.getSelf().getPortfolio();
         if (numSteps.getText().length() != 0 && priceAnnum.getText().length() != 0) {
             try {
                 int numberOfSteps = Integer.parseInt(numSteps.getText());
@@ -208,3 +218,4 @@ public class SimulationController extends MenuController {
 
     }
 }
+

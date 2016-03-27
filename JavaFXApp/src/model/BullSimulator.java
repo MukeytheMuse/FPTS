@@ -1,7 +1,4 @@
 package model;
-
-import gui.FPTS;
-
 import java.util.ArrayList;
 
 /**
@@ -11,12 +8,16 @@ public class BullSimulator implements Simulator {
     public static String name = "Bull Market Simulator";
 
     private ArrayList<Holding> holdings;//TODO: prices increase
+    //TODO: holdings is never assigned
     private String interval;
     private boolean hasSteps;
+    //TODO:Warning:(15, 21) [UnusedDeclaration] Private field 'hasSteps' is assigned but never accessed
     private int numSteps;
     private double pricePerYear;
     private double currentPercentIncrease;
+    //TODO:Warning:(18, 20) [UnusedDeclaration] Private field 'currentPercentIncrease' is assigned but never accessed
     private double valueChangePerStep;//may not need
+    //TODO:Warning:(19, 20) [UnusedDeclaration] Private field 'valueChangePerStep' is never used
     private int stepNumber;
 
     /**
@@ -31,7 +32,7 @@ public class BullSimulator implements Simulator {
         this.hasSteps = hasSteps;
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
-        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+//        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
         this.stepNumber = 0;
     }
 
@@ -71,3 +72,4 @@ public class BullSimulator implements Simulator {
         return numSteps;
     }
 }
+

@@ -1,60 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
 package gui;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import controller.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
-
-import static javafx.application.Application.launch;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.DataBase.WriteFile;
-import model.Equity;
-import model.Memento;
 import model.Portfolio;
 import model.Simulator;
 import model.User;
 
-import java.io.*;
-import java.util.ArrayList;
-
-/**
- * Executes application and refers user to relevant functions.
- *
- * @author Eric Epstein, Kimberly Sookoo, Ian London, Kaitlyn Brockway, Luke Veilleux
- */
 public class FPTS extends Application {
-    private ArrayList<Memento> savedMementoPortfolioStates;//acts as a queue
 
     /*
     * context data associated with simulation
@@ -62,204 +35,173 @@ public class FPTS extends Application {
     private static double simulationValue;
     private static Simulator currentSimulator;
 
-    /*
-    * constants that describe dimension of display
-    */
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 600;
 
-    /*
-    * stage
-    */
+    private final int WIDTH = 1200;
+    //TODO: check Warning:(40, 23) [UnusedDeclaration] Private field 'WIDTH' is never used
+    private final int HEIGHT = 600;
+    //TODO: check Warning:(41, 23) [UnusedDeclaration] Private field 'HEIGHT' is never used
     private Stage thestage;
 
-    /*
-    * associated portfolio
-    */
-    public Portfolio p;
-
-    /*
-    * current user
-    */
     private static User currentUser;
-
-    /*
-    * global reference to loginController
-    */
-    LoginController loginController;
-
-    /*
-    * copy of itself
-    */
     private static FPTS self;
 
-    /**
-     * Starts the application display and loads users
-     *
-     * @param primaryStage
-     * @throws IOException
-     */
-    @Override
+
+    public static ArrayList<String> allIndicies;//all index names
+    public static ArrayList<String> allSectors;//all sector names
+
+    public FPTS() {
+    }
+
     public void start(Stage primaryStage) throws IOException {
         self = this;
-        thestage = primaryStage;
-        //p = new Portfolio();
-
-        /*
-        * Fills the User static class
-        */
-        User.fillUsers();
-
-        // Fills the Equity static class with whats in the equities.csv file
-        Equity.getEquityList();
-
-        /*
-        * Sets homepage using FXML loader
-        */
-        Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
-        Scene loginScene = new Scene(root, WIDTH, HEIGHT);
+        this.thestage = primaryStage;
+        this.fillIndicies();
+        this.fillSectors();
+        User.fillUsers();//MUST be called after fillIndicies and fillSectors
+        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Scene loginScene = new Scene(root, 1200.0D, 600.0D);
 
         try {
-            thestage.setScene(createLogInScene());
-        } catch (Exception e) {
-            //e.printStackTrace();
+            this.thestage.setScene(this.createLogInScene());
+        } catch (Exception var5) {
+            //TODO: check
         }
 
-        self = this;
-
-        thestage.setScene(loginScene);
-        thestage.show();
-
+        this.thestage.setScene(loginScene);
+        this.thestage.show();
     }
 
 
 
     /**
-    * Returns home page
-    *
-    * @return Scene
-    */
-    public Scene getHomeScene() {
-        Scene scene = null;
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-            scene = new Scene(parent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+     * Populates the possible index fields.
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    public void fillIndicies(){
+        allIndicies = new ArrayList<>();
+        allIndicies.add("DOW");
+        allIndicies.add("NASDAQ100");
+    }
+
+    /**
+     * Populates all of the possible sector fields.
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    public void fillSectors(){
+        allSectors = new ArrayList<>();
+        allSectors.add("FINANCE");
+        allSectors.add("TRANSPORTATION");
+        allSectors.add("TECHNOLOGY");
+        allSectors.add("HEALTH CARE");
+    }
+
+    public Scene createLogInScene() throws IOException {
+        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Scene scene = new Scene(root, 1200.0D, 600.0D);
+        this.thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
     }
-    
-    /**
-     * Returns scene indicating confirmation of a user's action
-     * 
-     * @return Scene
-     */
 
+    public Scene getHomeScene() {
+        Scene scene = null;
+
+        try {
+            Parent e = (Parent)FXMLLoader.load(this.getClass().getResource("HomePage.fxml"));
+            scene = new Scene(e);
+        } catch (IOException var3) {
+            var3.printStackTrace();
+        }
+
+        return scene;
+    }
+
+    /**
+     * Called by "CashAccountCreator" class
+     *
+     * @return
+     */
     public Scene getConfirmationScene() {
         Label confirmation = new Label("Update completed");
         VBox split = new VBox();
-        split.getChildren().addAll(getNav(), confirmation);
-        return new Scene(split, WIDTH, HEIGHT);
+        split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
+        //TODO: check Warning:(127, 36) Redundant array creation for calling varargs method
+        return new Scene(split, 1200.0D, 600.0D);
     }
-    
+
+
     /**
-     * Returns scene indicating error on the part of the user
      *
-     * @return Scene
+     * @return
      */
     public Scene getErrorScene() {
         Label confirmation = new Label("Error");
         VBox split = new VBox();
-        split.getChildren().addAll(getNav(), confirmation);
-        return new Scene(split, WIDTH, HEIGHT);
+        split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
+        //TODO: check Warning:(139, 36) Redundant array creation for calling varargs method
+        return new Scene(split, 1200.0D, 600.0D);
     }
 
-    /**
-     * Returns login page loaded in FXMLLoader
-     *
-     * @return Scene
-     */
-    public Scene createLogInScene() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+//    public Scene createRegisterPage() throws IOException {
+//        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RegisterPage.fxml"));
+//        Scene scene = new Scene(root, 1200.0D, 600.0D);
+//        this.thestage.setScene(scene);
+//        this.thestage.setTitle("Financial Portfolio Tracking System");
+//        return scene;
+//    }
 
-        thestage.setTitle("Financial Portfolio Tracking System");
-        return scene;
-    }
-
-    /**
-    * Returns register page loaded in FXMLLoader 
-    *
-    * @return Scene
-    */
-    public Scene createRegisterPage() throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-
-        thestage.setScene(scene);
-        thestage.setTitle("Financial Portfolio Tracking System");
-
-        return scene;
-    }
-
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        if (args.length >= 2) {
-            if (args[0].equals("-delete")) {
-                String userID = args[1];
-                File csv = new File("JavaFXApp/src/model/DataBase/UserData.csv");
-                File csvTemp = new File("JavaFXApp/src/model/DataBase/UserDataTemp.csv");
+        if(args.length >= 2 && args[0].equals("-delete")) {
+            String userID = args[1];
+            File csv = new File("model/DataBase/UserData.csv");
+            File csvTemp = new File("model/DataBase/UserDataTemp.csv");
+
+            try {
+                BufferedReader e = new BufferedReader(new FileReader(csv));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
+
                 String line;
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader(csv));
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
-                    while ((line = reader.readLine()) != null) {
-                        String[] split = line.split(",");
-                        if (split[0].equals(userID)) {
-                            System.out.println("Deleting " + userID);
-                            continue;
-                        }
-                        writer.write(split[0] + "," + split[1]);
+                while((line = e.readLine()) != null) {
+                    String[] directory = line.split(",");
+                    if(directory[0].equals(userID)) {
+                        System.out.println("Deleting " + userID);
+                    } else {
+                        writer.write(directory[0] + "," + directory[1]);
                         writer.newLine();
                     }
-                    writer.close();
-                    reader.close();
-                    csvTemp.renameTo(csv);
-
-                    File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + userID);
-                    if (directory.exists()) {
-                        System.out.println("Has " + userID + " been deleted?");
-                        File transFile = new File(directory, "/Trans.csv");
-                        File cashFile = new File(directory, "/Cash.csv");
-                        File holdingsFile = new File(directory, "/Holdings.csv");
-                        transFile.delete();
-                        cashFile.delete();
-                        holdingsFile.delete();
-                        directory.delete();
-                    }
-                } catch (Exception e) {
-
                 }
+
+                writer.close();
+                e.close();
+                csvTemp.renameTo(csv);
+                //TODO: check Warning:(174, 25) Result of 'File.renameTo()' is ignored
+                File directory1 = new File("model/Database/Portfolios/" + userID);
+                if(directory1.exists()) {
+                    System.out.println("Has " + userID + " been deleted?");
+                    File transFile = new File(directory1, "/Trans.csv");
+                    File cashFile = new File(directory1, "/Cash.csv");
+                    File holdingsFile = new File(directory1, "/Holdings.csv");
+                    transFile.delete();
+                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
+                    cashFile.delete();
+                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
+                    holdingsFile.delete();
+                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
+                    directory1.delete();
+                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
+                }
+            } catch (Exception var11) {
+                ;
             }
         }
+
         launch(args);
     }
 
-
-    /**
-     * Returns portfolio
-     *
-     * @return Portfolio
-     */
     public Portfolio getPortfolio() {
-        return p;
+        return currentUser.getMyPortfolio();
     }
-
     /**
      * Constructs navigation for relevant subsystems
      *
@@ -410,20 +352,22 @@ public class FPTS extends Application {
             @Override
             public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
+
+                //TODO: check Warning:(346, 36) [UnusedDeclaration] Variable 'cashAccountCreator' is never used
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
 
-        /* 
+        /*
         The following code is commented out
         because it complies with our current
         design decision that will be revisited
-        in the next release. 
-        
+        in the next release.
+
         Create/Delete Portfolio Button disabled
-        
-        
+
+
         nav.getChildren().add(aButton);
 
         //Button to add/remove Portfolio
@@ -478,31 +422,13 @@ public class FPTS extends Application {
         return nav;
     }
 
-    /**
-     * Sets simulation value
-     *
-     * @param value
-     */
-    public static void setSimulationValue(double value) {
-        simulationValue = value;
+
+    public static User getCurrentUser() {
+        return currentUser;
     }
 
-    /**
-     * Returns simulation value
-     *
-     * @return double
-     */
-    public static double getSimulationValue() {
-        return simulationValue;
-    }
-
-    /**
-     * Sets current simulation
-     *
-     * @param curSim - Simulator
-     */
-    public static void setCurrentSimulator(Simulator curSim) {
-        currentSimulator = curSim;
+    public static String getCurrentUserID() {
+        return currentUser.getLoginID();
     }
 
     /**
@@ -515,99 +441,62 @@ public class FPTS extends Application {
     }
 
     /**
+     * Returns simulation value
      *
-     * @param m
+     * @return double
      */
-    public void addMemento(Memento m){
-        savedMementoPortfolioStates.add(m);
+    public static double getSimulationValue() {
+        return simulationValue;
     }
 
     /**
+     * Sets simulation value
      *
-     * @return
+     * @param value
      */
-    public Memento getMemento(){
-        return savedMementoPortfolioStates.remove(0);
-    }
-    
-     /**
-     * Returns current user
-     * 
-     * @return User
-     */
-    public User getCurrentUser() {
-        return currentUser;
+    public static void setSimulationValue(double value) {
+        simulationValue = value;
     }
 
-    /**
-     * Returns login ID of current user
-     * 
-     * @return String
-     */
-    public static String getCurrentUserID() {
-        return currentUser.getLoginID();
-    }
-    
-     /**
-     * Returns self
-     *
-     * @return FPTS
-     */
     public static FPTS getSelf() {
         return self;
     }
 
-    /**
-     * Returns indicator of portfolio existence
-     * 
-     * @param user
-     * @return boolean
-     */
     public boolean hasPortfolio(User user) {
-        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
         return directory.exists();
     }
-    
+
     /**
-     * Sets user object to the current user
-     * 
-     * @param user - User
+     * Sets current simulation
+     *
+     * @param curSim - Simulator
      */
-    public void setCurrentUser(User user) {
+    public static void setCurrentSimulator(Simulator curSim) {
+        currentSimulator = curSim;
+    }
+
+    /**
+     * When a user logs in the current user is set.
+     * A portfolio should already exist and will be existing in the user class.
+     *
+     * @param user
+     */
+    public static void setCurrentUser(User user) {
         currentUser = user;
-        WriteFile writeFile = new WriteFile();
-        if (!(hasPortfolio(currentUser))) {
-            writeFile.createPortfolioForUser(currentUser);
-        }
-        p = new Portfolio();
     }
-    
-     /**
-     * Returns height of stage
-     *
-     * @return int
-     */
+
+
     public int getHeight() {
-        return HEIGHT;
+        return 600;
     }
 
-    /**
-     * Returns width of stage
-     *
-     * @return int
-     */
     public int getWidth() {
-        return WIDTH;
+        return 1200;
     }
 
-    /**
-     * Returns primary stage
-     *
-     * @return Stage
-     */
     public Stage getStage() {
-        return thestage;
+        return this.thestage;
     }
 }
-
 

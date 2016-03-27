@@ -127,7 +127,7 @@ public class CashAccountFinder extends Observable implements Observer {
         splitPage.getChildren().addAll(theFPTS.getNav(), searchPane);
         return new Scene(splitPage, theFPTS.getWidth(), theFPTS.getHeight());
     }
-    
+
     /*
     *
     * Define helper methods related to creation for parts of views
@@ -150,6 +150,7 @@ public class CashAccountFinder extends Observable implements Observer {
                         "exactly matches"
                 );
         ComboBox searchConditions = new ComboBox(attributes);
+        //TODO: Warning:(152, 37) Unchecked call to 'ComboBox(ObservableList<T>)' as a member of raw type 'javafx.scene.control.ComboBox'
         searchConditions.getSelectionModel().select(0);
         aField.getChildren().addAll(descriptionLabel, searchConditions, input);
         aField.setSpacing(10);
@@ -166,7 +167,7 @@ public class CashAccountFinder extends Observable implements Observer {
         queries.getChildren().add(createInputField("Account name: ", mainInput));
         return queries;
     }
-    
+
     /*
     *
     * Defines methods related to the Observer pattern
@@ -206,3 +207,4 @@ public class CashAccountFinder extends Observable implements Observer {
         }
     }
 }
+

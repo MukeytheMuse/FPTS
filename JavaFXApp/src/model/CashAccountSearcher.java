@@ -24,6 +24,7 @@ public class CashAccountSearcher extends Searcher {
      */
     public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
         ArrayList<String> searchableStrings = new ArrayList<String>();
+        //TODO: check Warning:(26, 27) [UnusedDeclaration] Variable 'searchableStrings' is never used
         CashAccount ac = (CashAccount) (Object) s;
         ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>();
         ArrayList<String> cashAccountItem = new ArrayList<String>();
@@ -32,3 +33,4 @@ public class CashAccountSearcher extends Searcher {
         return anObject;
     }
 }
+

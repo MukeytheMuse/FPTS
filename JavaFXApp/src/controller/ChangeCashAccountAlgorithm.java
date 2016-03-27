@@ -52,3 +52,4 @@ abstract public class ChangeCashAccountAlgorithm extends CashAccountAlgorithm {
     abstract void performTransaction();
 
 }
+

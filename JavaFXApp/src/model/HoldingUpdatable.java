@@ -20,5 +20,4 @@ public interface HoldingUpdatable {
     public ArrayList<String> getIndices();
 
     public ArrayList<String> getSectors();
-    //public void add(HoldingUpdatable e);
 }

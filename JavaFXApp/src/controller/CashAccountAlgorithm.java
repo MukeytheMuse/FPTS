@@ -27,10 +27,12 @@ abstract public class CashAccountAlgorithm implements Observer {
     /**
      * Stalls algorithm until a CashAccount is obtained from CashAccountFinder
      *
+     * Called by Menu Controller methods
+     *
      * @param theFPTS - FPTS
      */
     public void process(FPTS theFPTS) {
-        c = new CashAccount("", 0, null);
+        c = new CashAccount("", 0, null, null);
         this.theFPTS = theFPTS;
         CashAccountFinder caFinder = new CashAccountFinder(theFPTS, c);
         caFinder.addObserver(this);
@@ -54,3 +56,4 @@ abstract public class CashAccountAlgorithm implements Observer {
     abstract void action();
 
 }
+

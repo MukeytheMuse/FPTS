@@ -79,7 +79,7 @@
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <Label alignment="CENTER" prefHeight="20.0" prefWidth="135.0" text="Current Step: " GridPane.halignment="CENTER">
@@ -94,12 +94,12 @@
                             </font>
                         </Label>
                         <Label fx:id="pValue" prefHeight="53.0" prefWidth="137.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Current Value: " GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalValue" alignment="CENTER" prefHeight="53.0" prefWidth="137.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Current Value: " GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="totalValue" alignment="CENTER" prefHeight="53.0" prefWidth="137.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
                 <Label fx:id="errors" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />

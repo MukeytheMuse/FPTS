@@ -34,7 +34,7 @@ public class PortfolioDisplayer implements Displayer {
      */
     @Override
     public void display(FPTS theFPTS) {
-        this.theFPTS = theFPTS;
+        this.theFPTS = theFPTS; //TODO: GET RID OF THE GOD CLASS.(IF WE CAN)
         portfolioElements = theFPTS.getPortfolio().getPortfolioElements();
         theFPTS.getStage().setScene(getDisplayScene());
     }
@@ -60,3 +60,4 @@ public class PortfolioDisplayer implements Displayer {
         return displayScene;
     }
 }
+

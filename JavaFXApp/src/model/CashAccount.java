@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,19 +8,27 @@ import java.util.Date;
  * Holds a user’s cash account details, including the account name,
  * creation date and total value that may change depending on various operations.
  *
- * @author Eric Epstein and Kaitlyn Brockway
+ * @author Eric Epstein and Kaitlin Brockway
  */
 public class CashAccount implements Searchable {
     private String accountName;
     private double currentValue;
-    private Date dateAdded;
-    public static ArrayList<CashAccount> cashList = getCashList();
+    private String dateAdded;//TODO: change type to date here and for readInCashFile(String userID) method in the User class.
+    private ArrayList<Transaction> transactions = new ArrayList<>();
+
+
+    //public static ArrayList<CashAccount> cashList = getCashList();
 
     /**
      * getCashList() returns cash accounts
      */
-    public static ArrayList<CashAccount> getCashList() {
-        return cashList;
+//    public static ArrayList<CashAccount> getCashList() {
+//        return cashList;
+//    }
+
+    //TODO: make private somehow
+    public ArrayList<Transaction> getTransactions(){
+        return transactions;
     }
 
     /**
@@ -30,12 +39,15 @@ public class CashAccount implements Searchable {
      * @param AccountName   - String
      * @param initialAmount - double
      * @param dateAdded     - Date
+     * @param existingTransactions -
      */
-    public CashAccount(String AccountName, double initialAmount, Date dateAdded) {
+    public CashAccount(String AccountName, double initialAmount, String dateAdded, ArrayList<Transaction> existingTransactions) {
         this.accountName = AccountName;
         currentValue = initialAmount;
         this.dateAdded = dateAdded;
+        this.transactions = existingTransactions;
     }
+
 
     /**
      * Returns the account name.
@@ -51,7 +63,6 @@ public class CashAccount implements Searchable {
      *
      * @return String
      */
-    @Override
     public String getDisplayName() {
         return accountName;
     }
@@ -93,6 +104,7 @@ public class CashAccount implements Searchable {
      */
     @Override
     public boolean equals(java.lang.Object obj) {
+        //TODO: check the class of the parameter
         CashAccount c = (CashAccount) obj;
         return (accountName.equals(c.getAccountName()));
     }
@@ -102,11 +114,20 @@ public class CashAccount implements Searchable {
      *
      * @return Date
      */
-    public Date getDateAdded() {
+    public String getDateAdded() {//TODO: SEE WHERE THIS IS BEING CALLED AND CHANGE TYPE FROM "Date" to "LocalDate"
         return dateAdded;
     }
 
 
+    /**
+     *
+     * @param t
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    protected void addTransaction(Transaction t){
+        transactions.add(t);
+    }
     /**
      * subtracts current value by a specified amount
      * <p>
@@ -144,3 +165,4 @@ public class CashAccount implements Searchable {
 
 
 }
+

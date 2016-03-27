@@ -1,7 +1,4 @@
 package model;
-
-import gui.FPTS;
-
 import java.util.ArrayList;
 
 /**
@@ -11,11 +8,14 @@ public class BearSimulator implements Simulator {
     public static String name = "Bear Market Simulator";
 
     private ArrayList<Holding> holdings;//TODO: find out how to get the holdings******
+    //TODO: holdings is never assigned and is accessed
     private String interval;
     private boolean hasSteps;
+    //TODO: Warning:(15, 21) [UnusedDeclaration] Private field 'hasSteps' is assigned but never accessed
     private int numSteps;
     private double pricePerYear;
     private double currentPercentDecrease;
+    //TODO: Warning:(18, 20) [UnusedDeclaration] Private field 'currentPercentDecrease' is assigned but never accessed
     private int stepNumber;
 
     /**
@@ -33,7 +33,7 @@ public class BearSimulator implements Simulator {
         this.hasSteps = hasSteps;
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
-        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+//        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
         this.stepNumber = 0;
     }
 

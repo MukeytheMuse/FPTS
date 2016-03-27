@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static model.DataBase.ReadFile.readHoldings;
+//import static model.DataBase.ReadFile.readHoldings;
 
 /**
  * Holds an individual equity acquisition made by the user of the application.
@@ -28,6 +28,8 @@ public class Holding implements Searchable, HoldingUpdatable {
     * initial price per share
     */
     private double initialPricePerShare;
+    //TODO: Warning:(30, 20) [UnusedDeclaration] Private field 'initialPricePerShare' is never used
+
 
     /*
     * number of shares
@@ -47,22 +49,28 @@ public class Holding implements Searchable, HoldingUpdatable {
     /*
     * acquistion date
     */
-    private Date acquisitionDate;
+    private String acquisitionDate;
 
     /*
     * indices
     */
     private ArrayList<String> indices;
+    //TODO:Warning:(55, 31) [UnusedDeclaration] Private field 'indices' is assigned but never accessed
+
+
 
     /*
     * sectors
     */
     private ArrayList<String> sectors;
+    //TODO:Warning:(60, 31) [UnusedDeclaration] Private field 'sectors' is assigned but never accessed
 
-    /*
-    *
-    */
-    public static ArrayList<Holding> holdingArrayList = readHoldings();
+
+
+//    /*
+//    *
+//    */
+//    public static ArrayList<Holding> holdingArrayList = readHoldings();
 
 
     /**
@@ -70,13 +78,15 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @author Eric Epstein and Kaitlyn Brockway
      */
-    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, Date acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors) {
+    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, String acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.holdingName = equityName;
         this.numOfShares = numOfShares;
         this.valuePerShare = valuePerShare;
         this.currentValue = numOfShares * valuePerShare;
         this.acquisitionDate = acquisitionDate;
+        this.indices = indices;
+        this.sectors = sectors;
         //this.cashAccount = cashAccount;
         //extras = new ArrayList<String>();
     }
@@ -96,7 +106,6 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return String
      */
-    @Override
     public String getDisplayName() {
         return tickerSymbol;
     }
@@ -106,7 +115,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return String
      */
-    public String getSymbol() {
+    public String getSymbol() {//TODO
         return tickerSymbol;
     }
 
@@ -159,7 +168,7 @@ public class Holding implements Searchable, HoldingUpdatable {
         return currentValue;
     }
 
-    public Date getAcquisitionDate() {
+    public String getAcquisitionDate() {//TODO
         return acquisitionDate;
     }
 
@@ -168,7 +177,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return double
      */
-    public double getCurrentValue() {
+    public double getCurrentValue() {//TODO
         return currentValue;
     }
 
@@ -179,7 +188,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      */
     @Override
     public ArrayList<String> getSectors() {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     /**
@@ -189,7 +198,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      */
     @Override
     public ArrayList<String> getIndices() {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     /**

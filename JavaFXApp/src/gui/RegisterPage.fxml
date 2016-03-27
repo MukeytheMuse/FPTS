@@ -79,6 +79,8 @@
                                 <Font size="14.0"/>
                             </font>
                         </Label>
+
+
                         <PasswordField fx:id="password1" promptText="Password" GridPane.columnIndex="1"
                                        GridPane.rowIndex="2"/>
                     </children>
@@ -106,6 +108,53 @@
                                 GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
                     </children>
                 </GridPane>
+
+
+
+
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
+                      GridPane.columnIndex="0" GridPane.rowIndex="3">
+                    <Label prefHeight="20.0" prefWidth="100.0" text="Import Transactions: " GridPane.halignment="CENTER"
+                           GridPane.valignment="CENTER">
+                        <font>
+                            <Font size="14.0"/>
+                        </font>
+                    </Label>
+                    <children>
+                        <RadioButton fx:id="transYes" mnemonicParsing="false"
+                                     onAction="#handleYesImportTransactionsButtonPressed" selected="true" text="Yes">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="importTrans"/>
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="transNo" mnemonicParsing="false"
+                                     onAction="#handleNoImportTransactionsButtonPressed" selected="true" text="No"
+                                     toggleGroup="$importTrans"/>
+                    </children>
+                </VBox>
+
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
+                      GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <Label prefHeight="20.0" prefWidth="76.0" text="Import Holdings: " GridPane.halignment="CENTER"
+                           GridPane.valignment="CENTER">
+                        <font>
+                            <Font size="14.0"/>
+                        </font>
+                    </Label>
+                    <children>
+                        <RadioButton fx:id="holdingsYes" mnemonicParsing="false"
+                                     onAction="#handleYesImportHoldingsButtonPressed" selected="true" text="Yes">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="importCash"/>
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="holdingsNo" mnemonicParsing="false"
+                                     onAction="#handleNoImportHoldingsButtonPressed" selected="true" text="No"
+                                     toggleGroup="$importCash"/>
+                    </children>
+                </VBox>
+
+
                 <Label text="Registration" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                     <font>
                         <Font name="System Bold Italic" size="18.0"/>

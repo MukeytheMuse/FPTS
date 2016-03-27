@@ -7,7 +7,6 @@ package controller;
 
 import model.CashAccount;
 import model.Transaction;
-import model.Withdrawal;
 
 /**
  * Implements final step in CashAccountAlgorithm by creating a Withdraw object.
@@ -28,12 +27,9 @@ public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         * Validates whether amount withdrawn will lead to negative overall value.
         */
         if (c.getValue() >= amount) {
-            
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            
-            Transaction t = new Withdrawal(aC, amount);
-            theFPTS.getPortfolio().add(t);
-
+            Transaction t = new Transaction(amount, "dateMade", "Withdrawal", aC.getAccountName());
+            theFPTS.getPortfolio().add(t, aC);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {
             theFPTS.getStage().setScene(theFPTS.getErrorScene());
@@ -41,3 +37,4 @@ public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
     }
 
 }
+

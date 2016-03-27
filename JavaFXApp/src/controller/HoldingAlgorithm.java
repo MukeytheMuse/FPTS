@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.FPTS;
@@ -19,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
-
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -49,7 +43,7 @@ abstract public class HoldingAlgorithm implements Observer {
     /*
     * Context data and derived information
     */
-    protected FPTS theFPTS;
+    protected FPTS theFPTS;//TODO:error checking
     protected Stage theStage;
     private double HEIGHT;
     private double WIDTH;
@@ -86,6 +80,9 @@ abstract public class HoldingAlgorithm implements Observer {
      * Establishes context derived from child algorithms then constructs
      * search scene with specialized context.
      *
+     * Called when Buy Equities button is pressed and sets up the scene
+     * for when a holding is searched for on the Buy Equities "page".
+     *
      * @param anFPTS - FPTS
      */
     public void process(FPTS anFPTS) {
@@ -101,11 +98,11 @@ abstract public class HoldingAlgorithm implements Observer {
         theStage.show();
 
     }
-    
+
     /*
      *
      * Defines abstract methods to be implemented in subclasses
-     * 
+     *
      */
 
     /*
@@ -117,7 +114,7 @@ abstract public class HoldingAlgorithm implements Observer {
     * Delegates method of purchase/sale outside FPTS to sublcass
     */
     abstract void processOutsideFPTS();
-     
+
     /*
     *
     * Defines views used throughout algorithm
@@ -131,6 +128,7 @@ abstract public class HoldingAlgorithm implements Observer {
      * @return
      */
     public Scene getFirstSearchScene() {
+        System.out.println("getFirstSearchScene() called");
         ArrayList<Searchable> toBeSearched = getToBeSearched();
         s = new SearchedHoldingSearcher();
         s.addObserver(self);
@@ -144,6 +142,7 @@ abstract public class HoldingAlgorithm implements Observer {
      * @return Scene
      */
     public Scene getSecondSearchScene() {
+        System.out.println("getSecondSearchScene() called");
         s = new CashAccountSearcher();
         s.addObserver(self);
         matchDisplay.getChildren().clear();
@@ -165,6 +164,7 @@ abstract public class HoldingAlgorithm implements Observer {
      * @return
      */
     private Scene getSearchScene(ArrayList<Searchable> toBeSearched, VBox queries, Button actionBtn) {
+        System.out.println("getSearchScene(p1 ,p2 ,p3 ) called");
         VBox splitPage = new VBox();
 
         VBox searchPane = new VBox();
@@ -206,7 +206,7 @@ abstract public class HoldingAlgorithm implements Observer {
         VBox searchPane = new VBox();
         VBox queries = new VBox();
         HBox aField = new HBox();
-        
+
         /*
         * Defines first field : price per share
         */
@@ -233,6 +233,7 @@ abstract public class HoldingAlgorithm implements Observer {
                         "Use existing cash account"
                 );
         ComboBox searchConditions = new ComboBox(attributes);
+        //TODO: check Warning:(235, 37) Unchecked call to 'ComboBox(ObservableList<T>)' as a member of raw type 'javafx.scene.control.ComboBox'
         searchConditions.getSelectionModel().select(0);
         aField.getChildren().addAll(new Label("Target source: "), searchConditions);
 
@@ -250,7 +251,7 @@ abstract public class HoldingAlgorithm implements Observer {
                 boolean isValid = isValid(pricePerShareField) && isValid(numOfSharesField);
 
                 /*
-                * If input is valid, analyze response and determine which step in the 
+                * If input is valid, analyze response and determine which step in the
                 * algorithm to go.
                 */
                 if (isValid) {
@@ -301,6 +302,7 @@ abstract public class HoldingAlgorithm implements Observer {
 
         try {
             Double.parseDouble(inputAmountString);
+            //TODO: check Warning:(303, 20) Result of 'Double.parseDouble()' is ignored
         } catch (Exception e) {
             return false;
         }
@@ -314,7 +316,7 @@ abstract public class HoldingAlgorithm implements Observer {
         return true;
 
     }
-    
+
     /*
     *
     * Defines Button controls
@@ -334,7 +336,7 @@ abstract public class HoldingAlgorithm implements Observer {
             @Override
             public void handle(ActionEvent e) {
                 /*
-                * Validates CashAccount and calls subclass algorithm to process 
+                * Validates CashAccount and calls subclass algorithm to process
                 * sale/purchase inside FPTS.
                 */
                 if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
@@ -364,7 +366,7 @@ abstract public class HoldingAlgorithm implements Observer {
             @Override
             public void handle(ActionEvent e) {
                 /*
-                * Validates HoldingUpdatable (Equity or Holding) then transitions 
+                * Validates HoldingUpdatable (Equity or Holding) then transitions
                 * to next view.
                 */
                 if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
@@ -378,7 +380,7 @@ abstract public class HoldingAlgorithm implements Observer {
 
         return actionBtn;
     }
-    
+
     /*
     *
     * Defines methods related to the Observer pattern
@@ -421,7 +423,7 @@ abstract public class HoldingAlgorithm implements Observer {
         }
 
     }
-    
+
     /*
     *
     * Define methods related to creation for parts of views
@@ -452,6 +454,8 @@ abstract public class HoldingAlgorithm implements Observer {
                         "exactly matches"
                 );
         ComboBox searchConditions = new ComboBox(attributes);
+        //TODO: check Warning:(454, 37) Unchecked call to 'ComboBox(ObservableList<T>)' as a member of raw type 'javafx.scene.control.ComboBox'
+
         searchConditions.getSelectionModel().select(0);
         aField.getChildren().addAll(descriptionLabel, searchConditions, input);
         aField.setSpacing(10);
@@ -486,3 +490,4 @@ abstract public class HoldingAlgorithm implements Observer {
     }
 
 }
+

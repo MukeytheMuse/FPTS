@@ -1,8 +1,8 @@
 package model;
 
-import java.util.ArrayList;
+import model.DataBase.ReadFile;
 
-import static model.DataBase.ReadFile.readEquity;
+import java.util.ArrayList;
 
 /**
  * Searchable and available to be purchased by the user.
@@ -11,7 +11,7 @@ import static model.DataBase.ReadFile.readEquity;
  *
  * @author Epstein & Ian London
  */
-public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
+public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatable {
 
     /*
     * the identifying symbol
@@ -38,33 +38,35 @@ public class Equity implements Searchable, EquityComponent, HoldingUpdatable {
     */
     public ArrayList<String> sectors;
 
+
+    //SHOULD NOT NEED THIS OR THE METHOD IN ReadFile called readEquity.
     /*
     * collection of Equity read from input
     */
-    public static ArrayList<EquityComponent> EquityList = readEquity();
+    public static ArrayList<EquityComponent> LoadedEquityList = ReadFile.readEquity();
 
     /*
     * collection of Equity that matches a search criteria
     */
-    private ArrayList<Equity> matches;
+    private ArrayList<LoadedEquity> matches;
 
     /*
-    * getEquityList() returns equities 
+    * getEquityList() returns equities
     */
     public static ArrayList<EquityComponent> getEquityList() {
-        return EquityList;
+        return LoadedEquityList;
     }
 
     /*
     * Equity constructor takes 5 parameters
-    * 
+    *
     * @params : tickerSymbol - str
     *            equityName - str
     *           perShareValue - double
     *           indices - ArrayList<String>
     *           sectors - ArrayList<String>
     */
-    public Equity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
+    public LoadedEquity(String tickerSymbol, String equityName, double perShareValue, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.equityName = equityName;
         this.pricePerShare = perShareValue;

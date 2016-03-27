@@ -1,9 +1,7 @@
 package model.DataBase;
 
 import gui.FPTS;
-import model.CashAccount;
 import model.EquityComponent;
-import model.Holding;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -22,18 +20,18 @@ public class ReadFile {
         return ReadEquity.read();
     }
 
-    public static ArrayList<Holding> readHoldings() {
-        return ReadHoldings.read();
-    }
-
-    public static ArrayList<CashAccount> readCash() {
-        return ReadCash.read();
-    }
+//    public static ArrayList<Holding> readHoldings() {
+//        return ReadHoldings.read();
+//    }
+//
+//    public static ArrayList<CashAccount> readCash() {
+//        return ReadCash.read();
+//    }
 
 
     // reads in CSV file
     protected static ArrayList<String[]> readInFile() {
-        String csv = "JavaFXApp/src/model/DataBase/equities.csv";
+        String csv = "model/DataBase/equities.csv";
         splitFile = new ArrayList<String[]>();
         BufferedReader reader = null;
         String line;
@@ -46,7 +44,7 @@ public class ReadFile {
                 splitFile.add(split);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/equities.csv not found! Please try again.");
+            System.out.println("model/DataBase/equities.csv not found! Please try again.");
             //readInFile();
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +63,7 @@ public class ReadFile {
     // reads in CSV file
     protected static ArrayList<String[]> readInUser(String file) {
         //System.out.println("CURRENT USER ID: " + FPTS.getCurrentUserID());
-        String csv = "JavaFXApp/src/model/DataBase/Portfolios/" + FPTS.getCurrentUserID() + file;
+        String csv = "model/DataBase/Portfolios/" + FPTS.getCurrentUserID() + file;
         splitFile = new ArrayList<String[]>();
         BufferedReader reader = null;
         String line;
@@ -78,7 +76,7 @@ public class ReadFile {
                 splitFile.add(split);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/equities.csv not found! Please try again.");
+            System.out.println("model/DataBase/equities.csv not found! Please try again.");
             //readInFile();
         } catch (IOException e) {
             e.printStackTrace();

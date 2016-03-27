@@ -1,16 +1,14 @@
 package controller;
 
 import model.CashAccount;
-import model.Deposit;
 import model.Transaction;
-import model.Withdrawal;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
 /**
  * Implements final step in CashAccountAlgorithm by specifying amount and another
- * CashAccount to which the previously specified CashAccount is transfered.
+ * CashAccount to which the previously specified CashAccount is transferred.
  *
  * @author ericepstein
  */
@@ -30,15 +28,17 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
     /*
     * Implements the action() step by creating a new CashAccountFinder to establish
     * the second CashAccount
+    *
+    * TODO: error check this
     */
     public void action() {
-        c2 = new CashAccount("", 0, null);
+        c2 = new CashAccount("", 0, null, null);
         CashAccountFinder caFinder = new CashAccountFinder(theFPTS, c2);
         caFinder.addObserver(this);
     }
 
     /*
-    * Processes notifications by calling specific methods based on number of 
+    * Processes notifications by calling specific methods based on number of
     * current notification.
     */
     public void update(Observable o, Object args) {
@@ -47,7 +47,7 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
 
         switch (numCalled) {
             /*
-            * At first notification, the first CashAccount is already set. 
+            * At first notification, the first CashAccount is already set.
             * Allow superclass to handle update.
             */
             case (1):
@@ -71,7 +71,7 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
     }
 
     /*
-    * Creates AmountInput to manage user interface and input to 
+    * Creates AmountInput to manage user interface and input to
     * receive validated numerical value.
     */
     public void getAmountInput() {
@@ -92,14 +92,13 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         * respective Transaction objects
         */
         if (c.getValue() >= amount) {
-            CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            
-            Transaction t = new Withdrawal(aC, amount);
-            theFPTS.getPortfolio().add(t);
-            
-            aC = theFPTS.getPortfolio().getCashAccount(c2);
-            t = new Deposit(aC, amount);
-            theFPTS.getPortfolio().add(t);
+            //TODO: change "date" to an actual date.
+            //CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
+            Transaction t = new Transaction(amount, "date", "Withdrawal", c.getAccountName());
+            theFPTS.getPortfolio().add(t, c);
+            //aC = theFPTS.getPortfolio().getCashAccount(c2);
+            t = new Transaction(amount, "date", "Deposit", c2.getAccountName());
+            theFPTS.getPortfolio().add(t, c2);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {
             theFPTS.getStage().setScene(theFPTS.getErrorScene());
@@ -113,3 +112,4 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
     }
 
 }
+

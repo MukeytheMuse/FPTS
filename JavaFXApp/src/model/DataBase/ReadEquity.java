@@ -1,9 +1,7 @@
 package model.DataBase;
-
-import model.Equity;
-import model.EquityComponent;
 import model.EquityComposite;
-
+import model.LoadedEquity;
+import model.EquityComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,14 +10,12 @@ import java.util.List;
  * Created by Ian on 3/2/16.
  */
 public class ReadEquity {
-
     protected static ArrayList<String[]> readInFile() {
         return ReadFile.readInFile();
     }
-
     private static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
     private static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
-    public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
+//    public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
     private static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     /**
@@ -37,7 +33,7 @@ public class ReadEquity {
         for (String[] line : splitFile) {
             ArrayList<String> indices = new ArrayList<String>();
             ArrayList<String> sectors = new ArrayList<String>();
-            Equity curEquity = new Equity(line[0], line[1], Double.parseDouble(line[2]), indices, sectors);
+            LoadedEquity curEquity = new LoadedEquity(line[0], line[1], Double.parseDouble(line[2]), indices, sectors);
             // iterate through fields of current equity
             for (int i = 3; i < line.length; i++) {
                 // finance, technology, health care, transportation
@@ -84,15 +80,20 @@ public class ReadEquity {
         // create the bare index composites
         for (String index : indexList) {
             ArrayList<String> indices = new ArrayList<String>();
+            //TODO: Warning:(82, 31) [UnusedDeclaration] Variable 'indices' is never used
             ArrayList<String> sectors = new ArrayList<String>();
+            //TODO:Warning:(83, 31) [UnusedDeclaration] Variable 'sectors' is never used
             compositeList.add(new EquityComposite(index, "Index"));
         }
         // create the bare index composites
         for (String sector : sectorList) {
             ArrayList<String> indices = new ArrayList<String>();
+            //TODO: Warning:(88, 31) [UnusedDeclaration] Variable 'indices' is never used
             ArrayList<String> sectors = new ArrayList<String>();
+            //TODO: Warning:(89, 31) [UnusedDeclaration] Variable 'sectors' is never used
             compositeList.add(new EquityComposite(sector, "Sector"));
         }
         return compositeList;
     }
 }
+

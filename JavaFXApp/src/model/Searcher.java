@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import javafx.collections.ObservableList;
@@ -150,6 +145,8 @@ abstract public class Searcher extends Observable {
                     }
                     //If there were no matches for one field, terminate
                     isMatch = isMatch && tempMatch;
+                    //TODO: check Warning:(147, 31) Condition 'isMatch' is always 'true'
+
 
                     if (!isMatch) {
                         break;
@@ -185,3 +182,4 @@ abstract public class Searcher extends Observable {
     }
 
 }
+

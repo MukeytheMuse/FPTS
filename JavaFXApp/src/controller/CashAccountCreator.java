@@ -64,9 +64,9 @@ public class CashAccountCreator {
 
         Button submitBtn = new Button();
         submitBtn.setText("Submit");
-        
+
         /*
-        * Processes input 
+        * Processes input
         */
         submitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -78,11 +78,14 @@ public class CashAccountCreator {
                 * Converts dateField to Date object
                 */
                 Date theDate = Date.from(dateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                //TODO: check Warning:(80, 22) [UnusedDeclaration] Variable 'theDate' is never used
 
+
+                //TODO: change theDate to type string then pass in instead of "" below for cashAccount constructor.
                 if (isValid) {
-                    CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate);
+                    CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), "", null);
                     theFPTS.getPortfolio().add(c);
-                    
+
                     /*
                     * Refers to confirmation scene
                     */
@@ -129,7 +132,7 @@ public class CashAccountCreator {
      * @return boolean
      */
     private boolean isValidDouble(TextField inputAmount) {
-        
+
         /*
         * Determine whether the input amount is not empty
         */
@@ -144,6 +147,7 @@ public class CashAccountCreator {
         */
         try {
             Double.parseDouble(inputAmountString);
+            //TODO: check Warning:(147, 20) Result of 'Double.parseDouble()' is ignored
         } catch (Exception e) {
             return false;
         }
@@ -158,3 +162,4 @@ public class CashAccountCreator {
     }
 
 }
+

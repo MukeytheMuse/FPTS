@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import gui.FPTS;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -13,40 +15,26 @@ import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 import model.DataBase.WriteFile;
 
-import java.io.IOException;
-
-/**
- * This class is the base implementation of the Menu Bar used in this application.
- * Other Controllers will extend this class to gain functionality of the MenuBar in the application.
- * Created by Luke on 3/01/2016.
- */
 public abstract class MenuController implements Initializable {
-    /**
-     * A Local variable to access the MenuBar located in the FXML documents for this FPTS application.
-     */
     @FXML
     MenuBar myMenuBar;
+
     FPTS fpts = FPTS.getSelf();
 
     /**
-     * Handler for when the Logout button is pressed in the Menu Bar
      *
-     * @param event - ActionEvent - Event that caused this function to be called.
-     * @throws IOException - Throws IO Exception if the LoginPage.fxml is not found by the program.
+     * @param event
+     * @throws IOException
      */
     public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
+        //TODO: Warning:(29, 57) [UnusedDeclaration] Parameter 'event' is never used
         Stage stage = new Stage();
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/LogoutPage.fxml"));
+        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml"));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
     }
 
-    /**
-     * Handler for when the Exit button is pressed in the Menu Bar
-     *
-     * @param event - ActionEvent - Event that caused this function to be called.
-     */
     public void handleExitMenuItemPressed(ActionEvent event) {
         Platform.exit();
         System.exit(0);
@@ -55,6 +43,7 @@ public abstract class MenuController implements Initializable {
     public void handleSaveMenuItemPressed(ActionEvent event) {
         WriteFile writeFile = new WriteFile();
         writeFile.updatePortfolioForUser(fpts.getCurrentUser());
+        //TODO: check Warning:(44, 42) Static member 'gui.FPTS.getCurrentUser()' accessed via instance reference
     }
 
     /**
@@ -67,13 +56,20 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
+        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage) myMenuBar.getScene().getWindow();
+        Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
+
+    /**
+     * TODO: FIGURE OUT HOW TO DO THIS WITHOUT THE GOD CLASS
+     *
+     * @param event
+     * @throws IOException
+     */
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
         Displayer pd = new PortfolioDisplayer();
         pd.display(FPTS.getSelf());
@@ -115,24 +111,24 @@ public abstract class MenuController implements Initializable {
         cashAcctAlgor.process(FPTS.getSelf());
     }
 
-    /**
-     * Additional function used in this application to return the application to the Login Page.
-     *
-     * @param event - ActionEvent - Event that caused the super function to be called, used to get the current Stage.
-     * @throws IOException - Throws IO Exception if the LoginPage.fxml cannot be found.
-     */
-    public void goToLoginPage(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../gui/LoginPage.fxml"));
-        Stage stage = new Stage();
-        try {
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        } catch (ClassCastException c) {
-            stage = (Stage) myMenuBar.getScene().getWindow();
 
+
+
+    //TODO: find out where we use this method
+    public void goToLoginPage(ActionEvent event) throws IOException {
+        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
+        new Stage();
+
+        Stage stage;
+        try {
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        } catch (ClassCastException var5) {
+            stage = (Stage)this.myMenuBar.getScene().getWindow();
         }
+
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
     }
-
 }
+

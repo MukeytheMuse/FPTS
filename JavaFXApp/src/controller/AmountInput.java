@@ -63,7 +63,7 @@ public class AmountInput extends Observable {
 
         Button submitBtn = new Button();
         submitBtn.setText("Submit");
-        
+
         /*
         * Defines action event when the user presses "Submit"
         */
@@ -137,3 +137,4 @@ public class AmountInput extends Observable {
     }
 
 }
+

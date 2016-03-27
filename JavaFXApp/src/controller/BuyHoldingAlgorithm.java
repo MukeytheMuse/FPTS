@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import model.*;
@@ -27,13 +22,16 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     }
 
     public ArrayList<Searchable> getToBeSearched() {
+        System.out.println("getToBeSearched called");
         return toBeSearched;
     }
-    
+
     /*
+    * Creates, saves and performs operations to carry out the transaction to execute.
     *
     *    precondition - cashAccountOfInterest is already set up
-    
+    *
+    * Author(s): Kaitlin Brockway & ..
     */
 
     public void processInsideFPTS() {
@@ -43,15 +41,23 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         if (p.getHolding(aTickerSymbol) != null) {
             e = p.getHolding(aTickerSymbol);
         } else {
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, new Date(), equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            //TODO: change date field to Date type
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares,"new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
         double accountVal = cashAccountOfInterest.getValue();
 
         if (accountVal >= (numOfShares * pricePerShare)) {
-            CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
-            Transaction t = new Withdrawal(aC, numOfShares * pricePerShare);
-            p.add(t);
+            //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
+            //TODO: check if its ok that I replaced the line above with the line below????
+            CashAccount aC = cashAccountOfInterest;
+            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Withdraw", aC.getAccountName());
+
+
+            t.execute(aC,numOfShares * pricePerShare,"Withdraw");//operates on portfolio
+            //Transaction(double amount, String dateMade, String type, String cashAccountName)
+
+            p.add(t, aC);
             e.addShares(numOfShares);
 
             theStage.setScene(theFPTS.getConfirmationScene());
@@ -74,7 +80,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                     e.addShares(numOfShares);
                     //If equity does not exist in the collection, create a new Holding & add to collection
                 } else {
-                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, new Date(), equityOfInterest.getSectors(), equityOfInterest.getIndices());
+                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
                     p.add(e);
                 }
 
@@ -88,3 +94,4 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     }
 
 }
+

@@ -1,35 +1,21 @@
 package controller;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import gui.FPTS;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-/**
- * This class controls the actions from button presses on the Login and Register page of this application.
- * Extends LoginMenuController because that class holds the code to handle events based on clicking items in the Menu.
- * Created by Luke Veilleux on 3/01/2016.
- */
-public class LoginController extends LoginMenuController {
-    /**
-     * Private variables representing the input of the user ID and password on both login and registration as well
-     * as a label that is used to output error messages to the user.
-     */
+public class LoginController {
     @FXML
     private Label error;
     @FXML
@@ -38,83 +24,214 @@ public class LoginController extends LoginMenuController {
     private TextField userid;
     @FXML
     private PasswordField password1;
-    FPTS fpts = FPTS.getSelf();
+
+    private User currentUser;
+
+
+    @FXML
+    private RadioButton transNo;//May not need these 4 attributes
+    //TODO check Warning:(32, 25) [UnusedDeclaration] Private field 'transNo' is assigned but never accessed
+
+
+    @FXML
+    private RadioButton transYes;
+    //TODO check Warning:(34, 25) [UnusedDeclaration] Private field 'transYes' is assigned but never accessed
+
+    @FXML
+    private RadioButton holdingsNo;
+    //TODO check Warning:(36, 25) [UnusedDeclaration] Private field 'holdingsNo' is assigned but never accessed
+
+    @FXML
+    private RadioButton holdingsYes;
+    //TODO check Warning:(38, 25) [UnusedDeclaration] Private field 'holdingsYes' is assigned but never accessed
+
+    private boolean importHoldingsRequested;
+    private boolean importTransactionsRequested;
+
+
+    //FPTS fpts = FPTS.getSelf();
+    // ^ TODO: get rid of FPTS dependencies. As of now we no longer need FPTS in this class
+
+
+    //***********bellow**********************From LoginMenuController**********
+    @FXML
+    MenuBar myMenuBar;
+
+    public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
+        this.goToLoginPage(event);
+    }
+
+    public void handleExitMenuItemPressed(ActionEvent event) {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    public void handleAboutMenuItemPressed(ActionEvent event) {
+    }
+
+    public void goToLoginPage(ActionEvent event) throws IOException {
+        Stage stage;
+        try {
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        } catch (ClassCastException var4) {
+            stage = (Stage)this.myMenuBar.getScene().getWindow();
+        }
+
+        Scene scene = new Scene((Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml")));
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    //above *********************************From LoginMenuController**********
 
     /**
-     * Controls the program when the Login button is pressed on the Login page of the application. Validates the user
-     * entered correct credentials, and if so logs them in, otherwise one of a few different errors will appear.
+     * Validates the users loginID and password combination and then gets the User object from
+     * the allUsers map in the User class that was populated when the system started up.
      *
-     * @param event - ActionEvent - event that caused this method to be called.
-     * @throws IOException - Exception thrown if the HomePage.fxml is not found where it should be.
+     * Sets the currentUser to the User object obtained from the user map.
+     * @param event
+     * @throws IOException
+     *
+     * Author(s): Kaitlin Brockway
      */
     @FXML
     protected void handleLoginButtonPressed(ActionEvent event) throws IOException {
-        if (userid.getText().length() != 0 && password.getText().length() != 0) {
-            User u = new User(userid.getText(), password.getText());
-            if (u.validateUser()) {
-                fpts.setCurrentUser(u);
-                error.setText("Logging in...");
-                Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
-                Scene scene = new Scene(parent);
-                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
+        if(userid.getText().length() != 0 && password.getText().length() != 0) {
+            if(User.validateUser(this.userid.getText(), this.password.getText())) {
+                this.error.setText("Logging in...");
+                User sub_user = new User(userid.getText());
+                currentUser = sub_user.getAllUsersMap().get(userid.getText());
+                FPTS.setCurrentUser(currentUser);
+                Scene scene = new Scene((Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml")));
+                Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene);
                 app_stage.show();
             } else {
-                password.clear();
-                error.setText("Not a valid combination of login ID and password");
+                this.password.clear();
+                this.error.setText("Not a valid combination of login ID and password");
             }
         } else {
-            error.setText("You have missing fields.");
+            this.error.setText("You have missing fields.");
         }
     }
 
     /**
-     * Controls the programs actions if the register button is pressed on the Registration page.
-     * The user id is checked to ensure it is not already in use in the system, and the registers a new user.
-     * A few different error messages are displayed based on different criteria not being met.
+     * Called when a user clicks "Register" on the LoginPage.
+     * The user is redirected to the RegisterPage.
      *
-     * @param event - ActionEvent - event that caused this method to be called.
-     * @throws IOException - Exception thrown if the HomePage.fxml is not found where it should be.
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    protected void handleRegisterButtonPressed(ActionEvent event) throws IOException {
+        Parent register_parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/RegisterPage.fxml"));
+        Scene register_scene = new Scene(register_parent);
+        Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        app_stage.setScene(register_scene);
+        app_stage.show();
+    }
+
+    /**
+     * Called when a user clicks "Register" on the RegisterPage.
+     *
+     * @param event
+     * @throws IOException
      */
     @FXML
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
-        if (userid.getText().length() != 0 && password.getText().length() != 0) {
-            if (User.ValidLoginID(userid.getText())) {
-                if (password.getText().equals(password1.getText())) {
-                    User usr = new User(userid.getText(), password.getText());
-                    fpts.setCurrentUser(usr);
-                    addUser(usr);
-                    Parent parent = FXMLLoader.load(getClass().getResource("../gui/HomePage.fxml"));
+        if(this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
+            User sub_user = new User(userid.getText());
+            if(sub_user.ValidLoginID(this.userid.getText())) {
+                //TODO check Warning:(137, 16) Static member 'model.User.ValidLoginID(java.lang.String)' accessed via instance reference
+                if(this.password.getText().equals(this.password1.getText())) {
+                    //At this point, now that we know the username is valid and
+                    // the passwords match ask the user if they would like to import
+                    // holdings &OR transactions to initialize the new users portfolio.
+
+                    if(importTransactionsRequested && importHoldingsRequested){
+                        //TODO:
+                        System.out.println("NOT IMPLEMENTED YET");
+                    } else if (importTransactionsRequested && !importHoldingsRequested){
+                        //TODO: Warning:(146, 63) Condition '!importHoldingsRequested' is always 'true' when reached
+                        //TODO: Warning:(146, 64) Value 'importHoldingsRequested' is always 'false'
+                        System.out.println("NOT IMPLEMENTED YET");
+                    } else if (!importTransactionsRequested && importHoldingsRequested){
+                        //TODO:Warning:(149, 32) Condition '!importTransactionsRequested' is always 'true'
+                        //TODO:Warning:(149, 33) Value 'importTransactionsRequested' is always 'false'
+                        System.out.println("NOT IMPLEMENTED YET");
+                    } else {
+                        User usr = new User(this.userid.getText(), this.password.getText(), null);
+                        //when the portfolio is null the user will have an empty portfolio created.
+                        this.addUser(usr, this.password1.getText());
+                    }
+                    Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
                     Scene scene = new Scene(parent);
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     stage.setScene(scene);
                     stage.show();
-
                 } else {
-                    error.setText("Password fields do not match. Try your password again.");
-                    password.clear();
-                    password1.clear();
+                    this.error.setText("Password fields do not match. Try your password again.");
+                    this.password.clear();
+                    this.password1.clear();
                 }
             } else {
-                error.setText("That User ID is already in use, please pick another one.");
+                this.error.setText("That User ID is already in use, please pick another one.");
             }
         } else {
-            error.setText("Please Enter both a UserID and a Password");
+            this.error.setText("Please Enter both a UserID and a Password");
         }
+
     }
 
     /**
-     * Controls the program if the clear button is pressed on either of the Login or Registration pages.
-     * Clears the text entered in the userid and password fields.
+     * Based off of user specifications during new user registration.
      *
-     * @param event - ActionEvent - event that caused this method to be called.
+     * Author(s): Kaitlin Brockway
+     */
+    public void handleYesImportTransactionsButtonPressed(){
+        importTransactionsRequested = true;
+    }
+
+    /**
+     * Based off of user specifications during new user registration.
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    public void handleNoImportTransactionsButtonPressed(){
+        importTransactionsRequested = false;
+    }
+
+    /**
+     * Based off of user specifications during new user registration.
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    public void handleYesImportHoldingsButtonPressed(){
+        importHoldingsRequested = true;
+    }
+
+    /**
+     * Based off of user specifications during new user registration.
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    public void handleNoImportHoldingsButtonPressed(){
+        importHoldingsRequested = false;
+    }
+
+
+    /**
+     *
+     * @param event
      */
     @FXML
     protected void handleClearButtonPressed(ActionEvent event) {
-        userid.clear();
-        password.clear();
-        if (password1 != null) password1.clear();
+        this.userid.clear();
+        this.password.clear();
+        if(this.password1 != null) {
+            this.password1.clear();
+        }
+
     }
 
     /**
@@ -128,78 +245,54 @@ public class LoginController extends LoginMenuController {
         goToLoginPage(event);
     }
 
-    /**
-     * Controls the program when the register button is clicked on the Login page.
-     *
-     * @param event - ActionEvent - event that caused this method to be called.
-     * @throws IOException - Exception thrown if the RegisterPage.fxml is not found where the program expects.
-     */
-    @FXML
-    protected void handleRegisterButtonPressed(ActionEvent event) throws IOException {
-        Parent register_parent = FXMLLoader.load(getClass().getResource("../gui/RegisterPage.fxml"));
-        Scene register_scene = new Scene(register_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        app_stage.setScene(register_scene);
-        app_stage.show();
-    }
 
     /**
-     * Method used to handle the when the Logout Save and Exit button is clicked on the Logout window.
      *
-     * @param event - ActionEvent - The event that caused this action to occur.
-     * @throws IOException - Throws IO exception if the the LoginPage.fxml file is not in the gui folder.
+     * @param event
+     * @throws IOException
      */
     @FXML
     protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
-        // TODO Save portfolio.
         stg.setScene(FPTS.getSelf().createLogInScene());
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
 
     /**
-     * Method used to handle the when the Logout Exit without Saving button is clicked on the Logout window.
      *
-     * @param event - ActionEvent - The event that caused this action to occur.
-     * @throws IOException - Throws IO exception if the the LoginPage.fxml file is not in the gui folder.
+     * @param event
+     * @throws IOException
      */
     @FXML
     protected void handleExitExitButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
         stg.setScene(FPTS.getSelf().createLogInScene());
         stg.show();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
 
     /**
-     * Method used to initialize items on the Login page. Currently not in use.
+     * CURRENTLY NOT IN USE.
+     *
+     * @param location
+     * @param resources
      */
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO
     }
 
     /**
-     * Adds a new user into the UserData.csv file for use in later uses of this application.
+     * Upon registering a new user the handleRegistrationButtonPressed
+     * method will call this method after it is confirmed that the user
+     * id is not already associated with a portfolio in the system.
      *
-     * @param usr - User - New user object to be added into the text file.
+     * @param usr
+     * @param pw1
      */
-    private void addUser(User usr) {
-        User.addToList(usr);
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            fileWriter = new FileWriter(new File("JavaFXApp/src/model/Database/UserData.csv").getAbsolutePath(), true);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(usr.getLoginID() + ",");
-            bufferedWriter.write(usr.hash(password1.getText()));
-            bufferedWriter.newLine();
-            bufferedWriter.close();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+    private void addUser(User usr, String pw1) {
+        User.addToUserMap(usr);//add to the Static collection allUsersMap
+        usr.addUser(usr, pw1);//add to the non Static collection of UserData.csv
     }
 }
+

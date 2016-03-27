@@ -4,24 +4,10 @@
  * and open the template in the editor.
  */
 package model;
-import java.util.List;
-import javafx.scene.control.TextField;
-import java.text.ParseException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Observable;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import model.DataBase.ReadFile;
 
-import static model.DataBase.ReadFile.readCash;
-import static model.DataBase.ReadFile.readHoldings;
+import javafx.scene.control.TextField;
+import java.util.ArrayList;
+
 
 /**
  * Maintains multiple holdings in equities, and cash in one or more cash
@@ -30,16 +16,19 @@ import static model.DataBase.ReadFile.readHoldings;
  * @author Eric Epstein and Kaitlin Brockway
  */
 public class Portfolio {
-
-    private ArrayList<Searchable> portfolioElements;
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
-    private ArrayList<Transaction> transactions;
-    private ArrayList<EquityComponent> equityComponents = Equity.getEquityList();  // lists what you can buy
     private double currentValue;
-   
-    private ArrayList<Searchable> matches;
-    private Memento memento;
+
+
+//    private ArrayList<Searchable> portfolioElements;
+
+    private ArrayList<EquityComponent> equityComponents = LoadedEquity.getEquityList();  // lists what you can buy
+//
+//    private ArrayList<Searchable> matches;
+//    private Memento memento;
+
+
     //this is observable. I missed the first thing, as i enter a search from the FPTS (gui),
     // it will tell the controller (ActionEvent in the button) to empty the "matches' array
     // and add elements that match, then after it finishes, the function in "Portfolio"
@@ -55,22 +44,31 @@ public class Portfolio {
      * @author ericepstein & Kaitlin
      */
     public Portfolio() {
-
-        portfolioElements = new ArrayList<Searchable>();
-        equityComponents = Equity.getEquityList();
-        cashAccounts = readCash(); //new ArrayList<CashAccount>(); <--replaced
-        holdings = readHoldings(); //new ArrayList<Holding>(); <--replaced
-        transactions = new ArrayList<Transaction>();
+        cashAccounts = new ArrayList<>();
+        holdings = new ArrayList<>();
+        currentValue = 0.00;
+    }
 
 
-        //add(new CashAccount("rofl", 3, new Date()));
-
-        //add(new Holding("mo", "momo", (float) 3.0, 2, new Date(), new ArrayList<String>(), new ArrayList<String>()));
-        //add(new Holding("lol", "lolol", new ArrayList<String>(), new ArrayList<String>(), 2, (float) 3, new Date()));
-
-        //add(new CashAccount("lala", 3, new Date()));
-        //add((EquityComponent) new Equity("lala","moo",300,new ArrayList<String>(), new ArrayList<String>()));
-
+    /**
+     * Called when the Users are being Filled to create all user objects in the system.
+     *
+     * @param readInholdings
+     * @param readInCashAccounts
+     *
+     * Author(s): Kaitlin Brockway
+     */
+    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts){
+        this.holdings = readInholdings;
+        this.cashAccounts = readInCashAccounts;
+        currentValue = 0;
+        //Calculates the portfolio's Total Value.
+        for(CashAccount c: cashAccounts){
+            currentValue += c.getValue();
+        }
+        for(Holding h: holdings){
+            currentValue += h.getValue();
+        }
     }
 
     /**
@@ -88,16 +86,16 @@ public class Portfolio {
      *
      * author: Kaitlin
      */
-    public Portfolio(ArrayList<Searchable> portfolioElements, ArrayList<CashAccount> cashAccounts, ArrayList<Holding> holdings, ArrayList<Transaction> transactions, ArrayList<EquityComponent> equityComponents, double currentValue, ArrayList<Searchable> matches){
-        this.portfolioElements = portfolioElements;
-        this.cashAccounts = cashAccounts;
-        this.holdings = holdings;
-        this.transactions = transactions;
-        this.equityComponents = equityComponents;
-        this.currentValue = currentValue;
-        this.matches = matches;
-    }
-
+//    public Portfolio(ArrayList<Searchable> portfolioElements, ArrayList<CashAccount> cashAccounts, ArrayList<Holding> holdings, ArrayList<Transaction> transactions, ArrayList<EquityComponent> equityComponents, double currentValue, ArrayList<Searchable> matches){
+//        this.portfolioElements = portfolioElements;
+//        this.cashAccounts = cashAccounts;
+//        this.holdings = holdings;
+//        this.transactions = transactions;
+//        this.equityComponents = equityComponents;
+//        this.currentValue = currentValue;
+//        this.matches = matches;
+//    }
+//
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.
@@ -119,7 +117,7 @@ public class Portfolio {
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.
-     * 
+     *
      * Returns a collection of Holding objects that are cast to Searchable
      *
      * @return ArrayList<Searchable>
@@ -159,25 +157,40 @@ public class Portfolio {
         return temp;
     }
 
+
     /**
      * Returns collection of Transaction objects
      *
      * @return ArrayList<Transaction>
      */
     public ArrayList<Transaction> getTransactions() {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        for(CashAccount c: cashAccounts){
+            transactions.addAll(c.getTransactions());
+        }
         return transactions;
     }
 
+
+
+
+    //TODO: make this private and find another way to access whats needed
     /**
-    *
-    * Returns collection of portfolio elements
-    *
-    * @return ArrayList<Searchable>
-    */
+     *
+     * Returns collection of portfolio elements
+     *
+     * @return ArrayList<Searchable>
+     */
     public ArrayList<Searchable> getPortfolioElements() {
+        ArrayList<Searchable> portfolioElements = new ArrayList<>();
+        portfolioElements.addAll(holdings);
+        portfolioElements.addAll(cashAccounts);
         return portfolioElements;
     }
 
+
+
+    //TODO: used by class "CashAccountCreator". We should make this private and find another way to implement what this this needed for.
     /**
      * Returns collection of CashAccount
      *
@@ -186,6 +199,7 @@ public class Portfolio {
     public ArrayList<CashAccount> getCashAccounts() {
         return cashAccounts;
     }
+
 
     public CashAccount getCashAccount(CashAccount c) {
         for (CashAccount aC : cashAccounts) {
@@ -204,16 +218,16 @@ public class Portfolio {
     public ArrayList<Holding> getHoldings() {
         return holdings;
     }
-
-    /**
-     * Returns collection of EquityComponent
-     *
-     * @return ArrayList<EquityComponent>
-     */
-    public ArrayList<EquityComponent> getEquityComponents() {
-        return Equity.getEquityList();
-    }
-
+//
+//    /**
+//     * Returns collection of EquityComponent
+//     *
+//     * @return ArrayList<EquityComponent>
+//     */
+//    public ArrayList<EquityComponent> getEquityComponents() {
+//        return Equity.getEquityList();
+//    }
+//
     /**
      * Adds EquityComponent object to portfolio
      *
@@ -222,24 +236,23 @@ public class Portfolio {
     public void add(EquityComponent e) {
         equityComponents.add(e);
     }
-
-    /**
-     * Removes EquityCompoonent object from portfolio
-     *
-     * @param e
-     */
-    public void remove(EquityComponent e) {
-        equityComponents.remove(e);
-    }
-
+//
+//    /**
+//     * Removes EquityCompoonent object from portfolio
+//     *
+//     * @param e
+//     */
+//    public void remove(EquityComponent e) {
+//        equityComponents.remove(e);
+//    }
+//
     /**
      * Adds CashAccount to portfolio
      *
      * @param e - CashAccount
      */
     public void add(CashAccount e) {
-        portfolioElements.add((Searchable) e);
-        transactions.add((Transaction) new Deposit(e, e.getValue()));
+//        transactions.add((Transaction) new Deposit(e, e.getValue()));
         cashAccounts.add(e);
     }
 
@@ -249,43 +262,45 @@ public class Portfolio {
      * @param e - CashAccount
      */
     public void remove(CashAccount e) {
-        portfolioElements.remove((Searchable) e);
         cashAccounts.remove(e);
     }
 
     /**
-     * Executes Transaction and adds to portfolio history
+     * Executes Transaction and adds to portfolio history whenever an Equity is bought.
+     * Called by BuyHoldingAlgorithm processInsideFPTS()
      *
      * @param t - Transaction
      */
-    public void add(Transaction t) {
-        transactions.add(t);
-        t.execute();
+    public void add(Transaction t, CashAccount c) {
+        c.addTransaction(t);
     }
 
-    /**
-     * Removes Transaction from history list
-     *
-     * @param t
-     */
-    public void remove(Transaction t) {
-        transactions.remove(t);
-    }
+//    /**
+//     * Removes Transaction from history list
+//     *
+//     * @param t
+//     */
+//    public void remove(Transaction t) {
+//
+//        transactions.remove(t);
+//    }
 
-    public ArrayList<Searchable> getMatches() {
-        return matches;
-    }
-
-    
+//    public ArrayList<Searchable> getMatches() {
+//        return matches;
+//    }
+//
+//
     /**
      * Adds Holding to portfolio
      *
      * @param e - Holding
      */
     public void add(Holding e) {
-        portfolioElements.add((Searchable) e);
+//        portfolioElements.add((Searchable) e);
         holdings.add(e);
     }
+
+
 
     /**
      * Removes Holding from portfolio
@@ -293,8 +308,10 @@ public class Portfolio {
      * @param e - Holding
      */
     public void remove(Holding e) {
-        portfolioElements.remove((Searchable) e);
         holdings.remove(e);
+        //TODO: add as a transaction for selling a holding. totalValueOfPortfolio remains the same
+        //TODO: ask if they get to select a specific cash Account where the transaction and $$ will transfer to
+        //Check "SellHoldingAlgorithm"
     }
 
     //Overloading fieldHasContent for TextField
@@ -315,7 +332,30 @@ public class Portfolio {
         }
     }
 
-    public double getCurrentValue(){
-        return this.currentValue;
-    }
+
+//
+//    public double getCurrentValue(){
+//        return this.currentValue;
+//    }
+//
+//
+//    public Memento createMemento(){
+//        Memento newMemento = new Memento(holdings, currentValue);
+//        return newMemento;
+//    }
+//
+//    /**
+//     * The memento only needs to know the holdings and current value of
+//     * the portfolio for the simulation(s) being ran.
+//     *
+//     * @param toBeAMemento: The porfolio's state that is being requested from the
+//     *                    SimulationController.
+//     *
+//     * Author(s): Kaitlin Brockway
+//     */
+//    public void setMemento(Portfolio toBeAMemento){
+//        Memento newMemento = new Memento(holdings, currentValue);
+//    }
+
+
 }

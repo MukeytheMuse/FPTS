@@ -1,163 +1,114 @@
 package model.DataBase;
 
-import gui.FPTS;
-import model.CashAccount;
-import model.Holding;
-import model.Transaction;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import model.User;
 
-import java.io.*;
-import java.util.ArrayList;
-
-/**
- * Created by Kimberly Sookoo on 3/2/16.
- */
 public class WriteFile {
+    public WriteFile() {
+    }
 
-    FPTS fpts = FPTS.getSelf();
-
-    /*
-    Public method that checks to see if customer has a portfolio
-    */
     public boolean hasPortfolio(User user) {
-        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
         return directory.exists();
     }
 
-    /*
- Public method that creates portfolio for customer.
- */
     public void createPortfolioForUser(User user) {
         try {
-            File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
-            if (!directory.exists()) {
-                directory.mkdir();
+            File e1 = new File("model/Database/Portfolios/" + user.getLoginID());
+            if(!e1.exists()) {
+                e1.mkdir();
+                //TODO: check Warning:(23, 20) Result of 'File.mkdir()' is ignored
             }
-            File transFile = new File(directory, "Trans.csv");
-            File cashFile = new File(directory, "Cash.csv");
-            File holdingsFile = new File(directory, "Holdings.csv");
-            transFile.createNewFile();
-            cashFile.createNewFile();
-            holdingsFile.createNewFile();
-            FileWriter writerT = new FileWriter(transFile, true);
-            FileWriter writerC = new FileWriter(cashFile, true);
 
-            //this.transactionsWriter(user, writerT);
+            File transFile = new File(e1, "Trans.csv");
+            File cashFile = new File(e1, "Cash.csv");
+            File holdingsFile = new File(e1, "Holdings.csv");
+            transFile.createNewFile();
+            //TODO: check Warning:(31, 26) Result of 'File.createNewFile()' is ignored
+            cashFile.createNewFile();
+            //TODO: check Warning:(31, 26) Result of 'File.createNewFile()' is ignored
+            holdingsFile.createNewFile();
+            //TODO: check Warning:(31, 26) Result of 'File.createNewFile()' is ignored
+            new FileWriter(transFile, true);
+            FileWriter writerC = new FileWriter(cashFile, true);
             this.cashAccountsWriter(writerC);
             this.holdingsWriter(holdingsFile);
-
-        } catch (Exception e1) {
-            e1.printStackTrace();
+        } catch (Exception var8) {
+            var8.printStackTrace();
         }
 
         System.out.println("Created");
     }
 
-    /*
-  Public method that removes portfolio for customer.
-  */
+
+
+    //TODO: check Warning:(47, 17) Method 'removePortfolioForUser(model.User)' is never used
+    /**
+     *
+     * @param user
+     */
     public void removePortfolioForUser(User user) {
-        File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
+        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
         File transFile = new File(directory, "/Trans.csv");
         File cashFile = new File(directory, "/Cash.csv");
         File holdingsFile = new File(directory, "/Holdings.csv");
         transFile.delete();
+        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
         cashFile.delete();
+        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
         holdingsFile.delete();
+        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
         directory.delete();
+        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
     }
 
-    /*
-    Public method that updates portfolio for given user.
+    /**
+     *
+     * @param user
      */
     public void updatePortfolioForUser(User user) {
         try {
-            File directory = new File("JavaFXApp/src/model/Database/Portfolios/" + user.getLoginID());
-            File transFile = new File(directory, "Trans.csv");
-            File cashFile = new File(directory, "Cash.csv");
-            File holdingsFile = new File(directory, "Holdings.csv");
-            FileWriter writerT = new FileWriter(transFile, true);
+            File e = new File("model/Database/Portfolios/" + user.getLoginID());
+            File transFile = new File(e, "Trans.csv");
+            File cashFile = new File(e, "Cash.csv");
+            File holdingsFile = new File(e, "Holdings.csv");
+            new FileWriter(transFile, true);
             FileWriter writerC = new FileWriter(cashFile, true);
-
-            cashAccountsWriter(writerC);
-            holdingsWriter(holdingsFile);
-
+            this.cashAccountsWriter(writerC);
+            this.holdingsWriter(holdingsFile);
             System.out.println("Has anything extra been written?");
-
-        } catch (Exception e) {
+        } catch (Exception var8) {
+            //TODO: check Warning:(73, 11) Empty 'catch' block
         }
+
     }
 
-    /*
-    Private method for writing down holdings
+    /**
+     *
+     * @param file
      */
     private void holdingsWriter(File file) {
-
         try {
-            FileReader reader = new FileReader(file);
+            FileReader e = new FileReader(file);
             FileWriter writerH = new FileWriter(file, true);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            BufferedWriter bufferedWriter = new BufferedWriter(writerH);
-            ArrayList<Holding> holding = fpts.getPortfolio().getHoldings();
-            String line = "";
-
-            for (int i = 0; i < holding.size(); i++) {
-                if ((line = bufferedReader.readLine()) != null) {
-                    line = line.substring(1, line.length() - 1);
-                    String[] split = line.split("\",\"");
-                    if (holding.get(i).getSymbol().equals(split[0])){
-                        System.out.println("Did I ever make it here?");
-                        holding.remove(i);
-                    }
-                }
-            }
+            BufferedReader bufferedReader = new BufferedReader(e);
+            new BufferedWriter(writerH);
             bufferedReader.close();
-
-            for (int i = 0; i < holding.size(); i++) {
-                bufferedWriter.write("\"" + holding.get(i).getSymbol() + "\",\"" + holding.get(i).getHoldingName() + "\",\"" +
-                        holding.get(i).getValuePerShare() + "\",\"" + holding.get(i).getNumOfShares() + "\",\"" +
-                        holding.get(i).getAcquisitionDate() + "\",\"" + holding.get(i).getIndices() + "\",\"" +
-                        holding.get(i).getSectors() + "\"");
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-        } catch (Exception e) {
-
+        } catch (Exception var6) {
+            //TODO: check Warning:(90, 11) Empty 'catch' block
         }
+
     }
 
-    /*
-    Private method for writing down cash accounts
+    /**
+     *
+     * @param writer
      */
     private void cashAccountsWriter(FileWriter writer) {
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            ArrayList<CashAccount> cashAccounts = fpts.getPortfolio().getCashAccounts();
-            for (int i = 0; i < cashAccounts.size(); i++) {
-                bufferedWriter.write("\"" + cashAccounts.get(i).getAccountName() + "\",\"" + cashAccounts.get(i).getValue() +
-                        "\",\"" + cashAccounts.get(i).getDateAdded() + "\"");
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-        } catch (Exception e) {
-
-        }
-    }
-
-    /*
-    Private method for writing down cash accounts
-     */
-    private void transactionsWriter(User user, FileWriter writer) {
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            ArrayList<Transaction> transactions = user.getMyPortfolio().getTransactions();
-            for (int i = 0; i < transactions.size(); i++) {
-
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-        } catch (Exception e) {
-
-        }
     }
 }
+

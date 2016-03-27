@@ -32,7 +32,8 @@ public class TransactionDisplayer implements Displayer {
     */
     FPTS theFPTS;
     ArrayList<Transaction> transactions;
-    VBox results;
+    VBox results;//TODO: check
+
 
     /*
     * Establishes context data and overrides Displayer's display method
@@ -64,7 +65,7 @@ public class TransactionDisplayer implements Displayer {
         Label aLabel = new Label("Start date: ");
         aField.getChildren().addAll(aLabel, startDate);
         queries.getChildren().add(aField);
-        
+
         /*
         * Field to select end date
         */
@@ -87,27 +88,28 @@ public class TransactionDisplayer implements Displayer {
         submitBtn.setText("Search");
         /*
          * Filters list of Transaction in case user inputs two valid start and end
-         * dates. 
+         * dates.
          */
         submitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 results.getChildren().clear();
                 if (startDate.getValue() != null && endDate.getValue() != null) {
-                    Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
+                    Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
                     /*
                     * Update display to represent filtered Transaction objects
                     */
                     for (Transaction t : transactions) {
-                        Date aDate = t.getCashAccount().getDateAdded();
+                        //TODO: change date to type date.
+                        String aDate = t.getCashAccount().getDateAdded();//TODO: check
                         /*
                         * Add to display if Transaction object is after the start
                         * date and before the end date.
                         */
-                        if (aDate.after(start) && aDate.before(end)) {
-                            results.getChildren().add(new Label(t.toString()));
-                        }
+//                        if (aDate.after(start) && aDate.before(end)) {
+//                            results.getChildren().add(new Label(t.toString()));
+//                        }
                     }
                 }
             }
@@ -117,3 +119,4 @@ public class TransactionDisplayer implements Displayer {
         return transactionDisplayScene;
     }
 }
+
