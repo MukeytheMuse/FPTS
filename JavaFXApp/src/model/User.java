@@ -54,11 +54,7 @@ public class User implements Serializable {
     public User(String loginID, String password, Portfolio portfolio){
         this.loginID = loginID;
         this.password = hash(password);
-        if(portfolio == null ){
-            myPortfolio = new Portfolio();//empty portfolio created
-        } else {
-            this.myPortfolio = portfolio;
-        }
+        this.myPortfolio = portfolio;
     }
 
     public Portfolio getMyPortfolio() {
@@ -178,6 +174,8 @@ public class User implements Serializable {
 
                 Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts);
                 User newUser = new User(un, unHash(pwd), userPortfolio);
+
+                System.out.println(un);
                 //have to unhash before creating a user because the password is hashed during creation
                 allUsersMap.put(un, newUser);
             }
@@ -455,6 +453,11 @@ public class User implements Serializable {
      * @param user
      */
     private void addHoldings(User user){
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+//        try {
+//
+//        }
 
     }
 

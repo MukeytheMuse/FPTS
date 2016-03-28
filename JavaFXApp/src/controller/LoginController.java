@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Portfolio;
 import model.User;
 
 public class LoginController {
@@ -25,7 +26,7 @@ public class LoginController {
     @FXML
     private PasswordField password1;
 
-    private User currentUser;
+    private User currentUser;//How do we know the currentUser after exiting this class??
 
 
     @FXML
@@ -140,8 +141,7 @@ public class LoginController {
     @FXML
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
         if(this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
-            User sub_user = new User(userid.getText());
-            if(sub_user.ValidLoginID(this.userid.getText())) {
+            if(User.ValidLoginID(this.userid.getText())) {
                 //TODO check Warning:(137, 16) Static member 'model.User.ValidLoginID(java.lang.String)' accessed via instance reference
                 if(this.password.getText().equals(this.password1.getText())) {
                     //At this point, now that we know the username is valid and
@@ -160,11 +160,12 @@ public class LoginController {
                         //TODO:Warning:(149, 33) Value 'importTransactionsRequested' is always 'false'
                         System.out.println("NOT IMPLEMENTED YET");
                     } else {
-                        User usr = new User(this.userid.getText(), this.password.getText(), null);
-                        //when the portfolio is null the user will have an empty portfolio created.
+                        Portfolio newEmptyPortfolio = new Portfolio();
+                        User usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
                         this.addUser(usr, this.password1.getText());
+                        currentUser = usr;
                     }
-                    Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
+                    Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
                     Scene scene = new Scene(parent);
                     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     stage.setScene(scene);
