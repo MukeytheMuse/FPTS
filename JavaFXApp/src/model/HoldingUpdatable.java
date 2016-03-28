@@ -8,14 +8,15 @@ package model;
 import java.util.ArrayList;
 
 /**
- * @author ericepstein
+ * @author ericepstein & Kaitlin Brockway
  */
 public interface HoldingUpdatable {
+
     public String getTickerSymbol();
 
-    public String getHoldingName();
+    public String getName();//may be an equity or a holding
 
-    public double getValuePerShare();
+    public double getPricePerShare();
 
     public ArrayList<String> getIndices();
 

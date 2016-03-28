@@ -12,10 +12,18 @@ import java.util.List;
  */
 public class EquityComposite implements Searchable, EquityComponent, HoldingUpdatable {
 
+
+    private String tickerSymbol;
+
+    //pricePerShare is calculated by the method each time it is called.
+    //sectors always -> empty array list
+    //indicies always -> empty array list
+
+
     /*
     * name
     */
-    private String name;
+    private String equityName;
 
     /*
     * type
@@ -35,7 +43,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      * type - String
      */
     public EquityComposite(String name, String type) {
-        this.name = name;
+        this.equityName = name;
         this.type = type;
         childEquities = new ArrayList<HoldingUpdatable>();
     }
@@ -47,7 +55,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      */
     @Override
     public String getDisplayName() {
-        return name;
+        return equityName;
     }
 
     /**
@@ -55,23 +63,17 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      */
     @Override
     public String getTickerSymbol() {
-        return name;
+        return equityName;
     }
+
+
 
     /**
      * @return name - String
      */
     @Override
-    public String getEquityName() {
-        return name;
-    }
-
-    /**
-     * @return name - String
-     */
-    @Override
-    public String getHoldingName() {
-        return name;
+    public String getName() {
+        return equityName;
     }
 
     /**
@@ -81,14 +83,6 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
         return type;
     }
 
-    /**
-     * Adds a child equity to composite
-     *
-     * @param e - HoldingUpdateable
-     */
-    public void add(HoldingUpdatable e) {
-        childEquities.add(e);
-    }
 
     /**
      * getValuePerShare calculates the average price of the composite
@@ -96,11 +90,11 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      * @return valuePerShare - double
      */
     @Override
-    public double getValuePerShare() {
+    public double getPricePerShare() {
         double count = 0;
         double curVal;
         for (HoldingUpdatable se : childEquities) {
-            curVal = se.getValuePerShare();
+            curVal = se.getPricePerShare();
             count += curVal;
         }
         return count / childEquities.size();
@@ -135,6 +129,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      */
     @Override
     public void remove(EquityComponent ec) {
+
         childEquities.remove((HoldingUpdatable) ec);
     }
 
@@ -145,7 +140,18 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      */
     @Override
     public void add(EquityComponent ec) {
+
         childEquities.add((HoldingUpdatable) ec);
+    }
+
+    /**
+     * Adds a child equity to composite
+     *
+     * @param e - HoldingUpdateable
+     */
+    public void add(HoldingUpdatable e) {
+
+        childEquities.add(e);
     }
 
 }

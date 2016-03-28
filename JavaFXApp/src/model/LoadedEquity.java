@@ -82,6 +82,7 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
     public String getDisplayName() {
         return tickerSymbol;
     }
+    //**************************************Searchable method
 
     /**
      * getValuePerShare returns price per share
@@ -89,25 +90,17 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
      * @return pricePerShare - double
      */
     @Override
-    public double getValuePerShare() {
+    public double getPricePerShare() {
         return pricePerShare;
     }
 
-    /**
-     * getEquityName returns equity name
-     *
-     * @return equityName - String
-     */
-    @Override
-    public String getEquityName() {
-        return equityName;
-    }
+
 
     /**
      * @return equityName - String
      */
     @Override
-    public String getHoldingName() {
+    public String getName() {
         return equityName;
     }
 
@@ -117,7 +110,7 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
     @Override
     public String getTickerSymbol() {
         return tickerSymbol;
-    }
+    }//TODO: get rid of one of these methods that both do the same thing.
 
     /**
      * @return sectors - ArrayList<String>
@@ -135,6 +128,11 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
         return indices;
     }
 
+
+
+
+
+    //TODO: find out if we even need add & remove in here (other than the fact that this class implements EquityComponent)
     /**
      * @param e - EquityComponent
      *          <p>

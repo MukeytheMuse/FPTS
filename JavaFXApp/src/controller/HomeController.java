@@ -38,7 +38,7 @@ public class HomeController extends MenuController {
 
         double equityTotalValue = 0;
         for(Holding h: p.getHoldings()){
-            equityTotalValue += h.getValue();
+            equityTotalValue += h.getTotalValue();
         }
         double cashAccountValue = 0;
         for(CashAccount c: p.getCashAccounts()){

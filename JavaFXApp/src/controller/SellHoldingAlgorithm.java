@@ -66,7 +66,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
             Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Deposit", aC.getAccountName()); //Deposit(aC, numOfShares * pricePerShare);
             p.add(t, aC);//add to transactions list in the Portfolio class.
-            e.subtractShares(numOfShares);
+            e.remove(numOfShares);
             /*
             * Portfolio removes Holding if the number of shares is equal to zero
             */
@@ -90,14 +90,14 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
         * the current number of shares before subtraction.
         */
         if (e.getNumOfShares() > numOfShares) {
-            e.subtractShares(numOfShares);
+            e.remove(numOfShares);
         /*
         * Removes Holding if the number of shares subtracted is equal
         * to the current number of shares.
         */
         } else if (e.getNumOfShares() == numOfShares) {
             p.remove(e);
-            double pricePerShare = e.getValuePerShare();
+            double pricePerShare = e.getPricePerShare();
             double totalAmountTransaction = (pricePerShare * numOfShares);
             Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0).getAccountName());
             p.add(newTransaction, p.getCashAccounts().get(0));

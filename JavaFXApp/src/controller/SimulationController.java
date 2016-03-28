@@ -210,7 +210,7 @@ public class SimulationController extends MenuController {
             }
             double value = 0;
             for (Holding h : FPTS.getSelf().getPortfolio().getHoldings()) {
-                value += h.getValue();
+                value += h.getTotalValue();
             }
             totalValue.setText("$" + (value + FPTS.getSimulationValue()));
 

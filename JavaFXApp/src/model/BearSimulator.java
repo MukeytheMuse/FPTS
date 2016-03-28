@@ -62,10 +62,10 @@ public class BearSimulator implements Simulator {
         double currentDecreaseValue;
         for (int i = 0; i < numberOfSteps; i++) {
             for (Holding h : holdings) {
-                currentDecreaseValue = currentPercentDecrease * h.getValue();
+                currentDecreaseValue = currentPercentDecrease * h.getTotalValue();
                 //the system shall ensure that the simulation algorithm
                 // keeps all equity prices greater than or equal to zero.
-                if(h.getValue() - currentDecreaseValue > 0){
+                if(h.getTotalValue() - currentDecreaseValue > 0){
                     valueCount -= currentDecreaseValue;
                 }
             }

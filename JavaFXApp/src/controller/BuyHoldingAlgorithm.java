@@ -42,7 +42,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares,"new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares,"new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
         double accountVal = cashAccountOfInterest.getValue();
@@ -58,7 +58,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             //Transaction(double amount, String dateMade, String type, String cashAccountName)
 
             p.add(t, aC);
-            e.addShares(numOfShares);
+            e.add(numOfShares);
 
             theStage.setScene(theFPTS.getConfirmationScene());
         } else {
@@ -77,10 +77,10 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                 //If the holding exists in the collection, increase # of shares
                 if (p.getHolding(keyword) != null) {
                     Holding e = p.getHolding(keyword);
-                    e.addShares(numOfShares);
+                    e.add(numOfShares);
                     //If equity does not exist in the collection, create a new Holding & add to collection
                 } else {
-                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
                     p.add(e);
                 }
 

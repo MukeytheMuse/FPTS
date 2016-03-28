@@ -24,22 +24,16 @@ public class Holding implements Searchable, HoldingUpdatable {
     */
     private String holdingName;
 
-    /*
-    * initial price per share
-    */
-    private double initialPricePerShare;
-    //TODO: Warning:(30, 20) [UnusedDeclaration] Private field 'initialPricePerShare' is never used
 
+    /*
+    * value per share
+    */
+    private double valuePerShare;//Same as pricePerShare of the Equity.
 
     /*
     * number of shares
     */
     private int numOfShares;
-
-    /*
-    * value per share
-    */
-    private double valuePerShare;
 
     /*
     * current value
@@ -55,18 +49,15 @@ public class Holding implements Searchable, HoldingUpdatable {
     * indices
     */
     private ArrayList<String> indices;
-    //TODO:Warning:(55, 31) [UnusedDeclaration] Private field 'indices' is assigned but never accessed
-
-
 
     /*
     * sectors
     */
     private ArrayList<String> sectors;
-    //TODO:Warning:(60, 31) [UnusedDeclaration] Private field 'sectors' is assigned but never accessed
 
 
 
+    //TODO: Fix this. Accidentally messed it up.
 //    /*
 //    *
 //    */
@@ -97,7 +88,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return double
      */
     @Override
-    public double getValuePerShare() {
+    public double getPricePerShare() {
         return valuePerShare;
     }
 
@@ -108,16 +99,8 @@ public class Holding implements Searchable, HoldingUpdatable {
      */
     public String getDisplayName() {
         return tickerSymbol;
-    }
+    }//***********************************************************GET RID OF WHEN COMBINING HoldingUpdatable
 
-    /**
-     * returns symbol
-     *
-     * @return String
-     */
-    public String getSymbol() {//TODO
-        return tickerSymbol;
-    }
 
     /**
      * returns symbol, overrides HoldingUpdatable interface
@@ -146,7 +129,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return String
      */
     @Override
-    public String getHoldingName() {
+    public String getName() {
         return holdingName;
     }
 
@@ -164,21 +147,12 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return double
      */
-    public double getValue() {
+    public double getTotalValue() {
         return currentValue;
     }
 
     public String getAcquisitionDate() {//TODO
         return acquisitionDate;
-    }
-
-    /**
-     * returns overall value
-     *
-     * @return double
-     */
-    public double getCurrentValue() {//TODO
-        return currentValue;
     }
 
     /**
@@ -188,7 +162,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      */
     @Override
     public ArrayList<String> getSectors() {
-        return new ArrayList<>();
+        return sectors;
     }
 
     /**
@@ -198,7 +172,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      */
     @Override
     public ArrayList<String> getIndices() {
-        return new ArrayList<>();
+        return indices;
     }
 
     /**
@@ -207,7 +181,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @param numOfSharesAdded
      */
-    public void addShares(int numOfSharesAdded) {
+    public void add(int numOfSharesAdded) {
         numOfShares += numOfSharesAdded;
         currentValue += (numOfSharesAdded * valuePerShare);
     }
@@ -219,10 +193,9 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @param numOfSharesSubtracted
      */
 
-    public void subtractShares(int numOfSharesSubtracted) {
+    public void remove(int numOfSharesSubtracted) {
         numOfShares -= numOfSharesSubtracted;
         currentValue -= (numOfSharesSubtracted * valuePerShare);
     }
-
 
 }
