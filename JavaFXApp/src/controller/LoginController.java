@@ -1,6 +1,7 @@
 package controller;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import gui.FPTS;
@@ -13,7 +14,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Holding;
 import model.Portfolio;
+import model.Transaction;
 import model.User;
 
 public class LoginController {
@@ -148,6 +151,8 @@ public class LoginController {
                     // the passwords match ask the user if they would like to import
                     // holdings &OR transactions to initialize the new users portfolio.
 
+                    ArrayList<Holding> userHoldingsToImport;
+                    ArrayList<Transaction> userTransactionsToImport;
                     if(importTransactionsRequested && importHoldingsRequested){
                         //TODO:
                         System.out.println("NOT IMPLEMENTED YET");
@@ -162,7 +167,7 @@ public class LoginController {
                     } else {
                         Portfolio newEmptyPortfolio = new Portfolio();
                         User usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
-                        this.addUser(usr, this.password1.getText());
+                        this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
                         currentUser = usr;
                     }
                     Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
@@ -291,9 +296,9 @@ public class LoginController {
      * @param usr
      * @param pw1
      */
-    private void addUser(User usr, String pw1) {
+    private void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         User.addToUserMap(usr);//add to the Static collection allUsersMap
-        usr.addUser(usr, pw1);//add to the non Static collection of UserData.csv
+        usr.addUser(usr, pw1, holdings, transactions);//add to the non Static collection of UserData.csv
     }
 }
 

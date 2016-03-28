@@ -4,6 +4,8 @@ package model;
 
 import gui.FPTS;
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.FileAttribute;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -424,10 +426,8 @@ public class User implements Serializable {
      *
      * Author(s): Kaitlin Brockway &
      *
-     *
-     * Make sure this writes correctly****************
      */
-    public void addUser(User usr, String pw1) {
+    public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
@@ -437,12 +437,31 @@ public class User implements Serializable {
             bufferedWriter.write(hash(pw1));
             bufferedWriter.newLine();
             bufferedWriter.close();
+            //create a new user directory for the new user registering.
+            File newUserDir = new File("JavaFXApp/src/model/Database/Portfolios/" + usr.loginID + "/");
+            newUserDir.mkdir();//not sure why IntelliJ says that this is ignored because it works
+            //create 3 new files inside the newUserDir
+            File newTransFile = new File(newUserDir.getAbsolutePath() + "/Trans.csv");
+            File newCashFile = new File(newUserDir.getAbsolutePath() + "/Cash.csv");
+            File newHoldingsFile = new File(newUserDir.getAbsolutePath() + "/Holdings.csv");
+            try{
+                newCashFile.createNewFile();
+                newTransFile.createNewFile();
+                newHoldingsFile.createNewFile();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         } catch (IOException var6) {
             var6.printStackTrace();
         }
-
-        addHoldings(usr);//TODO:
-        addCash(usr);//TODO:
+        //if there are holdings to import
+        if(!holdings.isEmpty()){
+            addHoldings(usr, holdings);//TODO:
+        }
+        //if there are transactions to import
+        if(!transactions.isEmpty()){
+            addCash(usr, transactions);//TODO:
+        }
     }
 
 
@@ -452,7 +471,7 @@ public class User implements Serializable {
      *
      * @param user
      */
-    private void addHoldings(User user){
+    private void addHoldings(User user, ArrayList<Holding> holdings){
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
 //        try {
@@ -462,15 +481,33 @@ public class User implements Serializable {
     }
 
 
-    //TODO:  write to a new file for when user is registering
-    //TODO: ask if the user could have existing transactions when creating a new portfolio that will need to be written to a file also
+
     /**
-     * Writes the users holding content to a file called Cash.csv.
+     * Writes the users holding content to a file called Cash.csv in the form
+     * "CashAccountForUser1","345.00","yyyy/mm/dd"
      *
+     * //TODO:
      *
      * @param user
      */
-    private void addCash(User user){
+    private void addCash(User user, ArrayList<Transaction> transactions){
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+//        if(!transactions.isEmpty()){
+//            for(Transaction t: transactions){
+//
+//            }
+//        }
+//            //fileWriter = new FileWriter((new File("JavaFXApp/src/model/Database/UserData.csv")).getAbsolutePath(), true);
+//            bufferedWriter = new BufferedWriter(fileWriter);
+//            bufferedWriter.write(user.getLoginID() + ",");
+//            bufferedWriter.write(user.getPassword());
+//            bufferedWriter.newLine();
+//            bufferedWriter.close();
+//        } catch (IOException var6) {
+//            var6.printStackTrace();
+//        }
+//
 
     }
 }
