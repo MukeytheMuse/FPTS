@@ -1,8 +1,6 @@
 package controller;
+
 import gui.FPTS;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +17,10 @@ import model.CashAccount;
 import model.Holding;
 import model.Portfolio;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class HomeController extends MenuController {
     FPTS fpts = FPTS.getSelf();//TODO: get rid of the god class
 
@@ -29,7 +31,6 @@ public class HomeController extends MenuController {
 
 
     /**
-     *
      * @param location
      * @param resources
      */
@@ -37,11 +38,11 @@ public class HomeController extends MenuController {
         Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
 
         double equityTotalValue = 0;
-        for(Holding h: p.getHoldings()){
+        for (Holding h : p.getHoldings()) {
             equityTotalValue += h.getCurrentValue();
         }
         double cashAccountValue = 0;
-        for(CashAccount c: p.getCashAccounts()){
+        for (CashAccount c : p.getCashAccounts()) {
             cashAccountValue += c.getValue();
         }
 
@@ -61,7 +62,7 @@ public class HomeController extends MenuController {
     @FXML
     protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml")));
-        Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene);
         app_stage.show();
     }
@@ -79,28 +80,26 @@ public class HomeController extends MenuController {
     }
 
     /**
-     *
      * @param event
      * @throws IOException
      */
     @FXML
     protected void handleSimulateButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/SimulatePage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/SimulatePage.fxml"));
         Scene scene = new Scene(parent);
-        Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene);
         app_stage.show();
     }
 
     /**
-     *
      * @param event
      * @throws IOException
      */
     @FXML
     protected void handleLogoutButtonPressed(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        Scene scene = new Scene((Parent)FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml")));
+        Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml")));
         stage.setScene(scene);
         stage.show();
     }

@@ -1,14 +1,4 @@
-
-
 package gui;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import controller.*;
 import javafx.application.Application;
@@ -26,6 +16,9 @@ import javafx.stage.Stage;
 import model.Portfolio;
 import model.Simulator;
 import model.User;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class FPTS extends Application {
 
@@ -58,7 +51,7 @@ public class FPTS extends Application {
         this.fillIndicies();
         this.fillSectors();
         User.fillUsers();//MUST be called after fillIndicies and fillSectors
-        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
 
         try {
@@ -73,10 +66,10 @@ public class FPTS extends Application {
 
     /**
      * Populates the possible index fields.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void fillIndicies(){
+    public void fillIndicies() {
         allIndicies = new ArrayList<>();
         allIndicies.add("DOW");
         allIndicies.add("NASDAQ100");
@@ -84,10 +77,10 @@ public class FPTS extends Application {
 
     /**
      * Populates all of the possible sector fields.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void fillSectors(){
+    public void fillSectors() {
         allSectors = new ArrayList<>();
         allSectors.add("FINANCE");
         allSectors.add("TRANSPORTATION");
@@ -96,7 +89,7 @@ public class FPTS extends Application {
     }
 
     public Scene createLogInScene() throws IOException {
-        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, 900.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
@@ -106,7 +99,7 @@ public class FPTS extends Application {
         Scene scene = null;
 
         try {
-            Parent e = (Parent)FXMLLoader.load(this.getClass().getResource("HomePage.fxml"));
+            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("HomePage.fxml"));
             scene = new Scene(e);
         } catch (IOException var3) {
             var3.printStackTrace();
@@ -130,7 +123,6 @@ public class FPTS extends Application {
 
 
     /**
-     *
      * @return
      */
     public Scene getErrorScene() {
@@ -142,7 +134,7 @@ public class FPTS extends Application {
     }
 
     public static void main(String[] args) {
-        if(args.length >= 2 && args[0].equals("-delete")) {
+        if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
             File csv = new File("model/DataBase/UserData.csv");
             File csvTemp = new File("model/DataBase/UserDataTemp.csv");
@@ -152,9 +144,9 @@ public class FPTS extends Application {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
 
                 String line;
-                while((line = e.readLine()) != null) {
+                while ((line = e.readLine()) != null) {
                     String[] directory = line.split(",");
-                    if(directory[0].equals(userID)) {
+                    if (directory[0].equals(userID)) {
                         System.out.println("Deleting " + userID);
                     } else {
                         writer.write(directory[0] + "," + directory[1]);
@@ -167,7 +159,7 @@ public class FPTS extends Application {
                 csvTemp.renameTo(csv);
                 //TODO: check Warning:(174, 25) Result of 'File.renameTo()' is ignored
                 File directory1 = new File("model/Database/Portfolios/" + userID);
-                if(directory1.exists()) {
+                if (directory1.exists()) {
                     System.out.println("Has " + userID + " been deleted?");
                     File transFile = new File(directory1, "/Trans.csv");
                     File cashFile = new File(directory1, "/Cash.csv");
@@ -192,6 +184,7 @@ public class FPTS extends Application {
     public Portfolio getPortfolio() {
         return currentUser.getMyPortfolio();
     }
+
     /**
      * Constructs navigation for relevant subsystems
      *

@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -79,7 +80,7 @@ abstract public class HoldingAlgorithm implements Observer {
     /**
      * Establishes context derived from child algorithms then constructs
      * search scene with specialized context.
-     *
+     * <p>
      * Called when Buy Equities button is pressed and sets up the scene
      * for when a holding is searched for on the Buy Equities "page".
      *
@@ -309,11 +310,7 @@ abstract public class HoldingAlgorithm implements Observer {
 
         Double inputAmountDouble = Double.parseDouble(inputAmountString);
 
-        if (inputAmountDouble < 0) {
-            return false;
-        }
-
-        return true;
+        return inputAmountDouble >= 0;
 
     }
 

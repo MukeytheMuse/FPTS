@@ -34,16 +34,16 @@ public class Transaction {
     /**
      * Runs the operation type on the object.
      */
-    public void execute(CashAccount cashAccount, double amount, String type){
-        if(type.equals("Deposit")){
+    public void execute(CashAccount cashAccount, double amount, String type) {
+        if (type.equals("Deposit")) {
             cashAccount.deposit(amount);
-        } else if (type.equals("Withdraw")){
+        } else if (type.equals("Withdraw")) {
             cashAccount.withdraw(amount);
         }
     }
 
 
-    private String getDateMade(){
+    private String getDateMade() {
         return this.dateMade;
     }
 

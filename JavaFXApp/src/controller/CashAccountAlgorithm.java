@@ -26,7 +26,7 @@ abstract public class CashAccountAlgorithm implements Observer {
 
     /**
      * Stalls algorithm until a CashAccount is obtained from CashAccountFinder
-     *
+     * <p>
      * Called by Menu Controller methods
      *
      * @param theFPTS - FPTS

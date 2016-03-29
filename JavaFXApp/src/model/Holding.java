@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 //import static model.DataBase.ReadFile.readHoldings;
 
@@ -54,7 +53,6 @@ public class Holding implements Searchable, HoldingUpdatable {
     * sectors
     */
     private ArrayList<String> sectors;
-
 
 
     //TODO: Fix this. Accidentally messed it up.

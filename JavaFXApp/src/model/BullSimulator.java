@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,6 @@ public class BullSimulator implements Simulator {
     private int stepNumber;
 
     /**
-     *
      * @param numSteps
      * @param interval
      * @param hasSteps
@@ -40,7 +40,6 @@ public class BullSimulator implements Simulator {
     //TODO: CHECK IF IT HAS STEPS.
 
     /**
-     *
      * @return
      */
     @Override

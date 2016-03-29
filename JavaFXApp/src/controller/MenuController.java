@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.IOException;
-
 import gui.FPTS;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,6 +13,8 @@ import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 import model.DataBase.WriteFile;
 
+import java.io.IOException;
+
 public abstract class MenuController implements Initializable {
     @FXML
     MenuBar myMenuBar;
@@ -22,14 +22,13 @@ public abstract class MenuController implements Initializable {
     FPTS fpts = FPTS.getSelf();
 
     /**
-     *
      * @param event
      * @throws IOException
      */
     public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
         //TODO: Warning:(29, 57) [UnusedDeclaration] Parameter 'event' is never used
         Stage stage = new Stage();
-        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml"));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -42,7 +41,7 @@ public abstract class MenuController implements Initializable {
 
     public void handleSaveMenuItemPressed(ActionEvent event) {
         WriteFile writeFile = new WriteFile();
-        writeFile.updatePortfolioForUser(fpts.getCurrentUser());
+        writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
         //TODO: check Warning:(44, 42) Static member 'gui.FPTS.getCurrentUser()' accessed via instance reference
     }
 
@@ -56,23 +55,22 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
 
     /**
-     *
      * @param event
      * @throws IOException
      */
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
@@ -114,18 +112,16 @@ public abstract class MenuController implements Initializable {
     }
 
 
-
-
     //TODO: find out where we use this method
     public void goToLoginPage(ActionEvent event) throws IOException {
-        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
         new Stage();
 
         Stage stage;
         try {
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         } catch (ClassCastException var5) {
-            stage = (Stage)this.myMenuBar.getScene().getWindow();
+            stage = (Stage) this.myMenuBar.getScene().getWindow();
         }
 
         Scene scene = new Scene(parent);

@@ -101,7 +101,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             double totalAmountTransaction = (pricePerShare * numOfShares);
             Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0).getAccountName());
             p.add(newTransaction, p.getCashAccounts().get(0));
-            newTransaction.execute(p.getCashAccounts().get(0),totalAmountTransaction, "Deposit");//operates on portfolio
+            newTransaction.execute(p.getCashAccounts().get(0), totalAmountTransaction, "Deposit");//operates on portfolio
             theStage.setScene(theFPTS.getConfirmationScene());
         /*
         * Warns the user of an invalid input.

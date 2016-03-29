@@ -20,7 +20,7 @@ public class SearchedHoldingSearcher extends Searcher {
      * @return ArrayList<ArrayList<String>>
      */
     public ArrayList<ArrayList<String>> getSearchableStrings(Searchable s) {
-        HoldingUpdatable eq = (HoldingUpdatable) (Object) s;
+        HoldingUpdatable eq = (HoldingUpdatable) s;
         ArrayList<ArrayList<String>> anObject = new ArrayList<ArrayList<String>>();
         ArrayList<String> tickerSymbolItem = new ArrayList<String>();
         tickerSymbolItem.add(eq.getTickerSymbol());

@@ -1,11 +1,8 @@
 package model.DataBase;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import model.User;
+
+import java.io.*;
 
 public class WriteFile {
     public WriteFile() {
@@ -19,7 +16,7 @@ public class WriteFile {
     public void createPortfolioForUser(User user) {
         try {
             File e1 = new File("model/Database/Portfolios/" + user.getLoginID());
-            if(!e1.exists()) {
+            if (!e1.exists()) {
                 e1.mkdir();
                 //TODO: check Warning:(23, 20) Result of 'File.mkdir()' is ignored
             }
@@ -45,10 +42,9 @@ public class WriteFile {
     }
 
 
-
     //TODO: check Warning:(47, 17) Method 'removePortfolioForUser(model.User)' is never used
+
     /**
-     *
      * @param user
      */
     public void removePortfolioForUser(User user) {
@@ -67,7 +63,6 @@ public class WriteFile {
     }
 
     /**
-     *
      * @param user
      */
     public void updatePortfolioForUser(User user) {
@@ -88,7 +83,6 @@ public class WriteFile {
     }
 
     /**
-     *
      * @param file
      */
     private void holdingsWriter(File file) {
@@ -105,7 +99,6 @@ public class WriteFile {
     }
 
     /**
-     *
      * @param writer
      */
     private void cashAccountsWriter(FileWriter writer) {

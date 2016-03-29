@@ -6,6 +6,7 @@
 package model;
 
 import javafx.scene.control.TextField;
+
 import java.util.ArrayList;
 
 
@@ -38,7 +39,7 @@ public class Portfolio {
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio. THIS IS NOT ALLOWED YET
-     *
+     * <p>
      * Method called when a user is constructed.
      *
      * @author ericepstein & Kaitlin
@@ -54,19 +55,17 @@ public class Portfolio {
      * Called when the Users are being Filled to create all user objects in the system.
      *
      * @param readInholdings
-     * @param readInCashAccounts
-     *
-     * Author(s): Kaitlin Brockway
+     * @param readInCashAccounts Author(s): Kaitlin Brockway
      */
-    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts){
+    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts) {
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
         currentValue = 0;
         //Calculates the portfolio's Total Value.
-        for(CashAccount c: cashAccounts){
+        for (CashAccount c : cashAccounts) {
             currentValue += c.getValue();
         }
-        for(Holding h: holdings){
+        for (Holding h : holdings) {
             currentValue += h.getCurrentValue();
         }
     }
@@ -96,6 +95,7 @@ public class Portfolio {
 //        this.matches = matches;
 //    }
 //
+
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.
@@ -117,7 +117,7 @@ public class Portfolio {
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.
-     *
+     * <p>
      * Returns a collection of Holding objects that are cast to Searchable
      *
      * @return ArrayList<Searchable>
@@ -165,18 +165,16 @@ public class Portfolio {
      */
     public ArrayList<Transaction> getTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        for(CashAccount c: cashAccounts){
+        for (CashAccount c : cashAccounts) {
             transactions.addAll(c.getTransactions());
         }
         return transactions;
     }
 
 
-
-
     //TODO: make this private and find another way to access whats needed
+
     /**
-     *
      * Returns collection of portfolio elements
      *
      * @return ArrayList<Searchable>
@@ -189,8 +187,8 @@ public class Portfolio {
     }
 
 
-
     //TODO: used by class "CashAccountCreator". We should make this private and find another way to implement what this this needed for.
+
     /**
      * Returns collection of CashAccount
      *
@@ -228,6 +226,7 @@ public class Portfolio {
 //        return Equity.getEquityList();
 //    }
 //
+
     /**
      * Adds EquityComponent object to portfolio
      *
@@ -246,6 +245,7 @@ public class Portfolio {
 //        equityComponents.remove(e);
 //    }
 //
+
     /**
      * Adds CashAccount to portfolio
      *
@@ -290,6 +290,7 @@ public class Portfolio {
 //    }
 //
 //
+
     /**
      * Adds Holding to portfolio
      *
@@ -299,7 +300,6 @@ public class Portfolio {
 //        portfolioElements.add((Searchable) e);
         holdings.add(e);
     }
-
 
 
     /**

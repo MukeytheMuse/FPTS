@@ -95,7 +95,6 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
     }
 
 
-
     /**
      * @return equityName - String
      */
@@ -129,10 +128,8 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
     }
 
 
-
-
-
     //TODO: find out if we even need add & remove in here (other than the fact that this class implements EquityComponent)
+
     /**
      * @param e - EquityComponent
      *          <p>

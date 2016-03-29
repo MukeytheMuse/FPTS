@@ -41,7 +41,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares,"new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
         double accountVal = cashAccountOfInterest.getValue();
@@ -53,7 +53,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Withdraw", aC.getAccountName());
 
 
-            t.execute(aC,numOfShares * pricePerShare,"Withdraw");//operates on portfolio
+            t.execute(aC, numOfShares * pricePerShare, "Withdraw");//operates on portfolio
             //Transaction(double amount, String dateMade, String type, String cashAccountName)
 
             p.add(t, aC);

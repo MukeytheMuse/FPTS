@@ -67,7 +67,6 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     }
 
 
-
     /**
      * @return name - String
      */

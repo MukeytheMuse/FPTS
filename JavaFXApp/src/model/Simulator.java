@@ -4,9 +4,9 @@ package model;
  * authors: Kaitlin Brockway & Luke
  */
 public interface Simulator {
-    public double simulate(int numberOfSteps);
+    double simulate(int numberOfSteps);
 
-    public int getCurrentStep();
+    int getCurrentStep();
 
-    public int getTotalSteps();
+    int getTotalSteps();
 }

@@ -1,8 +1,6 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Holds a user’s cash account details, including the account name,
@@ -27,7 +25,7 @@ public class CashAccount implements Searchable {
 //    }
 
     //TODO: make private somehow
-    public ArrayList<Transaction> getTransactions(){
+    public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
 
@@ -36,9 +34,9 @@ public class CashAccount implements Searchable {
      * A user defines a cash account by specifying an account name,
      * initial amount, and the date it was added.
      *
-     * @param AccountName   - String
-     * @param initialAmount - double
-     * @param dateAdded     - Date
+     * @param AccountName          - String
+     * @param initialAmount        - double
+     * @param dateAdded            - Date
      * @param existingTransactions -
      */
     public CashAccount(String AccountName, double initialAmount, String dateAdded, ArrayList<Transaction> existingTransactions) {
@@ -120,14 +118,12 @@ public class CashAccount implements Searchable {
 
 
     /**
-     *
-     * @param t
-     *
-     * Author(s): Kaitlin Brockway
+     * @param t Author(s): Kaitlin Brockway
      */
-    protected void addTransaction(Transaction t){
+    protected void addTransaction(Transaction t) {
         transactions.add(t);
     }
+
     /**
      * subtracts current value by a specified amount
      * <p>

@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 
 /**
@@ -65,7 +66,7 @@ public class BearSimulator implements Simulator {
                 currentDecreaseValue = currentPercentDecrease * h.getCurrentValue();
                 //the system shall ensure that the simulation algorithm
                 // keeps all equity prices greater than or equal to zero.
-                if(h.getCurrentValue() - currentDecreaseValue > 0){
+                if (h.getCurrentValue() - currentDecreaseValue > 0) {
                     valueCount -= currentDecreaseValue;
                 }
             }

@@ -1,4 +1,5 @@
 package controller;
+
 import model.Transaction;
 
 /**
@@ -16,7 +17,7 @@ public class DepositCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         //CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
         Transaction t = new Transaction(amount, "date", "Deposit", c.getAccountName());
         theFPTS.getPortfolio().add(t, c);
-        t.execute(c, amount,"Deposit");
+        t.execute(c, amount, "Deposit");
         /*
         * Transitions to confirmation scene.
         */

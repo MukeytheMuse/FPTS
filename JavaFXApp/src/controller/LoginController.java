@@ -1,8 +1,4 @@
 package controller;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import gui.FPTS;
 import javafx.application.Platform;
@@ -12,12 +8,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Holding;
 import model.Portfolio;
 import model.Transaction;
 import model.User;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class LoginController {
     @FXML
@@ -53,12 +57,12 @@ public class LoginController {
     protected void goToLoginPage(ActionEvent event) throws IOException {
         Stage stage;
         try {
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         } catch (ClassCastException var4) {
-            stage = (Stage)this.myMenuBar.getScene().getWindow();
+            stage = (Stage) this.myMenuBar.getScene().getWindow();
         }
 
-        Scene scene = new Scene((Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml")));
+        Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml")));
         stage.setScene(scene);
         stage.show();
     }
@@ -66,23 +70,22 @@ public class LoginController {
     /**
      * Validates the users loginID and password combination and then gets the User object from
      * the allUsers map in the User class that was populated when the system started up.
-     *
+     * <p>
      * Sets the currentUser to the User object obtained from the user map.
-     * @param event
-     * @throws IOException
      *
-     * Author(s): Kaitlin Brockway
+     * @param event
+     * @throws IOException Author(s): Kaitlin Brockway
      */
     @FXML
     protected void handleLoginButtonPressed(ActionEvent event) throws IOException {
-        if(userid.getText().length() != 0 && password.getText().length() != 0) {
-            if(User.validateUser(this.userid.getText(), this.password.getText())) {
+        if (userid.getText().length() != 0 && password.getText().length() != 0) {
+            if (User.validateUser(this.userid.getText(), this.password.getText())) {
                 this.error.setText("Logging in...");
                 User sub_user = new User(userid.getText());
                 currentUser = sub_user.getAllUsersMap().get(userid.getText());
                 FPTS.setCurrentUser(currentUser);
-                Scene scene = new Scene((Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml")));
-                Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml")));
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene);
                 app_stage.show();
             } else {
@@ -103,9 +106,9 @@ public class LoginController {
      */
     @FXML
     protected void handleRegisterButtonPressed(ActionEvent event) throws IOException {
-        Parent register_parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/RegisterPage.fxml"));
+        Parent register_parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/RegisterPage.fxml"));
         Scene register_scene = new Scene(register_parent);
-        Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(register_scene);
         app_stage.show();
     }
@@ -118,23 +121,23 @@ public class LoginController {
      */
     @FXML
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
-        if(this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
-            if(User.ValidLoginID(this.userid.getText())) {
-                if(this.password.getText().equals(this.password1.getText())) {
+        if (this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
+            if (User.ValidLoginID(this.userid.getText())) {
+                if (this.password.getText().equals(this.password1.getText())) {
                     //At this point, now that we know the username is valid and
                     // the passwords match ask the user if they would like to import
                     // holdings &OR transactions to initialize the new users portfolio.
 
                     ArrayList<Holding> userHoldingsToImport;
                     ArrayList<Transaction> userTransactionsToImport;
-                    if(importTransactionsRequested && importHoldingsRequested){
+                    if (importTransactionsRequested && importHoldingsRequested) {
                         //TODO:
                         System.out.println("NOT IMPLEMENTED YET 1");
-                    } else if (importTransactionsRequested && !importHoldingsRequested){
+                    } else if (importTransactionsRequested && !importHoldingsRequested) {
                         //TODO: Warning:(146, 63) Condition '!importHoldingsRequested' is always 'true' when reached
                         //TODO: Warning:(146, 64) Value 'importHoldingsRequested' is always 'false'
                         System.out.println("NOT IMPLEMENTED YET 2");
-                    } else if (!importTransactionsRequested && importHoldingsRequested){
+                    } else if (!importTransactionsRequested && importHoldingsRequested) {
                         //TODO:Warning:(149, 32) Condition '!importTransactionsRequested' is always 'true'
                         //TODO:Warning:(149, 33) Value 'importTransactionsRequested' is always 'false'
                         System.out.println("NOT IMPLEMENTED YET 3");
@@ -144,9 +147,9 @@ public class LoginController {
                         this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
                         currentUser = usr;
                     }
-                    Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
+                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
                     Scene scene = new Scene(parent);
-                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(scene);
                     stage.show();
                 } else {
@@ -165,50 +168,49 @@ public class LoginController {
 
     /**
      * Based off of user specifications during new user registration.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleYesImportTransactionsButtonPressed(){
+    public void handleYesImportTransactionsButtonPressed() {
         importTransactionsRequested = true;
     }
 
     /**
      * Based off of user specifications during new user registration.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleNoImportTransactionsButtonPressed(){
+    public void handleNoImportTransactionsButtonPressed() {
         importTransactionsRequested = false;
     }
 
     /**
      * Based off of user specifications during new user registration.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleYesImportHoldingsButtonPressed(){
+    public void handleYesImportHoldingsButtonPressed() {
         importHoldingsRequested = true;
     }
 
     /**
      * Based off of user specifications during new user registration.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleNoImportHoldingsButtonPressed(){
+    public void handleNoImportHoldingsButtonPressed() {
         importHoldingsRequested = false;
     }
 
 
     /**
-     *
      * @param event
      */
     @FXML
     protected void handleClearButtonPressed(ActionEvent event) {
         this.userid.clear();
         this.password.clear();
-        if(this.password1 != null) {
+        if (this.password1 != null) {
             this.password1.clear();
         }
 
@@ -227,7 +229,6 @@ public class LoginController {
 
 
     /**
-     *
      * @param event
      * @throws IOException
      */
@@ -235,12 +236,11 @@ public class LoginController {
     protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
         stg.setScene(FPTS.getSelf().createLogInScene());
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
     /**
-     *
      * @param event
      * @throws IOException
      */
@@ -249,7 +249,7 @@ public class LoginController {
         Stage stg = FPTS.getSelf().getStage();
         stg.setScene(FPTS.getSelf().createLogInScene());
         stg.show();
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
