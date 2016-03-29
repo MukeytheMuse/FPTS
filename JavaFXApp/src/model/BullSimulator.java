@@ -55,7 +55,7 @@ public class BullSimulator implements Simulator {
         }
         for (int i = 0; i < numberOfSteps; i++) {
             for (Holding h : holdings) {
-                valueCount += currentPercentIncrease * h.getTotalValue();
+                valueCount += currentPercentIncrease * h.getCurrentValue();
             }
         }
         stepNumber += numberOfSteps;

@@ -38,14 +38,14 @@ public class HomeController extends MenuController {
 
         double equityTotalValue = 0;
         for(Holding h: p.getHoldings()){
-            equityTotalValue += h.getTotalValue();
+            equityTotalValue += h.getCurrentValue();
         }
         double cashAccountValue = 0;
         for(CashAccount c: p.getCashAccounts()){
             cashAccountValue += c.getValue();
         }
 
-        ObservableList pieChartData = FXCollections.observableArrayList(new Data[]{new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue)});
+        ObservableList pieChartData = FXCollections.observableArrayList(new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue));
         this.valueChart.setData(pieChartData);
         //TODO: Warning:(49, 33) Unchecked assignment: 'javafx.collections.ObservableList' to 'javafx.collections.ObservableList<javafx.scene.chart.PieChart.Data>'
 
@@ -59,9 +59,11 @@ public class HomeController extends MenuController {
      * @param event - ActionEvent - the event that caused this method to run.
      */
     @FXML
-    protected void handlePortfolioButtonPressed(ActionEvent event) {
-        Displayer pd = new PortfolioDisplayer();
-        pd.display(fpts);
+    protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml")));
+        Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene);
+        app_stage.show();
     }
 
     /**

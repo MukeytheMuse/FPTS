@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -16,10 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -210,7 +207,7 @@ public class SimulationController extends MenuController {
             }
             double value = 0;
             for (Holding h : FPTS.getSelf().getPortfolio().getHoldings()) {
-                value += h.getTotalValue();
+                value += h.getCurrentValue();
             }
             totalValue.setText("$" + (value + FPTS.getSimulationValue()));
 

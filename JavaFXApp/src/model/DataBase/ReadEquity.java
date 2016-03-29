@@ -42,7 +42,7 @@ public class ReadEquity {
                     // add to sector composite
                     try {
                         for (EquityComposite ec : CompositeEquities) {
-                            if (ec.getEquityType().equals("Sector") & ec.getName().equals(line[i])) {
+                            if (ec.getEquityType().equals("Sector") & ec.getHoldingName().equals(line[i])) {
                                 ec.add((EquityComponent) curEquity);
                             }
                         }
@@ -56,7 +56,7 @@ public class ReadEquity {
                     //add to index composite
                     try {
                         for (EquityComposite ec : CompositeEquities) {
-                            if (ec.getEquityType().equals("Index") & ec.getName().equals(line[i])) {
+                            if (ec.getEquityType().equals("Index") & ec.getHoldingName().equals(line[i])) {
                                 ec.add((EquityComponent) curEquity);
                             }
                         }

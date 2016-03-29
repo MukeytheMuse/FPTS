@@ -88,7 +88,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return double
      */
     @Override
-    public double getPricePerShare() {
+    public double getValuePerShare() {
         return valuePerShare;
     }
 
@@ -129,7 +129,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return String
      */
     @Override
-    public String getName() {
+    public String getHoldingName() {
         return holdingName;
     }
 
@@ -147,7 +147,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return double
      */
-    public double getTotalValue() {
+    public double getCurrentValue() {
         return currentValue;
     }
 

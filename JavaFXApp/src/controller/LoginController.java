@@ -29,35 +29,11 @@ public class LoginController {
     @FXML
     private PasswordField password1;
 
-    private User currentUser;//How do we know the currentUser after exiting this class??
+    private User currentUser;
 
+    private boolean importHoldingsRequested = false;
+    private boolean importTransactionsRequested = false;
 
-    @FXML
-    private RadioButton transNo;//May not need these 4 attributes
-    //TODO check Warning:(32, 25) [UnusedDeclaration] Private field 'transNo' is assigned but never accessed
-
-
-    @FXML
-    private RadioButton transYes;
-    //TODO check Warning:(34, 25) [UnusedDeclaration] Private field 'transYes' is assigned but never accessed
-
-    @FXML
-    private RadioButton holdingsNo;
-    //TODO check Warning:(36, 25) [UnusedDeclaration] Private field 'holdingsNo' is assigned but never accessed
-
-    @FXML
-    private RadioButton holdingsYes;
-    //TODO check Warning:(38, 25) [UnusedDeclaration] Private field 'holdingsYes' is assigned but never accessed
-
-    private boolean importHoldingsRequested;
-    private boolean importTransactionsRequested;
-
-
-    //FPTS fpts = FPTS.getSelf();
-    // ^ TODO: get rid of FPTS dependencies. As of now we no longer need FPTS in this class
-
-
-    //***********bellow**********************From LoginMenuController**********
     @FXML
     MenuBar myMenuBar;
 
@@ -71,9 +47,10 @@ public class LoginController {
     }
 
     public void handleAboutMenuItemPressed(ActionEvent event) {
+        //TODO Add an about page
     }
 
-    public void goToLoginPage(ActionEvent event) throws IOException {
+    protected void goToLoginPage(ActionEvent event) throws IOException {
         Stage stage;
         try {
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -85,8 +62,6 @@ public class LoginController {
         stage.setScene(scene);
         stage.show();
     }
-
-    //above *********************************From LoginMenuController**********
 
     /**
      * Validates the users loginID and password combination and then gets the User object from
@@ -145,7 +120,6 @@ public class LoginController {
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
         if(this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
             if(User.ValidLoginID(this.userid.getText())) {
-                //TODO check Warning:(137, 16) Static member 'model.User.ValidLoginID(java.lang.String)' accessed via instance reference
                 if(this.password.getText().equals(this.password1.getText())) {
                     //At this point, now that we know the username is valid and
                     // the passwords match ask the user if they would like to import
@@ -155,15 +129,15 @@ public class LoginController {
                     ArrayList<Transaction> userTransactionsToImport;
                     if(importTransactionsRequested && importHoldingsRequested){
                         //TODO:
-                        System.out.println("NOT IMPLEMENTED YET");
+                        System.out.println("NOT IMPLEMENTED YET 1");
                     } else if (importTransactionsRequested && !importHoldingsRequested){
                         //TODO: Warning:(146, 63) Condition '!importHoldingsRequested' is always 'true' when reached
                         //TODO: Warning:(146, 64) Value 'importHoldingsRequested' is always 'false'
-                        System.out.println("NOT IMPLEMENTED YET");
+                        System.out.println("NOT IMPLEMENTED YET 2");
                     } else if (!importTransactionsRequested && importHoldingsRequested){
                         //TODO:Warning:(149, 32) Condition '!importTransactionsRequested' is always 'true'
                         //TODO:Warning:(149, 33) Value 'importTransactionsRequested' is always 'false'
-                        System.out.println("NOT IMPLEMENTED YET");
+                        System.out.println("NOT IMPLEMENTED YET 3");
                     } else {
                         Portfolio newEmptyPortfolio = new Portfolio();
                         User usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);

@@ -72,7 +72,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      * @return name - String
      */
     @Override
-    public String getName() {
+    public String getHoldingName() {
         return equityName;
     }
 
@@ -90,11 +90,11 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      * @return valuePerShare - double
      */
     @Override
-    public double getPricePerShare() {
+    public double getValuePerShare() {
         double count = 0;
         double curVal;
         for (HoldingUpdatable se : childEquities) {
-            curVal = se.getPricePerShare();
+            curVal = se.getValuePerShare();
             count += curVal;
         }
         return count / childEquities.size();

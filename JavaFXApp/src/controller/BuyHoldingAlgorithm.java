@@ -3,7 +3,6 @@ package controller;
 import model.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author ericepstein
@@ -42,7 +41,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares,"new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares,"new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
         double accountVal = cashAccountOfInterest.getValue();
@@ -80,7 +79,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                     e.add(numOfShares);
                     //If equity does not exist in the collection, create a new Holding & add to collection
                 } else {
-                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
                     p.add(e);
                 }
 

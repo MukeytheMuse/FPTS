@@ -211,7 +211,7 @@ abstract public class HoldingAlgorithm implements Observer {
         * Defines first field : price per share
         */
         TextField pricePerShareField = new TextField();
-        pricePerShareField.setText("" + equityOfInterest.getPricePerShare());
+        pricePerShareField.setText("" + equityOfInterest.getValuePerShare());
         aField.getChildren().addAll(new Label("Price per share: "), pricePerShareField);
         queries.getChildren().add(aField);
 

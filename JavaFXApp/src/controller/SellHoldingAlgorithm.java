@@ -97,7 +97,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
         */
         } else if (e.getNumOfShares() == numOfShares) {
             p.remove(e);
-            double pricePerShare = e.getPricePerShare();
+            double pricePerShare = e.getValuePerShare();
             double totalAmountTransaction = (pricePerShare * numOfShares);
             Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0).getAccountName());
             p.add(newTransaction, p.getCashAccounts().get(0));

@@ -65,14 +65,16 @@ public abstract class MenuController implements Initializable {
 
 
     /**
-     * TODO: FIGURE OUT HOW TO DO THIS WITHOUT THE GOD CLASS
      *
      * @param event
      * @throws IOException
      */
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        Displayer pd = new PortfolioDisplayer();
-        pd.display(FPTS.getSelf());
+        Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
 

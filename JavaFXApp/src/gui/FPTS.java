@@ -71,8 +71,6 @@ public class FPTS extends Application {
         this.thestage.show();
     }
 
-
-
     /**
      * Populates the possible index fields.
      *
@@ -99,7 +97,7 @@ public class FPTS extends Application {
 
     public Scene createLogInScene() throws IOException {
         Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
-        Scene scene = new Scene(root, 1200.0D, 600.0D);
+        Scene scene = new Scene(root, 900.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
     }
@@ -142,14 +140,6 @@ public class FPTS extends Application {
         //TODO: check Warning:(139, 36) Redundant array creation for calling varargs method
         return new Scene(split, 1200.0D, 600.0D);
     }
-
-//    public Scene createRegisterPage() throws IOException {
-//        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RegisterPage.fxml"));
-//        Scene scene = new Scene(root, 1200.0D, 600.0D);
-//        this.thestage.setScene(scene);
-//        this.thestage.setTitle("Financial Portfolio Tracking System");
-//        return scene;
-//    }
 
     public static void main(String[] args) {
         if(args.length >= 2 && args[0].equals("-delete")) {
@@ -261,8 +251,12 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Displayer pd = new PortfolioDisplayer();
-                pd.display(getSelf());
+                try {
+                    Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("PortfolioPage.fxml")));
+                    thestage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         });

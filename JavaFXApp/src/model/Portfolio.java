@@ -67,7 +67,7 @@ public class Portfolio {
             currentValue += c.getValue();
         }
         for(Holding h: holdings){
-            currentValue += h.getTotalValue();
+            currentValue += h.getCurrentValue();
         }
     }
 
