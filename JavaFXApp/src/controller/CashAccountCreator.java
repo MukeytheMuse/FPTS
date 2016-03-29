@@ -83,7 +83,7 @@ public class CashAccountCreator {
 
                 //TODO: change theDate to type string then pass in instead of "" below for cashAccount constructor.
                 if (isValid) {
-                    CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), "", null);
+                    CashAccount c = new CashAccount(nameInputField.getText(), Double.parseDouble(amountInputField.getText()), theDate.toString(), null);
                     theFPTS.getPortfolio().add(c);
 
                     /*

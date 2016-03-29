@@ -88,7 +88,7 @@ public class CashAccount implements Searchable {
      *
      * @return double
      */
-    public double getValue() {
+    public double getCurrentValue() {
         return currentValue;
     }
 
@@ -155,7 +155,7 @@ public class CashAccount implements Searchable {
     */
     public void overwrite(CashAccount c) {
         this.accountName = c.getAccountName();
-        this.currentValue = c.getValue();
+        this.currentValue = c.getCurrentValue();
         this.dateAdded = c.getDateAdded();
     }
 

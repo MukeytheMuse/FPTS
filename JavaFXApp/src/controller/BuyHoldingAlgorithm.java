@@ -44,7 +44,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
-        double accountVal = cashAccountOfInterest.getValue();
+        double accountVal = cashAccountOfInterest.getCurrentValue();
 
         if (accountVal >= (numOfShares * pricePerShare)) {
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);

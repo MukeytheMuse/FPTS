@@ -63,7 +63,7 @@ public class Portfolio {
         currentValue = 0;
         //Calculates the portfolio's Total Value.
         for (CashAccount c : cashAccounts) {
-            currentValue += c.getValue();
+            currentValue += c.getCurrentValue();
         }
         for (Holding h : holdings) {
             currentValue += h.getCurrentValue();
@@ -252,7 +252,7 @@ public class Portfolio {
      * @param e - CashAccount
      */
     public void add(CashAccount e) {
-//        transactions.add((Transaction) new Deposit(e, e.getValue()));
+//        transactions.add((Transaction) new Deposit(e, e.getCurrentValue()));
         cashAccounts.add(e);
     }
 

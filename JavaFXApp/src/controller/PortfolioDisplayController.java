@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.CashAccount;
 import model.Holding;
 import model.Portfolio;
 
@@ -18,6 +19,7 @@ public class PortfolioDisplayController extends MenuController {
 
     @FXML
     private TableView<Holding> tableView;
+    @FXML TableView<CashAccount> CAtableView;
 
     @FXML
     private TableColumn<Holding, String> tickerCol;
@@ -29,8 +31,15 @@ public class PortfolioDisplayController extends MenuController {
     private TableColumn<Holding, String> priceCol;
     @FXML
     private TableColumn<Holding, String> valueCol;
+    @FXML
+    private TableColumn<CashAccount, String> CAnameCol;
+    @FXML
+    private TableColumn<CashAccount, String> amountCol;
+    @FXML
+    private TableColumn<CashAccount, String> dateCol;
 
     /**
+     *
      * @param location
      * @param resources
      */
@@ -45,7 +54,15 @@ public class PortfolioDisplayController extends MenuController {
         ObservableList<Holding> data = FXCollections.observableArrayList(p.getHoldings());
         tableView.setItems(data);
 
+        CAnameCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("accountName"));
+        amountCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("currentValue"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("dateAdded"));
+
+        ObservableList<CashAccount> CAdata = FXCollections.observableArrayList(p.getCashAccounts());
+        CAtableView.setItems(CAdata);
+
     }
+
 
 
 }

@@ -43,7 +43,7 @@ public class HomeController extends MenuController {
         }
         double cashAccountValue = 0;
         for (CashAccount c : p.getCashAccounts()) {
-            cashAccountValue += c.getValue();
+            cashAccountValue += c.getCurrentValue();
         }
 
         ObservableList pieChartData = FXCollections.observableArrayList(new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue));
