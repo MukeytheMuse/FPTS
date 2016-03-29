@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User implements Serializable {
+public class User {
     private String loginID;
     private String password;
     private Portfolio myPortfolio;
@@ -405,7 +405,7 @@ public class User implements Serializable {
      * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
-     * @param pw1 Author(s): Kaitlin Brockway &
+     * @param pw1 Author(s): Kaitlin Brockway & Ian
      */
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
@@ -419,7 +419,7 @@ public class User implements Serializable {
             bufferedWriter.close();
             //create a new user directory for the new user registering.
             File newUserDir = new File("JavaFXApp/src/model/Database/Portfolios/" + usr.loginID + "/");
-            newUserDir.mkdir();//not sure why IntelliJ says that this is ignored because it works
+            newUserDir.mkdir();
             //create 3 new files inside the newUserDir
             File newTransFile = new File(newUserDir.getAbsolutePath() + "/Trans.csv");
             File newCashFile = new File(newUserDir.getAbsolutePath() + "/Cash.csv");
