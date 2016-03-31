@@ -7,6 +7,9 @@ package model;
  * @author Eric Epstein & Kaitlin Brockway
  */
 public interface EquityComponent {
+    
+    public String getDisplayName();
+    
     /**
      * adds child to the composite
      *

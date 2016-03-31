@@ -18,6 +18,10 @@ public class User {
     public Map<String, User> getAllUsersMap() {
         return allUsersMap;
     }
+    
+    public void setMyPortfolio(Portfolio p) {
+        myPortfolio = p;
+    }
 
 
     //private final String dateFormatPattern = "yyyy/MM/dd";

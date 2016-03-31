@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class Portfolio {
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
+    private ArrayList<WatchedEquity> watchedEquities;
+    
     private double currentValue;
 
 
@@ -47,6 +49,7 @@ public class Portfolio {
     public Portfolio() {
         cashAccounts = new ArrayList<>();
         holdings = new ArrayList<>();
+        watchedEquities = new ArrayList<WatchedEquity>();
         currentValue = 0.00;
     }
 
@@ -114,6 +117,10 @@ public class Portfolio {
     }
 
 
+    public ArrayList<WatchedEquity> getWatchedEquities() {
+        return watchedEquities;
+    }
+    
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.

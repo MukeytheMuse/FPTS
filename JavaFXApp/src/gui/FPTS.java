@@ -60,7 +60,12 @@ public class FPTS extends Application {
             //TODO: check
         }
 
-        this.thestage.setScene(loginScene);
+        //this.thestage.setScene(loginScene);
+        
+        currentUser = new User("lala");
+        currentUser.setMyPortfolio(new Portfolio());
+        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("WatchlistPage.fxml"));
+        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.show();
     }
 
