@@ -31,7 +31,8 @@ public class ReadFile {
 
     // reads in CSV file
     protected static ArrayList<String[]> readInFile() {
-        String csv = "JavaFXApp/src/model/DataBase/equities.csv";
+        
+        String csv = "../DataBase/equities.csv";
         splitFile = new ArrayList<String[]>();
         BufferedReader reader = null;
         String line;
@@ -44,7 +45,7 @@ public class ReadFile {
                 splitFile.add(split);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/equities.csv not found! Please try again.");
+            System.out.println("equities.csv not found! Please try again.");
             //readInFile();
         } catch (IOException e) {
             e.printStackTrace();

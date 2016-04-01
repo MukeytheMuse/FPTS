@@ -38,7 +38,6 @@ public class FPTS extends Application {
     private static User currentUser;
     private static FPTS self;
 
-
     public static ArrayList<String> allIndicies;//all index names
     public static ArrayList<String> allSectors;//all sector names
 
@@ -65,7 +64,7 @@ public class FPTS extends Application {
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
         Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("WatchlistPage.fxml"));
-        //this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
+        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
         this.thestage.show();
     }

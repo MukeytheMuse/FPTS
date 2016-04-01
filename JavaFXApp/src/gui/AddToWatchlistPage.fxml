@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.HomeController">
+            fx:controller="controller.AddToWatchlistController">
     <children>
         <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
                  prefWidth="800.0" AnchorPane.topAnchor="2.0">
@@ -85,34 +85,30 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label prefHeight="20.0" prefWidth="100.0" text="Equity name: " GridPane.halignment="CENTER"
+                        <Label prefHeight="20.0" prefWidth="100.0" text="Equity symbol: " GridPane.halignment="CENTER"
                                GridPane.valignment="CENTER">
                             <font>
                                 <Font size="14.0"/>
                             </font>
                         </Label>
-                        <Label prefHeight="20.0" prefWidth="100.0" text="High trigger:" GridPane.halignment="CENTER"
+                        <Label prefHeight="20.0" prefWidth="100.0" text="Low trigger:" GridPane.halignment="CENTER"
                                GridPane.rowIndex="1">
                             <font>
                                 <Font size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="lolol" promptText="lolhaha" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="1"/>
-                        <TextField fx:id="userid" prefHeight="25.0" prefWidth="150.0" promptText="User ID"
-                                   GridPane.columnIndex="1"/>
-                        <Label prefHeight="14.0" prefWidth="69.0" text="Watchlist:" GridPane.halignment="CENTER"
+                        <Label prefHeight="20.0" prefWidth="100.0" text="High trigger:" GridPane.halignment="CENTER"
                                GridPane.rowIndex="2">
                             <font>
                                 <Font size="14.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="watchlist" prefHeight="80.0" prefWidth="69.0" text="NOTHING" GridPane.halignment="CENTER"
-                               GridPane.rowIndex="3">
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
-                        </Label>
+                        <TextField fx:id="tickerSymbolField" promptText="Equity symbol" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="0"/>
+                        <TextField fx:id="lowTriggerField" prefHeight="25.0" prefWidth="150.0" promptText="Low trigger"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <TextField fx:id="highTriggerField" prefHeight="25.0" prefWidth="150.0" promptText="High trigger"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                     </children>
                 </GridPane>
                 <Label fx:id="error" mouseTransparent="true" prefHeight="17.0" prefWidth="404.0" GridPane.columnSpan="2"
@@ -127,7 +123,7 @@
                         <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Button id="create" mnemonicParsing="false" onAction="#handleBuyEquityButtonPressed"
+                        <Button id="create" mnemonicParsing="false" onAction="#handleAddEquityToWatchlistButtonPressed"
                                 prefHeight="25.0" prefWidth="150.0" text="Add to Watchlist" GridPane.halignment="CENTER"
                                 GridPane.rowIndex="2"/>
                     </children>

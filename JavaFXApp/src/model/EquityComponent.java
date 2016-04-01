@@ -9,6 +9,7 @@ package model;
 public interface EquityComponent {
     
     public String getDisplayName();
+    public double getValuePerShare();
     
     /**
      * adds child to the composite

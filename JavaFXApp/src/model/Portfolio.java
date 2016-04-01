@@ -23,7 +23,6 @@ public class Portfolio {
     
     private double currentValue;
 
-
 //    private ArrayList<Searchable> portfolioElements;
 
     private ArrayList<EquityComponent> equityComponents = LoadedEquity.getEquityList();  // lists what you can buy
@@ -49,7 +48,7 @@ public class Portfolio {
     public Portfolio() {
         cashAccounts = new ArrayList<>();
         holdings = new ArrayList<>();
-        watchedEquities = new ArrayList<WatchedEquity>();
+        watchedEquities = new ArrayList<>();
         currentValue = 0.00;
     }
 
@@ -115,10 +114,30 @@ public class Portfolio {
         }
         return null;
     }
+    
+    public ArrayList<EquityComponent> getEquityComponents() {
+        return equityComponents;
+    }
 
+    public EquityComponent getEquityComponent(String tickerSymbol) {
+        
+        System.out.println("IN GET EQUITY COMPONENT");
+        System.out.println("SIZE IS " + equityComponents.size());
+        for (EquityComponent ec : equityComponents) {
+            if (ec.getDisplayName().toUpperCase().equals(tickerSymbol.toUpperCase())) {
+                
+                return ec;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<WatchedEquity> getWatchedEquities() {
         return watchedEquities;
+    }
+    
+    public void addWatchedEquity(WatchedEquity w) {
+        watchedEquities.add(w);
     }
     
     /**
@@ -223,6 +242,7 @@ public class Portfolio {
     public ArrayList<Holding> getHoldings() {
         return holdings;
     }
+    
 //
 //    /**
 //     * Returns collection of EquityComponent

@@ -85,7 +85,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label fx:id="watchlistLabel" prefHeight="80.0" prefWidth="200.0" text="NOTHING" GridPane.halignment="CENTER"
+                        <Label fx:id="watchlistLabel" prefHeight="80.0" prefWidth="300.0" text="NOTHING" GridPane.halignment="CENTER"
                                GridPane.rowIndex="0">
                             <font>
                                 <Font size="14.0"/>
@@ -106,9 +106,9 @@
                     </rowConstraints>
                     <children>
                         <Button id="login" defaultButton="true" mnemonicParsing="false"
-                                onAction="#handleAddEquityToWatchlistButtonPressed" prefHeight="25.0" prefWidth="150.0" text="Add Equity"
+                                onAction="#handleGoToAddEquityToWatchlistButtonPressed" prefHeight="25.0" prefWidth="150.0" text="Add Equity"
                                 GridPane.halignment="CENTER"/>
-                        <Button id="clear" mnemonicParsing="false" onAction="#handleAddEquityToWatchlistButtonPressed"
+                        <Button id="clear" mnemonicParsing="false" onAction="#handleGoToAddEquityToWatchlistButtonPressed"
                                 prefHeight="25.0" prefWidth="150.0" text="Remove Equity" GridPane.halignment="CENTER"
                                 GridPane.rowIndex="1"/>
                         <Button id="register" mnemonicParsing="false" onAction="#handleUpdate"

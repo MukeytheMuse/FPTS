@@ -39,22 +39,26 @@ public class WatchlistController extends MenuController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
-
+        Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
+        ArrayList<WatchedEquity> watchlist = p.getWatchedEquities();
+        String watchlistStr = "";
+        for (WatchedEquity w : watchlist) {
+            watchlistStr = watchlistStr + w + "\n";
+        }
         //ObservableList pieChartData = FXCollections.observableArrayList(new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue));
         //TODO: Warning:(49, 33) Unchecked assignment: 'javafx.collections.ObservableList' to 'javafx.collections.ObservableList<javafx.scene.chart.PieChart.Data>'
         
-        //this.valueChart.setTitle("Portfolio");
-        this.watchlistLabel.setText("TEST");
+        this.watchlistLabel.setText(watchlistStr);
+        
     }
     
     public void handleUpdate(ActionEvent event) {
         System.out.println("IN UPDATE");
-        Portfolio p = new Portfolio(); // fpts.getCurrentUser().getMyPortfolio();
+        Portfolio p = fpts.getCurrentUser().getMyPortfolio();
         ArrayList<WatchedEquity> watchedEquities = p.getWatchedEquities();
         String list = "";
         for (WatchedEquity w : watchedEquities) {
-            list += w + "\n";
+            list += w;
         }
         this.watchlistLabel.setText(list);
         
@@ -77,15 +81,14 @@ public class WatchlistController extends MenuController {
     */
     
     @FXML
-    protected void handleAddEquityToWatchlistButtonPressed(ActionEvent event) throws IOException {
-
+    protected void handleGoToAddEquityToWatchlistButtonPressed(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/AddToWatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
-
+   
    
 }
 
