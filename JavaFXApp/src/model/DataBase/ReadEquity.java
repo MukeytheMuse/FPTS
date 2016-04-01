@@ -1,8 +1,8 @@
 package model.DataBase;
 
-import model.EquityComponent;
-import model.EquityComposite;
-import model.LoadedEquity;
+import model.Equities.EquityComponent;
+import model.Equities.EquityComposite;
+import model.Equities.LoadedEquity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

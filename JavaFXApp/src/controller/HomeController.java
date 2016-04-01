@@ -1,5 +1,7 @@
 package controller;
 
+import controller.HoldingCtrl.BuyHoldingAlgorithm;
+import controller.HoldingCtrl.HoldingAlgorithm;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +15,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import model.CashAccount;
-import model.Holding;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Holding;
 import model.Portfolio;
 
 import java.io.IOException;

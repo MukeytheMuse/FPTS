@@ -1,4 +1,4 @@
-package model;
+package model.Searchers;
 
 /**
  * Defines an interface that accesses a display name. Allows objects of

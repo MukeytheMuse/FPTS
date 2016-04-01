@@ -1,4 +1,4 @@
-package model;
+package model.Searchers;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

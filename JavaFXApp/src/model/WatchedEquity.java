@@ -5,6 +5,8 @@
  */
 package model;
 
+import model.Equities.EquityComponent;
+
 /**
  *
  * @author ericepstein

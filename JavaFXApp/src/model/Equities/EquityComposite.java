@@ -1,4 +1,7 @@
-package model;
+package model.Equities;
+
+import model.PortfolioElements.HoldingUpdatable;
+import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;

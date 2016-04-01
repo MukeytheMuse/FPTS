@@ -1,4 +1,6 @@
-package controller;
+package controller.CashAccountCtrl;
+
+import controller.AmountInput;
 
 import java.util.ArrayList;
 import java.util.Observable;

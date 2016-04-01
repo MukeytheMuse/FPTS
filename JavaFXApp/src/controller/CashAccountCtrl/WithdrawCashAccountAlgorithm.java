@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.CashAccountCtrl;
 
-import model.CashAccount;
-import model.Transaction;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Transaction;
 
 /**
  * Implements final step in CashAccountAlgorithm by creating a Withdraw object.

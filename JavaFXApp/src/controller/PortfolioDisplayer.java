@@ -9,7 +9,7 @@ import gui.FPTS;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import model.Searchable;
+import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 

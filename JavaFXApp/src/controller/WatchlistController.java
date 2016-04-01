@@ -1,31 +1,23 @@
 package controller;
 
 import gui.FPTS;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 
 import javafx.stage.Stage;
 import model.WatchedEquity;
-import model.Holding;
 import model.Portfolio;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
-import model.Transaction;
 
 public class WatchlistController extends MenuController {
     FPTS fpts = FPTS.getSelf();//TODO: get rid of the god class

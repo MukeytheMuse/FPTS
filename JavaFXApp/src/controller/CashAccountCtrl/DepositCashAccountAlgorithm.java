@@ -1,6 +1,6 @@
-package controller;
+package controller.CashAccountCtrl;
 
-import model.Transaction;
+import model.PortfolioElements.Transaction;
 
 /**
  * Implements final step in CashAccountAlgorithm by creating a Deposit object.

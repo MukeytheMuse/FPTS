@@ -1,4 +1,4 @@
-package model;
+package model.Simulators;
 
 /**
  * authors: Kaitlin Brockway & Luke

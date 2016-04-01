@@ -1,7 +1,8 @@
-package controller;
+package controller.CashAccountCtrl;
 
-import model.CashAccount;
-import model.Transaction;
+import controller.AmountInput;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Transaction;
 
 import java.util.ArrayList;
 import java.util.Observable;

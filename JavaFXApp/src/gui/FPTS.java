@@ -1,6 +1,10 @@
 package gui;
 
 import controller.*;
+import controller.CashAccountCtrl.*;
+import controller.HoldingCtrl.BuyHoldingAlgorithm;
+import controller.HoldingCtrl.HoldingAlgorithm;
+import controller.HoldingCtrl.SellHoldingAlgorithm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Portfolio;
-import model.Simulator;
+import model.Simulators.Simulator;
 import model.User;
 
 import java.io.*;

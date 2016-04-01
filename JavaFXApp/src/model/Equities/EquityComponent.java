@@ -1,4 +1,4 @@
-package model;
+package model.Equities;
 
 /**
  * Defines the interface that manages and accesses the collection

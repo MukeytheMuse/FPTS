@@ -1,7 +1,7 @@
 package model.DataBase;
 
 import gui.FPTS;
-import model.EquityComponent;
+import model.Equities.EquityComponent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
