@@ -5,6 +5,10 @@ import model.PortfolioElements.HoldingUpdatable;
 import model.Searchers.Searchable;
 
 import java.util.ArrayList;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Searchable and available to be purchased by the user.
@@ -74,6 +78,36 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
         this.pricePerShare = perShareValue;
         this.indices = indices;
         this.sectors = sectors;
+    }
+    
+    public void updatePrice(Document document) {
+       NodeList nodeList = document.getDocumentElement().getChildNodes().item(0).getChildNodes();
+                   
+       for (int i = 0; i < nodeList.getLength(); i++) {
+           Node node = nodeList.item(i);
+           if (node instanceof Element && node.getNodeName().equals("quote")) {
+               if (node.getAttributes().getNamedItem("symbol").getNodeValue().toUpperCase().equals(tickerSymbol.toUpperCase())) {
+                    NodeList childNodes = node.getChildNodes();
+               
+                    for (int j = 0; j < childNodes.getLength(); j++) {
+                        Node cNode = childNodes.item(j);
+
+                        if (cNode.getNodeName().equals("LastTradePriceOnly")) {
+                            try {
+                                //System.out.println(cNode.getTextContent());
+                                String priceStr = cNode.getTextContent();
+                                double price = Double.parseDouble(priceStr);
+                                //System.out.println("NEW PRICE: " + price);
+                                pricePerShare = price;
+                                //System.out.println("new price per share is " + pricePerShare);
+                            } catch (Exception e) {
+                                //e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+           }
+       }
     }
 
     /*

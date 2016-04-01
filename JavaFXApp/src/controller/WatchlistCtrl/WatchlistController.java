@@ -17,9 +17,12 @@ import model.Portfolio;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
+import model.WebServiceReader;
 
-public class WatchlistController extends MenuController {
+public class WatchlistController extends MenuController implements Observer {
     FPTS fpts = FPTS.getSelf();//TODO: get rid of the god class
 
     @FXML
@@ -31,31 +34,33 @@ public class WatchlistController extends MenuController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
-        ArrayList<WatchedEquity> watchlist = p.getWatchedEquities();
-        String watchlistStr = "";
-        for (WatchedEquity w : watchlist) {
-            watchlistStr = watchlistStr + w + "\n";
-        }
-        //ObservableList pieChartData = FXCollections.observableArrayList(new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue));
-        //TODO: Warning:(49, 33) Unchecked assignment: 'javafx.collections.ObservableList' to 'javafx.collections.ObservableList<javafx.scene.chart.PieChart.Data>'
+        WebServiceReader ws = fpts.getWebServiceReader();
+        ws.addObserver(this);
+        //System.out.println("ADDED AS OBSERVER");
+        fillWatchlist();
         
-        this.watchlistLabel.setText(watchlistStr);
-        
+        //TODO: Warning:(49, 33) Unchecked assignment: 'javafx.collections.ObservableList' to 'javafx.collections.ObservableList<javafx.scene.chart.PieChart.Data>'    
     }
-    
-    public void handleUpdate(ActionEvent event) {
-        System.out.println("IN UPDATE");
-        Portfolio p = fpts.getCurrentUser().getMyPortfolio();
-        ArrayList<WatchedEquity> watchedEquities = p.getWatchedEquities();
-        String list = "";
+   
+
+    @Override
+   public void update(Observable o, Object arg) {
+       //System.out.println("IN UPDATE");
+       Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
+       p.updateWatchlist();
+       
+   }
+   
+   private void fillWatchlist() {
+       Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
+       ArrayList<WatchedEquity> watchedEquities = p.getWatchedEquities();
+       String list = "";
         for (WatchedEquity w : watchedEquities) {
-            list += w;
+            list += w + "\n";
         }
         this.watchlistLabel.setText(list);
-        
-    }
-
+       
+   }
 
 
     /**
@@ -74,7 +79,7 @@ public class WatchlistController extends MenuController {
     
     @FXML
     protected void handleGoToAddEquityToWatchlistButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/AddToWatchlistPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/AddToWatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -83,7 +88,16 @@ public class WatchlistController extends MenuController {
     
     @FXML
     protected void handleGoToRemoveEquityFromWatchlistButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/RemoveFromWatchlistPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/RemoveFromWatchlistPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    protected void handleGoToEditedWatchedEquityButtonPressed(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/EditWatchedEquityPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);

@@ -114,6 +114,14 @@ public abstract class MenuController implements Initializable {
         CashAccountAlgorithm cashAcctAlgor = new RemoveCashAccountAlgorithm();
         cashAcctAlgor.process(FPTS.getSelf());
     }
+    
+    public void handleWatchMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/Watchlist/WatchlistPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 
 
     //TODO: find out where we use this method
