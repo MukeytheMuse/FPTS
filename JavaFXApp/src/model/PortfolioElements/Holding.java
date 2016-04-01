@@ -1,4 +1,6 @@
-package model;
+package model.PortfolioElements;
+
+import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 

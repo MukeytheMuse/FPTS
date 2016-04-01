@@ -1,7 +1,7 @@
-package controller;
+package controller.CashAccountCtrl;
 
 import gui.FPTS;
-import model.CashAccount;
+import model.PortfolioElements.CashAccount;
 
 import java.util.Observable;
 import java.util.Observer;

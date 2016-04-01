@@ -5,6 +5,8 @@
  */
 package model;
 
+import model.Equities.EquityComponent;
+
 /**
  *
  * @author ericepstein
@@ -27,9 +29,7 @@ public class WatchedEquity {
         assocEquity = ec;
         this.highTrigger = highTrigger;
         this.lowTrigger = lowTrigger;
-        
-        System.out.println("HIGH TRIGGER IS " + highTrigger);
-        
+       
         previousPrice = ec.getValuePerShare();
         
         System.out.println("PREVIOUS PRICE IS " + previousPrice);

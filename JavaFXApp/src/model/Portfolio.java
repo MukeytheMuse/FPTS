@@ -6,6 +6,13 @@
 package model;
 
 import javafx.scene.control.TextField;
+import model.Equities.EquityComponent;
+import model.Equities.LoadedEquity;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Holding;
+import model.PortfolioElements.Transaction;
+import model.Searchers.Searchable;
+import model.WatchedEquity;
 
 import java.util.ArrayList;
 

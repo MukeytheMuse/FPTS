@@ -1,4 +1,6 @@
-package model;
+package model.PortfolioElements;
+
+import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 
@@ -120,7 +122,7 @@ public class CashAccount implements Searchable {
     /**
      * @param t Author(s): Kaitlin Brockway
      */
-    protected void addTransaction(Transaction t) {
+    public void addTransaction(Transaction t) {
         transactions.add(t);
     }
 

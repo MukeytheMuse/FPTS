@@ -1,4 +1,6 @@
-package model;
+package model.Simulators;
+
+import model.PortfolioElements.Holding;
 
 import java.util.ArrayList;
 

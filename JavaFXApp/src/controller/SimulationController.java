@@ -13,7 +13,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.*;
+import model.PortfolioElements.Holding;
+import model.Simulators.BearSimulator;
+import model.Simulators.BullSimulator;
+import model.Simulators.NoGrowthSimulator;
+import model.Simulators.Simulator;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,4 +1,6 @@
-package model;
+package model.Searchers;
+
+import model.PortfolioElements.HoldingUpdatable;
 
 import java.util.ArrayList;
 

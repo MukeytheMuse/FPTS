@@ -1,6 +1,8 @@
-package model;
+package model.Equities;
 
 import model.DataBase.ReadFile;
+import model.PortfolioElements.HoldingUpdatable;
+import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 

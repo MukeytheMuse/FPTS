@@ -13,9 +13,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Holding;
+import model.PortfolioElements.Holding;
 import model.Portfolio;
-import model.Transaction;
+import model.PortfolioElements.Transaction;
 import model.User;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package controller;
+package controller.HoldingCtrl;
 
 import gui.FPTS;
 import javafx.collections.FXCollections;
@@ -13,7 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.*;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.HoldingUpdatable;
+import model.Searchers.CashAccountSearcher;
+import model.Searchers.Searchable;
+import model.Searchers.SearchedHoldingSearcher;
+import model.Searchers.Searcher;
 
 import java.util.ArrayList;
 import java.util.Observable;

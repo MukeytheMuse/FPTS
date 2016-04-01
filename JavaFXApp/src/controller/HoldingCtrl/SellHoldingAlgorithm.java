@@ -1,6 +1,10 @@
-package controller;
+package controller.HoldingCtrl;
 
-import model.*;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Holding;
+import model.Portfolio;
+import model.PortfolioElements.Transaction;
+import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 

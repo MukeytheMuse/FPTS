@@ -1,6 +1,6 @@
 package model.DataBase;
 
-import model.Holding;
+import model.PortfolioElements.Holding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

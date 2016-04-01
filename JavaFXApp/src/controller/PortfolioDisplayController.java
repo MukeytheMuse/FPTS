@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.CashAccount;
-import model.Holding;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Holding;
 import model.Portfolio;
 
 import java.net.URL;

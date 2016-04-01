@@ -14,7 +14,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.Transaction;
+import model.PortfolioElements.Transaction;
 
 import java.time.ZoneId;
 import java.util.ArrayList;

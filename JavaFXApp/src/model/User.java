@@ -1,6 +1,9 @@
 package model;
 
 import gui.FPTS;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Holding;
+import model.PortfolioElements.Transaction;
 
 import java.io.*;
 import java.util.ArrayList;
