@@ -5,6 +5,7 @@ import model.Searchers.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.w3c.dom.Document;
 
 /**
  * Searchable and available to be purchased by the user.
@@ -51,6 +52,10 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
         childEquities = new ArrayList<HoldingUpdatable>();
     }
 
+    public void updatePrice(Document document) { 
+    
+    }
+    
     /**
      * getDisplayName returns name
      *

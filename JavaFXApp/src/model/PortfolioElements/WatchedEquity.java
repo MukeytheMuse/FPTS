@@ -24,17 +24,20 @@ public class WatchedEquity {
     boolean notMeetsTrigger;
     boolean hasNotMetTrigger;
     
-    
     public WatchedEquity(EquityComponent ec, double highTrigger, double lowTrigger) {
         assocEquity = ec;
         this.highTrigger = highTrigger;
         this.lowTrigger = lowTrigger;
        
-        previousPrice = ec.getValuePerShare();
+        previousPrice = assocEquity.getValuePerShare();
         
         System.out.println("PREVIOUS PRICE IS " + previousPrice);
+        updateTriggers();
         
-        if (highTrigger == -1) {
+    }
+    
+    public void updateTriggers() {
+        if (highTrigger < 0) {
             exceedsTrigger = false;
             hasExceededTrigger = false;
         } else if (previousPrice > highTrigger) {
@@ -45,7 +48,7 @@ public class WatchedEquity {
             hasExceededTrigger = false;
         }
         
-        if (lowTrigger == -1) {
+        if (lowTrigger < 0) {
             notMeetsTrigger = false;
             hasNotMetTrigger = false;
         } else if (previousPrice < lowTrigger) {
@@ -55,28 +58,50 @@ public class WatchedEquity {
             notMeetsTrigger = false;
             hasNotMetTrigger = false;
         }
-        
+    }
+    
+    public void handleNewPrice() {
+        previousPrice = assocEquity.getValuePerShare();
+        updateTriggers();
     }
     
     public String toString() {
         String status = "";
         if (exceedsTrigger) { 
-            status += " | Currently exceeds trigger";
+            status += " | Currently exceeds trigger" + " (" + highTrigger + ")";
         } else if (hasExceededTrigger) {
-            status += " | Had exceeded trigger";
+            status += " | Had exceeded trigger" + " (" + highTrigger + ")";
         }
         
         if (notMeetsTrigger) {
-            status += " | Currently below low trigger";
+            status += " | Currently below low trigger" + " (" + lowTrigger + ")";
         } else if (hasNotMetTrigger) {
-            status += " | Had been below low trigger";
+            status += " | Had been below low trigger" + " (" + lowTrigger + ")";
         }
         
-        return assocEquity.getDisplayName() + status;
+        return assocEquity.getDisplayName() + " " + previousPrice + " " + status;
     }
     
     public String getSymbol() {
         return assocEquity.getDisplayName();
+    }
+    
+    public EquityComponent getAssocEquity() {
+        return assocEquity;
+    }
+    
+    public double getPricePerShare() {
+        return previousPrice;
+    }
+    
+    public void setHighTrigger(double trigger) {
+        highTrigger = trigger;
+        updateTriggers();
+    }
+    
+    public void setLowTrigger(double trigger) {
+        lowTrigger = trigger;
+        updateTriggers();
     }
     
 }

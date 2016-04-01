@@ -2,6 +2,7 @@ package gui;
 
 import controller.*;
 import controller.CashAccountCtrl.CashAccountAlgorithm;
+import controller.CashAccountCtrl.CashAccountCreator;
 import controller.CashAccountCtrl.DepositCashAccountAlgorithm;
 import controller.CashAccountCtrl.RemoveCashAccountAlgorithm;
 import controller.CashAccountCtrl.TransferCashAccountAlgorithm;
@@ -31,6 +32,7 @@ import model.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class FPTS extends Application {
 
@@ -53,15 +55,23 @@ public class FPTS extends Application {
     public static ArrayList<String> allIndicies;//all index names
     public static ArrayList<String> allSectors;//all sector names
 
+    private WebServiceReader webServiceReader;
+    
     public FPTS() {
     }
 
     public void start(Stage primaryStage) throws IOException {
+        
         self = this;
         this.thestage = primaryStage;
         this.fillIndicies();
         this.fillSectors();
         User.fillUsers();//MUST be called after fillIndicies and fillSectors
+        
+        Timer time = new Timer();
+        webServiceReader = new WebServiceReader(this);
+        time.schedule(new WebService(webServiceReader), 0, 5000);
+        
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
 
@@ -75,7 +85,7 @@ public class FPTS extends Application {
         
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
-        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("WatchlistPage.fxml"));
+        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("Watchlist/WatchlistPage.fxml"));
         this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
         this.thestage.show();
@@ -124,6 +134,10 @@ public class FPTS extends Application {
 
         return scene;
     }
+    
+    public WebServiceReader getWebServiceReader() {
+        return webServiceReader;
+    }
 
     /**
      * Called by "CashAccountCreator" class
@@ -138,7 +152,10 @@ public class FPTS extends Application {
         return new Scene(split, 1200.0D, 600.0D);
     }
 
-
+    public boolean hasCurrentUser() {
+       return currentUser != null;
+    }
+    
     /**
      * @return
      */

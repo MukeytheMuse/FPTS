@@ -15,6 +15,7 @@ import model.Searchers.Searchable;
 import model.PortfolioElements.WatchedEquity;
 
 import java.util.ArrayList;
+import org.w3c.dom.Document;
 
 
 /**
@@ -147,6 +148,23 @@ public class Portfolio {
         watchedEquities.add(w);
     }
     
+    public void updateWatchlist() {
+        for (WatchedEquity w : watchedEquities) {
+            
+            //EquityComponent ec = w.getAssocEquity();
+            //System.out.println("EQUITY COMPONENT VALUE: " + ec.getValuePerShare());
+            //System.out.println("WATCHED COMPONENT OLD VALUE: " + w.getPricePerShare());
+            
+            
+            w.handleNewPrice();
+            
+            //System.out.println("WATCHED COMPONENT NEW VALUE : " + w.getPricePerShare());
+            
+            //System.out.println(w.getAssocEquity());
+            //System.out.println(getEquityComponent(w.getSymbol()));
+        }
+    }
+    
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.
@@ -231,6 +249,7 @@ public class Portfolio {
         return cashAccounts;
     }
 
+    
 
     public CashAccount getCashAccount(CashAccount c) {
         for (CashAccount aC : cashAccounts) {
@@ -248,6 +267,12 @@ public class Portfolio {
      */
     public ArrayList<Holding> getHoldings() {
         return holdings;
+    }
+    
+    public void updateEquityComponentsPrice(Document d) {
+        for (EquityComponent eq : equityComponents) {
+            eq.updatePrice(d);
+        }
     }
     
 //

@@ -1,5 +1,7 @@
 package model.Equities;
 
+import org.w3c.dom.Document;
+
 /**
  * Defines the interface that manages and accesses the collection
  * of objects of which there are five accessible attributes.
@@ -10,6 +12,7 @@ public interface EquityComponent {
     
     public String getDisplayName();
     public double getValuePerShare();
+    public void updatePrice(Document d);
     
     /**
      * adds child to the composite

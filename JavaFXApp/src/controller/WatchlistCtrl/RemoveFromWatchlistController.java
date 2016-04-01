@@ -101,7 +101,7 @@ public class RemoveFromWatchlistController extends MenuController implements Ini
     } 
     
     public void redirect() throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/WatchlistPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
