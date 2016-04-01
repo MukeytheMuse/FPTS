@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.AddToWatchlistController">
+            fx:controller="controller.WatchlistCtrl.AddToWatchlistController">
     <children>
         <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
                  prefWidth="800.0" AnchorPane.topAnchor="2.0">

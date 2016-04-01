@@ -1,5 +1,6 @@
-package controller;
+package controller.WatchlistCtrl;
 
+import controller.MenuController;
 import gui.FPTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.PortfolioElements.WatchedEquity;
 import model.Portfolio;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -75,6 +75,15 @@ public class WatchlistController extends MenuController {
     @FXML
     protected void handleGoToAddEquityToWatchlistButtonPressed(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/AddToWatchlistPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    protected void handleGoToRemoveEquityFromWatchlistButtonPressed(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/RemoveFromWatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);

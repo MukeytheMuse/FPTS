@@ -1,5 +1,6 @@
-package controller;
+package controller.WatchlistCtrl;
 
+import controller.MenuController;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,8 @@ import java.util.ResourceBundle;
 import javafx.scene.control.TextField;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.Transaction;
+
+import controller.MenuController;
 
 public class AddToWatchlistController extends MenuController {
     FPTS fpts = FPTS.getSelf();//TODO: get rid of the god class

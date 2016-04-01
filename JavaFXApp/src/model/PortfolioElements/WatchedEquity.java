@@ -75,4 +75,8 @@ public class WatchedEquity {
         return assocEquity.getDisplayName() + status;
     }
     
+    public String getSymbol() {
+        return assocEquity.getDisplayName();
+    }
+    
 }

@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public abstract class MenuController implements Initializable {
     @FXML
-    MenuBar myMenuBar;
+    public MenuBar myMenuBar;
 
     FPTS fpts = FPTS.getSelf();
 
