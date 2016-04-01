@@ -55,11 +55,13 @@ public class WatchlistController extends MenuController implements Observer {
        Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
        ArrayList<WatchedEquity> watchedEquities = p.getWatchedEquities();
        String list = "";
-        for (WatchedEquity w : watchedEquities) {
-            list += w + "\n";
-        }
+       if (watchedEquities != null) {
+           for (WatchedEquity w : watchedEquities) {
+               list += w + "\n";
+           }
+       }
         this.watchlistLabel.setText(list);
-       
+
    }
 
 

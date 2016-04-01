@@ -45,7 +45,9 @@ public class User {
      * @param uid Author(s): Kaitlin Brockway
      */
     public User(String uid) {
+
         this.loginID = uid;
+        myPortfolio = new Portfolio();
     }
 
     /**
