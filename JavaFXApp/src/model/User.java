@@ -29,8 +29,7 @@ public class User {
     public void setMyPortfolio(Portfolio p) {
         myPortfolio = p;
     }
-
-
+    
     //private final String dateFormatPattern = "yyyy/MM/dd";
 
 //    public User(String loginID, String password) {

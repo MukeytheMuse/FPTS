@@ -6,6 +6,7 @@
 package model.PortfolioElements;
 
 import model.Equities.EquityComponent;
+import gui.FPTS;
 
 /**
  *
@@ -24,6 +25,27 @@ public class WatchedEquity {
     boolean notMeetsTrigger;
     boolean hasNotMetTrigger;
     
+    public WatchedEquity(String symbol, double highTrigger, double lowTrigger, 
+            boolean exceedsTrigger, boolean hasExceededTrigger, boolean notMeetsTrigger,
+            boolean hasNotMetTrigger) {
+        assocEquity = getAssocEquity(symbol);
+        this.highTrigger = highTrigger;
+        this.lowTrigger = lowTrigger;
+        this.exceedsTrigger = exceedsTrigger;
+        this.hasExceededTrigger = hasExceededTrigger;
+        this.notMeetsTrigger = notMeetsTrigger;
+        this.hasNotMetTrigger = hasNotMetTrigger;
+       
+        previousPrice = assocEquity.getValuePerShare();
+        
+        System.out.println("PREVIOUS PRICE IS " + previousPrice);
+        updateTriggers();   
+    }
+    
+    private EquityComponent getAssocEquity(String symbol) {
+        return FPTS.getCurrentUser().getMyPortfolio().getEquityComponent(symbol);
+    }
+    
     public WatchedEquity(EquityComponent ec, double highTrigger, double lowTrigger) {
         assocEquity = ec;
         this.highTrigger = highTrigger;
@@ -32,8 +54,7 @@ public class WatchedEquity {
         previousPrice = assocEquity.getValuePerShare();
         
         System.out.println("PREVIOUS PRICE IS " + previousPrice);
-        updateTriggers();
-        
+        updateTriggers();   
     }
     
     public void updateTriggers() {
