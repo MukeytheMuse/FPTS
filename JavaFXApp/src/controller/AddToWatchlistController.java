@@ -15,9 +15,10 @@ import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 
 import javafx.stage.Stage;
-import model.WatchedEquity;
-import model.Holding;
+import model.PortfolioElements.WatchedEquity;
+import model.PortfolioElements.Holding;
 import model.Portfolio;
+import model.PortfolioElements.WatchedEquity;
 
 
 import java.io.IOException;
@@ -26,8 +27,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.scene.control.TextField;
-import model.EquityComponent;
-import model.Transaction;
+import model.Equities.EquityComponent;
+import model.PortfolioElements.Transaction;
 
 public class AddToWatchlistController extends MenuController {
     FPTS fpts = FPTS.getSelf();//TODO: get rid of the god class

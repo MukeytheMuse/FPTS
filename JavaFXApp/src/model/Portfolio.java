@@ -12,7 +12,7 @@ import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Transaction;
 import model.Searchers.Searchable;
-import model.WatchedEquity;
+import model.PortfolioElements.WatchedEquity;
 
 import java.util.ArrayList;
 

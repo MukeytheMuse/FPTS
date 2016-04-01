@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 import javafx.stage.Stage;
-import model.WatchedEquity;
+import model.PortfolioElements.WatchedEquity;
 import model.Portfolio;
 
 
