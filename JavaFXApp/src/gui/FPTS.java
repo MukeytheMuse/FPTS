@@ -1,12 +1,7 @@
 package gui;
 
 import controller.*;
-import controller.CashAccountCtrl.CashAccountAlgorithm;
-import controller.CashAccountCtrl.DepositCashAccountAlgorithm;
-import controller.CashAccountCtrl.RemoveCashAccountAlgorithm;
-import controller.CashAccountCtrl.TransferCashAccountAlgorithm;
-import controller.CashAccountCtrl.ChangeCashAccountAlgorithm;
-import controller.CashAccountCtrl.WithdrawCashAccountAlgorithm;
+import controller.CashAccountCtrl.*;
 
 import controller.HoldingCtrl.BuyHoldingAlgorithm;
 import controller.HoldingCtrl.HoldingAlgorithm;
@@ -75,8 +70,8 @@ public class FPTS extends Application {
         
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
-        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("WatchlistPage.fxml"));
-        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
+        //Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("WatchlistPage.fxml"));
+        //this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
         this.thestage.show();
     }

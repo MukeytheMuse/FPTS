@@ -2,6 +2,7 @@ package model.DataBase;
 
 import model.PortfolioElements.Holding;
 
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ReadHoldings {
             }
 
             //TODO: change date to Date type :DD
-            Holding curHolding = new Holding(line[0], line[1], Double.parseDouble(line[2]), Integer.parseInt(line[3]), "date", indices, sectors);
+            Holding curHolding = new Holding(line[0], line[1], Double.parseDouble(line[2]), Integer.parseInt(line[3]), date, indices, sectors);
 
 
             // iterate through fields of current Holding

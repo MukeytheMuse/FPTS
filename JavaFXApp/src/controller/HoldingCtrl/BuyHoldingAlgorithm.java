@@ -6,7 +6,9 @@ import model.Portfolio;
 import model.PortfolioElements.Transaction;
 import model.Searchers.Searchable;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author ericepstein
@@ -45,7 +47,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, Date.from(Instant.now()), equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
         double accountVal = cashAccountOfInterest.getCurrentValue();
@@ -83,7 +85,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                     e.add(numOfShares);
                     //If equity does not exist in the collection, create a new Holding & add to collection
                 } else {
-                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, "new Date()", equityOfInterest.getSectors(), equityOfInterest.getIndices());
+                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, Date.from(Instant.now()), equityOfInterest.getSectors(), equityOfInterest.getIndices());
                     p.add(e);
                 }
 

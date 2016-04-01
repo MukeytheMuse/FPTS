@@ -5,8 +5,12 @@ import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Transaction;
 
+import javax.swing.*;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -267,7 +271,8 @@ public class User {
         String holdingName;
         String stringPricePerShare;
         String stringNumOfShares;
-        String stringAcquisitionDate;
+        //String stringAcquisitionDate;
+        Date acquisitionDate;
         ArrayList<String> indicies = new ArrayList<>();
         String cur_indexORsector;
         ArrayList<String> sectors = new ArrayList<>();
@@ -291,8 +296,8 @@ public class User {
                 stringNumOfShares = stringNumOfShares.substring(1, (stringNumOfShares.length() - 1));//strips the first @ last "
                 //TODO: check to see if stringNumOfShares can be converted to an int. catch
                 int intNumOfShares = Integer.parseInt(stringNumOfShares);
-                stringAcquisitionDate = split[4];
-                stringAcquisitionDate = stringAcquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
+                acquisitionDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[4]);
+                //acquisitionDate = acquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
                 //TODO: change to date format here and for the corresponding class attribute and its constructor. catch
                 // WE DON'T NEED THE TOTAL VALUE BECAUSE IT IS CALCULATED IN THE CONSTRUCTOR.
                 int counter = 5;
@@ -311,12 +316,14 @@ public class User {
                     }
                     counter += 1;
                 }
-                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, stringAcquisitionDate, indicies, sectors);
+                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, acquisitionDate, indicies, sectors);
                 allHoldings.add(cur_holding);
             }
         } catch (FileNotFoundException e) {
             System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -412,7 +419,7 @@ public class User {
      * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
-     * @param pw1 Author(s): Kaitlin Brockway & Ian
+     * @param pw1 Author(s): Kimberly Sookoo, Kaitlin Brockway & Ian
      */
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
@@ -460,11 +467,6 @@ public class User {
      * @param user
      */
     private void addHoldings(User user, ArrayList<Holding> holdings) {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-//        try {
-//
-//        }
 
     }
 

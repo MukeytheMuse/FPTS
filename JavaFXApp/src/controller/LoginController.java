@@ -12,12 +12,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.DataBase.ReadHoldings;
 import model.PortfolioElements.Holding;
 import model.Portfolio;
 import model.PortfolioElements.Transaction;
 import model.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -140,7 +143,16 @@ public class LoginController {
                     } else if (!importTransactionsRequested && importHoldingsRequested) {
                         //TODO:Warning:(149, 32) Condition '!importTransactionsRequested' is always 'true'
                         //TODO:Warning:(149, 33) Value 'importTransactionsRequested' is always 'false'
-                        System.out.println("NOT IMPLEMENTED YET 3");
+                        //System.out.println("NOT IMPLEMENTED YET 3");
+                        Stage stage = new Stage();
+                        FileChooser fd = new FileChooser();
+                        fd.setTitle("Select file");
+                        fd.setInitialDirectory(new File(System.getProperty("user.home")));
+                        fd.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+                        File file = fd.showOpenDialog(stage);
+                        if (file != null) {
+                            System.out.println("Selected file: " + file.getName());
+                        }
                     } else {
                         Portfolio newEmptyPortfolio = new Portfolio();
                         User usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);

@@ -3,6 +3,7 @@ package model.PortfolioElements;
 import model.Searchers.Searchable;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 //import static model.DataBase.ReadFile.readHoldings;
 
@@ -44,7 +45,7 @@ public class Holding implements Searchable, HoldingUpdatable {
     /*
     * acquistion date
     */
-    private String acquisitionDate;
+    private Date acquisitionDate;
 
     /*
     * indices
@@ -69,7 +70,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @author Eric Epstein and Kaitlyn Brockway
      */
-    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, String acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors) {
+    public Holding(String tickerSymbol, String equityName, double valuePerShare, int numOfShares, Date acquisitionDate, ArrayList<String> indices, ArrayList<String> sectors) {
         this.tickerSymbol = tickerSymbol;
         this.holdingName = equityName;
         this.numOfShares = numOfShares;
@@ -151,7 +152,7 @@ public class Holding implements Searchable, HoldingUpdatable {
         return currentValue;
     }
 
-    public String getAcquisitionDate() {//TODO
+    public Date getAcquisitionDate() {//TODO
         return acquisitionDate;
     }
 
