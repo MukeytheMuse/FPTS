@@ -46,7 +46,6 @@ public abstract class MenuController implements Initializable {
     public void handleSaveMenuItemPressed(ActionEvent event) {
         WriteFile writeFile = new WriteFile();
         writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
-        //TODO: check Warning:(44, 42) Static member 'gui.FPTS.getCurrentUser()' accessed via instance reference
     }
 
     /**
@@ -59,9 +58,9 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
@@ -131,9 +130,9 @@ public abstract class MenuController implements Initializable {
 
         Stage stage;
         try {
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         } catch (ClassCastException var5) {
-            stage = (Stage) this.myMenuBar.getScene().getWindow();
+            stage = (Stage)this.myMenuBar.getScene().getWindow();
         }
 
         Scene scene = new Scene(parent);

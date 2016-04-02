@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.PortfolioElements;
 
 import javafx.scene.control.TextField;
 import model.Equities.EquityComponent;
@@ -28,8 +28,9 @@ public class Portfolio {
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
     private ArrayList<WatchedEquity> watchedEquities;
-    
+
     private double currentValue;
+
 
 //    private ArrayList<Searchable> portfolioElements;
 
@@ -56,7 +57,7 @@ public class Portfolio {
     public Portfolio() {
         cashAccounts = new ArrayList<>();
         holdings = new ArrayList<>();
-        watchedEquities = new ArrayList<>();
+        watchedEquities = new ArrayList<WatchedEquity>();
         currentValue = 0.00;
     }
 
@@ -65,46 +66,28 @@ public class Portfolio {
      * Called when the Users are being Filled to create all user objects in the system.
      *
      * @param readInholdings
-     * @param readInCashAccounts Author(s): Kaitlin Brockway
+     * @param readInCashAccounts
+     *
+     * Author(s): Kaitlin Brockway
      */
-    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts) {
+    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts){
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
         currentValue = 0;
+        watchedEquities = new ArrayList<WatchedEquity>();
         //Calculates the portfolio's Total Value.
-        for (CashAccount c : cashAccounts) {
-            currentValue += c.getCurrentValue();
+        if(!readInholdings.isEmpty()){
+            for(Holding h: holdings){
+                currentValue += h.getTotalValue();
+            }
         }
-        for (Holding h : holdings) {
-            currentValue += h.getCurrentValue();
+        if(!readInCashAccounts.isEmpty()){
+            for(CashAccount c: cashAccounts){
+                currentValue += c.getValue();
+            }
         }
     }
 
-    /**
-     * Second Portfolio Constructor for when setMemento makes
-     * a copy of the current Portfolio in order to set the Memento and
-     * save the current state of the Portfolio prior to a simulation.
-     *
-     * @param portfolioElements
-     * @param cashAccounts
-     * @param holdings
-     * @param transactions
-     * @param equityComponents
-     * @param currentValue
-     * @param matches
-     *
-     * author: Kaitlin
-     */
-//    public Portfolio(ArrayList<Searchable> portfolioElements, ArrayList<CashAccount> cashAccounts, ArrayList<Holding> holdings, ArrayList<Transaction> transactions, ArrayList<EquityComponent> equityComponents, double currentValue, ArrayList<Searchable> matches){
-//        this.portfolioElements = portfolioElements;
-//        this.cashAccounts = cashAccounts;
-//        this.holdings = holdings;
-//        this.transactions = transactions;
-//        this.equityComponents = equityComponents;
-//        this.currentValue = currentValue;
-//        this.matches = matches;
-//    }
-//
 
     /**
      * When creating a new portfolio, the system shall allow the user to
@@ -122,18 +105,18 @@ public class Portfolio {
         }
         return null;
     }
-    
+
     public ArrayList<EquityComponent> getEquityComponents() {
         return equityComponents;
     }
 
     public EquityComponent getEquityComponent(String tickerSymbol) {
-        
+
         System.out.println("IN GET EQUITY COMPONENT");
         System.out.println("SIZE IS " + equityComponents.size());
         for (EquityComponent ec : equityComponents) {
             if (ec.getDisplayName().toUpperCase().equals(tickerSymbol.toUpperCase())) {
-                
+
                 return ec;
             }
         }
@@ -143,28 +126,30 @@ public class Portfolio {
     public ArrayList<WatchedEquity> getWatchedEquities() {
         return watchedEquities;
     }
-    
+
+
+
     public void addWatchedEquity(WatchedEquity w) {
         watchedEquities.add(w);
     }
-    
+
     public void updateWatchlist() {
         for (WatchedEquity w : watchedEquities) {
-            
+
             //EquityComponent ec = w.getAssocEquity();
             //System.out.println("EQUITY COMPONENT VALUE: " + ec.getValuePerShare());
             //System.out.println("WATCHED COMPONENT OLD VALUE: " + w.getPricePerShare());
-            
-            
+
+
             w.handleNewPrice();
-            
+
             //System.out.println("WATCHED COMPONENT NEW VALUE : " + w.getPricePerShare());
-            
+
             //System.out.println(w.getAssocEquity());
             //System.out.println(getEquityComponent(w.getSymbol()));
         }
     }
-    
+
     /**
      * When creating a new portfolio, the system shall allow the user to
      * import holdings and transactions to initialize the new portfolio.
@@ -216,7 +201,7 @@ public class Portfolio {
      */
     public ArrayList<Transaction> getTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        for (CashAccount c : cashAccounts) {
+        for(CashAccount c: cashAccounts){
             transactions.addAll(c.getTransactions());
         }
         return transactions;
@@ -249,7 +234,6 @@ public class Portfolio {
         return cashAccounts;
     }
 
-    
 
     public CashAccount getCashAccount(CashAccount c) {
         for (CashAccount aC : cashAccounts) {
@@ -268,13 +252,13 @@ public class Portfolio {
     public ArrayList<Holding> getHoldings() {
         return holdings;
     }
-    
+
     public void updateEquityComponentsPrice(Document d) {
         for (EquityComponent eq : equityComponents) {
             eq.updatePrice(d);
         }
     }
-    
+
 //
 //    /**
 //     * Returns collection of EquityComponent
@@ -311,7 +295,7 @@ public class Portfolio {
      * @param e - CashAccount
      */
     public void add(CashAccount e) {
-//        transactions.add((Transaction) new Deposit(e, e.getCurrentValue()));
+//        transactions.add((Transaction) new Deposit(e, e.getValue()));
         cashAccounts.add(e);
     }
 

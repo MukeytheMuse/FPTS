@@ -36,7 +36,7 @@ public class WatchedEquity {
         this.notMeetsTrigger = notMeetsTrigger;
         this.hasNotMetTrigger = hasNotMetTrigger;
        
-        previousPrice = assocEquity.getValuePerShare();
+        previousPrice = assocEquity.getPricePerShare();
         
         System.out.println("PREVIOUS PRICE IS " + previousPrice);
         updateTriggers();   
@@ -51,7 +51,7 @@ public class WatchedEquity {
         this.highTrigger = highTrigger;
         this.lowTrigger = lowTrigger;
        
-        previousPrice = assocEquity.getValuePerShare();
+        previousPrice = assocEquity.getPricePerShare();
         
         System.out.println("PREVIOUS PRICE IS " + previousPrice);
         updateTriggers();   
@@ -82,7 +82,7 @@ public class WatchedEquity {
     }
     
     public void handleNewPrice() {
-        previousPrice = assocEquity.getValuePerShare();
+        previousPrice = assocEquity.getPricePerShare();
         updateTriggers();
     }
     

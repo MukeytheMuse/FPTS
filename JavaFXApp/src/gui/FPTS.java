@@ -1,5 +1,13 @@
 package gui;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import controller.*;
 import controller.CashAccountCtrl.CashAccountAlgorithm;
 import controller.CashAccountCtrl.CashAccountCreator;
@@ -24,7 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Portfolio;
+import model.PortfolioElements.Portfolio;
 import model.Simulators.Simulator;
 import model.User;
 import model.*;
@@ -52,6 +60,7 @@ public class FPTS extends Application {
     private static User currentUser;
     private static FPTS self;
 
+
     public static ArrayList<String> allIndicies;//all index names
     public static ArrayList<String> allSectors;//all sector names
 
@@ -61,17 +70,17 @@ public class FPTS extends Application {
     }
 
     public void start(Stage primaryStage) throws IOException {
-        
+
         self = this;
         this.thestage = primaryStage;
         this.fillIndicies();
         this.fillSectors();
         User.fillUsers();//MUST be called after fillIndicies and fillSectors
-        
+
         Timer time = new Timer();
         webServiceReader = new WebServiceReader(this);
         time.schedule(new WebService(webServiceReader), 0, 5000);
-        
+
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
 
@@ -82,14 +91,14 @@ public class FPTS extends Application {
         }
 
         //this.thestage.setScene(loginScene);
-        
+
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
-        
+
         Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
         this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
-        
+
         this.thestage.show();
     }
 
@@ -120,6 +129,7 @@ public class FPTS extends Application {
     public Scene createLogInScene() throws IOException {
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, 900.0D, 600.0D);
+        //        Scene scene = new Scene(root, 1200.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
     }
@@ -136,10 +146,11 @@ public class FPTS extends Application {
 
         return scene;
     }
-    
+
     public WebServiceReader getWebServiceReader() {
         return webServiceReader;
     }
+
 
     /**
      * Called by "CashAccountCreator" class
@@ -168,6 +179,14 @@ public class FPTS extends Application {
         //TODO: check Warning:(139, 36) Redundant array creation for calling varargs method
         return new Scene(split, 1200.0D, 600.0D);
     }
+
+//    public Scene createRegisterPage() throws IOException {
+//        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RegisterPage.fxml"));
+//        Scene scene = new Scene(root, 1200.0D, 600.0D);
+//        this.thestage.setScene(scene);
+//        this.thestage.setTitle("Financial Portfolio Tracking System");
+//        return scene;
+//    }
 
     public static void main(String[] args) {
         if (args.length >= 2 && args[0].equals("-delete")) {

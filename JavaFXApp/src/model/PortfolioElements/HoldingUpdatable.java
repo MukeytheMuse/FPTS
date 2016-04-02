@@ -14,9 +14,9 @@ public interface HoldingUpdatable {
 
     public String getTickerSymbol();
 
-    public String getHoldingName();//may be an equity or a holding
+    public String getName();//may be an equity or a holding
 
-    public double getValuePerShare();
+    public double getPricePerShare();
 
     public ArrayList<String> getIndices();
 

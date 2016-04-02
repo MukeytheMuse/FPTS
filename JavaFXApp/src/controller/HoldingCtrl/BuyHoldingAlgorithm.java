@@ -2,7 +2,7 @@ package controller.HoldingCtrl;
 
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
-import model.Portfolio;
+import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.Transaction;
 import model.Searchers.Searchable;
 
@@ -47,16 +47,16 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, Date.from(Instant.now()), equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares,new Date() , equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
-        double accountVal = cashAccountOfInterest.getCurrentValue();
+        double accountVal = cashAccountOfInterest.getValue();
 
         if (accountVal >= (numOfShares * pricePerShare)) {
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
             //TODO: check if its ok that I replaced the line above with the line below????
             CashAccount aC = cashAccountOfInterest;
-            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Withdraw", aC.getAccountName());
+            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Withdraw", aC);
 
 
             t.execute(aC, numOfShares * pricePerShare, "Withdraw");//operates on portfolio
@@ -85,7 +85,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                     e.add(numOfShares);
                     //If equity does not exist in the collection, create a new Holding & add to collection
                 } else {
-                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getHoldingName(), equityOfInterest.getValuePerShare(), numOfShares, Date.from(Instant.now()), equityOfInterest.getSectors(), equityOfInterest.getIndices());
+                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares, new Date(), equityOfInterest.getSectors(), equityOfInterest.getIndices());
                     p.add(e);
                 }
 

@@ -2,7 +2,6 @@ package model.DataBase;
 
 import gui.FPTS;
 import model.Equities.EquityComponent;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -31,8 +30,7 @@ public class ReadFile {
 
     // reads in CSV file
     protected static ArrayList<String[]> readInFile() {
-        
-        String csv = "../DataBase/equities.csv";
+        String csv = "JavaFXApp/src/model/DataBase/equities.csv";
         splitFile = new ArrayList<String[]>();
         BufferedReader reader = null;
         String line;

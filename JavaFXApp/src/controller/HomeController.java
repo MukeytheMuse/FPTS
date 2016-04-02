@@ -1,8 +1,10 @@
 package controller;
-
 import controller.HoldingCtrl.BuyHoldingAlgorithm;
 import controller.HoldingCtrl.HoldingAlgorithm;
 import gui.FPTS;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,11 +19,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
-import model.Portfolio;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import model.PortfolioElements.Portfolio;
 
 public class HomeController extends MenuController {
     FPTS fpts = FPTS.getSelf();//TODO: get rid of the god class
@@ -33,6 +31,7 @@ public class HomeController extends MenuController {
 
 
     /**
+     *
      * @param location
      * @param resources
      */
@@ -40,12 +39,12 @@ public class HomeController extends MenuController {
         Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
 
         double equityTotalValue = 0;
-        for (Holding h : p.getHoldings()) {
-            equityTotalValue += h.getCurrentValue();
+        for(Holding h: p.getHoldings()){
+            equityTotalValue += h.getTotalValue();
         }
         double cashAccountValue = 0;
-        for (CashAccount c : p.getCashAccounts()) {
-            cashAccountValue += c.getCurrentValue();
+        for(CashAccount c: p.getCashAccounts()){
+            cashAccountValue += c.getValue();
         }
 
         ObservableList pieChartData = FXCollections.observableArrayList(new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue));
@@ -82,6 +81,7 @@ public class HomeController extends MenuController {
     }
 
     /**
+     *
      * @param event
      * @throws IOException
      */

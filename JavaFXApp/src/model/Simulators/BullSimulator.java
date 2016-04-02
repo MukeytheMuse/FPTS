@@ -24,6 +24,7 @@ public class BullSimulator implements Simulator {
     private int stepNumber;
 
     /**
+     *
      * @param numSteps
      * @param interval
      * @param hasSteps
@@ -42,6 +43,7 @@ public class BullSimulator implements Simulator {
     //TODO: CHECK IF IT HAS STEPS.
 
     /**
+     *
      * @return
      */
     @Override
@@ -56,7 +58,7 @@ public class BullSimulator implements Simulator {
         }
         for (int i = 0; i < numberOfSteps; i++) {
             for (Holding h : holdings) {
-                valueCount += currentPercentIncrease * h.getCurrentValue();
+                valueCount += currentPercentIncrease * h.getTotalValue();
             }
         }
         stepNumber += numberOfSteps;

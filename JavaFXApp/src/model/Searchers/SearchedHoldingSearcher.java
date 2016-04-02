@@ -29,7 +29,7 @@ public class SearchedHoldingSearcher extends Searcher {
         anObject.add(tickerSymbolItem);
 
         ArrayList<String> holdingNameItem = new ArrayList<String>();
-        holdingNameItem.add(eq.getHoldingName());
+        holdingNameItem.add(eq.getName());
         anObject.add(holdingNameItem);
 
         ArrayList<String> indices = eq.getIndices();
@@ -39,6 +39,4 @@ public class SearchedHoldingSearcher extends Searcher {
 
         return anObject;
     }
-
-
 }

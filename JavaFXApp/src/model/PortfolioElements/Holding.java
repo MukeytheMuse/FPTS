@@ -58,6 +58,7 @@ public class Holding implements Searchable, HoldingUpdatable {
     private ArrayList<String> sectors;
 
 
+
     //TODO: Fix this. Accidentally messed it up.
 //    /*
 //    *
@@ -89,7 +90,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return double
      */
     @Override
-    public double getValuePerShare() {
+    public double getPricePerShare() {
         return valuePerShare;
     }
 
@@ -130,7 +131,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return String
      */
     @Override
-    public String getHoldingName() {
+    public String getName() {
         return holdingName;
     }
 
@@ -148,7 +149,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return double
      */
-    public double getCurrentValue() {
+    public double getTotalValue() {
         return currentValue;
     }
 

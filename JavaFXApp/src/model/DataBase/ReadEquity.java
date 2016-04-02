@@ -1,9 +1,7 @@
 package model.DataBase;
-
 import model.Equities.EquityComponent;
 import model.Equities.EquityComposite;
 import model.Equities.LoadedEquity;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,10 +13,9 @@ public class ReadEquity {
     protected static ArrayList<String[]> readInFile() {
         return ReadFile.readInFile();
     }
-
     private static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
     private static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
-    //    public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
+//    public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
     private static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     /**
@@ -45,7 +42,7 @@ public class ReadEquity {
                     // add to sector composite
                     try {
                         for (EquityComposite ec : CompositeEquities) {
-                            if (ec.getEquityType().equals("Sector") & ec.getHoldingName().equals(line[i])) {
+                            if (ec.getEquityType().equals("Sector") & ec.getName().equals(line[i])) {
                                 ec.add((EquityComponent) curEquity);
                             }
                         }
@@ -59,7 +56,7 @@ public class ReadEquity {
                     //add to index composite
                     try {
                         for (EquityComposite ec : CompositeEquities) {
-                            if (ec.getEquityType().equals("Index") & ec.getHoldingName().equals(line[i])) {
+                            if (ec.getEquityType().equals("Index") & ec.getName().equals(line[i])) {
                                 ec.add((EquityComponent) curEquity);
                             }
                         }

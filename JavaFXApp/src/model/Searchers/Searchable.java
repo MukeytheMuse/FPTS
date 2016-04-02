@@ -13,6 +13,6 @@ public interface Searchable {
      *
      * @return String
      */
-    String getDisplayName();
+    public String getDisplayName();
 
 }

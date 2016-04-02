@@ -24,6 +24,17 @@ public class Transaction {
     private CashAccount cashAccount;
     //TODO: Warning:(23, 25) [UnusedDeclaration] Private field 'cashAccount' is never assigned
 
+    public Transaction(double amount, String dateMade, String type, CashAccount cashAccount) {
+        this.amount = amount;
+        this.dateMade = dateMade;
+        this.type = type;
+        this.cashAccountName = cashAccount.getAccountName();
+        this.cashAccount = cashAccount;
+    }
+
+
+    //only used for reading in the user for a temporary transaction until the cash account object can be created
+    //to be saved as a transaction attribute
     public Transaction(double amount, String dateMade, String type, String cashAccountName) {
         this.amount = amount;
         this.dateMade = dateMade;
@@ -31,19 +42,23 @@ public class Transaction {
         this.cashAccountName = cashAccountName;
     }
 
+    public void setCashAccount(CashAccount c){
+        cashAccount = c;
+    }
+
     /**
      * Runs the operation type on the object.
      */
-    public void execute(CashAccount cashAccount, double amount, String type) {
-        if (type.equals("Deposit")) {
+    public void execute(CashAccount cashAccount, double amount, String type){
+        if(type.equals("Deposit")){
             cashAccount.deposit(amount);
-        } else if (type.equals("Withdraw")) {
+        } else if (type.equals("Withdraw")){
             cashAccount.withdraw(amount);
         }
     }
 
 
-    private String getDateMade() {
+    private String getDateMade(){
         return this.dateMade;
     }
 

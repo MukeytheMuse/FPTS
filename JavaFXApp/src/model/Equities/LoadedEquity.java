@@ -126,16 +126,17 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
      * @return pricePerShare - double
      */
     @Override
-    public double getValuePerShare() {
+    public double getPricePerShare() {
         return pricePerShare;
     }
+
 
 
     /**
      * @return equityName - String
      */
     @Override
-    public String getHoldingName() {
+    public String getName() {
         return equityName;
     }
 
@@ -164,8 +165,10 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
     }
 
 
-    //TODO: find out if we even need add & remove in here (other than the fact that this class implements EquityComponent)
 
+
+
+    //TODO: find out if we even need add & remove in here (other than the fact that this class implements EquityComponent)
     /**
      * @param e - EquityComponent
      *          <p>

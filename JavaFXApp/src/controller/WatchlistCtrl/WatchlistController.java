@@ -11,8 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 import javafx.stage.Stage;
+import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.WatchedEquity;
-import model.Portfolio;
 
 import java.io.IOException;
 import java.net.URL;

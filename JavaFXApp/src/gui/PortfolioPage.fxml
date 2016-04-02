@@ -42,46 +42,46 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <VBox layoutY="28.0" prefHeight="580.0" prefWidth="790.0">
-         <children>
+        <VBox layoutY="28.0" prefHeight="580.0" prefWidth="790.0">
+            <children>
                 <Label alignment="CENTER" prefHeight="27.0" prefWidth="329.0" text="Your Portfolio:">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="800.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="790.0">
-                     <children>
-                        <TableView fx:id="tableView" prefHeight="280.0" prefWidth="790.0">
-                          <columns>
-                            <TableColumn fx:id="tickerCol" editable="false" prefWidth="100.0" text="Ticker" />
-                            <TableColumn fx:id="nameCol" editable="false" prefWidth="270.0" text="Company Name" />
-                              <TableColumn fx:id="sharesCol" editable="false" prefWidth="100.0" text="Shares" />
-                              <TableColumn fx:id="priceCol" editable="false" prefWidth="175.0" text="Price per Share ($)" />
-                              <TableColumn fx:id="valueCol" editable="false" prefWidth="150.0" text="Current Value ($)" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="800.0">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="788.0">
-                     <children>
-                        <TableView fx:id="CAtableView" prefHeight="268.0" prefWidth="790.0">
-                           <columns>
-                              <TableColumn fx:id="CAnameCol" editable="false" prefWidth="275.0" text="Cash Account Name" />
-                              <TableColumn fx:id="amountCol" editable="false" prefWidth="136.0" text="Amount ($)" />
-                              <TableColumn fx:id="dateCol" prefWidth="163.0" text="Date Added" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </ScrollPane>
-         </children>
-      </VBox>
+                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="800.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="790.0">
+                            <children>
+                                <TableView fx:id="tableView" prefHeight="280.0" prefWidth="790.0">
+                                    <columns>
+                                        <TableColumn fx:id="tickerCol" editable="false" prefWidth="100.0" text="Ticker" />
+                                        <TableColumn fx:id="nameCol" editable="false" prefWidth="270.0" text="Company Name" />
+                                        <TableColumn fx:id="sharesCol" editable="false" prefWidth="100.0" text="Shares" />
+                                        <TableColumn fx:id="priceCol" editable="false" prefWidth="175.0" text="Price per Share ($)" />
+                                        <TableColumn fx:id="valueCol" editable="false" prefWidth="150.0" text="Current Value ($)" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="800.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="788.0">
+                            <children>
+                                <TableView fx:id="CAtableView" prefHeight="268.0" prefWidth="790.0">
+                                    <columns>
+                                        <TableColumn fx:id="CAnameCol" editable="false" prefWidth="275.0" text="Cash Account Name" />
+                                        <TableColumn fx:id="amountCol" editable="false" prefWidth="136.0" text="Amount ($)" />
+                                        <TableColumn fx:id="dateCol" prefWidth="163.0" text="Date Added" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
     </children>
 </AnchorPane>

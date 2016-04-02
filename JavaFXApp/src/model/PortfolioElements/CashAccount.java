@@ -1,8 +1,8 @@
 package model.PortfolioElements;
 
 import model.Searchers.Searchable;
-
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Holds a user’s cash account details, including the account name,
@@ -14,7 +14,7 @@ public class CashAccount implements Searchable {
     private String accountName;
     private double currentValue;
     private String dateAdded;//TODO: change type to date here and for readInCashFile(String userID) method in the User class.
-    private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<Transaction> transactions;// = new ArrayList<>();
 
 
     //public static ArrayList<CashAccount> cashList = getCashList();
@@ -27,7 +27,7 @@ public class CashAccount implements Searchable {
 //    }
 
     //TODO: make private somehow
-    public ArrayList<Transaction> getTransactions() {
+    public ArrayList<Transaction> getTransactions(){
         return transactions;
     }
 
@@ -36,9 +36,9 @@ public class CashAccount implements Searchable {
      * A user defines a cash account by specifying an account name,
      * initial amount, and the date it was added.
      *
-     * @param AccountName          - String
-     * @param initialAmount        - double
-     * @param dateAdded            - Date
+     * @param AccountName   - String
+     * @param initialAmount - double
+     * @param dateAdded     - Date
      * @param existingTransactions -
      */
     public CashAccount(String AccountName, double initialAmount, String dateAdded, ArrayList<Transaction> existingTransactions) {
@@ -48,6 +48,14 @@ public class CashAccount implements Searchable {
         this.transactions = existingTransactions;
     }
 
+    /**
+     * Sets a users transactions when loading up all users.
+     *
+     * @param setTransactions
+     */
+    public void setTransactions(ArrayList<Transaction> setTransactions){
+        transactions = setTransactions;
+    }
 
     /**
      * Returns the account name.
@@ -90,7 +98,7 @@ public class CashAccount implements Searchable {
      *
      * @return double
      */
-    public double getCurrentValue() {
+    public double getValue() {
         return currentValue;
     }
 
@@ -120,9 +128,11 @@ public class CashAccount implements Searchable {
 
 
     /**
-     * @param t Author(s): Kaitlin Brockway
+     * Author(s): Kaitlin Brockway
+     * @param
+     *
      */
-    public void addTransaction(Transaction t) {
+    protected void addTransaction(Transaction t){
         transactions.add(t);
     }
 
@@ -157,7 +167,7 @@ public class CashAccount implements Searchable {
     */
     public void overwrite(CashAccount c) {
         this.accountName = c.getAccountName();
-        this.currentValue = c.getCurrentValue();
+        this.currentValue = c.getValue();
         this.dateAdded = c.getDateAdded();
     }
 

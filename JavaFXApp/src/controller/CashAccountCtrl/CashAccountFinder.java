@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.PortfolioElements.CashAccount;
-import model.Portfolio;
+import model.PortfolioElements.Portfolio;
 import model.Searchers.CashAccountSearcher;
 import model.Searchers.Searchable;
 import model.Searchers.Searcher;

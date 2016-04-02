@@ -2,7 +2,7 @@ package controller.HoldingCtrl;
 
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
-import model.Portfolio;
+import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.Transaction;
 import model.Searchers.Searchable;
 
@@ -68,7 +68,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             * Creates Transaction that adds value to cashAccountOfInterest
             */
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
-            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Deposit", aC.getAccountName()); //Deposit(aC, numOfShares * pricePerShare);
+            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Deposit", aC); //Deposit(aC, numOfShares * pricePerShare);
             p.add(t, aC);//add to transactions list in the Portfolio class.
             e.remove(numOfShares);
             /*
@@ -101,11 +101,11 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
         */
         } else if (e.getNumOfShares() == numOfShares) {
             p.remove(e);
-            double pricePerShare = e.getValuePerShare();
+            double pricePerShare = e.getPricePerShare();
             double totalAmountTransaction = (pricePerShare * numOfShares);
-            Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0).getAccountName());
+            Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0));
             p.add(newTransaction, p.getCashAccounts().get(0));
-            newTransaction.execute(p.getCashAccounts().get(0), totalAmountTransaction, "Deposit");//operates on portfolio
+            newTransaction.execute(p.getCashAccounts().get(0),totalAmountTransaction, "Deposit");//operates on portfolio
             theStage.setScene(theFPTS.getConfirmationScene());
         /*
         * Warns the user of an invalid input.

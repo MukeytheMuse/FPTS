@@ -16,9 +16,7 @@ import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 
 import javafx.stage.Stage;
-import model.PortfolioElements.WatchedEquity;
-import model.PortfolioElements.Holding;
-import model.Portfolio;
+import model.PortfolioElements.*;
 import model.PortfolioElements.WatchedEquity;
 
 
@@ -29,7 +27,6 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.scene.control.TextField;
 import model.Equities.EquityComponent;
-import model.PortfolioElements.Transaction;
 
 import controller.MenuController;
 
@@ -78,6 +75,7 @@ public class AddToWatchlistController extends MenuController {
         boolean validInput = true;
         if (this.tickerSymbolField == null || this.tickerSymbolField.getText().isEmpty()) {
             tickerSymbolField.setText("INVALID");
+            //TODO: check Warning:(77, 13) Method invocation 'tickerSymbolField.setText("INVALID")' may produce 'java.lang.NullPointerException'
             validInput = false;
         } else {
             String tickerSymbol = this.tickerSymbolField.getText(); 

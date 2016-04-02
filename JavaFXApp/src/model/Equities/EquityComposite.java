@@ -16,9 +16,6 @@ import org.w3c.dom.Document;
  */
 public class EquityComposite implements Searchable, EquityComponent, HoldingUpdatable {
 
-
-    private String tickerSymbol;
-
     //pricePerShare is calculated by the method each time it is called.
     //sectors always -> empty array list
     //indicies always -> empty array list
@@ -52,10 +49,10 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
         childEquities = new ArrayList<HoldingUpdatable>();
     }
 
-    public void updatePrice(Document document) { 
-    
+    public void updatePrice(Document document) {
+
     }
-    
+
     /**
      * getDisplayName returns name
      *
@@ -75,11 +72,12 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     }
 
 
+
     /**
      * @return name - String
      */
     @Override
-    public String getHoldingName() {
+    public String getName() {
         return equityName;
     }
 
@@ -97,11 +95,11 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
      * @return valuePerShare - double
      */
     @Override
-    public double getValuePerShare() {
+    public double getPricePerShare() {
         double count = 0;
         double curVal;
         for (HoldingUpdatable se : childEquities) {
-            curVal = se.getValuePerShare();
+            curVal = se.getPricePerShare();
             count += curVal;
         }
         return count / childEquities.size();

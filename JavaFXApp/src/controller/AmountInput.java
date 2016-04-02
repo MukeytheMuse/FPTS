@@ -128,7 +128,11 @@ public class AmountInput extends Observable {
 
         Double inputAmountDouble = Double.parseDouble(inputAmountString);
 
-        return inputAmountDouble >= 0;
+        if (inputAmountDouble < 0) {
+            return false;
+        }
+
+        return true;
 
     }
 

@@ -92,13 +92,13 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         * If the current value exceeds or equals the amount withdrawn, create
         * respective Transaction objects
         */
-        if (c.getCurrentValue() >= amount) {
+        if (c.getValue() >= amount) {
             //TODO: change "date" to an actual date.
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Transaction t = new Transaction(amount, "date", "Withdrawal", c.getAccountName());
+            Transaction t = new Transaction(amount, "date", "Withdrawal", c);
             theFPTS.getPortfolio().add(t, c);
             //aC = theFPTS.getPortfolio().getCashAccount(c2);
-            t = new Transaction(amount, "date", "Deposit", c2.getAccountName());
+            t = new Transaction(amount, "date", "Deposit", c2);
             theFPTS.getPortfolio().add(t, c2);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {

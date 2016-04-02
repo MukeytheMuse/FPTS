@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 public interface EquityComponent {
     
     public String getDisplayName();
-    public double getValuePerShare();
+    public double getPricePerShare();
     public void updatePrice(Document d);
     
     /**

@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
-import model.Portfolio;
+import model.PortfolioElements.Portfolio;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,7 +19,8 @@ public class PortfolioDisplayController extends MenuController {
 
     @FXML
     private TableView<Holding> tableView;
-    @FXML TableView<CashAccount> CAtableView;
+    @FXML
+    TableView<CashAccount> CAtableView;
 
     @FXML
     private TableColumn<Holding, String> tickerCol;
@@ -39,7 +40,6 @@ public class PortfolioDisplayController extends MenuController {
     private TableColumn<CashAccount, String> dateCol;
 
     /**
-     *
      * @param location
      * @param resources
      */
@@ -64,6 +64,7 @@ public class PortfolioDisplayController extends MenuController {
     }
 
 
-
 }
+
+
 

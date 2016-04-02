@@ -1,5 +1,5 @@
 package controller.CashAccountCtrl;
-
+import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
 
 /**
@@ -14,10 +14,10 @@ public class DepositCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
     @Override
     public void performTransaction() {
         double amount = amounts.get(0);
-        //CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-        Transaction t = new Transaction(amount, "date", "Deposit", c.getAccountName());
-        theFPTS.getPortfolio().add(t, c);
-        t.execute(c, amount, "Deposit");
+        CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
+        Transaction t = new Transaction(amount, "date", "Deposit", c);
+        theFPTS.getPortfolio().add(t, aC);
+        t.execute(c, amount,"Deposit");
         /*
         * Transitions to confirmation scene.
         */

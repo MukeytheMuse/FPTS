@@ -3,6 +3,7 @@ package model;
 import gui.FPTS;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.Transaction;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
     private String loginID;
     private String password;
     private Portfolio myPortfolio;
@@ -22,14 +23,15 @@ public class User {
     //TODO: Warning:(17, 52) Unchecked assignment: 'java.util.HashMap' to 'java.util.Map<java.lang.String,model.User>'
 
 
-    public Map<String, User> getAllUsersMap() {
+    public Map<String, User> getAllUsersMap(){
         return allUsersMap;
     }
     
     public void setMyPortfolio(Portfolio p) {
         myPortfolio = p;
     }
-    
+
+
     //private final String dateFormatPattern = "yyyy/MM/dd";
 
 //    public User(String loginID, String password) {
@@ -41,10 +43,11 @@ public class User {
     /**
      * Acts as a temporary user for accessing static methods.
      *
-     * @param uid Author(s): Kaitlin Brockway
+     * @param uid
+     *
+     * Author(s): Kaitlin Brockway
      */
     public User(String uid) {
-
         this.loginID = uid;
         myPortfolio = new Portfolio();
     }
@@ -54,7 +57,9 @@ public class User {
      *
      * @param loginID
      * @param password
-     * @param portfolio Author(s): Kaitlin Brockway
+     * @param portfolio
+     *
+     * Author(s): Kaitlin Brockway
      */
     public User(String loginID, String password, Portfolio portfolio) {
         this.loginID = loginID;
@@ -80,8 +85,8 @@ public class User {
     private static String hash(String password) {
         String encryptedPW = "";
 
-        for (int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char) (password.charAt(i) + 1);
+        for(int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char)(password.charAt(i) + 1);
             encryptedPW = encryptedPW + encryptedChar;
         }
 
@@ -91,8 +96,8 @@ public class User {
     private static String unHash(String password) {
         String textPass = "";
 
-        for (int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char) (password.charAt(i) - 1);
+        for(int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char)(password.charAt(i) - 1);
             textPass = textPass + encryptedChar;
         }
 
@@ -100,10 +105,10 @@ public class User {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof User)) {
+        if(!(o instanceof User)) {
             return false;
         } else {
-            User cur_user = (User) o;
+            User cur_user = (User)o;
             return cur_user.getLoginID().equals(this.loginID) && cur_user.getPassword().equals(this.password);
         }
     }
@@ -140,7 +145,7 @@ public class User {
      * @return: true if the user and password combination exists in the system.
      */
     public static boolean validateUser(String username, String password) {
-        if (allUsersMap.containsKey(username)) {
+        if(allUsersMap.containsKey(username)) {
             String hashedPasswordMappedTo = allUsersMap.get(username).getPassword();
             String hashedPasswordEntered = hash(password);
             return hashedPasswordEntered.equals(hashedPasswordMappedTo);
@@ -205,10 +210,12 @@ public class User {
      * with their corresponding transaction history.
      *
      * @param userID: Current User being created and populated with their information
-     *                from the database when the system first starts up.
-     * @return Author(s): Ian London and Kaitlin Brockway
+     *              from the database when the system first starts up.
+     * @return
+     *
+     * Author(s): Ian London and Kaitlin Brockway
      */
-    private static ArrayList<CashAccount> readInCashFile(String userID) {
+    private static ArrayList<CashAccount> readInCashFile(String userID){
         String cash_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv";
         String line;
         BufferedReader reader = null;
@@ -221,6 +228,7 @@ public class User {
         try {
             reader = new BufferedReader(new FileReader(cash_csv));
             cashAccountNameTransactionsMap = readInTransFile(userID);//get the transactions from Trans.csv
+            //GIVE TRANSACTIONS AN ASSOCIATED CASH ACCOUNT
             //Each line in the file is formatted: AccountName, currentValue, dateAdded
             //loops through while there are still lines with information left in the file
             while ((line = reader.readLine()) != null) {
@@ -236,8 +244,19 @@ public class User {
                 //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
                 //LocalDate parsedDate = LocalDate.parse(cashAccountDateAdded, formatter);
 
-                CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue, cashAccountDateAdded, cashAccountNameTransactionsMap.get(cashAccountName));
-                usersCashAccounts.add(cashAccountToAdd);
+                CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , cashAccountDateAdded, cashAccountNameTransactionsMap.get(cashAccountName));
+                if( cashAccountNameTransactionsMap.containsKey(cashAccountToAdd.getAccountName())){
+                    ArrayList<Transaction> newTransactions = new ArrayList<>();
+                    ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAdd.getAccountName());
+                    for(Transaction t: curTransactions){
+                        t.setCashAccount(cashAccountToAdd);
+                        newTransactions.add(t);
+                    }
+                    cashAccountToAdd.setTransactions(newTransactions);
+                    usersCashAccounts.add(cashAccountToAdd);
+                } else {
+                    usersCashAccounts.add(cashAccountToAdd);
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv not found! Please try again.");
@@ -262,7 +281,9 @@ public class User {
      * where there may be multiple indicies and sectors.
      *
      * @param userID
-     * @return Author(s): Kaitlin Brockway
+     * @return
+     *
+     * Author(s): Kaitlin Brockway
      */
     private static ArrayList<Holding> readInHoldingsFile(String userID) {
         String holdings_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Holdings.csv";
@@ -272,7 +293,7 @@ public class User {
         String holdingName;
         String stringPricePerShare;
         String stringNumOfShares;
-        //String stringAcquisitionDate;
+        String stringAcquisitionDate;
         Date acquisitionDate;
         ArrayList<String> indicies = new ArrayList<>();
         String cur_indexORsector;
@@ -281,7 +302,7 @@ public class User {
 
         try {
             reader = new BufferedReader(new FileReader(holdings_csv));
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null ){
                 String[] split = line.split(",");
                 int splitLength = split.length;
                 System.out.println(splitLength);
@@ -297,8 +318,8 @@ public class User {
                 stringNumOfShares = stringNumOfShares.substring(1, (stringNumOfShares.length() - 1));//strips the first @ last "
                 //TODO: check to see if stringNumOfShares can be converted to an int. catch
                 int intNumOfShares = Integer.parseInt(stringNumOfShares);
-                acquisitionDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[4]);
-                //acquisitionDate = acquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
+                stringAcquisitionDate = split[4];
+                stringAcquisitionDate = stringAcquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
                 //TODO: change to date format here and for the corresponding class attribute and its constructor. catch
                 // WE DON'T NEED THE TOTAL VALUE BECAUSE IT IS CALCULATED IN THE CONSTRUCTOR.
                 int counter = 5;
@@ -317,14 +338,13 @@ public class User {
                     }
                     counter += 1;
                 }
-                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, acquisitionDate, indicies, sectors);
+                //TODO: Fix date
+                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, new Date(), indicies, sectors);
                 allHoldings.add(cur_holding);
             }
         } catch (FileNotFoundException e) {
             System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -420,7 +440,10 @@ public class User {
      * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
-     * @param pw1 Author(s): Kimberly Sookoo, Kaitlin Brockway & Ian
+     * @param pw1
+     *
+     * Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
+     *
      */
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
@@ -434,7 +457,7 @@ public class User {
             bufferedWriter.close();
             //create a new user directory for the new user registering.
             File newUserDir = new File("JavaFXApp/src/model/Database/Portfolios/" + usr.loginID + "/");
-            newUserDir.mkdir();
+            newUserDir.mkdir();//not sure why IntelliJ says that this is ignored because it works
             //create 3 new files inside the newUserDir
             File newTransFile = new File(newUserDir.getAbsolutePath() + "/Trans.csv");
             File newCashFile = new File(newUserDir.getAbsolutePath() + "/Cash.csv");
@@ -467,7 +490,12 @@ public class User {
      *
      * @param user
      */
-    private void addHoldings(User user, ArrayList<Holding> holdings) {
+    private void addHoldings(User user, ArrayList<Holding> holdings){
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+//        try {
+//
+//        }
 
     }
 

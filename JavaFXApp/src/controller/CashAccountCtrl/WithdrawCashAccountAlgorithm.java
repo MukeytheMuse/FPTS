@@ -26,9 +26,9 @@ public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         /*
         * Validates whether amount withdrawn will lead to negative overall value.
         */
-        if (c.getCurrentValue() >= amount) {
+        if (c.getValue() >= amount) {
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Transaction t = new Transaction(amount, "dateMade", "Withdrawal", aC.getAccountName());
+            Transaction t = new Transaction(amount, "dateMade", "Withdrawal", aC);
             theFPTS.getPortfolio().add(t, aC);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {

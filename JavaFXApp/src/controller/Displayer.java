@@ -14,6 +14,6 @@ public interface Displayer {
      *
      * @param theFPTS - the FPTS
      */
-    void display(FPTS theFPTS);
+    public void display(FPTS theFPTS);
 
 }

@@ -22,7 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Equities.EquityComponent;
-import model.Portfolio;
+import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.WatchedEquity;
 
 /**
