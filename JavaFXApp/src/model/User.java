@@ -386,11 +386,11 @@ public class User implements Serializable {
             reader = new BufferedReader(new FileReader(transactions_csv));
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split("\",\"");
-                System.out.println(split[0] + split[1] + split[2] + split[3]);
                 stringCashAccountNameAssociatedWith = split[3];
                 //stringCashAccountNameAssociatedWith = stringCashAccountNameAssociatedWith.substring(1, (stringCashAccountNameAssociatedWith.length() - 1));//strips the first @ last "
                 stringAmount = split[0];
-                stringAmount = stringAmount.substring(1, (stringAmount.length() - 1));//strips the first @ last "
+                stringAmount = stringAmount.substring(1, (stringAmount.length()));//strips the first @ last "
+                System.out.println(stringAmount);
                 dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[1]);
                 //System.out.println(stringDateMade);
                 stringType = split[2];
