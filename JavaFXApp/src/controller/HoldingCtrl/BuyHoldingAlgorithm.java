@@ -55,8 +55,9 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         if (accountVal >= (numOfShares * pricePerShare)) {
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
             //TODO: check if its ok that I replaced the line above with the line below????
+            Date date = new Date(2012-11-14);
             CashAccount aC = cashAccountOfInterest;
-            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Withdraw", aC);
+            Transaction t = new Transaction(numOfShares * pricePerShare, date, "Withdraw", aC);
 
 
             t.execute(aC, numOfShares * pricePerShare, "Withdraw");//operates on portfolio

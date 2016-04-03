@@ -7,6 +7,7 @@ import model.PortfolioElements.Transaction;
 import model.Searchers.Searchable;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Extends the Holding Algorithm by defining methods to sell a Holding
@@ -67,8 +68,9 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             /*
             * Creates Transaction that adds value to cashAccountOfInterest
             */
+            Date date = new Date(2012-11-14);
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
-            Transaction t = new Transaction(numOfShares * pricePerShare, "date", "Deposit", aC); //Deposit(aC, numOfShares * pricePerShare);
+            Transaction t = new Transaction(numOfShares * pricePerShare, date, "Deposit", aC); //Deposit(aC, numOfShares * pricePerShare);
             p.add(t, aC);//add to transactions list in the Portfolio class.
             e.remove(numOfShares);
             /*
@@ -89,6 +91,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     @Override
     public void processOutsideFPTS() {
         Holding e = (Holding) equityOfInterest;
+        Date date = new Date(2012-11-14);
         /*
         * Validates that the number of shares subtracted is less than
         * the current number of shares before subtraction.
@@ -103,7 +106,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             p.remove(e);
             double pricePerShare = e.getPricePerShare();
             double totalAmountTransaction = (pricePerShare * numOfShares);
-            Transaction newTransaction = new Transaction(totalAmountTransaction, "date", "Deposit", p.getCashAccounts().get(0));
+            Transaction newTransaction = new Transaction(totalAmountTransaction, date, "Deposit", p.getCashAccounts().get(0));
             p.add(newTransaction, p.getCashAccounts().get(0));
             newTransaction.execute(p.getCashAccounts().get(0),totalAmountTransaction, "Deposit");//operates on portfolio
             theStage.setScene(theFPTS.getConfirmationScene());

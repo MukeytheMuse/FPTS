@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DataBase.ReadHoldings;
 import model.*;
+import model.DataBase.ReadTransactions;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Portfolio;
@@ -139,29 +140,66 @@ public class LoginController {
 
                     ArrayList<Holding> userHoldingsToImport;
                     ArrayList<Transaction> userTransactionsToImport;
+                    Portfolio newPortfolio;
+                    Portfolio newEmptyPortfolio;
+                    User usr;
+
                     if(importTransactionsRequested && importHoldingsRequested){
-                        //TODO:
-                        System.out.println("NOT IMPLEMENTED YET");
-                    } else if (importTransactionsRequested && !importHoldingsRequested){
-                        //TODO: Warning:(146, 63) Condition '!importHoldingsRequested' is always 'true' when reached
-                        //TODO: Warning:(146, 64) Value 'importHoldingsRequested' is always 'false'
-                        System.out.println("NOT IMPLEMENTED YET");
-                    } else if (!importTransactionsRequested && importHoldingsRequested){
-                        //TODO:Warning:(149, 32) Condition '!importTransactionsRequested' is always 'true'
-                        //TODO:Warning:(149, 33) Value 'importTransactionsRequested' is always 'false'
-                        //System.out.println("NOT IMPLEMENTED YET 3");
                         Stage stage = new Stage();
                         FileChooser fd = new FileChooser();
-                        fd.setTitle("Select file");
+                        fd.setTitle("Select holdings to upload");
+                        fd.setInitialDirectory(new File(System.getProperty("user.home")));
+                        fd.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+                        File file = fd.showOpenDialog(stage);
+
+                        Stage stageT = new Stage();
+                        FileChooser transactionsChooser = new FileChooser();
+                        transactionsChooser.setTitle("Select transactions to upload");
+                        transactionsChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                        transactionsChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+                        File fileT = transactionsChooser.showOpenDialog(stageT);
+
+                        if ((fileT != null) && (file != null)) {
+                            userHoldingsToImport = ReadHoldings.readInImports(file);
+                            userTransactionsToImport = ReadTransactions.readTransactionImports(fileT);
+                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
+                            usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
+                            this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
+                            currentUser = usr;
+                        }
+                    } else if (importTransactionsRequested && !importHoldingsRequested){
+                        Stage stageT = new Stage();
+                        FileChooser transactionsChooser = new FileChooser();
+                        transactionsChooser.setTitle("Select transactions to upload");
+                        transactionsChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                        transactionsChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+                        File fileT = transactionsChooser.showOpenDialog(stageT);
+                        if (fileT != null) {
+                            userTransactionsToImport = ReadTransactions.readTransactionImports(fileT);
+                            //TODO: do transactions have anything to do with the cash accounts? I figured they shouldn't.
+                            newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
+                            usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
+                            this.addUser(usr, this.password1.getText(), new ArrayList<>(), userTransactionsToImport);
+                            currentUser = usr;
+                        }
+                    } else if (!importTransactionsRequested && importHoldingsRequested){
+                        Stage stage = new Stage();
+                        FileChooser fd = new FileChooser();
+                        fd.setTitle("Select holdings to upload");
                         fd.setInitialDirectory(new File(System.getProperty("user.home")));
                         fd.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
                         File file = fd.showOpenDialog(stage);
                         if (file != null) {
                             System.out.println("Selected file: " + file.getName());
+                            userHoldingsToImport = ReadHoldings.readInImports(file);
+                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
+                            usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
+                            this.addUser(usr, this.password1.getText(), userHoldingsToImport, new ArrayList<>());
+                            currentUser = usr;
                         }
                     } else {
-                        Portfolio newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
-                        User usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
+                        newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
+                        usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
                         this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
                         currentUser = usr;
                     }

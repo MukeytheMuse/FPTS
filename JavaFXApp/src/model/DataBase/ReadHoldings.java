@@ -66,4 +66,71 @@ public class ReadHoldings {
         }
         return allHoldings;
     }
+
+    /**
+     * Reads in external holdings file that the user chooses to import.
+     * @param file - file that user chooses to upload.
+     * @return - arraylist containing the user's imported holdings.
+     * Created by: Kimberly Sookoo.
+     */
+    public static ArrayList<Holding> readInImports(File file) {
+        splitFile = new ArrayList<>();
+        allHoldings = new ArrayList<>();
+
+        BufferedReader reader = null;
+        String splitLine;
+
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            while ((splitLine = reader.readLine()) != null) {
+                splitLine = splitLine.substring(1, splitLine.length() - 1);
+                String[] split = splitLine.split("\",\"");
+                splitFile.add(split);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found! Please try again.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // iterate through each line representing an Holding
+        for (String[] line : splitFile) {
+            ArrayList<String> indices = new ArrayList<String>();
+            ArrayList<String> sectors = new ArrayList<String>();
+            Date date = new Date();
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                date = simpleDateFormat.parse(line[4]);
+                //TODO: Warning:(41, 17) The value new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[4]) assigned to 'date' is never used
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Holding curHolding = new Holding(line[0], line[1], Double.parseDouble(line[2]), Integer.parseInt(line[3]), date, indices, sectors);
+
+
+            //TODO: combine into market average as well
+            // iterate through fields of current Holding
+            for (int i = 5; i < line.length; i++) {
+                // finance, technology, health care, transportation
+                if (sectorList.contains(line[i])) {
+                    sectors.add(line[i]);
+                }
+                // dow, nasdaq100
+                else if (indexList.contains(line[i])) {
+                    indices.add(line[i]);
+                }
+            }
+            allHoldings.add(curHolding);
+        }
+        return allHoldings;
+    }
 }

@@ -293,7 +293,6 @@ public class User implements Serializable {
         String holdingName;
         String stringPricePerShare;
         String stringNumOfShares;
-        String stringAcquisitionDate;
         Date acquisitionDate;
         ArrayList<String> indicies = new ArrayList<>();
         String cur_indexORsector;
@@ -302,25 +301,18 @@ public class User implements Serializable {
 
         try {
             reader = new BufferedReader(new FileReader(holdings_csv));
-            while ((line = reader.readLine()) != null ){
-                String[] split = line.split(",");
+            while ((line = reader.readLine()) != null) {
+                String[] split = line.split("\",\"");
                 int splitLength = split.length;
-                System.out.println(splitLength);
+                System.out.println(split[0]);
                 tickerSymbol = split[0];
                 tickerSymbol = tickerSymbol.substring(1, (tickerSymbol.length() - 1));//strips the first @ last "
                 holdingName = split[1];
-                holdingName = holdingName.substring(1, (holdingName.length() - 1));//strips the first @ last "
                 stringPricePerShare = split[2];
-                stringPricePerShare = stringPricePerShare.substring(1, (stringPricePerShare.length() - 1));//strips the first @ last "
-                //TODO: check if the stringPricePerShare can be parsed into a double. catch
                 double doublePricePerShareValue = Double.parseDouble(stringPricePerShare);
                 stringNumOfShares = split[3];
-                stringNumOfShares = stringNumOfShares.substring(1, (stringNumOfShares.length() - 1));//strips the first @ last "
-                //TODO: check to see if stringNumOfShares can be converted to an int. catch
                 int intNumOfShares = Integer.parseInt(stringNumOfShares);
-                stringAcquisitionDate = split[4];
-                stringAcquisitionDate = stringAcquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
-                //TODO: change to date format here and for the corresponding class attribute and its constructor. catch
+                acquisitionDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[4]);
                 // WE DON'T NEED THE TOTAL VALUE BECAUSE IT IS CALCULATED IN THE CONSTRUCTOR.
                 int counter = 5;
                 while (counter < splitLength) {
@@ -338,13 +330,14 @@ public class User implements Serializable {
                     }
                     counter += 1;
                 }
-                //TODO: Fix date
-                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, new Date(), indicies, sectors);
+                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, acquisitionDate, indicies, sectors);
                 allHoldings.add(cur_holding);
             }
         } catch (FileNotFoundException e) {
             System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -384,7 +377,7 @@ public class User implements Serializable {
         BufferedReader reader = null;
         String stringCashAccountNameAssociatedWith;
         String stringAmount;
-        String stringDateMade;
+        Date dateMade;
 
         String stringType;
         // Line format:
@@ -392,23 +385,23 @@ public class User implements Serializable {
         try {
             reader = new BufferedReader(new FileReader(transactions_csv));
             while ((line = reader.readLine()) != null) {
-                String[] split = line.split(",");
-                stringCashAccountNameAssociatedWith = split[0];
-                stringCashAccountNameAssociatedWith = stringCashAccountNameAssociatedWith.substring(1, (stringCashAccountNameAssociatedWith.length() - 1));//strips the first @ last "
-                stringAmount = split[1];
+                String[] split = line.split("\",\"");
+                System.out.println(split[0] + split[1] + split[2] + split[3]);
+                stringCashAccountNameAssociatedWith = split[3];
+                //stringCashAccountNameAssociatedWith = stringCashAccountNameAssociatedWith.substring(1, (stringCashAccountNameAssociatedWith.length() - 1));//strips the first @ last "
+                stringAmount = split[0];
                 stringAmount = stringAmount.substring(1, (stringAmount.length() - 1));//strips the first @ last "
-                stringDateMade = split[2];
-                stringDateMade = stringDateMade.substring(1, (stringDateMade.length() - 1));//strips the first @ last "
+                dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[1]);
                 //System.out.println(stringDateMade);
-                stringType = split[3];
-                stringType = stringType.substring(1, (stringType.length() - 1));//strips the first @ last "
+                stringType = split[2];
+                //stringType = stringType.substring(1, (stringType.length() - 1));//strips the first @ last "
                 //convert certain fields to their appropriate types for the constructor.
                 //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
                 double amount = Double.parseDouble(stringAmount);//need the amount in double format to use the transaction constructor
                 //TODO: figure out why date conversion throws parsing errors and fix and change types in class constructor.
 //                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
 //                LocalDate parsedDate = LocalDate.parse(stringDateMade, formatter);
-                Transaction newTransactionToAdd = new Transaction(amount, stringDateMade, stringType, stringCashAccountNameAssociatedWith);
+                Transaction newTransactionToAdd = new Transaction(amount, dateMade, stringType, stringCashAccountNameAssociatedWith);
                 if (cashAccountNameTransactionsMap.containsKey(stringCashAccountNameAssociatedWith)) {
                     ArrayList<Transaction> newTransactionsList = cashAccountNameTransactionsMap.get(stringCashAccountNameAssociatedWith);
                     newTransactionsList.add(newTransactionToAdd);
@@ -422,6 +415,8 @@ public class User implements Serializable {
         } catch (FileNotFoundException e) {
             System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -448,6 +443,10 @@ public class User implements Serializable {
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
+        File newHoldingsFile;
+        File newTransFile;
+        File newCashFile;
+
         try {
             fileWriter = new FileWriter((new File("JavaFXApp/src/model/Database/UserData.csv")).getAbsolutePath(), true);
             bufferedWriter = new BufferedWriter(fileWriter);
@@ -455,13 +454,18 @@ public class User implements Serializable {
             bufferedWriter.write(hash(pw1));
             bufferedWriter.newLine();
             bufferedWriter.close();
+            //creates portfolio directory to store all user information
+            File portfolioDir = new File("JavaFXApp/src/model/Database/Portfolios/");
+            if (!portfolioDir.exists()) {
+                portfolioDir.mkdir();
+            }
             //create a new user directory for the new user registering.
             File newUserDir = new File("JavaFXApp/src/model/Database/Portfolios/" + usr.loginID + "/");
-            newUserDir.mkdir();//not sure why IntelliJ says that this is ignored because it works
+            newUserDir.mkdir();
             //create 3 new files inside the newUserDir
-            File newTransFile = new File(newUserDir.getAbsolutePath() + "/Trans.csv");
-            File newCashFile = new File(newUserDir.getAbsolutePath() + "/Cash.csv");
-            File newHoldingsFile = new File(newUserDir.getAbsolutePath() + "/Holdings.csv");
+            newTransFile = new File(newUserDir.getAbsolutePath() + "/Trans.csv");
+            newCashFile = new File(newUserDir.getAbsolutePath() + "/Cash.csv");
+            newHoldingsFile = new File(newUserDir.getAbsolutePath() + "/Holdings.csv");
             try {
                 newCashFile.createNewFile();
                 newTransFile.createNewFile();
@@ -469,33 +473,52 @@ public class User implements Serializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            //if there are holdings to import
+            if (!holdings.isEmpty()) {
+                addHoldings(holdings, newHoldingsFile);
+            }
+            //if there are transactions to import
+            if (!transactions.isEmpty()) {
+                addCash(transactions, newTransFile);
+            }
+
         } catch (IOException var6) {
             var6.printStackTrace();
-        }
-        //if there are holdings to import
-        if (!holdings.isEmpty()) {
-            addHoldings(usr, holdings);//TODO:
-        }
-        //if there are transactions to import
-        if (!transactions.isEmpty()) {
-            addCash(usr, transactions);//TODO:
         }
     }
 
 
-    //TODO: write to a new file for when user is registering
-
     /**
-     * Writes the users holding content to a file called Holdings.csv.
-     *
-     * @param user
+     * Writes the user's holding content to a file called Holdings.csv.
+     * Written by: Kimberly Sookoo
+     * @param holdings
+     * @param importedHoldings
      */
-    private void addHoldings(User user, ArrayList<Holding> holdings){
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-//        try {
-//
-//        }
+    public void addHoldings(ArrayList<Holding> holdings, File importedHoldings) {
+        try {
+            FileWriter writerH = new FileWriter(importedHoldings, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writerH);
+            String index = "";
+            String sector = "";
+
+            for (Holding holding : holdings) {
+                for (String s : holding.getIndices()) {
+                    index += s;
+                }
+                for (String se : holding.getSectors()) {
+                    sector += se;
+                }
+                bufferedWriter.write("\"" + holding.getTickerSymbol() + "\",\"" +
+                        holding.getDisplayName() + "\",\"" + holding.getPricePerShare() + "\",\""
+                        + holding.getNumOfShares() + "\",\"" + holding.getAcquisitionDate() + "\",\""
+                        + index + "\",\"" + sector + "\"");
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -503,29 +526,25 @@ public class User implements Serializable {
     /**
      * Writes the users holding content to a file called Cash.csv in the form
      * "CashAccountForUser1","345.00","yyyy/mm/dd"
-     * <p>
-     * //TODO:
      *
-     * @param user
+     * @param transactions
      */
-    private void addCash(User user, ArrayList<Transaction> transactions) {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-//        if(!transactions.isEmpty()){
-//            for(Transaction t: transactions){
-//
-//            }
-//        }
-//            //fileWriter = new FileWriter((new File("JavaFXApp/src/model/Database/UserData.csv")).getAbsolutePath(), true);
-//            bufferedWriter = new BufferedWriter(fileWriter);
-//            bufferedWriter.write(user.getLoginID() + ",");
-//            bufferedWriter.write(user.getPassword());
-//            bufferedWriter.newLine();
-//            bufferedWriter.close();
-//        } catch (IOException var6) {
-//            var6.printStackTrace();
-//        }
-//
+    private void addCash(ArrayList<Transaction> transactions, File importedTransactions) {
+        FileWriter writerT = null;
+        try {
+            writerT = new FileWriter(importedTransactions, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writerT);
+
+            for (Transaction transaction : transactions) {
+                bufferedWriter.write("\"" + transaction.getAmount() + "\",\"" + transaction.getDateMade() +
+                        "\",\"" + transaction.getType() + "\",\"" + transaction.getCashAccount() + "\"");
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

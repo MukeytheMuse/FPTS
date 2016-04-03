@@ -8,6 +8,8 @@ package controller.CashAccountCtrl;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
 
+import java.util.Date;
+
 /**
  * Implements final step in CashAccountAlgorithm by creating a Withdraw object.
  *
@@ -28,7 +30,8 @@ public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         */
         if (c.getValue() >= amount) {
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Transaction t = new Transaction(amount, "dateMade", "Withdrawal", aC);
+            Date date = new Date(2012-11-14);
+            Transaction t = new Transaction(amount, date, "Withdrawal", aC);
             theFPTS.getPortfolio().add(t, aC);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {
