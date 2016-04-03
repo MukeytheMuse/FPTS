@@ -221,7 +221,7 @@ public class User implements Serializable {
         BufferedReader reader = null;
         String cashAccountName;
         String cashAccountTotalValue;
-        String cashAccountDateAdded;
+        Date cashAccountDateAdded;
         ArrayList<CashAccount> usersCashAccounts = new ArrayList<>();
         Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap;
 
@@ -232,14 +232,13 @@ public class User implements Serializable {
             //Each line in the file is formatted: AccountName, currentValue, dateAdded
             //loops through while there are still lines with information left in the file
             while ((line = reader.readLine()) != null) {
-                String[] split = line.split(",");
+                String[] split = line.split("\",\"");
                 cashAccountName = split[0];
                 cashAccountName = cashAccountName.substring(1, (cashAccountName.length() - 1));//strips the first @ last "
                 cashAccountTotalValue = split[1];
-                cashAccountTotalValue = cashAccountTotalValue.substring(1, (cashAccountTotalValue.length() - 1));//strips the first @ last "
+                //cashAccountTotalValue = cashAccountTotalValue.substring(1, (cashAccountTotalValue.length() - 1));//strips the first @ last "
                 double doubleCashATotalValue = Double.parseDouble(cashAccountTotalValue);
-                cashAccountDateAdded = split[2];
-                cashAccountDateAdded = cashAccountDateAdded.substring(1, (cashAccountDateAdded.length() - 1));//strips the first @ last "
+                cashAccountDateAdded = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[2]);
                 //TODO: figure out why date conversion throws parsing errors and fix and change types in class constructor.
                 //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
                 //LocalDate parsedDate = LocalDate.parse(cashAccountDateAdded, formatter);
@@ -261,6 +260,8 @@ public class User implements Serializable {
         } catch (FileNotFoundException e) {
             System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv not found! Please try again.");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -480,7 +481,7 @@ public class User implements Serializable {
             }
             //if there are transactions to import
             if (!transactions.isEmpty()) {
-                addCash(transactions, newTransFile);
+                addCash(transactions, newTransFile, newCashFile);
             }
 
         } catch (IOException var6) {
@@ -529,8 +530,9 @@ public class User implements Serializable {
      *
      * @param transactions
      */
-    private void addCash(ArrayList<Transaction> transactions, File importedTransactions) {
+    private void addCash(ArrayList<Transaction> transactions, File importedTransactions, File createdCashAccount) {
         FileWriter writerT = null;
+        FileWriter writerCash = null;
         try {
             writerT = new FileWriter(importedTransactions, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writerT);
@@ -545,6 +547,19 @@ public class User implements Serializable {
             e.printStackTrace();
         }
 
+        try {
+            writerCash = new FileWriter(createdCashAccount, true);
+            BufferedWriter cashWriter = new BufferedWriter(writerCash);
+
+            for (Transaction t : transactions) {
+                cashWriter.write("\"" + t.getCashAccountName() + "\",\"" + t.getAmount() + "\",\""
+                        + t.getDateMade() + "\",\"" + transactions + "\"");
+                cashWriter.newLine();
+            }
+            cashWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

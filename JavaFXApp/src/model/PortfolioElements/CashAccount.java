@@ -13,7 +13,7 @@ import java.util.Date;
 public class CashAccount implements Searchable {
     private String accountName;
     private double currentValue;
-    private String dateAdded;//TODO: change type to date here and for readInCashFile(String userID) method in the User class.
+    private Date dateAdded;//TODO: change type to date here and for readInCashFile(String userID) method in the User class.
     private ArrayList<Transaction> transactions;// = new ArrayList<>();
 
 
@@ -41,7 +41,7 @@ public class CashAccount implements Searchable {
      * @param dateAdded     - Date
      * @param existingTransactions -
      */
-    public CashAccount(String AccountName, double initialAmount, String dateAdded, ArrayList<Transaction> existingTransactions) {
+    public CashAccount(String AccountName, double initialAmount, Date dateAdded, ArrayList<Transaction> existingTransactions) {
         this.accountName = AccountName;
         currentValue = initialAmount;
         this.dateAdded = dateAdded;
@@ -122,7 +122,7 @@ public class CashAccount implements Searchable {
      *
      * @return Date
      */
-    public String getDateAdded() {//TODO: SEE WHERE THIS IS BEING CALLED AND CHANGE TYPE FROM "Date" to "LocalDate"
+    public Date getDateAdded() {//TODO: SEE WHERE THIS IS BEING CALLED AND CHANGE TYPE FROM "Date" to "LocalDate"
         return dateAdded;
     }
 

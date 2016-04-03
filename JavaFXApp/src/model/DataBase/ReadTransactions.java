@@ -14,7 +14,9 @@ import java.util.Date;
  */
 public class ReadTransactions {
 
-    public static ArrayList<Transaction> allTransactions;
+    private static ArrayList<CashAccount> cashAccount;
+    private static ArrayList<Transaction> allTransactions;
+
 
     /**
      * Reads in external transaction file that the user chooses to import.
@@ -50,12 +52,6 @@ public class ReadTransactions {
             }
         }
 
-        for (String s[] : splitFile) {
-            for (int i = 0; i < s.length; i++) {
-                System.out.println(s[i]);
-            }
-        }
-
         for (String[] line : splitFile) {
             Date date = null;
             try {
@@ -69,5 +65,19 @@ public class ReadTransactions {
         }
 
         return allTransactions;
+    }
+
+    /**
+     * Allows access to populated cash account.
+     * @return cashAccount
+     */
+    public static ArrayList<CashAccount> getCashAccount(ArrayList<Transaction> transactions) {
+        cashAccount = new ArrayList<CashAccount>();
+
+        for (Transaction t : transactions) {
+            cashAccount.add(new CashAccount(t.getCashAccountName(), t.getAmount(), t.getDateMade(), transactions));
+        }
+
+        return cashAccount;
     }
 }

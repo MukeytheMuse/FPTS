@@ -102,7 +102,7 @@ public class TransactionDisplayer implements Displayer {
                     */
                     for (Transaction t : transactions) {
                         //TODO: change date to type date.
-                        String aDate = t.getCashAccount().getDateAdded();//TODO: check
+                        Date aDate = t.getCashAccount().getDateAdded();//TODO: check
                         /*
                         * Add to display if Transaction object is after the start
                         * date and before the end date.

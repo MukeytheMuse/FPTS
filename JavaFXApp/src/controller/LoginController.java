@@ -142,6 +142,7 @@ public class LoginController {
                     ArrayList<Transaction> userTransactionsToImport;
                     Portfolio newPortfolio;
                     Portfolio newEmptyPortfolio;
+                    ArrayList<CashAccount> cashAccount;
                     User usr;
 
                     if(importTransactionsRequested && importHoldingsRequested){
@@ -162,7 +163,8 @@ public class LoginController {
                         if ((fileT != null) && (file != null)) {
                             userHoldingsToImport = ReadHoldings.readInImports(file);
                             userTransactionsToImport = ReadTransactions.readTransactionImports(fileT);
-                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
+                            cashAccount = ReadTransactions.getCashAccount(userTransactionsToImport);
+                            newPortfolio = new Portfolio(userHoldingsToImport, cashAccount);
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
                             currentUser = usr;
@@ -176,9 +178,9 @@ public class LoginController {
                         File fileT = transactionsChooser.showOpenDialog(stageT);
                         if (fileT != null) {
                             userTransactionsToImport = ReadTransactions.readTransactionImports(fileT);
-                            //TODO: do transactions have anything to do with the cash accounts? I figured they shouldn't.
-                            newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
-                            usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
+                            cashAccount = ReadTransactions.getCashAccount(userTransactionsToImport);
+                            newPortfolio = new Portfolio(new ArrayList<Holding>(), cashAccount);
+                            usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText(), new ArrayList<>(), userTransactionsToImport);
                             currentUser = usr;
                         }
