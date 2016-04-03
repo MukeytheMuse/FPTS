@@ -90,4 +90,10 @@ public class Transaction {
     public CashAccount getCashAccount() {
         return cashAccount;
     }
+
+    /**
+     * returns String name of cashAccount
+     *
+     */
+    public String getCashAccountName() {return cashAccountName;}
 }

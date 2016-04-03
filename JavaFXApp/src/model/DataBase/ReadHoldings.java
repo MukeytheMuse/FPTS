@@ -107,8 +107,7 @@ public class ReadHoldings {
             ArrayList<String> sectors = new ArrayList<String>();
             Date date = new Date();
             try {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                date = simpleDateFormat.parse(line[4]);
+                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[4]);
                 //TODO: Warning:(41, 17) The value new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[4]) assigned to 'date' is never used
             } catch (ParseException e) {
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package model.DataBase;
 
+import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
 
 import java.io.*;

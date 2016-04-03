@@ -537,7 +537,7 @@ public class User implements Serializable {
 
             for (Transaction transaction : transactions) {
                 bufferedWriter.write("\"" + transaction.getAmount() + "\",\"" + transaction.getDateMade() +
-                        "\",\"" + transaction.getType() + "\",\"" + transaction.getCashAccount() + "\"");
+                        "\",\"" + transaction.getType() + "\",\"" + transaction.getCashAccountName() + "\"");
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
