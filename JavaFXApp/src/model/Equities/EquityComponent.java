@@ -9,11 +9,13 @@ import org.w3c.dom.Document;
  * @author Eric Epstein & Kaitlin Brockway
  */
 public interface EquityComponent {
-    
+
     public String getDisplayName();
+
     public double getPricePerShare();
+
     public void updatePrice(Document d);
-    
+
     /**
      * adds child to the composite
      *

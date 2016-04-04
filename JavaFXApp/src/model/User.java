@@ -1,12 +1,9 @@
 package model;
 
-import gui.FPTS;
 import model.DataBase.ReadFile;
-import model.DataBase.ReadHoldings;
 import model.DataBase.WriteFile;
 import model.PortfolioElements.*;
 
-import javax.swing.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,10 +20,10 @@ public class User implements Serializable {
     //TODO: Warning:(17, 52) Unchecked assignment: 'java.util.HashMap' to 'java.util.Map<java.lang.String,model.User>'
 
 
-    public Map<String, User> getAllUsersMap(){
+    public Map<String, User> getAllUsersMap() {
         return allUsersMap;
     }
-    
+
     public void setMyPortfolio(Portfolio p) {
         myPortfolio = p;
     }
@@ -43,9 +40,7 @@ public class User implements Serializable {
     /**
      * Acts as a temporary user for accessing static methods.
      *
-     * @param uid
-     *
-     * Author(s): Kaitlin Brockway
+     * @param uid Author(s): Kaitlin Brockway
      */
     public User(String uid) {
         this.loginID = uid;
@@ -57,9 +52,7 @@ public class User implements Serializable {
      *
      * @param loginID
      * @param password
-     * @param portfolio
-     *
-     * Author(s): Kaitlin Brockway
+     * @param portfolio Author(s): Kaitlin Brockway
      */
     public User(String loginID, String password, Portfolio portfolio) {
         this.loginID = loginID;
@@ -85,8 +78,8 @@ public class User implements Serializable {
     private static String hash(String password) {
         String encryptedPW = "";
 
-        for(int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char)(password.charAt(i) + 1);
+        for (int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char) (password.charAt(i) + 1);
             encryptedPW = encryptedPW + encryptedChar;
         }
 
@@ -96,8 +89,8 @@ public class User implements Serializable {
     private static String unHash(String password) {
         String textPass = "";
 
-        for(int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char)(password.charAt(i) - 1);
+        for (int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char) (password.charAt(i) - 1);
             textPass = textPass + encryptedChar;
         }
 
@@ -105,10 +98,10 @@ public class User implements Serializable {
     }
 
     public boolean equals(Object o) {
-        if(!(o instanceof User)) {
+        if (!(o instanceof User)) {
             return false;
         } else {
-            User cur_user = (User)o;
+            User cur_user = (User) o;
             return cur_user.getLoginID().equals(this.loginID) && cur_user.getPassword().equals(this.password);
         }
     }
@@ -145,7 +138,7 @@ public class User implements Serializable {
      * @return: true if the user and password combination exists in the system.
      */
     public static boolean validateUser(String username, String password) {
-        if(allUsersMap.containsKey(username)) {
+        if (allUsersMap.containsKey(username)) {
             String hashedPasswordMappedTo = allUsersMap.get(username).getPassword();
             String hashedPasswordEntered = hash(password);
             return hashedPasswordEntered.equals(hashedPasswordMappedTo);
@@ -218,12 +211,10 @@ public class User implements Serializable {
      * with their corresponding transaction history.
      *
      * @param userID: Current User being created and populated with their information
-     *              from the database when the system first starts up.
-     * @return
-     *
-     * Author(s): Ian London and Kaitlin Brockway
+     *                from the database when the system first starts up.
+     * @return Author(s): Ian London and Kaitlin Brockway
      */
-    private static ArrayList<CashAccount> readInCashFile(String userID){
+    private static ArrayList<CashAccount> readInCashFile(String userID) {
         String cash_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv";
         String line;
         BufferedReader reader = null;
@@ -251,11 +242,11 @@ public class User implements Serializable {
                 //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
                 //LocalDate parsedDate = LocalDate.parse(cashAccountDateAdded, formatter);
 
-                CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , cashAccountDateAdded, cashAccountNameTransactionsMap.get(cashAccountName));
-                if( cashAccountNameTransactionsMap.containsKey(cashAccountToAdd.getAccountName())){
+                CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue, cashAccountDateAdded, cashAccountNameTransactionsMap.get(cashAccountName));
+                if (cashAccountNameTransactionsMap.containsKey(cashAccountToAdd.getAccountName())) {
                     ArrayList<Transaction> newTransactions = new ArrayList<>();
                     ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAdd.getAccountName());
-                    for(Transaction t: curTransactions){
+                    for (Transaction t : curTransactions) {
                         t.setCashAccount(cashAccountToAdd);
                         newTransactions.add(t);
                     }
@@ -282,82 +273,6 @@ public class User implements Serializable {
 
         }
         return usersCashAccounts;
-    }
-
-    /**
-     * Holdings.csv file is in the format:
-     * "tickerSymbol","holdingName","valuePricePerShare","numOfShares","aquisitionDate","index1","sector1"
-     * where there may be multiple indicies and sectors.
-     *
-     * @param userID
-     * @return
-     *
-     * Author(s): Kaitlin Brockway
-     */
-    private static ArrayList<Holding> readInHoldingsFile(String userID) {
-        String holdings_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Holdings.csv";
-        String line;
-        BufferedReader reader = null;
-        String tickerSymbol;
-        String holdingName;
-        String stringPricePerShare;
-        String stringNumOfShares;
-        Date acquisitionDate;
-        ArrayList<String> indicies = new ArrayList<>();
-        String cur_indexORsector;
-        ArrayList<String> sectors = new ArrayList<>();
-        ArrayList<Holding> allHoldings = new ArrayList<>();
-
-        try {
-            reader = new BufferedReader(new FileReader(holdings_csv));
-            while ((line = reader.readLine()) != null) {
-                String[] split = line.split("\",\"");
-                int splitLength = split.length;
-                System.out.println(split[0]);
-                tickerSymbol = split[0];
-                tickerSymbol = tickerSymbol.substring(1, (tickerSymbol.length() - 1));//strips the first & last "
-                holdingName = split[1];
-                stringPricePerShare = split[2];
-                double doublePricePerShareValue = Double.parseDouble(stringPricePerShare);
-                stringNumOfShares = split[3];
-                int intNumOfShares = Integer.parseInt(stringNumOfShares);
-                acquisitionDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[4]);
-                // WE DON'T NEED THE TOTAL VALUE BECAUSE IT IS CALCULATED IN THE CONSTRUCTOR.
-                int counter = 5;
-                while (counter < splitLength) {
-                    cur_indexORsector = split[counter];
-                    cur_indexORsector = cur_indexORsector.substring(1, cur_indexORsector.length() - 1);
-                    if (FPTS.allIndicies.contains(cur_indexORsector)) {
-                        indicies.add(cur_indexORsector);
-                    } else if (FPTS.allSectors.contains(cur_indexORsector)) {
-                        sectors.add(cur_indexORsector);
-                    } else {
-//                        System.out.println("The current index or sector being read is not included in the possibilities.");
-//                        System.out.println("Check to make sure allSectors and allIndicies in the FPTS class have included all possibilities");
-                        System.out.println("The current string being ignored is: " + cur_indexORsector);
-                        System.out.println("This is being printed from the method readInHoldingsFile in the User Class.");
-                    }
-                    counter += 1;
-                }
-                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, acquisitionDate, indicies, sectors);
-                allHoldings.add(cur_holding);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return allHoldings;
     }
 
 
@@ -444,10 +359,7 @@ public class User implements Serializable {
      * Adds the user to UserData.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
-     * @param pw1
-     *
-     * Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
-     *
+     * @param pw1 Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
      */
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
@@ -456,6 +368,11 @@ public class User implements Serializable {
         File newHoldingsFile;
         File newTransFile;
         File newCashFile;
+
+        // temporary quick fix to add user to lilBase
+        String un = usr.getLoginID();
+        writeFile.addUser(un, hash(pw1));
+        writeFile.updatePortfolioForUser(usr);
 
         try {
             fileWriter = new FileWriter((new File("JavaFXApp/src/model/Database/UserData.csv")).getAbsolutePath(), true);
@@ -502,6 +419,7 @@ public class User implements Serializable {
     /**
      * Writes the user's holding content to a file called Holdings.csv.
      * Written by: Kimberly Sookoo
+     *
      * @param holdings
      * @param importedHoldings
      */

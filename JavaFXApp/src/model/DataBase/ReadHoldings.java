@@ -2,7 +2,7 @@ package model.DataBase;
 
 import model.PortfolioElements.Holding;
 
-import java.io.*;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +21,9 @@ public class ReadHoldings {
 
     /**
      * Created by Ian
+     * Holdings.csv file is in the format:
+     * "tickerSymbol","holdingName","valuePricePerShare","numOfShares","acquisitionDate","index/sector"...
+     * there may be multiple indices and sectors or none
      *
      * @return ArrayList of Holding objects in the database for that user
      */
@@ -70,6 +73,7 @@ public class ReadHoldings {
 
     /**
      * Reads in external holdings file that the user chooses to import.
+     *
      * @param file - file that user chooses to upload.
      * @return - arraylist containing the user's imported holdings.
      * Created by: Kimberly Sookoo.

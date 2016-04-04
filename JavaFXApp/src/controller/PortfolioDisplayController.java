@@ -40,6 +40,9 @@ public class PortfolioDisplayController extends MenuController {
     private TableColumn<CashAccount, String> dateCol;
 
     /**
+     * TODO: holdingName, valuePerShare, & currentValue are not showing up in portfolio view of holdings
+     * TODO: currentValue is not showing up in portfolio view of cash accounts
+     *
      * @param location
      * @param resources
      */

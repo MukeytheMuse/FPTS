@@ -60,7 +60,7 @@ public abstract class MenuController implements Initializable {
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
         Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/HomePage.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
@@ -113,7 +113,7 @@ public abstract class MenuController implements Initializable {
         CashAccountAlgorithm cashAcctAlgor = new RemoveCashAccountAlgorithm();
         cashAcctAlgor.process(FPTS.getSelf());
     }
-    
+
     public void handleWatchMenuItemPressed(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/Watchlist/WatchlistPage.fxml"));
         Scene scene = new Scene(parent);
@@ -130,9 +130,9 @@ public abstract class MenuController implements Initializable {
 
         Stage stage;
         try {
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         } catch (ClassCastException var5) {
-            stage = (Stage)this.myMenuBar.getScene().getWindow();
+            stage = (Stage) this.myMenuBar.getScene().getWindow();
         }
 
         Scene scene = new Scene(parent);

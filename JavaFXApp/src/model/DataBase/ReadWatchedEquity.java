@@ -1,4 +1,5 @@
 package model.DataBase;
+
 import model.PortfolioElements.WatchedEquity;
 
 import java.util.ArrayList;

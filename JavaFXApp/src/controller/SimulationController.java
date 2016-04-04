@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -20,10 +19,8 @@ import model.Simulators.BullSimulator;
 import model.Simulators.NoGrowthSimulator;
 import model.Simulators.Simulator;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -82,14 +79,13 @@ public class SimulationController extends MenuController {
     //TODO:Warning:(70, 67) [UnusedDeclaration] Parameter 'event' is never used
 
 
-
-
     /**
      * Checks to make sure the number of steps entered is valid.
      * If the simulation is no growth then the simulation will be called,
      * but if the simulation is a bull or bear market simulation the user
      * will be asked to input a percentage for price increase or decrease
      * per year.
+     *
      * @param event - ActionEvent - The event that is created when Simulate button is pressed.
      * @throws java.io.IOException - Exception thrown if the SimulationPage.fxml is not found.
      */
@@ -155,7 +151,6 @@ public class SimulationController extends MenuController {
     }
 
     /**
-     *
      * @param event
      * @throws IOException
      */
@@ -172,7 +167,6 @@ public class SimulationController extends MenuController {
     }
 
     /**
-     *
      * @param event
      * @throws IOException
      */
@@ -184,9 +178,7 @@ public class SimulationController extends MenuController {
     }
 
     /**
-     *
-     * @param event
-     * authors: Kaitlin
+     * @param event authors: Kaitlin
      */
     @FXML
     protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) {

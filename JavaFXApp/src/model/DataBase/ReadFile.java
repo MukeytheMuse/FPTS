@@ -8,8 +8,6 @@ import model.PortfolioElements.WatchedEquity;
 import java.io.*;
 import java.util.ArrayList;
 
-import static model.DataBase.WriteFile.getPath;
-
 /**
  * @author: Ian London
  */
@@ -31,9 +29,9 @@ public class ReadFile {
         return ReadWatchedEquity.readDB(user);
     }
 
-//    public static ArrayList<CashAccount> readCash() {
-//        return ReadCash.read();
-//    }
+    /*public static ArrayList<CashAccount> readCash() {
+        return ReadCash.read();
+    }*/
 
 
     // reads in CSV file
@@ -68,11 +66,12 @@ public class ReadFile {
         String line;
 
         try {
-            if(path.contains("/equities.c")){
+            if (path.contains("/equities.c")) {
                 InputStream is = FPTS.class.getClassLoader().getResourceAsStream("model/DataBase/equities.csv");
                 reader = new BufferedReader(new InputStreamReader(is));
+            } else {
+                reader = new BufferedReader(new FileReader(path));
             }
-            else{ reader = new BufferedReader(new FileReader(path)); }
 
             while ((line = reader.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);

@@ -1,6 +1,7 @@
 package model.PortfolioElements;
 
 import model.Searchers.Searchable;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,7 +28,7 @@ public class CashAccount implements Searchable {
 //    }
 
     //TODO: make private somehow
-    public ArrayList<Transaction> getTransactions(){
+    public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
 
@@ -36,9 +37,9 @@ public class CashAccount implements Searchable {
      * A user defines a cash account by specifying an account name,
      * initial amount, and the date it was added.
      *
-     * @param AccountName   - String
-     * @param initialAmount - double
-     * @param dateAdded     - Date
+     * @param AccountName          - String
+     * @param initialAmount        - double
+     * @param dateAdded            - Date
      * @param existingTransactions -
      */
     public CashAccount(String AccountName, double initialAmount, Date dateAdded, ArrayList<Transaction> existingTransactions) {
@@ -53,7 +54,7 @@ public class CashAccount implements Searchable {
      *
      * @param setTransactions
      */
-    public void setTransactions(ArrayList<Transaction> setTransactions){
+    public void setTransactions(ArrayList<Transaction> setTransactions) {
         transactions = setTransactions;
     }
 
@@ -129,10 +130,10 @@ public class CashAccount implements Searchable {
 
     /**
      * Author(s): Kaitlin Brockway
-     * @param
      *
+     * @param
      */
-    protected void addTransaction(Transaction t){
+    protected void addTransaction(Transaction t) {
         transactions.add(t);
     }
 

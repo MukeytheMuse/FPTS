@@ -6,31 +6,29 @@
 package model.PortfolioElements;
 
 import model.Equities.EquityComponent;
-import gui.FPTS;
 import model.Equities.LoadedEquity;
 
 import java.util.ArrayList;
 
 /**
- *
  * @author ericepstein
  */
 public class WatchedEquity {
-    
+
     EquityComponent assocEquity;
-    double highTrigger;
-    double lowTrigger;
-    
-    double previousPrice;
-   
-    boolean exceedsTrigger;
-    boolean hasExceededTrigger;
-    boolean notMeetsTrigger;
-    boolean hasNotMetTrigger;
-    
-    public WatchedEquity(String symbol, double highTrigger, double lowTrigger, 
-            boolean exceedsTrigger, boolean hasExceededTrigger, boolean notMeetsTrigger,
-            boolean hasNotMetTrigger) {
+    private double highTrigger;
+    private double lowTrigger;
+
+    private double previousPrice;
+
+    private boolean exceedsTrigger;
+    private boolean hasExceededTrigger;
+    private boolean notMeetsTrigger;
+    private boolean hasNotMetTrigger;
+
+    public WatchedEquity(String symbol, double highTrigger, double lowTrigger,
+                         boolean exceedsTrigger, boolean hasExceededTrigger, boolean notMeetsTrigger,
+                         boolean hasNotMetTrigger) {
         assocEquity = getAssocEquity(symbol);
         this.highTrigger = highTrigger;
         this.lowTrigger = lowTrigger;
@@ -38,13 +36,13 @@ public class WatchedEquity {
         this.hasExceededTrigger = hasExceededTrigger;
         this.notMeetsTrigger = notMeetsTrigger;
         this.hasNotMetTrigger = hasNotMetTrigger;
-       
+
         previousPrice = assocEquity.getPricePerShare();
-        
+
         System.out.println("PREVIOUS PRICE IS " + previousPrice);
-        updateTriggers();   
+        updateTriggers();
     }
-    
+
     private EquityComponent getAssocEquity(String symbol) {
         ArrayList<EquityComponent> equityComponents = LoadedEquity.getEquityList();
         for (EquityComponent ec : equityComponents) {
@@ -56,18 +54,18 @@ public class WatchedEquity {
         return null;
         //return FPTS.getCurrentUser().getMyPortfolio().getEquityComponent(symbol);
     }
-    
+
     public WatchedEquity(EquityComponent ec, double highTrigger, double lowTrigger) {
         assocEquity = ec;
         this.highTrigger = highTrigger;
         this.lowTrigger = lowTrigger;
-       
+
         previousPrice = assocEquity.getPricePerShare();
-        
+
         System.out.println("PREVIOUS PRICE IS " + previousPrice);
-        updateTriggers();   
+        updateTriggers();
     }
-    
+
     public void updateTriggers() {
         if (highTrigger < 0) {
             exceedsTrigger = false;
@@ -79,7 +77,7 @@ public class WatchedEquity {
             exceedsTrigger = false;
             hasExceededTrigger = false;
         }
-        
+
         if (lowTrigger < 0) {
             notMeetsTrigger = false;
             hasNotMetTrigger = false;
@@ -91,46 +89,46 @@ public class WatchedEquity {
             hasNotMetTrigger = false;
         }
     }
-    
+
     public void handleNewPrice() {
         previousPrice = assocEquity.getPricePerShare();
         updateTriggers();
     }
-    
+
     public String toString() {
         String status = "";
-        if (exceedsTrigger) { 
+        if (exceedsTrigger) {
             status += " | Currently exceeds trigger" + " (" + highTrigger + ")";
         } else if (hasExceededTrigger) {
             status += " | Had exceeded trigger" + " (" + highTrigger + ")";
         }
-        
+
         if (notMeetsTrigger) {
             status += " | Currently below low trigger" + " (" + lowTrigger + ")";
         } else if (hasNotMetTrigger) {
             status += " | Had been below low trigger" + " (" + lowTrigger + ")";
         }
-        
+
         return assocEquity.getDisplayName() + " " + previousPrice + " " + status;
     }
-    
+
     public String getSymbol() {
         return assocEquity.getDisplayName();
     }
-    
+
     public EquityComponent getAssocEquity() {
         return assocEquity;
     }
-    
+
     public double getPricePerShare() {
         return previousPrice;
     }
-    
+
     public void setHighTrigger(double trigger) {
         highTrigger = trigger;
         updateTriggers();
     }
-    
+
     public void setLowTrigger(double trigger) {
         lowTrigger = trigger;
         updateTriggers();

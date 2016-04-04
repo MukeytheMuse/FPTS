@@ -44,28 +44,32 @@ public class Transaction {
         this.cashAccountName = cashAccountName;
     }
 
-    public void setCashAccount(CashAccount c){
+    public void setCashAccount(CashAccount c) {
         cashAccount = c;
     }
 
     /**
      * Runs the operation type on the object.
      */
-    public void execute(CashAccount cashAccount, double amount, String type){
-        if(type.equals("Deposit")){
+    public void execute(CashAccount cashAccount, double amount, String type) {
+        if (type.equals("Deposit")) {
             cashAccount.deposit(amount);
-        } else if (type.equals("Withdraw")){
+        } else if (type.equals("Withdraw")) {
             cashAccount.withdraw(amount);
         }
     }
 
-    public Double getAmount() {return this.amount;}
+    public Double getAmount() {
+        return this.amount;
+    }
 
-    public Date getDateMade(){
+    public Date getDateMade() {
         return this.dateMade;
     }
 
-    public String getType() {return this.type;}
+    public String getType() {
+        return this.type;
+    }
 
     /**
      * returns a String representation for display
@@ -93,7 +97,8 @@ public class Transaction {
 
     /**
      * returns String name of cashAccount
-     *
      */
-    public String getCashAccountName() {return cashAccountName;}
+    public String getCashAccountName() {
+        return cashAccountName;
+    }
 }

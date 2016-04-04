@@ -85,7 +85,7 @@ abstract public class HoldingAlgorithm implements Observer {
     /**
      * Establishes context derived from child algorithms then constructs
      * search scene with specialized context.
-     *
+     * <p>
      * Called when Buy Equities button is pressed and sets up the scene
      * for when a holding is searched for on the Buy Equities "page".
      *

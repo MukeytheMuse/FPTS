@@ -96,7 +96,7 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         if (c.getValue() >= amount) {
             //TODO: change "date" to an actual date.
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Date date = new Date(2012-11-14);
+            Date date = new Date(2012 - 11 - 14);
             Transaction t = new Transaction(amount, date, "Withdrawal", c);
             theFPTS.getPortfolio().add(t, c);
             //aC = theFPTS.getPortfolio().getCashAccount(c2);

@@ -3,7 +3,7 @@ package model.DataBase;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
 
-import java.io.*;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class ReadTransactions {
 
     /**
      * Reads in external transaction file that the user chooses to import.
+     *
      * @param file - file that user chooses to upload.
      * @return - arraylist containing the user's imported holdings.
      * Created by: Kimberly Sookoo.
@@ -71,6 +72,7 @@ public class ReadTransactions {
 
     /**
      * Allows access to populated cash account.
+     *
      * @return cashAccount
      */
     public static ArrayList<CashAccount> getCashAccount(ArrayList<Transaction> transactions) {

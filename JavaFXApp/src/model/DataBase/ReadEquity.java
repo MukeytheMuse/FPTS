@@ -1,7 +1,9 @@
 package model.DataBase;
+
 import model.Equities.EquityComponent;
 import model.Equities.EquityComposite;
 import model.Equities.LoadedEquity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +15,10 @@ public class ReadEquity {
     protected static ArrayList<String[]> readInFile() {
         return ReadFile.readInEquities();
     }
+
     private static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
     private static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
-//    public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
+    //    public static ArrayList<EquityComponent> allEquities = new ArrayList<>();
     private static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     /**

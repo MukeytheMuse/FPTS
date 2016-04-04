@@ -1,8 +1,4 @@
 package controller;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import gui.FPTS;
 import javafx.application.Platform;
@@ -12,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DataBase.ReadHoldings;
-import model.*;
 import model.DataBase.ReadTransactions;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
@@ -81,9 +79,7 @@ public class LoginController {
      * Sets the currentUser to the User object obtained from the user map.
      *
      * @param event
-     * @throws IOException
-     *
-     * Author(s): Kaitlin Brockway
+     * @throws IOException Author(s): Kaitlin Brockway
      */
     @FXML
     protected void handleLoginButtonPressed(ActionEvent event) throws IOException {
@@ -93,8 +89,8 @@ public class LoginController {
                 User sub_user = new User(userid.getText());
                 currentUser = sub_user.getAllUsersMap().get(userid.getText());
                 FPTS.setCurrentUser(currentUser);
-                Scene scene = new Scene((Parent)FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml")));
-                Stage app_stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml")));
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene);
                 app_stage.show();
             } else {
@@ -130,10 +126,10 @@ public class LoginController {
      */
     @FXML
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
-        if(this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
-            if(User.ValidLoginID(this.userid.getText())) {
+        if (this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
+            if (User.ValidLoginID(this.userid.getText())) {
                 //TODO check Warning:(137, 16) Static member 'model.User.ValidLoginID(java.lang.String)' accessed via instance reference
-                if(this.password.getText().equals(this.password1.getText())) {
+                if (this.password.getText().equals(this.password1.getText())) {
                     //At this point, now that we know the username is valid and
                     // the passwords match ask the user if they would like to import
                     // holdings &OR transactions to initialize the new users portfolio.
@@ -145,7 +141,7 @@ public class LoginController {
                     ArrayList<CashAccount> cashAccount;
                     User usr;
 
-                    if(importTransactionsRequested && importHoldingsRequested){
+                    if (importTransactionsRequested && importHoldingsRequested) {
                         Stage stage = new Stage();
                         FileChooser fd = new FileChooser();
                         fd.setTitle("Select holdings to upload");
@@ -169,7 +165,7 @@ public class LoginController {
                             this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
                             currentUser = usr;
                         }
-                    } else if (importTransactionsRequested && !importHoldingsRequested){
+                    } else if (importTransactionsRequested && !importHoldingsRequested) {
                         Stage stageT = new Stage();
                         FileChooser transactionsChooser = new FileChooser();
                         transactionsChooser.setTitle("Select transactions to upload");
@@ -184,7 +180,7 @@ public class LoginController {
                             this.addUser(usr, this.password1.getText(), new ArrayList<>(), userTransactionsToImport);
                             currentUser = usr;
                         }
-                    } else if (!importTransactionsRequested && importHoldingsRequested){
+                    } else if (!importTransactionsRequested && importHoldingsRequested) {
                         Stage stage = new Stage();
                         FileChooser fd = new FileChooser();
                         fd.setTitle("Select holdings to upload");
@@ -205,9 +201,9 @@ public class LoginController {
                         this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
                         currentUser = usr;
                     }
-                    Parent parent = (Parent)FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
+                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/LoginPage.fxml"));
                     Scene scene = new Scene(parent);
-                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(scene);
                     stage.show();
                 } else {
@@ -229,7 +225,7 @@ public class LoginController {
      * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleYesImportTransactionsButtonPressed(){
+    public void handleYesImportTransactionsButtonPressed() {
         importTransactionsRequested = true;
     }
 
@@ -253,10 +249,10 @@ public class LoginController {
 
     /**
      * Based off of user specifications during new user registration.
-     *
+     * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleNoImportHoldingsButtonPressed(){
+    public void handleNoImportHoldingsButtonPressed() {
         importHoldingsRequested = false;
     }
 
@@ -268,7 +264,7 @@ public class LoginController {
     protected void handleClearButtonPressed(ActionEvent event) {
         this.userid.clear();
         this.password.clear();
-        if(this.password1 != null) {
+        if (this.password1 != null) {
             this.password1.clear();
         }
 
@@ -294,7 +290,7 @@ public class LoginController {
     protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
         stg.setScene(FPTS.getSelf().createLogInScene());
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 

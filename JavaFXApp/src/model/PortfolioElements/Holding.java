@@ -58,7 +58,6 @@ public class Holding implements Searchable, HoldingUpdatable {
     private ArrayList<String> sectors;
 
 
-
     //TODO: Fix this. Accidentally messed it up.
 //    /*
 //    *

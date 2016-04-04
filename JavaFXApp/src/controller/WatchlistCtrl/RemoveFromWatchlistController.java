@@ -6,30 +6,27 @@
 package controller.WatchlistCtrl;
 
 import controller.MenuController;
-import java.net.URL;
-import java.util.ResourceBundle;
+import gui.FPTS;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
-
-import gui.FPTS;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.WatchedEquity;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -82,30 +79,30 @@ public class RemoveFromWatchlistController extends MenuController implements Ini
         FPTS fpts = FPTS.getSelf();
         Portfolio p = fpts.getCurrentUser().getMyPortfolio();
         ArrayList<WatchedEquity> watchlist = p.getWatchedEquities();
-        
+
         for (WatchedEquity w : watchlist) {
             Button aButton = new Button(w.getSymbol());
             aButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
                     watchlist.remove(w);
-                    try { 
+                    try {
                         redirect();
                     } catch (Exception ex) {
-                        
+
                     }
                 }
             });
             watchedEquitiesBox.getChildren().add(aButton);
         }
-    } 
-    
+    }
+
     public void redirect() throws IOException {
         Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
-                    stage.show(); 
+        stage.show();
     }
-    
+
 }

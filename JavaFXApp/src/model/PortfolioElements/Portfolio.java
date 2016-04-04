@@ -8,14 +8,10 @@ package model.PortfolioElements;
 import javafx.scene.control.TextField;
 import model.Equities.EquityComponent;
 import model.Equities.LoadedEquity;
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Transaction;
 import model.Searchers.Searchable;
-import model.PortfolioElements.WatchedEquity;
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
-import org.w3c.dom.Document;
 
 
 /**
@@ -66,23 +62,21 @@ public class Portfolio {
      * Called when the Users are being Filled to create all user objects in the system.
      *
      * @param readInholdings
-     * @param readInCashAccounts
-     *
-     * Author(s): Kaitlin Brockway
+     * @param readInCashAccounts Author(s): Kaitlin Brockway
      */
-    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts){
+    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts) {
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
         currentValue = 0;
         watchedEquities = new ArrayList<WatchedEquity>();
         //Calculates the portfolio's Total Value.
-        if(!readInholdings.isEmpty()){
-            for(Holding h: holdings){
+        if (!readInholdings.isEmpty()) {
+            for (Holding h : holdings) {
                 currentValue += h.getTotalValue();
             }
         }
-        if(!readInCashAccounts.isEmpty()){
-            for(CashAccount c: cashAccounts){
+        if (!readInCashAccounts.isEmpty()) {
+            for (CashAccount c : cashAccounts) {
                 currentValue += c.getValue();
             }
         }
@@ -126,7 +120,6 @@ public class Portfolio {
     public ArrayList<WatchedEquity> getWatchedEquities() {
         return watchedEquities;
     }
-
 
 
     public void addWatchedEquity(WatchedEquity w) {
@@ -201,7 +194,7 @@ public class Portfolio {
      */
     public ArrayList<Transaction> getTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        for(CashAccount c: cashAccounts){
+        for (CashAccount c : cashAccounts) {
             transactions.addAll(c.getTransactions());
         }
         return transactions;

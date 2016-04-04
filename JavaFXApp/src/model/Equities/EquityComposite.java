@@ -2,10 +2,10 @@ package model.Equities;
 
 import model.PortfolioElements.HoldingUpdatable;
 import model.Searchers.Searchable;
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.w3c.dom.Document;
 
 /**
  * Searchable and available to be purchased by the user.
@@ -70,7 +70,6 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     public String getTickerSymbol() {
         return equityName;
     }
-
 
 
     /**

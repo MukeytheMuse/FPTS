@@ -7,10 +7,6 @@ package controller.WatchlistCtrl;
 
 import controller.MenuController;
 import gui.FPTS;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,49 +21,53 @@ import model.Equities.EquityComponent;
 import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.WatchedEquity;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 /**
- *
  * @author ericepstein
  */
 public class EditWatchlistController extends MenuController {
-    
-    @FXML 
+
+    @FXML
     private TextField tickerSymbolField = new TextField();
-    
+
     @FXML
     private TextField lowTriggerField = new TextField();
-    
+
     @FXML
     private TextField highTriggerField = new TextField();
-    
+
     @FXML
     private VBox watchedEquitiesBox = new VBox();
-    
+
     FPTS fpts;
-    
-    WatchedEquity watchedEq; 
-    
-        /**
+
+    WatchedEquity watchedEq;
+
+    /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.print("INITIALIZED AGAIN!!!!");
         // TODO
-        
+
         //watchedEquitiesBox = new VBox();
         fpts = FPTS.getSelf();
         Portfolio p = fpts.getCurrentUser().getMyPortfolio();
         ArrayList<WatchedEquity> watchlist = p.getWatchedEquities();
-        
+
         for (WatchedEquity w : watchlist) {
             System.out.println("LOOP");
             Button aButton = new Button(w.getSymbol());
             aButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-                    
-                    try { 
+
+                    try {
                         System.out.println("HANDLE");
                         watchedEq = w;
                         respond();
@@ -79,8 +79,8 @@ public class EditWatchlistController extends MenuController {
             });
             watchedEquitiesBox.getChildren().add(aButton);
         }
-    } 
-    
+    }
+
     public void redirect() throws IOException {
         System.out.println("IN REDIRECT");
         Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
@@ -88,9 +88,9 @@ public class EditWatchlistController extends MenuController {
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         System.out.println("SET SCENE");
-        stage.show(); 
+        stage.show();
     }
-   
+
     protected void respond() throws IOException {
         boolean validInput = true;
         /*
@@ -105,45 +105,45 @@ public class EditWatchlistController extends MenuController {
                 validInput = false;
             } else {
         */
-                double lowTrigger = -1;
-                double highTrigger = -1;
-                
-                //EquityComponent e = p.getEquityComponent(tickerSymbol);
-                EquityComponent e = watchedEq.getAssocEquity();
-                
-                if (lowTriggerField != null && !lowTriggerField.getText().isEmpty()) {
-                    System.out.println("TESTING FIRST INPUT: " + lowTriggerField.getText());
-                    try {
-                        lowTrigger = Double.parseDouble(lowTriggerField.getText());
-                    } catch (Exception ex) {
-                           lowTriggerField.setText("INVALID");
-                           validInput = false;
-                    }
-                }
-                
-                if (highTriggerField != null && !highTriggerField.getText().isEmpty()) {
-                    System.out.println("TESTING SECOND INPUT: " + highTriggerField.getText());
-                    try {
-                        highTrigger = Double.parseDouble(highTriggerField.getText());
-                    } catch (Exception ex) {
-                           highTriggerField.setText("INVALID");
-                           validInput = false;
-                    }
-                }
-               
-                if (validInput) {
-                    System.out.println("IN VALID INPUT");
-                    //WatchedEquity w = new WatchedEquity(e, lowTrigger, highTrigger);
-                    //p.addWatchedEquity(w);
-                    watchedEq.setHighTrigger(highTrigger);
-                    watchedEq.setLowTrigger(lowTrigger);
-                    Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
-                    Scene scene = new Scene(parent);
-                    Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show(); 
-                }
- 
+        double lowTrigger = -1;
+        double highTrigger = -1;
+
+        //EquityComponent e = p.getEquityComponent(tickerSymbol);
+        EquityComponent e = watchedEq.getAssocEquity();
+
+        if (lowTriggerField != null && !lowTriggerField.getText().isEmpty()) {
+            System.out.println("TESTING FIRST INPUT: " + lowTriggerField.getText());
+            try {
+                lowTrigger = Double.parseDouble(lowTriggerField.getText());
+            } catch (Exception ex) {
+                lowTriggerField.setText("INVALID");
+                validInput = false;
+            }
+        }
+
+        if (highTriggerField != null && !highTriggerField.getText().isEmpty()) {
+            System.out.println("TESTING SECOND INPUT: " + highTriggerField.getText());
+            try {
+                highTrigger = Double.parseDouble(highTriggerField.getText());
+            } catch (Exception ex) {
+                highTriggerField.setText("INVALID");
+                validInput = false;
+            }
+        }
+
+        if (validInput) {
+            System.out.println("IN VALID INPUT");
+            //WatchedEquity w = new WatchedEquity(e, lowTrigger, highTrigger);
+            //p.addWatchedEquity(w);
+            watchedEq.setHighTrigger(highTrigger);
+            watchedEq.setLowTrigger(lowTrigger);
+            Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
+
     }
-    
+
 }
