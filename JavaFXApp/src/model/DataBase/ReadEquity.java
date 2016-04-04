@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ReadEquity {
     protected static ArrayList<String[]> readInFile() {
-        return ReadFile.readInFile();
+        return ReadFile.readInEquities();
     }
     private static List<String> indexList = new ArrayList<String>(Arrays.asList("DOW", "NASDAQ100"));
     private static List<String> sectorList = new ArrayList<String>(Arrays.asList("FINANCE", "TECHNOLOGY", "HEALTH CARE", "TRANSPORTATION"));
@@ -79,18 +79,10 @@ public class ReadEquity {
         ArrayList<EquityComposite> compositeList = new ArrayList<EquityComposite>();
         // create the bare index composites
         for (String index : indexList) {
-            ArrayList<String> indices = new ArrayList<String>();
-            //TODO: Warning:(82, 31) [UnusedDeclaration] Variable 'indices' is never used
-            ArrayList<String> sectors = new ArrayList<String>();
-            //TODO:Warning:(83, 31) [UnusedDeclaration] Variable 'sectors' is never used
             compositeList.add(new EquityComposite(index, "Index"));
         }
         // create the bare index composites
         for (String sector : sectorList) {
-            ArrayList<String> indices = new ArrayList<String>();
-            //TODO: Warning:(88, 31) [UnusedDeclaration] Variable 'indices' is never used
-            ArrayList<String> sectors = new ArrayList<String>();
-            //TODO: Warning:(89, 31) [UnusedDeclaration] Variable 'sectors' is never used
             compositeList.add(new EquityComposite(sector, "Sector"));
         }
         return compositeList;

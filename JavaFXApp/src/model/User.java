@@ -1,6 +1,9 @@
 package model;
 
 import gui.FPTS;
+import model.DataBase.ReadFile;
+import model.DataBase.ReadHoldings;
+import model.DataBase.WriteFile;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Portfolio;
@@ -170,6 +173,7 @@ public class User implements Serializable {
         String user_csv = "JavaFXApp/src/model/DataBase/UserData.csv";
         BufferedReader reader = null;
         String line;
+        ReadFile readFile = new ReadFile();
 
         try {
             reader = new BufferedReader(new FileReader(user_csv));
@@ -179,8 +183,8 @@ public class User implements Serializable {
                 String pwd = split[1];
                 ArrayList<CashAccount> usersCashAccounts = readInCashFile(un);
                 //line above also utilizes readInTransFile(String userID) method
-                //ArrayList<Holding> usersHoldings = ReadHoldings.read();//THIS CAUSED ERRORS FOR SOME REASON
-                ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
+                ArrayList<Holding> usersHoldings = readFile.readHoldings(un);//THIS CAUSED ERRORS FOR SOME REASON
+                //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
 
                 Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts);
                 User newUser = new User(un, unHash(pwd), userPortfolio);
@@ -307,7 +311,7 @@ public class User implements Serializable {
                 int splitLength = split.length;
                 System.out.println(split[0]);
                 tickerSymbol = split[0];
-                tickerSymbol = tickerSymbol.substring(1, (tickerSymbol.length() - 1));//strips the first @ last "
+                tickerSymbol = tickerSymbol.substring(1, (tickerSymbol.length() - 1));//strips the first & last "
                 holdingName = split[1];
                 stringPricePerShare = split[2];
                 double doublePricePerShareValue = Double.parseDouble(stringPricePerShare);
@@ -433,7 +437,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.
+     * Adds the user to UserData.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
      * @param pw1
@@ -444,6 +448,7 @@ public class User implements Serializable {
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
+        WriteFile writeFile = new WriteFile();
         File newHoldingsFile;
         File newTransFile;
         File newCashFile;
@@ -497,30 +502,8 @@ public class User implements Serializable {
      * @param importedHoldings
      */
     public void addHoldings(ArrayList<Holding> holdings, File importedHoldings) {
-        try {
-            FileWriter writerH = new FileWriter(importedHoldings, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(writerH);
-            String index = "";
-            String sector = "";
-
-            for (Holding holding : holdings) {
-                for (String s : holding.getIndices()) {
-                    index += s;
-                }
-                for (String se : holding.getSectors()) {
-                    sector += se;
-                }
-                bufferedWriter.write("\"" + holding.getTickerSymbol() + "\",\"" +
-                        holding.getDisplayName() + "\",\"" + holding.getPricePerShare() + "\",\""
-                        + holding.getNumOfShares() + "\",\"" + holding.getAcquisitionDate() + "\",\""
-                        + index + "\",\"" + sector + "\"");
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        WriteFile writeFile = new WriteFile();
+        writeFile.holdingsWriter(holdings, importedHoldings);
     }
 
 

@@ -25,10 +25,12 @@ public class ReadTransactions {
      * Created by: Kimberly Sookoo.
      */
     public static ArrayList<Transaction> readTransactionImports(File file) {
-        ArrayList<String[]> splitFile = new ArrayList<>();
+        String path = file.getPath();
+        ArrayList<String[]> splitFile = ReadFile.readIn(path);
+        //ArrayList<String[]> splitFile = new ArrayList<>();
         allTransactions = new ArrayList<>();
 
-        BufferedReader reader = null;
+        /*BufferedReader reader = null;
         String splitLine;
 
         try {
@@ -50,7 +52,7 @@ public class ReadTransactions {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
 
         for (String[] line : splitFile) {
             Date date = null;
