@@ -7,6 +7,9 @@ package model.PortfolioElements;
 
 import model.Equities.EquityComponent;
 import gui.FPTS;
+import model.Equities.LoadedEquity;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -43,7 +46,15 @@ public class WatchedEquity {
     }
     
     private EquityComponent getAssocEquity(String symbol) {
-        return FPTS.getCurrentUser().getMyPortfolio().getEquityComponent(symbol);
+        ArrayList<EquityComponent> equityComponents = LoadedEquity.getEquityList();
+        for (EquityComponent ec : equityComponents) {
+            if (ec.getDisplayName().toUpperCase().equals(symbol.toUpperCase())) {
+
+                return ec;
+            }
+        }
+        return null;
+        //return FPTS.getCurrentUser().getMyPortfolio().getEquityComponent(symbol);
     }
     
     public WatchedEquity(EquityComponent ec, double highTrigger, double lowTrigger) {
@@ -124,5 +135,28 @@ public class WatchedEquity {
         lowTrigger = trigger;
         updateTriggers();
     }
-    
+
+    public double getHighTrigger() {
+        return this.highTrigger;
+    }
+
+    public double getLowTrigger() {
+        return lowTrigger;
+    }
+
+    public boolean isExceedsTrigger() {
+        return exceedsTrigger;
+    }
+
+    public boolean isHasExceededTrigger() {
+        return hasExceededTrigger;
+    }
+
+    public boolean isNotMeetsTrigger() {
+        return notMeetsTrigger;
+    }
+
+    public boolean isHasNotMetTrigger() {
+        return hasNotMetTrigger;
+    }
 }

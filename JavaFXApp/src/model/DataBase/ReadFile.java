@@ -3,6 +3,7 @@ package model.DataBase;
 import gui.FPTS;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.WatchedEquity;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class ReadFile {
 
     public static ArrayList<Holding> readHoldings(String un) {
         return ReadHoldings.readDB(un);
+    }
+
+    public static ArrayList<WatchedEquity> readWatchedEquities(String user) {
+        return ReadWatchedEquity.readDB(user);
     }
 
 //    public static ArrayList<CashAccount> readCash() {

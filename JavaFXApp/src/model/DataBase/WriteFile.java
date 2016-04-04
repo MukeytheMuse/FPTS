@@ -1,6 +1,7 @@
 package model.DataBase;
 
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.WatchedEquity;
 import model.User;
 
 import javax.swing.*;
@@ -122,10 +123,12 @@ public class WriteFile {
             File transFile = new File(e, "Trans.csv");
             File cashFile = new File(e, "Cash.csv");
             File holdingsFile = new File(e, "Holdings.csv");
+            File watchedEquitiesFile = new File(e, "Watch.csv");
             new FileWriter(transFile, true);
             FileWriter writerC = new FileWriter(cashFile, true);
             this.cashAccountsWriter(writerC);
             this.holdingsWriter(user.getMyPortfolio().getHoldings(), holdingsFile);
+            this.equityWriter(user.getMyPortfolio().getWatchedEquities(), watchedEquitiesFile);
             System.out.println("made it through WriteFile.updatePortfolioForUser!!!");
         } catch (Exception var8) {
             System.out.println("updatePortfolioForUser within WriteFile threw an exception");
@@ -165,6 +168,28 @@ public class WriteFile {
             System.out.println("holdingsWriter within WriteFile threw an exception");
         }
 
+    }
+
+    /**
+     *
+     */
+    public void equityWriter(ArrayList<WatchedEquity> watchedEquities, File file) {
+        try {
+            file.delete();
+            FileWriter fileWriterE = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriterE);
+
+            for (WatchedEquity watchedEquity : watchedEquities) {
+                bufferedWriter.write("\"" + watchedEquity.getSymbol() + "\",\"" + watchedEquity.getHighTrigger()
+                + "\",\"" + watchedEquity.getLowTrigger() + "\",\"" + watchedEquity.isExceedsTrigger() +
+                        "\",\"" + watchedEquity.isHasExceededTrigger() + "\",\"" + watchedEquity.isNotMeetsTrigger()
+                + "\",\"" + watchedEquity.isHasNotMetTrigger() + "\"");
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

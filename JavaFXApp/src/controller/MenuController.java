@@ -32,7 +32,7 @@ public abstract class MenuController implements Initializable {
     public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
         //TODO: Warning:(29, 57) [UnusedDeclaration] Parameter 'event' is never used
         Stage stage = new Stage();
-        Parent parent = FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/LogoutPage.fxml"));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -58,7 +58,7 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/HomePage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/HomePage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage)this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -71,7 +71,7 @@ public abstract class MenuController implements Initializable {
      * @throws IOException
      */
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/PortfolioPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);

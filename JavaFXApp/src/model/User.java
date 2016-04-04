@@ -4,10 +4,7 @@ import gui.FPTS;
 import model.DataBase.ReadFile;
 import model.DataBase.ReadHoldings;
 import model.DataBase.WriteFile;
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Portfolio;
-import model.PortfolioElements.Transaction;
+import model.PortfolioElements.*;
 
 import javax.swing.*;
 import java.io.*;
@@ -185,9 +182,16 @@ public class User implements Serializable {
                 //line above also utilizes readInTransFile(String userID) method
                 ArrayList<Holding> usersHoldings = readFile.readHoldings(un);//THIS CAUSED ERRORS FOR SOME REASON
                 //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
+                ArrayList<WatchedEquity> watchedEquities = readFile.readWatchedEquities(un);
 
                 Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts);
                 User newUser = new User(un, unHash(pwd), userPortfolio);
+
+                if (watchedEquities.size() != 0) {
+                    for (WatchedEquity w : watchedEquities) {
+                        newUser.getMyPortfolio().addWatchedEquity(w);
+                    }
+                }
 
                 System.out.println(un);
                 //have to unhash before creating a user because the password is hashed during creation
