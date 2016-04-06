@@ -1,0 +1,142 @@
+package controller;
+
+import gui.FPTS;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import model.Equities.EquityComponent;
+import model.PortfolioElements.HoldingUpdatable;
+import model.PortfolioElements.Portfolio;
+import model.SearchThread;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+import java.util.Set;
+
+/**
+ * Created by Luke Veilleux
+ */
+public class SearchController extends MenuController {
+
+    @FXML
+    private TableView<EquityComponent> tableView;
+    @FXML
+    private TableColumn<EquityComponent, String> tickerCol, nameCol, priceCol;
+    @FXML
+    private ChoiceBox<String> fieldDropDown, searchType;
+    @FXML
+    private TextField searchText;
+
+    private static Set<EquityComponent> matchList = new HashSet<EquityComponent>();
+    private String typeSearch = "Any";
+    private String fieldSearch = "All";
+
+    @FXML
+    protected void handleSearchTextEntered() {
+        fieldSearch = fieldDropDown.getValue();
+        typeSearch = searchType.getValue();
+        matchList.clear();
+        search();
+        update();
+    }
+
+    private void search() {
+        ArrayList<SearchThread> threads = new ArrayList<>();
+        switch(fieldSearch){
+            case "All":
+                threads.add(new SearchThread(searchText.getText(), "Ticker", typeSearch, null));
+                threads.add(new SearchThread(searchText.getText(), "Name", typeSearch, null));
+                break;
+            case "Ticker":
+                threads.add(new SearchThread(searchText.getText(), "Ticker", typeSearch, null));
+                break;
+            case "Name":
+                threads.add(new SearchThread(searchText.getText(), "Name", typeSearch, null));
+                break;
+            case "Index":
+                threads.add(new SearchThread(searchText.getText(), "Index", typeSearch, null));
+                break;
+            case "Sector":
+                threads.add(new SearchThread(searchText.getText(), "Sector", typeSearch, null));
+                break;
+        }
+        for(SearchThread thread : threads)
+            thread.run();
+        for(SearchThread thead : threads) {
+            try {
+                thead.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void update(){
+        ObservableList<EquityComponent> data = FXCollections.observableArrayList(matchList);
+        tableView.setItems(data);
+    }
+
+    public static void addEquitiesToList(ArrayList<HoldingUpdatable> lst){
+        for (HoldingUpdatable eqt : lst){
+            boolean flag = false;
+            for (EquityComponent e : matchList){
+                if (e.equals((EquityComponent) eqt))
+                    flag = true;
+            }
+            if (!flag)
+                matchList.add((EquityComponent) eqt);
+        }
+    }
+
+    @FXML
+    public void handleDoubleClickTableRow(MouseEvent event) throws IOException{
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+            EquityComponent equity = tableView.getSelectionModel().getSelectedItem();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../gui/PurchasePopUp.fxml"));
+                Parent root1 = fxmlLoader.load();
+                PurchasePopUpController controller=fxmlLoader.getController();
+                controller.setEquity(equity, 0, equity.getPricePerShare(), "BUY");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        fieldDropDown.setItems(FXCollections.observableArrayList(
+                "All", "Ticker", "Name", "Index", "Sector"
+        ));
+        fieldDropDown.setValue("All");
+        searchType.setItems(FXCollections.observableArrayList(
+                "Any", "Contains", "Starts with", "Exactly Matches"
+        ));
+        searchType.setValue("Any");
+
+        Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
+        tickerCol.setCellValueFactory(new PropertyValueFactory<EquityComponent, String>("tickerSymbol"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<EquityComponent, String>("name"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<EquityComponent, String>("pricePerShare"));
+
+        ObservableList<EquityComponent> data = FXCollections.observableArrayList(p.getEquityComponents());
+        tableView.setItems(data);
+    }
+
+}

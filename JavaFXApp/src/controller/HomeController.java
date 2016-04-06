@@ -76,9 +76,11 @@ public class HomeController extends MenuController {
      * @param event - ActionEvent - the event that caused this method to run.
      */
     @FXML
-    protected void handleBuyEquityButtonPressed(ActionEvent event) {
-        HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
-        eqUpdater.process(FPTS.getSelf());
+    protected void handleBuyEquityButtonPressed(ActionEvent event) throws IOException {
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("../gui/SearchPage.fxml")));
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene);
+        app_stage.show();
     }
 
     /**

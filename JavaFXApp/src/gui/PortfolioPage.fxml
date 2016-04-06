@@ -11,77 +11,62 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="home" mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
-                        <MenuItem fx:id="save" mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
-                        <MenuItem fx:id="Logout" mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
                     <items>
-                        <MenuItem fx:id="showPortfolio" mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
-                        <MenuItem fx:id="buyEquities" mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
-                        <MenuItem fx:id="sellEquities" mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
+                        <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWatchlistMenuItemPressed" text="Watchlist" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Cash Account">
                     <items>
-                        <MenuItem fx:id="createCA" mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
-                        <MenuItem fx:id="deposit" mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
-                        <MenuItem fx:id="withdraw" mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
-                        <MenuItem fx:id="transfer" mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <VBox layoutY="28.0" prefHeight="580.0" prefWidth="790.0">
-            <children>
+      <VBox layoutY="28.0" prefHeight="580.0" prefWidth="800.0">
+         <children>
                 <Label alignment="CENTER" prefHeight="27.0" prefWidth="329.0" text="Your Portfolio:">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="800.0">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="790.0">
-                            <children>
-                                <TableView fx:id="tableView" prefHeight="280.0" prefWidth="790.0">
-                                    <columns>
-                                        <TableColumn fx:id="tickerCol" editable="false" prefWidth="100.0" text="Ticker" />
-                                        <TableColumn fx:id="nameCol" editable="false" prefWidth="270.0" text="Company Name" />
-                                        <TableColumn fx:id="sharesCol" editable="false" prefWidth="100.0" text="Shares" />
-                                        <TableColumn fx:id="priceCol" editable="false" prefWidth="175.0" text="Price per Share ($)" />
-                                        <TableColumn fx:id="valueCol" editable="false" prefWidth="150.0" text="Current Value ($)" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </ScrollPane>
-                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="800.0">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="788.0">
-                            <children>
-                                <TableView fx:id="CAtableView" prefHeight="268.0" prefWidth="790.0">
-                                    <columns>
-                                        <TableColumn fx:id="CAnameCol" editable="false" prefWidth="275.0" text="Cash Account Name" />
-                                        <TableColumn fx:id="amountCol" editable="false" prefWidth="136.0" text="Amount ($)" />
-                                        <TableColumn fx:id="dateCol" prefWidth="163.0" text="Date Added" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </ScrollPane>
-            </children>
-        </VBox>
+            <TableView fx:id="tableView" prefHeight="280.0" prefWidth="800.0">
+              <columns>
+                <TableColumn fx:id="tickerCol" editable="false" prefWidth="100.0" text="Ticker" />
+                <TableColumn fx:id="nameCol" editable="false" prefWidth="270.0" text="Company Name" />
+                  <TableColumn fx:id="sharesCol" editable="false" prefWidth="100.0" text="Shares" />
+                  <TableColumn fx:id="priceCol" editable="false" prefWidth="175.0" text="Price per Share ($)" />
+                  <TableColumn fx:id="valueCol" editable="false" prefWidth="150.0" text="Current Value ($)" />
+              </columns>
+            </TableView>
+            <TableView fx:id="CAtableView" prefHeight="268.0" prefWidth="800.0">
+               <columns>
+                  <TableColumn fx:id="CAnameCol" editable="false" prefWidth="275.0" text="Cash Account Name" />
+                  <TableColumn fx:id="amountCol" editable="false" prefWidth="136.0" text="Amount ($)" />
+                  <TableColumn fx:id="dateCol" prefWidth="163.0" text="Date Added" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package model.Simulators;
 
+import gui.FPTS;
 import model.PortfolioElements.Holding;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class BullSimulator implements Simulator {
         this.hasSteps = hasSteps;
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
-//        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
         this.stepNumber = 0;
     }
 

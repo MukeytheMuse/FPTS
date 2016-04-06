@@ -20,28 +20,15 @@ public class PortfolioDisplayController extends MenuController {
     @FXML
     private TableView<Holding> tableView;
     @FXML
-    TableView<CashAccount> CAtableView;
+    private TableView<CashAccount> CAtableView;
 
     @FXML
-    private TableColumn<Holding, String> tickerCol;
+    private TableColumn<Holding, String> tickerCol, nameCol, sharesCol, priceCol, valueCol;
     @FXML
-    private TableColumn<Holding, String> nameCol;
-    @FXML
-    private TableColumn<Holding, String> sharesCol;
-    @FXML
-    private TableColumn<Holding, String> priceCol;
-    @FXML
-    private TableColumn<Holding, String> valueCol;
-    @FXML
-    private TableColumn<CashAccount, String> CAnameCol;
-    @FXML
-    private TableColumn<CashAccount, String> amountCol;
-    @FXML
-    private TableColumn<CashAccount, String> dateCol;
+    private TableColumn<CashAccount, String> CAnameCol, amountCol, dateCol;
+
 
     /**
-     * TODO: holdingName, valuePerShare, & currentValue are not showing up in portfolio view of holdings
-     * TODO: currentValue is not showing up in portfolio view of cash accounts
      *
      * @param location
      * @param resources
@@ -49,16 +36,16 @@ public class PortfolioDisplayController extends MenuController {
     public void initialize(URL location, ResourceBundle resources) {
         Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
         tickerCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("tickerSymbol"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("holdingName"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("name"));
         sharesCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("numOfShares"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("valuePerShare"));
-        valueCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("currentValue"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("pricePerShare"));
+        valueCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("totalValue"));
 
         ObservableList<Holding> data = FXCollections.observableArrayList(p.getHoldings());
         tableView.setItems(data);
 
         CAnameCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("accountName"));
-        amountCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("currentValue"));
+        amountCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("value"));
         dateCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("dateAdded"));
 
         ObservableList<CashAccount> CAdata = FXCollections.observableArrayList(p.getCashAccounts());

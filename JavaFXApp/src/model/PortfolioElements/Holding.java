@@ -99,7 +99,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      * @return String
      */
     public String getDisplayName() {
-        return tickerSymbol;
+        return holdingName;
     }//***********************************************************GET RID OF WHEN COMBINING HoldingUpdatable
 
 

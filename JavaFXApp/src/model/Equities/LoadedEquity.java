@@ -185,4 +185,9 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
     @Override
     public void remove(EquityComponent e) {
     }
+
+    public boolean equals(EquityComponent e) {
+        return e instanceof EquityComposite && this.getName().equals(e.getName()) && this.getTickerSymbol().equals(e.getTickerSymbol());
+    }
+
 }
