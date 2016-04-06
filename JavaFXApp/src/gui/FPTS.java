@@ -32,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.DataBase.WriteFile;
 import model.PortfolioElements.Portfolio;
 import model.Simulators.Simulator;
 import model.User;
@@ -191,42 +192,43 @@ public class FPTS extends Application {
     public static void main(String[] args) {
         if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
-            File csv = new File("model/DataBase/UserData.csv");
-            File csvTemp = new File("model/DataBase/UserDataTemp.csv");
 
             try {
-                BufferedReader e = new BufferedReader(new FileReader(csv));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
+                BufferedReader reader;
+
+                File csv = new File(WriteFile.getPath() + "/lilBase/UserData.csv");
+
+                reader = new BufferedReader(new FileReader(csv));
+                File csvTemp = new File(WriteFile.getPath() + "/lilBase/UserDataTemp.csv");
+                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp,true));
 
                 String line;
-                while ((line = e.readLine()) != null) {
-                    String[] directory = line.split(",");
-                    if (directory[0].equals(userID)) {
+                while ((line = reader.readLine()) != null) {
+                    String[] user = line.split(",");
+                    if (user[0].equals(userID)) {
                         System.out.println("Deleting " + userID);
                     } else {
-                        writer.write(directory[0] + "," + directory[1]);
+                        writer.write(user[0] + "," + user[1]);
                         writer.newLine();
                     }
                 }
 
                 writer.close();
-                e.close();
+                reader.close();
                 csvTemp.renameTo(csv);
-                //TODO: check Warning:(174, 25) Result of 'File.renameTo()' is ignored
-                File directory1 = new File("model/Database/Portfolios/" + userID);
-                if (directory1.exists()) {
-                    System.out.println("Has " + userID + " been deleted?");
-                    File transFile = new File(directory1, "/Trans.csv");
-                    File cashFile = new File(directory1, "/Cash.csv");
-                    File holdingsFile = new File(directory1, "/Holdings.csv");
+
+                File directory = new File(WriteFile.getPath() + "/lilBase/Portfolios/" + userID);
+                System.out.println(directory.toString());
+                if (directory.exists()) {
+                    File transFile = new File(directory, "/Trans.csv");
+                    File cashFile = new File(directory, "/Cash.csv");
+                    File holdingsFile = new File(directory, "/Holdings.csv");
+                    File watchFile = new File(directory, "/Watch.csv");
                     transFile.delete();
-                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
                     cashFile.delete();
-                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
                     holdingsFile.delete();
-                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
-                    directory1.delete();
-                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
+                    watchFile.delete();
+                    directory.delete();
                 }
             } catch (Exception var11) {
                 ;
