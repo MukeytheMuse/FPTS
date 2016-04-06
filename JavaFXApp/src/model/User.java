@@ -178,9 +178,23 @@ public class User implements Serializable {
                 String[] split = line.split(",");
                 String un = split[0];
                 String pwd = split[1];
-                //ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
-                ArrayList<CashAccount> usersCashAccounts = readInCashFile(un);
+                ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
+                //ArrayList<CashAccount> usersCashAccounts = readInCashFile(un);
+                Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
 
+
+                for(CashAccount cashAccountToAssociate: usersCashAccounts){
+                    //if transactions exist for this cash account
+                    if(cashAccountNameTransactionsMap.containsKey(cashAccountToAssociate.getAccountName())){
+                        ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAssociate.getAccountName());
+                        cashAccountToAssociate.setTransactions(curTransactions);//add transactions to this current cashAccount object
+                        //iterate through transactions (that have a cash account association with a cash account that still exists)
+                        // and add association to the transaction objects
+                        for(Transaction t: curTransactions){
+                            t.setCashAccount(cashAccountToAssociate);
+                        }
+                    }//if not it will maintain an empty array list for its transactions
+                }
                 //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
                 ArrayList<Holding> usersHoldings = readFile.readHoldings(un);
                 //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
@@ -214,246 +228,253 @@ public class User implements Serializable {
     }
 
 
-    /**
-     * Reads Cash.csv and Trans.csv in order to created a populated list of Cash Accounts
-     * with their corresponding transaction history.
-     *
-     * @param userID: Current User being created and populated with their information
-     *              from the database when the system first starts up.
-     * @return
-     *
-     * Author(s): Ian London and Kaitlin Brockway
-     */
-    private static ArrayList<CashAccount> readInCashFile(String userID){
-        String cash_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv";
-        String line;
-        BufferedReader reader = null;
-        String cashAccountName;
-        String cashAccountTotalValue;
-        String cashAccountDateAdded;
-        ArrayList<CashAccount> usersCashAccounts = new ArrayList<>();
-        Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap;
-
-        try {
-            reader = new BufferedReader(new FileReader(cash_csv));
-            cashAccountNameTransactionsMap = readInTransFile(userID);//get the transactions from Trans.csv
-            //GIVE TRANSACTIONS AN ASSOCIATED CASH ACCOUNT
-            //Each line in the file is formatted: AccountName, currentValue, dateAdded
-            //loops through while there are still lines with information left in the file
-            while ((line = reader.readLine()) != null) {
-                String[] split = line.split(",");
-                cashAccountName = split[0];
-                cashAccountName = cashAccountName.substring(1, (cashAccountName.length() - 1));//strips the first @ last "
-                cashAccountTotalValue = split[1];
-                cashAccountTotalValue = cashAccountTotalValue.substring(1, (cashAccountTotalValue.length() - 1));//strips the first @ last "
-                double doubleCashATotalValue = Double.parseDouble(cashAccountTotalValue);
-                cashAccountDateAdded = split[2];
-                cashAccountDateAdded = cashAccountDateAdded.substring(1, (cashAccountDateAdded.length() - 1));//strips the first @ last "
-
-                //cashAccountDateAdded = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[2]);
-                //TODO: figure out why date conversion throws parsing errors and fix and change types in class constructor.
-                //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
-                //LocalDate parsedDate = LocalDate.parse(cashAccountDateAdded, formatter);
-
-                CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , new Date(), cashAccountNameTransactionsMap.get(cashAccountName));
-                if( cashAccountNameTransactionsMap.containsKey(cashAccountToAdd.getAccountName())){
-                    ArrayList<Transaction> newTransactions = new ArrayList<>();
-                    ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAdd.getAccountName());
-                    for(Transaction t: curTransactions){
-                        t.setCashAccount(cashAccountToAdd);
-                        newTransactions.add(t);
-                    }
-                    cashAccountToAdd.setTransactions(newTransactions);
-                    usersCashAccounts.add(cashAccountToAdd);
-                } else {
-                    usersCashAccounts.add(cashAccountToAdd);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv not found! Please try again.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
-        return usersCashAccounts;
-    }
-
-    /**
-     * Holdings.csv file is in the format:
-     * "tickerSymbol","holdingName","valuePricePerShare","numOfShares","aquisitionDate","index1","sector1"
-     * where there may be multiple indicies and sectors.
-     *
-     * @param userID
-     * @return
-     *
-     * Author(s): Kaitlin Brockway
-     */
-    private static ArrayList<Holding> readInHoldingsFile(String userID) {
-        String holdings_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Holdings.csv";
-        String line;
-        BufferedReader reader = null;
-        String tickerSymbol;
-        String holdingName;
-        String stringPricePerShare;
-        String stringNumOfShares;
-        String stringAcquisitionDate;
-        Date acquisitionDate;
-        ArrayList<String> indicies = new ArrayList<>();
-        String cur_indexORsector;
-        ArrayList<String> sectors = new ArrayList<>();
-        ArrayList<Holding> allHoldings = new ArrayList<>();
-
-        try {
-            reader = new BufferedReader(new FileReader(holdings_csv));
-            while ((line = reader.readLine()) != null ){
-                String[] split = line.split(",");
-                int splitLength = split.length;
-                System.out.println(splitLength);
-                tickerSymbol = split[0];
-                tickerSymbol = tickerSymbol.substring(1, (tickerSymbol.length() - 1));//strips the first @ last "
-                holdingName = split[1];
-                holdingName = holdingName.substring(1, (holdingName.length() - 1));//strips the first @ last "
-                stringPricePerShare = split[2];
-                stringPricePerShare = stringPricePerShare.substring(1, (stringPricePerShare.length() - 1));//strips the first @ last "
-                //TODO: check if the stringPricePerShare can be parsed into a double. catch
-                double doublePricePerShareValue = Double.parseDouble(stringPricePerShare);
-                stringNumOfShares = split[3];
-                stringNumOfShares = stringNumOfShares.substring(1, (stringNumOfShares.length() - 1));//strips the first @ last "
-                //TODO: check to see if stringNumOfShares can be converted to an int. catch
-                int intNumOfShares = Integer.parseInt(stringNumOfShares);
-                stringAcquisitionDate = split[4];
-                stringAcquisitionDate = stringAcquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
-                //TODO: change to date format here and for the corresponding class attribute and its constructor. catch
-                // WE DON'T NEED THE TOTAL VALUE BECAUSE IT IS CALCULATED IN THE CONSTRUCTOR.
-                int counter = 5;
-                while (counter < splitLength) {
-                    cur_indexORsector = split[counter];
-                    cur_indexORsector = cur_indexORsector.substring(1, cur_indexORsector.length() - 1);
-                    if (FPTS.allIndicies.contains(cur_indexORsector)) {
-                        indicies.add(cur_indexORsector);
-                    } else if (FPTS.allSectors.contains(cur_indexORsector)) {
-                        sectors.add(cur_indexORsector);
-                    } else {
-//                        System.out.println("The current index or sector being read is not included in the possibilities.");
-//                        System.out.println("Check to make sure allSectors and allIndicies in the FPTS class have included all possibilities");
-                        System.out.println("The current string being ignored is: " + cur_indexORsector);
-                        System.out.println("This is being printed from the method readInHoldingsFile in the User Class.");
-                    }
-                    counter += 1;
-                }
-                //TODO: Fix date
-                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, new Date(), indicies, sectors);
-                allHoldings.add(cur_holding);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return allHoldings;
-    }
-
-
-    /**
-     * BE AWARE: IF THE USER HAS TRANSACTIONS WITH A CASH ACCOUNT NAME THAT DOES NOT EXIST
-     * IT WILL NOT BE SAVED IN THE PORTFOLIO. ALSO IF THE CASH ACCOUNT NAME DOES NOT HAVE ANY TRANSACTIONS
-     * THE TRANSACTIONS WILL BE "null"
-     * <p>
-     * <p>
-     * Reads the Trans.csv file for the userID specified as a parameter and returns
-     * a map that contains a key represented as the CashAccountName with the values
-     * represented as a list of the transactions associated with the cash account.
-     * <p>
-     * Called by "readInCashFile" method because the cash objects need to be created with
-     * the preexisting transactions.
-     * <p>
-     * Private method for safety purposes.
-     *
-     * @param userID
-     * @return Author(s): Kaitlin Brockway
-     */
-    private static Map<String, ArrayList<Transaction>> readInTransFile(String userID) {
-        String transactions_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv";
-        Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = new HashMap<>();
-        String line;
-        BufferedReader reader = null;
-        String stringCashAccountNameAssociatedWith;
-        String stringAmount;
-        String stringDateMade;
-        Date dateMade;
-
-        String stringType;
-        // Line format:
-        // cashAccountNameAssociatedWith, amount, year, month, day, typeWithdrawalTransferOrDeposit
-        try {
-            reader = new BufferedReader(new FileReader(transactions_csv));
-            while ((line = reader.readLine()) != null) {
-                String[] split = line.split(",");
-                stringCashAccountNameAssociatedWith = split[0];
-                stringCashAccountNameAssociatedWith = stringCashAccountNameAssociatedWith.substring(1, (stringCashAccountNameAssociatedWith.length() - 1));//strips the first @ last "
-                stringAmount = split[1];
-                stringAmount = stringAmount.substring(1, (stringAmount.length() - 1));//strips the first @ last "
-                stringDateMade = split[2];
-                stringDateMade = stringDateMade.substring(1, (stringDateMade.length() - 1));//strips the first @ last "
-                //dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[2]);
-                //System.out.println(stringDateMade);
-                stringType = split[3];
-                stringType = stringType.substring(1, (stringType.length() - 1));//strips the first @ last "
-                //convert certain fields to their appropriate types for the constructor.
-                //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
-                double amount = Double.parseDouble(stringAmount);//need the amount in double format to use the transaction constructor
-                //TODO: figure out why date conversion throws parsing errors and fix and change types in class constructor.
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
-//                LocalDate parsedDate = LocalDate.parse(stringDateMade, formatter);
-                Transaction newTransactionToAdd;
-                if(stringType.equals("Withdrawal")){
-                    newTransactionToAdd = new Withdrawal(amount);
-                } else {//if(stringType.equals("Deposit")){
-                    newTransactionToAdd = new Deposit(amount);
-                }
-                //Transaction newTransactionToAdd = new Transaction(amount, stringDateMade, stringType, stringCashAccountNameAssociatedWith);
-                if (cashAccountNameTransactionsMap.containsKey(stringCashAccountNameAssociatedWith)) {
-                    ArrayList<Transaction> newTransactionsList = cashAccountNameTransactionsMap.get(stringCashAccountNameAssociatedWith);
-                    newTransactionsList.add(newTransactionToAdd);
-                    cashAccountNameTransactionsMap.replace(stringCashAccountNameAssociatedWith, newTransactionsList);
-                } else {
-                    ArrayList<Transaction> transactionListToAdd = new ArrayList<>();
-                    transactionListToAdd.add(newTransactionToAdd);
-                    cashAccountNameTransactionsMap.put(stringCashAccountNameAssociatedWith, transactionListToAdd);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-//                    System.out.print("Closed Successfully. ");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return cashAccountNameTransactionsMap;
-    }
+//    /**
+//     * Reads Cash.csv and Trans.csv in order to created a populated list of Cash Accounts
+//     * with their corresponding transaction history.
+//     *
+//     * @param userID: Current User being created and populated with their information
+//     *              from the database when the system first starts up.
+//     * @return
+//     *
+//     * Author(s): Ian London and Kaitlin Brockway
+//     */
+//    private static ArrayList<CashAccount> readInCashFile(String userID){
+//        String cash_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv";
+//        String line;
+//        BufferedReader reader = null;
+//        String cashAccountName;
+//        String cashAccountTotalValue;
+//        String cashAccountDateAdded;
+//        ArrayList<CashAccount> usersCashAccounts = new ArrayList<>();
+//        Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap;
+//
+//        try {
+//            reader = new BufferedReader(new FileReader(cash_csv));
+//            cashAccountNameTransactionsMap = readInTransFile(userID);//get the transactions from Trans.csv
+//            //GIVE TRANSACTIONS AN ASSOCIATED CASH ACCOUNT
+//            //Each line in the file is formatted: AccountName, currentValue, dateAdded
+//            //loops through while there are still lines with information left in the file
+//            while ((line = reader.readLine()) != null) {
+//                String[] split = line.split(",");
+//                cashAccountName = split[0];
+//                cashAccountName = cashAccountName.substring(1, (cashAccountName.length() - 1));//strips the first @ last "
+//                cashAccountTotalValue = split[1];
+//                cashAccountTotalValue = cashAccountTotalValue.substring(1, (cashAccountTotalValue.length() - 1));//strips the first @ last "
+//                double doubleCashATotalValue = Double.parseDouble(cashAccountTotalValue);
+//                cashAccountDateAdded = split[2];
+//                cashAccountDateAdded = cashAccountDateAdded.substring(1, (cashAccountDateAdded.length() - 1));//strips the first @ last "
+//
+//                //cashAccountDateAdded = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[2]);
+//                //TODO: figure out why date conversion throws parsing errors and fix and change types in class constructor.
+//                //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+//                //LocalDate parsedDate = LocalDate.parse(cashAccountDateAdded, formatter);
+//
+//
+//                CashAccount cashAccountToAdd;
+//                //If there are no transactions associated with this cash account
+//                if(cashAccountNameTransactionsMap.get(cashAccountName)==null){
+//                    cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , new Date(), new ArrayList<>());
+//                } else {//There are transactions associated with this cash account
+//                    cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , new Date(), cashAccountNameTransactionsMap.get(cashAccountName));
+//                }
+//                if( cashAccountNameTransactionsMap.containsKey(cashAccountToAdd.getAccountName())){
+//                    ArrayList<Transaction> newTransactions = new ArrayList<>();
+//                    ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAdd.getAccountName());
+//                    for(Transaction t: curTransactions){
+//                        t.setCashAccount(cashAccountToAdd);
+//                        newTransactions.add(t);
+//                    }
+//                    cashAccountToAdd.setTransactions(newTransactions);
+//                    usersCashAccounts.add(cashAccountToAdd);
+//                } else {
+//                    usersCashAccounts.add(cashAccountToAdd);
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv not found! Please try again.");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (reader != null) {
+//                try {
+//                    reader.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//        }
+//        return usersCashAccounts;
+//    }
+//
+//    /**
+//     * Holdings.csv file is in the format:
+//     * "tickerSymbol","holdingName","valuePricePerShare","numOfShares","aquisitionDate","index1","sector1"
+//     * where there may be multiple indicies and sectors.
+//     *
+//     * @param userID
+//     * @return
+//     *
+//     * Author(s): Kaitlin Brockway
+//     */
+//    private static ArrayList<Holding> readInHoldingsFile(String userID) {
+//        String holdings_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Holdings.csv";
+//        String line;
+//        BufferedReader reader = null;
+//        String tickerSymbol;
+//        String holdingName;
+//        String stringPricePerShare;
+//        String stringNumOfShares;
+//        String stringAcquisitionDate;
+//        Date acquisitionDate;
+//        ArrayList<String> indicies = new ArrayList<>();
+//        String cur_indexORsector;
+//        ArrayList<String> sectors = new ArrayList<>();
+//        ArrayList<Holding> allHoldings = new ArrayList<>();
+//
+//        try {
+//            reader = new BufferedReader(new FileReader(holdings_csv));
+//            while ((line = reader.readLine()) != null ){
+//                String[] split = line.split(",");
+//                int splitLength = split.length;
+//                System.out.println(splitLength);
+//                tickerSymbol = split[0];
+//                tickerSymbol = tickerSymbol.substring(1, (tickerSymbol.length() - 1));//strips the first @ last "
+//                holdingName = split[1];
+//                holdingName = holdingName.substring(1, (holdingName.length() - 1));//strips the first @ last "
+//                stringPricePerShare = split[2];
+//                stringPricePerShare = stringPricePerShare.substring(1, (stringPricePerShare.length() - 1));//strips the first @ last "
+//                //TODO: check if the stringPricePerShare can be parsed into a double. catch
+//                double doublePricePerShareValue = Double.parseDouble(stringPricePerShare);
+//                stringNumOfShares = split[3];
+//                stringNumOfShares = stringNumOfShares.substring(1, (stringNumOfShares.length() - 1));//strips the first @ last "
+//                //TODO: check to see if stringNumOfShares can be converted to an int. catch
+//                int intNumOfShares = Integer.parseInt(stringNumOfShares);
+//                stringAcquisitionDate = split[4];
+//                stringAcquisitionDate = stringAcquisitionDate.substring(1, (stringAcquisitionDate.length() - 1));
+//                //TODO: change to date format here and for the corresponding class attribute and its constructor. catch
+//                // WE DON'T NEED THE TOTAL VALUE BECAUSE IT IS CALCULATED IN THE CONSTRUCTOR.
+//                int counter = 5;
+//                while (counter < splitLength) {
+//                    cur_indexORsector = split[counter];
+//                    cur_indexORsector = cur_indexORsector.substring(1, cur_indexORsector.length() - 1);
+//                    if (FPTS.allIndicies.contains(cur_indexORsector)) {
+//                        indicies.add(cur_indexORsector);
+//                    } else if (FPTS.allSectors.contains(cur_indexORsector)) {
+//                        sectors.add(cur_indexORsector);
+//                    } else {
+////                        System.out.println("The current index or sector being read is not included in the possibilities.");
+////                        System.out.println("Check to make sure allSectors and allIndicies in the FPTS class have included all possibilities");
+//                        System.out.println("The current string being ignored is: " + cur_indexORsector);
+//                        System.out.println("This is being printed from the method readInHoldingsFile in the User Class.");
+//                    }
+//                    counter += 1;
+//                }
+//                //TODO: Fix date
+//                Holding cur_holding = new Holding(tickerSymbol, holdingName, doublePricePerShareValue, intNumOfShares, new Date(), indicies, sectors);
+//                allHoldings.add(cur_holding);
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (reader != null) {
+//                try {
+//                    reader.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return allHoldings;
+//    }
+//
+//
+//    /**
+//     * BE AWARE: IF THE USER HAS TRANSACTIONS WITH A CASH ACCOUNT NAME THAT DOES NOT EXIST
+//     * IT WILL NOT BE SAVED IN THE PORTFOLIO. ALSO IF THE CASH ACCOUNT NAME DOES NOT HAVE ANY TRANSACTIONS
+//     * THE TRANSACTIONS WILL BE "null"
+//     * <p>
+//     * <p>
+//     * Reads the Trans.csv file for the userID specified as a parameter and returns
+//     * a map that contains a key represented as the CashAccountName with the values
+//     * represented as a list of the transactions associated with the cash account.
+//     * <p>
+//     * Called by "readInCashFile" method because the cash objects need to be created with
+//     * the preexisting transactions.
+//     * <p>
+//     * Private method for safety purposes.
+//     *
+//     * @param userID
+//     * @return Author(s): Kaitlin Brockway
+//     */
+//    private static Map<String, ArrayList<Transaction>> readInTransFile(String userID) {
+//        String transactions_csv = "JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv";
+//        Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = new HashMap<>();
+//        String line;
+//        BufferedReader reader = null;
+//        String stringCashAccountNameAssociatedWith;
+//        String stringAmount;
+//        String stringDateMade;
+//        Date dateMade;
+//
+//        String stringType;
+//        // Line format:
+//        // cashAccountNameAssociatedWith, amount, year, month, day, typeWithdrawalTransferOrDeposit
+//        try {
+//            reader = new BufferedReader(new FileReader(transactions_csv));
+//            while ((line = reader.readLine()) != null) {
+//                String[] split = line.split(",");
+//                stringCashAccountNameAssociatedWith = split[0];
+//                stringCashAccountNameAssociatedWith = stringCashAccountNameAssociatedWith.substring(1, (stringCashAccountNameAssociatedWith.length() - 1));//strips the first @ last "
+//                stringAmount = split[1];
+//                stringAmount = stringAmount.substring(1, (stringAmount.length() - 1));//strips the first @ last "
+//                stringDateMade = split[2];
+//                stringDateMade = stringDateMade.substring(1, (stringDateMade.length() - 1));//strips the first @ last "
+//                //dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(split[2]);
+//                //System.out.println(stringDateMade);
+//                stringType = split[3];
+//                stringType = stringType.substring(1, (stringType.length() - 1));//strips the first @ last "
+//                //convert certain fields to their appropriate types for the constructor.
+//                //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
+//                double amount = Double.parseDouble(stringAmount);//need the amount in double format to use the transaction constructor
+//                //TODO: figure out why date conversion throws parsing errors and fix and change types in class constructor.
+////                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+////                LocalDate parsedDate = LocalDate.parse(stringDateMade, formatter);
+//                Transaction newTransactionToAdd;
+//                if(stringType.equals("Withdrawal")){
+//                    newTransactionToAdd = new Withdrawal(amount);
+//                } else {//if(stringType.equals("Deposit")){
+//                    newTransactionToAdd = new Deposit(amount);
+//                }
+//                //Transaction newTransactionToAdd = new Transaction(amount, stringDateMade, stringType, stringCashAccountNameAssociatedWith);
+//                if (cashAccountNameTransactionsMap.containsKey(stringCashAccountNameAssociatedWith)) {
+//                    ArrayList<Transaction> newTransactionsList = cashAccountNameTransactionsMap.get(stringCashAccountNameAssociatedWith);
+//                    newTransactionsList.add(newTransactionToAdd);
+//                    cashAccountNameTransactionsMap.replace(stringCashAccountNameAssociatedWith, newTransactionsList);
+//                } else {
+//                    ArrayList<Transaction> transactionListToAdd = new ArrayList<>();
+//                    transactionListToAdd.add(newTransactionToAdd);
+//                    cashAccountNameTransactionsMap.put(stringCashAccountNameAssociatedWith, transactionListToAdd);
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Trans.csv not found! Please try again.");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (reader != null) {
+//                try {
+//                    reader.close();
+////                    System.out.print("Closed Successfully. ");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return cashAccountNameTransactionsMap;
+//    }
 
     /**
      * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.

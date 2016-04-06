@@ -48,7 +48,11 @@ public class CashAccount implements Searchable {
         this.accountName = AccountName;
         currentValue = initialAmount;
         this.dateAdded = dateAdded;
-        this.transactions = existingTransactions;
+        if(existingTransactions == null){
+            this.transactions = new ArrayList<>();
+        } else {
+            this.transactions = existingTransactions;
+        }
     }
 
     /**

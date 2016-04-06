@@ -4,10 +4,12 @@ import gui.FPTS;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.Transaction;
 import model.PortfolioElements.WatchedEquity;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author: Ian London
@@ -35,6 +37,10 @@ public class ReadFile {
 
     public static ArrayList<CashAccount> readInCashFile(String un) {
         return ReadCash.readDB(un);
+    }
+
+    public static Map<String, ArrayList<Transaction>> readInTransFile(String un){
+        return ReadTrans.readDB(un);
     }
 
 

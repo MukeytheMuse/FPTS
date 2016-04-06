@@ -3,6 +3,7 @@ package model.DataBase;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Transaction;
+import model.User;
 
 import java.io.*;
 import java.text.ParseException;
@@ -39,7 +40,6 @@ public class ReadCash {
     protected static ArrayList<CashAccount> read(ArrayList<String[]> file) {
         ArrayList<String[]> splitFile = file;
         ArrayList<CashAccount> allCashAccounts = new ArrayList<>();
-        Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap;
 
         // iterate through each line representing a Cash Account
         for (String[] line : splitFile) {
@@ -54,51 +54,11 @@ public class ReadCash {
             String stringCashValue = line[1];
             double doubleCashATotalValue = Double.parseDouble(stringCashValue);
             String cashAccountDateAdded = line[2];
-
-            //cashAccountNameTransactionsMap = readInTransFile(userID);
-
-            //CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , new Date(), cashAccountNameTransactionsMap.get(cashAccountName));
-//                        if( cashAccountNameTransactionsMap.containsKey(cashAccountToAdd.getAccountName())){
-//                            ArrayList<Transaction> newTransactions = new ArrayList<>();
-//                            ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAdd.getAccountName());
-//                            for(Transaction t: curTransactions){
-//                                t.setCashAccount(cashAccountToAdd);
-//                                newTransactions.add(t);
-//                            }
-//                            cashAccountToAdd.setTransactions(newTransactions);
-//                            usersCashAccounts.add(cashAccountToAdd);
-//                        } else {
-//                            usersCashAccounts.add(cashAccountToAdd);
-//                        }
-//                    }
-//                } catch (FileNotFoundException e) {
-//                    System.out.println("JavaFXApp/src/model/DataBase/Portfolios/" + userID + "/Cash.csv not found! Please try again.");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    if (reader != null) {
-//                        try {
-//                            reader.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                }
-//                return usersCashAccounts;
-//            }
-
-            //TODO: ADD BACK
-//            CashAccount curCash = new CashAccount(line[0], Double.parseDouble(line[1]), date);
-//
-//            //    public CashAccount(String s, double v, Date date) {
-//            //public CashAccount(String AccountName, double initialAmount, Date dateAdded, ArrayList< Transaction > existingTransactions) {
-//
-//
-//                // add cash accounts iteratively
-//            allCash.add(curCash);
+            //Cash account is temporarily created with no associated transactions. Association is made in fillUsers method in the User class
+            CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , new Date(), new ArrayList<>());
+            allCashAccounts.add(cashAccountToAdd);
         }
-        return allCash;
+        return allCashAccounts;
     }
 
 
