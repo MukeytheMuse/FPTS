@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Equities.EquityComponent;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.HoldingUpdatable;
 import model.Searchers.CashAccountSearcher;
@@ -114,12 +115,12 @@ abstract public class HoldingAlgorithm implements Observer {
     /*
     * Delegates method of purchase/sale inside FPTS to subclass
     */
-    abstract void processInsideFPTS();
+    abstract void processInsideFPTS(EquityComponent equity, int numOfShares, CashAccount account, double price);
 
     /*
     * Delegates method of purchase/sale outside FPTS to sublcass
     */
-    abstract void processOutsideFPTS();
+    abstract void processOutsideFPTS(EquityComponent equity, int numOfShares, double price);
 
     /*
     *
@@ -269,7 +270,7 @@ abstract public class HoldingAlgorithm implements Observer {
                             /*
                             * Delegates purchase/sale outside FPTS in respective subclass
                             */
-                            processOutsideFPTS();
+                            processOutsideFPTS(null, 0, 0);
                             theStage.setScene(theFPTS.getConfirmationScene());
                             break;
                         case ("Use existing cash account"):
@@ -343,7 +344,7 @@ abstract public class HoldingAlgorithm implements Observer {
                 */
                 if (mainInput.getText() != null && s.getMatch(mainInput.getText()) != null) {
                     cashAccountOfInterest = (CashAccount) s.getMatch(mainInput.getText());
-                    processInsideFPTS();
+                    processInsideFPTS(null, 0, cashAccountOfInterest, 0);
                 } else {
                     mainInput.setText("INVALID");
                 }

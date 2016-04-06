@@ -158,4 +158,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
         childEquities.add(e);
     }
 
+    public boolean equals(EquityComponent e) {
+        return e instanceof EquityComposite && this.getName().equals(e.getName()) && this.getTickerSymbol().equals(e.getTickerSymbol());
+    }
 }

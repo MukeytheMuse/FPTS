@@ -284,7 +284,7 @@ public class FPTS extends Application {
         aButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm();
+                HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm(null);
                 eqUpdater.process(self);
             }
         });

@@ -79,14 +79,28 @@ public abstract class MenuController implements Initializable {
     }
 
 
-    public void handleBuyEquitiesMenuItemPressed(ActionEvent event) {
-        HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
-        eqUpdater.process(FPTS.getSelf());
+    public void handleBuyEquitiesMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/SearchPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void handleSellEquitiesMenuItemPressed(ActionEvent event) {
-        HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm();
-        eqUpdater.process(FPTS.getSelf());
+    public void handleSellEquitiesMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/SellHoldingPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void handleWatchlistMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleWithdrawMenuItemPressed(ActionEvent event) {

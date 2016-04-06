@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchController">
     <children>
         <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
             <menus>
@@ -43,7 +43,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
                     </items>
                 </Menu>
-                                
             </menus>
         </MenuBar>
         <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="802.0">
@@ -53,43 +52,37 @@
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="317.99998474121094" minHeight="10.0" prefHeight="118.33333587646484" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="225.00000762939453" minHeight="10.0" prefHeight="166.66666412353516" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="225.00000762939453" minHeight="10.0" prefHeight="111.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="225.00000762939453" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="174.33331298828125" minHeight="10.0" prefHeight="158.33331298828125" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="132.33334350585938" minHeight="10.0" prefHeight="132.33334350585938" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label alignment="CENTER" prefHeight="27.0" prefWidth="329.0" text="Financial Portfolio Tracking System" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                    <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                    </font>
-                </Label>
-                <Label fx:id="label" mouseTransparent="true" prefHeight="17.0" prefWidth="404.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="75.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
-                    <children>
-                        <Button fx:id="pinfo" mnemonicParsing="false" onAction="#handlePortfolioButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Portfolio Info">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="buyEquity" mnemonicParsing="false" onAction="#handleBuyEquityButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Buy Equities">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="simulate" mnemonicParsing="false" onAction="#handleSimulateButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Run Simulation">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="logout" mnemonicParsing="false" onAction="#handleLogoutButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Logout">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                    </children>
-                </HBox>
-                <PieChart fx:id="valueChart" title="Portfolio" GridPane.columnIndex="1" GridPane.rowSpan="2" />
-                <Label fx:id="valueLabel" alignment="CENTER" prefHeight="17.0" prefWidth="255.0" text="Portfolio Current Value: " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <TableView fx:id="tableView" onMousePressed="#handleDoubleClickTableRow" prefHeight="380.0" prefWidth="790.0" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="3">
+               <columns>
+                  <TableColumn fx:id="tickerCol" editable="false" prefWidth="141.0" text="Ticker" />
+                  <TableColumn fx:id="nameCol" editable="false" prefWidth="315.0" text="Company Name" />
+                  <TableColumn fx:id="priceCol" editable="false" prefWidth="140.0" text="Price per Share ($)" />
+               </columns>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <children>
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="150.0" text="Search: " />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="150.0" text="Search by Field" />
+                        <ChoiceBox fx:id="fieldDropDown" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="150.0" text="Search Type" />
+                        <ChoiceBox fx:id="searchType" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <TextField fx:id="searchText" onKeyReleased="#handleSearchTextEntered" promptText="Search Text" />
+               </children>
+            </HBox>
             </children>
         </GridPane>
     </children>

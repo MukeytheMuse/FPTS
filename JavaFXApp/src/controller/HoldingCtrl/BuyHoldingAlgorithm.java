@@ -1,5 +1,7 @@
 package controller.HoldingCtrl;
 
+import gui.FPTS;
+import model.Equities.EquityComponent;
 import model.PortfolioElements.*;
 import model.Searchers.Searchable;
 
@@ -19,7 +21,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
 
     @Override
     public void establishContext() {
-        p = theFPTS.getPortfolio();
+        p = FPTS.getSelf().getPortfolio();
         toBeSearched = p.getEquityComponentSearchables();
     }
 
@@ -36,39 +38,33 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     * Author(s): Kaitlin Brockway & ..
     */
 
-    public void processInsideFPTS() {
+    public void processInsideFPTS(EquityComponent equity, int numOfShares, CashAccount account, double price) {
 
-        String aTickerSymbol = equityOfInterest.getTickerSymbol();
+        String aTickerSymbol = equity.getTickerSymbol();
         Holding e;
         if (p.getHolding(aTickerSymbol) != null) {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares,new Date() , equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equity.getTickerSymbol(), equity.getName(), price, numOfShares, new Date(), equity.getSectors(), equity.getIndices());
         }
 
-        double accountVal = cashAccountOfInterest.getValue();
+        double accountVal = account.getValue();
 
-        if (accountVal >= (numOfShares * pricePerShare)) {
+        if (accountVal >= (numOfShares * price)) {
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
             //TODO: check if its ok that I replaced the line above with the line below????
             //Date date = new Date(2012 - 11 - 14);
-            CashAccount aC = cashAccountOfInterest;
-            Transaction t = new Withdrawal(aC, numOfShares * pricePerShare);//TODO: add date***
+            Transaction t = new Withdrawal(account, numOfShares * price);//TODO: add date***
             t.execute();//operates on portfolio
-            p.add(t, aC);
-            e.add(numOfShares);
-
-            theStage.setScene(theFPTS.getConfirmationScene());
-        } else {
-            mainInput.setText("INVALID");
+            p.add(t, account);
+            p.add(e);
         }
-
     }
 
-    public void processOutsideFPTS() {
+    public void processOutsideFPTS(EquityComponent equity, int numOfShares, double price) {
 
-        String keyword = mainInput.getText();
+        String keyword = equity.getTickerSymbol();
 
         for (Searchable s : toBeSearched) {
             if (keyword.equals(s.getDisplayName())) {
@@ -79,14 +75,10 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
                     e.add(numOfShares);
                     //If equity does not exist in the collection, create a new Holding & add to collection
                 } else {
-                    Holding e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares, new Date(), equityOfInterest.getSectors(), equityOfInterest.getIndices());
+                    Holding e = new Holding(equity.getTickerSymbol(), equity.getName(), price, numOfShares, new Date(), equity.getSectors(), equity.getIndices());
                     p.add(e);
                 }
 
-                theStage.setScene(theFPTS.getConfirmationScene());
-
-            } else {
-                mainInput.setText("INVALID");
             }
         }
 

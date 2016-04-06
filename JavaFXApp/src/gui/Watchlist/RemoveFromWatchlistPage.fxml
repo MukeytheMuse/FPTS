@@ -8,53 +8,41 @@
             prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.WatchlistCtrl.RemoveFromWatchlistController">
     <children>
-        <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
-                 prefWidth="800.0" AnchorPane.topAnchor="2.0">
+        <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="home" mnemonicParsing="false" onAction="#handleHomeMenuItemPressed"
-                                  text="Home"/>
-                        <MenuItem fx:id="save" mnemonicParsing="false" onAction="#handleSaveMenuItemPressed"
-                                  text="Save"/>
-                        <MenuItem fx:id="Logout" mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed"
-                                  text="Logout"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#handleExitMenuItemPressed"
-                                  text="Exit"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
                     <items>
-                        <MenuItem fx:id="showPortfolio" mnemonicParsing="false"
-                                  onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio"/>
-                        <MenuItem fx:id="buyEquities" mnemonicParsing="false"
-                                  onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities"/>
-                        <MenuItem fx:id="sellEquities" mnemonicParsing="false"
-                                  onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWatchlistMenuItemPressed" text="Watchlist" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Cash Account">
                     <items>
-                        <MenuItem fx:id="createCA" mnemonicParsing="false" onAction="#handleCreateMenuItemPressed"
-                                  text="Create New"/>
-                        <MenuItem fx:id="deposit" mnemonicParsing="false" onAction="#handleDepositMenuItemPressed"
-                                  text="Deposit"/>
-                        <MenuItem fx:id="withdraw" mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed"
-                                  text="Withdraw"/>
-                        <MenuItem fx:id="transfer" mnemonicParsing="false" onAction="#handleTransferMenuItemPressed"
-                                  text="Transfer"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed"
-                                  text="Remove Account"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAboutMenuItemPressed"
-                                  text="About"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
                     </items>
                 </Menu>
+
             </menus>
         </MenuBar>
                 <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="805.0">
