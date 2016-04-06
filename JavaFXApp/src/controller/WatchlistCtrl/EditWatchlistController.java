@@ -83,7 +83,7 @@ public class EditWatchlistController extends MenuController {
 
     public void redirect() throws IOException {
         System.out.println("IN REDIRECT");
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -137,7 +137,7 @@ public class EditWatchlistController extends MenuController {
             //p.addWatchedEquity(w);
             watchedEq.setHighTrigger(highTrigger);
             watchedEq.setLowTrigger(lowTrigger);
-            Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+            Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
             stage.setScene(scene);

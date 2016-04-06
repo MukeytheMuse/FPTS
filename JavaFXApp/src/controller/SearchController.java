@@ -106,7 +106,7 @@ public class SearchController extends MenuController {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             EquityComponent equity = tableView.getSelectionModel().getSelectedItem();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../gui/PurchasePopUp.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/PurchasePopUp.fxml"));
                 Parent root1 = fxmlLoader.load();
                 PurchasePopUpController controller=fxmlLoader.getController();
                 controller.setEquity(equity, 0, equity.getPricePerShare(), "BUY");

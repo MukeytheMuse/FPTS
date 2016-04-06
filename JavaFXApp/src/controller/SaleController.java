@@ -89,7 +89,7 @@ public class SaleController extends MenuController {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             Holding holding = tableView.getSelectionModel().getSelectedItem();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../gui/PurchasePopUp.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/PurchasePopUp.fxml"));
                 Parent root1 = fxmlLoader.load();
                 PurchasePopUpController controller=fxmlLoader.getController();
                 controller.setEquity(holding, 0, holding.getPricePerShare(), "SALE");

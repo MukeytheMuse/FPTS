@@ -14,7 +14,6 @@ import controller.CashAccountCtrl.CashAccountCreator;
 import controller.CashAccountCtrl.DepositCashAccountAlgorithm;
 import controller.CashAccountCtrl.RemoveCashAccountAlgorithm;
 import controller.CashAccountCtrl.TransferCashAccountAlgorithm;
-import controller.CashAccountCtrl.ChangeCashAccountAlgorithm;
 import controller.CashAccountCtrl.WithdrawCashAccountAlgorithm;
 
 import controller.HoldingCtrl.BuyHoldingAlgorithm;
@@ -39,8 +38,6 @@ import model.User;
 import model.*;
 
 
-import java.io.*;
-import java.util.ArrayList;
 import java.util.Timer;
 
 public class FPTS extends Application {
@@ -82,7 +79,7 @@ public class FPTS extends Application {
         webServiceReader = new WebServiceReader(this);
         time.schedule(new WebService(webServiceReader), 0, 5000);
 
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
 
         try {
@@ -96,7 +93,7 @@ public class FPTS extends Application {
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
 
-        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
         this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
 
@@ -128,7 +125,7 @@ public class FPTS extends Application {
     }
 
     public Scene createLogInScene() throws IOException {
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene scene = new Scene(root, 900.0D, 600.0D);
         //        Scene scene = new Scene(root, 1200.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
@@ -139,7 +136,7 @@ public class FPTS extends Application {
         Scene scene = null;
 
         try {
-            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("HomePage.fxml"));
+            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
             scene = new Scene(e);
         } catch (IOException var3) {
             var3.printStackTrace();
@@ -302,7 +299,7 @@ public class FPTS extends Application {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("PortfolioPage.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml")));
                     thestage.setScene(scene);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -452,7 +449,7 @@ public class FPTS extends Application {
             public void handle(ActionEvent e) {
                 try {
                     Stage stage = new Stage();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("../gui/LogoutPage.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/LogoutPage.fxml")));
                     stage.setScene(scene);
                     stage.show();
                 } catch (Exception ex) {

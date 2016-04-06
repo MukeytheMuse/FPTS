@@ -134,7 +134,7 @@ public class SimulationController extends MenuController {
                 } else {
                     FPTS.setSimulationValue(currentSimulator.simulate(numberOfSteps));
                 }
-                Parent parent = FXMLLoader.load(getClass().getResource("../gui/SimulationPage.fxml"));
+                Parent parent = FXMLLoader.load(getClass().getResource("/SimulationPage.fxml"));
                 Scene scene = new Scene(parent);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
@@ -161,7 +161,7 @@ public class SimulationController extends MenuController {
             FPTS.setSimulationValue(FPTS.getSimulationValue() + currentSimulator.simulate(1));
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../gui/SimulationPage.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/SimulationPage.fxml"))));
             stage.show();
         }
     }
@@ -173,7 +173,7 @@ public class SimulationController extends MenuController {
     @FXML
     protected void handleResetToStartButtonPressed(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../gui/SimulatePage.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/SimulatePage.fxml"))));
         stage.show();
     }
 

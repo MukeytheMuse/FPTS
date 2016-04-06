@@ -101,7 +101,7 @@ public class AddToWatchlistController extends MenuController {
                     System.out.println("IN VALID INPUT");
                     WatchedEquity w = new WatchedEquity(e, lowTrigger, highTrigger);
                     p.addWatchedEquity(w);
-                    Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+                    Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
                     Scene scene = new Scene(parent);
                     Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
                     stage.setScene(scene);

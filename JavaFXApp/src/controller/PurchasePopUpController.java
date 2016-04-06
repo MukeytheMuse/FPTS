@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
-import model.PortfolioElements.HoldingUpdatable;
 
 import java.io.IOException;
 import java.net.URL;
@@ -93,7 +92,7 @@ public class PurchasePopUpController implements Initializable {
 
     @FXML
     public void handleProceedButtonPressed(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../gui/CASelectPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/CASelectPage.fxml"));
         Parent root1 = fxmlLoader.load();
         PurchasePopUpController controller=fxmlLoader.getController();
         try {
@@ -109,7 +108,7 @@ public class PurchasePopUpController implements Initializable {
                     bha.processOutsideFPTS(equity, shares, price);
                     Stage stg = FPTS.getSelf().getStage();
                     try {
-                        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+                        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
                         stg.setScene(new Scene(parent));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -120,7 +119,7 @@ public class PurchasePopUpController implements Initializable {
                     sha.processOutsideFPTS(null, shares, price);
                     Stage stg = FPTS.getSelf().getStage();
                     try {
-                        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+                        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
                         stg.setScene(new Scene(parent));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -157,7 +156,7 @@ public class PurchasePopUpController implements Initializable {
                 bha.processInsideFPTS(equity, shares, account, price);
                 Stage stg = FPTS.getSelf().getStage();
                 try {
-                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
                     stg.setScene(new Scene(parent));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -168,7 +167,7 @@ public class PurchasePopUpController implements Initializable {
                 sha.processInsideFPTS(equity, shares, account, price);
                 Stage stg = FPTS.getSelf().getStage();
                 try {
-                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml"));
+                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
                     stg.setScene(new Scene(parent));
                 } catch (IOException e) {
                     e.printStackTrace();

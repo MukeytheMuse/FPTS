@@ -1,7 +1,5 @@
 package controller;
 
-import controller.HoldingCtrl.BuyHoldingAlgorithm;
-import controller.HoldingCtrl.HoldingAlgorithm;
 import gui.FPTS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,7 +61,7 @@ public class HomeController extends MenuController {
      */
     @FXML
     protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("../gui/PortfolioPage.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml")));
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene);
         app_stage.show();
@@ -77,7 +75,7 @@ public class HomeController extends MenuController {
      */
     @FXML
     protected void handleBuyEquityButtonPressed(ActionEvent event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("../gui/SearchPage.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/SearchPage.fxml")));
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene);
         app_stage.show();
@@ -89,7 +87,7 @@ public class HomeController extends MenuController {
      */
     @FXML
     protected void handleSimulateButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("../gui/SimulatePage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/SimulatePage.fxml"));
         Scene scene = new Scene(parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene);
@@ -103,7 +101,7 @@ public class HomeController extends MenuController {
     @FXML
     protected void handleLogoutButtonPressed(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("../gui/LogoutPage.fxml")));
+        Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("/LogoutPage.fxml")));
         stage.setScene(scene);
         stage.show();
     }

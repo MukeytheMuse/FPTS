@@ -78,7 +78,7 @@ public class WatchlistController extends MenuController implements Observer {
     */
     @FXML
     protected void handleGoToAddEquityToWatchlistButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/AddToWatchlistPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/AddToWatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -87,7 +87,7 @@ public class WatchlistController extends MenuController implements Observer {
 
     @FXML
     protected void handleGoToRemoveEquityFromWatchlistButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/RemoveFromWatchlistPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/RemoveFromWatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -96,7 +96,7 @@ public class WatchlistController extends MenuController implements Observer {
 
     @FXML
     protected void handleGoToEditedWatchedEquityButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/EditWatchedEquityPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/EditWatchedEquityPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
