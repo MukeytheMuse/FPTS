@@ -238,15 +238,16 @@ public class User implements Serializable {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         //*************
-        WriteFile writeFile = new WriteFile();
+        //WriteFile writeFile = new WriteFile();
         File newHoldingsFile;
         File newTransFile;
         File newCashFile;
 
-        // temporary quick fix to add user to lilBase
+        /*// temporary quick fix to add user to lilBase
         String un = usr.getLoginID();
         writeFile.addUser(un, hash(pw1));
-        writeFile.updatePortfolioForUser(usr);
+        writeFile.updatePortfolioForUser(usr);*/
+        //THE CODE BELOW ALSO WORKS WITH THE JAR FILE.
         //*************
 
         try {
