@@ -7,6 +7,7 @@ package controller.CashAccountCtrl;
 
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
+import model.PortfolioElements.Withdrawal;
 
 import java.util.Date;
 
@@ -30,8 +31,8 @@ public class WithdrawCashAccountAlgorithm extends ChangeCashAccountAlgorithm {
         */
         if (c.getValue() >= amount) {
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Date date = new Date(2012 - 11 - 14);
-            Transaction t = new Transaction(amount, date, "Withdrawal", aC);
+            Transaction t = new Withdrawal(aC, amount);//TODO: ADD A DATE TO THIS WITHDRAWAL
+            t.execute();
             theFPTS.getPortfolio().add(t, aC);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {

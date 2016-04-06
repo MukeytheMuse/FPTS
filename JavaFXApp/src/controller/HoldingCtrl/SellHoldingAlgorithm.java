@@ -1,9 +1,6 @@
 package controller.HoldingCtrl;
 
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Portfolio;
-import model.PortfolioElements.Transaction;
+import model.PortfolioElements.*;
 import model.Searchers.Searchable;
 
 import java.util.ArrayList;
@@ -70,7 +67,8 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             */
             Date date = new Date(2012 - 11 - 14);
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
-            Transaction t = new Transaction(numOfShares * pricePerShare, date, "Deposit", aC); //Deposit(aC, numOfShares * pricePerShare);
+            Transaction t = new Deposit(aC, numOfShares * pricePerShare);//TODO: ADD DATE
+            t.execute();
             p.add(t, aC);//add to transactions list in the Portfolio class.
             e.remove(numOfShares);
             /*
@@ -106,11 +104,12 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
             p.remove(e);
             double pricePerShare = e.getPricePerShare();
             double totalAmountTransaction = (pricePerShare * numOfShares);
-            //TODO: HEY ERIC :) the following commented code doesn't account for the useR not having a cash account
-            /*Transaction newTransaction = new Transaction(totalAmountTransaction, date, "Deposit", p.getCashAccounts().get(0));
+            Transaction newTransaction = new Deposit(p.getCashAccounts().get(0), totalAmountTransaction);
+            newTransaction.execute();
+            //TODO: doesn't account for the useR not having a cash account
             p.add(newTransaction, p.getCashAccounts().get(0));
-            newTransaction.execute(p.getCashAccounts().get(0),totalAmountTransaction, "Deposit");//operates on portfolio*/
             theStage.setScene(theFPTS.getConfirmationScene());
+        /*
         /*
         * Warns the user of an invalid input.
         */

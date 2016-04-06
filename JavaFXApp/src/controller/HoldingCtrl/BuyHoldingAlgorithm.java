@@ -1,11 +1,9 @@
 package controller.HoldingCtrl;
 
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Portfolio;
-import model.PortfolioElements.Transaction;
+import model.PortfolioElements.*;
 import model.Searchers.Searchable;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -46,7 +44,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             e = p.getHolding(aTickerSymbol);
         } else {
             //TODO: change date field to Date type
-            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares, new Date(), equityOfInterest.getSectors(), equityOfInterest.getIndices());
+            e = new Holding(equityOfInterest.getTickerSymbol(), equityOfInterest.getName(), equityOfInterest.getPricePerShare(), numOfShares,new Date() , equityOfInterest.getSectors(), equityOfInterest.getIndices());
         }
 
         double accountVal = cashAccountOfInterest.getValue();
@@ -54,14 +52,10 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
         if (accountVal >= (numOfShares * pricePerShare)) {
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
             //TODO: check if its ok that I replaced the line above with the line below????
-            Date date = new Date(2012 - 11 - 14);
+            //Date date = new Date(2012 - 11 - 14);
             CashAccount aC = cashAccountOfInterest;
-            Transaction t = new Transaction(numOfShares * pricePerShare, date, "Withdraw", aC);
-
-
-            t.execute(aC, numOfShares * pricePerShare, "Withdraw");//operates on portfolio
-            //Transaction(double amount, String dateMade, String type, String cashAccountName)
-
+            Transaction t = new Withdrawal(aC, numOfShares * pricePerShare);//TODO: add date***
+            t.execute();//operates on portfolio
             p.add(t, aC);
             e.add(numOfShares);
 

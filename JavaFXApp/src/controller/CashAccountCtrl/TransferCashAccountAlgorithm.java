@@ -2,7 +2,9 @@ package controller.CashAccountCtrl;
 
 import controller.AmountInput;
 import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Transaction;
+import model.PortfolioElements.Withdrawal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,6 +87,8 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
     /*
     * Validates amount withdrawn before creating Deposit and Withdraw objects
     * for respective CashAccount objects.
+    *
+    * Supports Transactions done between two accounts within the system.
     */
     public void performTransaction() {
 
@@ -95,12 +99,13 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         */
         if (c.getValue() >= amount) {
             //TODO: change "date" to an actual date.
-            //CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Date date = new Date(2012 - 11 - 14);
-            Transaction t = new Transaction(amount, date, "Withdrawal", c);
+            CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
+            Transaction t = new Withdrawal(aC, amount);//TODO: add date********
+            t.execute();
             theFPTS.getPortfolio().add(t, c);
-            //aC = theFPTS.getPortfolio().getCashAccount(c2);
-            t = new Transaction(amount, date, "Deposit", c2);
+            aC = theFPTS.getPortfolio().getCashAccount(c2);
+            t = new Deposit(aC, amount);//TODO: add date********
+            t.execute();
             theFPTS.getPortfolio().add(t, c2);
             theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
         } else {

@@ -2,6 +2,7 @@ package model.DataBase;
 
 import gui.FPTS;
 import model.Equities.EquityComponent;
+import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.WatchedEquity;
 
@@ -13,6 +14,9 @@ import java.util.ArrayList;
  */
 public class ReadFile {
 
+    /**
+     *
+     */
     protected static ArrayList<String[]> splitFile = new ArrayList<String[]>();
 
     public static ArrayList<EquityComponent> readEquity() {
@@ -29,9 +33,9 @@ public class ReadFile {
         return ReadWatchedEquity.readDB(user);
     }
 
-    /*public static ArrayList<CashAccount> readCash() {
-        return ReadCash.read();
-    }*/
+    public static ArrayList<CashAccount> readInCashFile(String un) {
+        return ReadCash.readDB(un);
+    }
 
 
     // reads in CSV file

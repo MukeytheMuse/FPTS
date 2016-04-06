@@ -1,7 +1,9 @@
 package model.DataBase;
 
 import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Transaction;
+import model.PortfolioElements.Withdrawal;
 
 import java.io.File;
 import java.text.ParseException;
@@ -63,7 +65,16 @@ public class ReadTransactions {
                 e.printStackTrace();
             }
             double amount = Double.parseDouble(line[0]);
-            Transaction trans = new Transaction(amount, date, line[2], line[3]);
+            //(double amount, String dateMade, String type, String cashAccountName) {
+
+            String type = line[2];
+            Transaction trans;
+            if(type.equals("Withdrawal")){
+                trans = new Withdrawal(amount);
+            } else {//if(stringType.equals("Deposit")){
+                trans = new Deposit(amount);
+            }
+
             allTransactions.add(trans);
         }
 

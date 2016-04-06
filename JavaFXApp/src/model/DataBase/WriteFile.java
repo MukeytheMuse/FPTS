@@ -49,6 +49,8 @@ public class WriteFile {
     }
 
     /*
+     * Finds the jar file's path and returns it.
+     *
      * @author: Ian London
      */
     public static String getPath() throws UnsupportedEncodingException {

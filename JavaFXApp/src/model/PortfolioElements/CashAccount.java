@@ -18,6 +18,8 @@ public class CashAccount implements Searchable {
     private ArrayList<Transaction> transactions;// = new ArrayList<>();
 
 
+
+
     //public static ArrayList<CashAccount> cashList = getCashList();
 
     /**
