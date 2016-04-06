@@ -17,6 +17,7 @@ public class Withdrawal implements Transaction {
 
     private CashAccount c;
     private double amount;
+    private Date date;
 
     /**
      * Constructs a Withdrawal command
@@ -27,6 +28,7 @@ public class Withdrawal implements Transaction {
     public Withdrawal(CashAccount c, double amount) {
         this.c = c;
         this.amount = amount;
+        this.date = new Date();
     }
 
 
@@ -36,8 +38,9 @@ public class Withdrawal implements Transaction {
      * @param amount
      * Author(s): Kaitlin Brockway
      */
-    public Withdrawal(double amount){
+    public Withdrawal(double amount, Date date){
         this.amount = amount;
+        this.date = date;
     }
 
     /**
@@ -64,7 +67,7 @@ public class Withdrawal implements Transaction {
 
     @Override
     public Date getDateMade() {
-        return null;
+        return date;
     }
 
     @Override

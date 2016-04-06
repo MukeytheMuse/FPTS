@@ -3,6 +3,7 @@ package model.PortfolioElements;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Date;
 public class Deposit implements Transaction {
     private CashAccount c;
     private double amount;
+    private Date date;
 
     /**
      * Constructs a Deposit command
@@ -26,6 +28,7 @@ public class Deposit implements Transaction {
     public Deposit(CashAccount c, double amount) {
         this.c = c;
         this.amount = amount;
+        this.date = new Date();
     }
 
     /**
@@ -34,8 +37,9 @@ public class Deposit implements Transaction {
      * @param amount
      * Author(s): Kaitlin Brockway
      */
-    public Deposit(double amount) {
+    public Deposit(double amount, Date date) {
         this.amount = amount;
+        this.date = date;
     }
 
 
@@ -63,7 +67,7 @@ public class Deposit implements Transaction {
 
     @Override
     public Date getDateMade() {
-        return null;
+        return date;
     }
 
     @Override

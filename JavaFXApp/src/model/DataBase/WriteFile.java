@@ -1,6 +1,8 @@
 package model.DataBase;
 
+import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.Transaction;
 import model.PortfolioElements.WatchedEquity;
 import model.User;
 
@@ -108,9 +110,7 @@ public class WriteFile {
             File cashFile = new File(e, "Cash.csv");
             File holdingsFile = new File(e, "Holdings.csv");
             File watchedEquitiesFile = new File(e, "Watch.csv");
-            new FileWriter(transFile, true);
-            FileWriter writerC = new FileWriter(cashFile, true);
-            this.cashAccountsWriter(writerC);
+            this.cashAccountsWriter(user.getMyPortfolio().getCashAccounts(), cashFile, transFile);
             this.holdingsWriter(user.getMyPortfolio().getHoldings(), holdingsFile);
             this.equityWriter(user.getMyPortfolio().getWatchedEquities(), watchedEquitiesFile);
         } catch (Exception var8) {
@@ -171,9 +171,36 @@ public class WriteFile {
     }
 
     /**
-     * @param writer
+     * @param cashAccounts
      */
-    private void cashAccountsWriter(FileWriter writer) {
+    private void cashAccountsWriter(ArrayList<CashAccount> cashAccounts, File cashFile, File transFile) {
+
+        try {
+            cashFile.delete();
+            FileWriter fileWriterC = new FileWriter(cashFile, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriterC);
+
+            for (CashAccount cashAccount : cashAccounts) {
+                bufferedWriter.write("\"" + cashAccount.getAccountName() + "\",\"" + cashAccount.getValue() + "\",\"" +
+                        cashAccount.getDateAdded() + "\",\"" + cashAccount.getTransactions() + "\"");
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+
+            FileWriter fileWriterT = new FileWriter(transFile, true);
+            BufferedWriter bufferedWriterT = new BufferedWriter(fileWriterT);
+
+            for (CashAccount cashAccount : cashAccounts) {
+                for (Transaction t : cashAccount.getTransactions()) {
+                    bufferedWriterT.write("\"" + t.getAmount() + "\",\"" + t.getDateMade() + "\",\"" +
+                            t.getType() + "\",\"" + t.getCashAccountName() + "\"");
+                    bufferedWriterT.newLine();
+                }
+            }
+            bufferedWriterT.close();
+        } catch (Exception e) {
+
+        }
     }
 }
 

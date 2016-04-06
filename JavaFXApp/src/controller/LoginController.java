@@ -138,7 +138,6 @@ public class LoginController {
                     ArrayList<Transaction> userTransactionsToImport;
                     Portfolio newPortfolio;
                     Portfolio newEmptyPortfolio;
-                    ArrayList<CashAccount> cashAccount;
                     User usr;
 
                     if (importTransactionsRequested && importHoldingsRequested) {
@@ -158,9 +157,8 @@ public class LoginController {
 
                         if ((fileT != null) && (file != null)) {
                             userHoldingsToImport = ReadHoldings.readInImports(file);
-                            userTransactionsToImport = ReadTransactions.readTransactionImports(fileT);
-                            cashAccount = ReadTransactions.getCashAccount(userTransactionsToImport);
-                            newPortfolio = new Portfolio(userHoldingsToImport, cashAccount);
+                            userTransactionsToImport = ReadTransactions.readInImports(fileT);
+                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
                             currentUser = usr;
@@ -173,9 +171,8 @@ public class LoginController {
                         transactionsChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
                         File fileT = transactionsChooser.showOpenDialog(stageT);
                         if (fileT != null) {
-                            userTransactionsToImport = ReadTransactions.readTransactionImports(fileT);
-                            cashAccount = ReadTransactions.getCashAccount(userTransactionsToImport);
-                            newPortfolio = new Portfolio(new ArrayList<Holding>(), cashAccount);
+                            userTransactionsToImport = ReadTransactions.readInImports(fileT);
+                            newPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText(), new ArrayList<>(), userTransactionsToImport);
                             currentUser = usr;

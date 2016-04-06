@@ -167,19 +167,18 @@ public class User implements Serializable {
      * from the UserData.csv file.
      */
     public static void fillUsers() {
-        String user_csv = "JavaFXApp/src/model/DataBase/UserData.csv";
         BufferedReader reader = null;
         String line;
         ReadFile readFile = new ReadFile();
 
         try {
+            File user_csv = new File(WriteFile.getPath() + "/lilBase/UserData.csv");
             reader = new BufferedReader(new FileReader(user_csv));
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(",");
                 String un = split[0];
                 String pwd = split[1];
                 ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
-                //ArrayList<CashAccount> usersCashAccounts = readInCashFile(un);
                 Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
 
 
@@ -197,7 +196,6 @@ public class User implements Serializable {
                 }
                 //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
                 ArrayList<Holding> usersHoldings = readFile.readHoldings(un);
-                //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
                 ArrayList<WatchedEquity> watchedEquities = readFile.readWatchedEquities(un);
                 Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts);
                 User newUser = new User(un, unHash(pwd), userPortfolio);
@@ -252,20 +250,20 @@ public class User implements Serializable {
         //*************
 
         try {
-            fileWriter = new FileWriter((new File("JavaFXApp/src/model/Database/UserData.csv")).getAbsolutePath(), true);
+            fileWriter = new FileWriter((new File(WriteFile.getPath() + "/lilBase/UserData.csv")).getAbsolutePath(), true);
             bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(usr.getLoginID() + ",");
             bufferedWriter.write(hash(pw1));
             bufferedWriter.newLine();
             bufferedWriter.close();
             //creates portfolio directory to store all user information
-            File portfolioDir = new File("JavaFXApp/src/model/Database/Portfolios/");
+            File portfolioDir = new File(WriteFile.getPath() + "/lilBase/Portfolios/");
             //TODO: ask why we are creating a new portfolio directory each time we add a user. THink this could be better in fillUsers so only one portfolio dir is created for all users
             if (!portfolioDir.exists()) {
                 portfolioDir.mkdir();
             }
             //create a new user directory for the new user registering.
-            File newUserDir = new File("JavaFXApp/src/model/Database/Portfolios/" + usr.loginID + "/");
+            File newUserDir = new File(WriteFile.getPath() + "/lilBase/Portfolios/" + usr.loginID + "/");
             newUserDir.mkdir();
             //create 3 new files inside the newUserDir
             newTransFile = new File(newUserDir.getAbsolutePath() + "/Trans.csv");
@@ -285,7 +283,7 @@ public class User implements Serializable {
             }
             //if there are transactions to import
             if (!transactions.isEmpty()) {
-                addCash(transactions, newTransFile, newCashFile);
+                addTrans(transactions, newTransFile);
             }
 
         } catch (IOException var6) {
@@ -311,11 +309,12 @@ public class User implements Serializable {
      * Writes the users holding content to a file called Cash.csv in the form
      * "CashAccountForUser1","345.00","yyyy/mm/dd"
      *
+     * @author: Kimberly Sookoo
+     *
      * @param transactions
      */
-    private void addCash(ArrayList<Transaction> transactions, File importedTransactions, File createdCashAccount) {
+    private void addTrans(ArrayList<Transaction> transactions, File importedTransactions) {
         FileWriter writerT = null;
-        FileWriter writerCash = null;
         try {
             writerT = new FileWriter(importedTransactions, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writerT);
@@ -326,20 +325,6 @@ public class User implements Serializable {
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            writerCash = new FileWriter(createdCashAccount, true);
-            BufferedWriter cashWriter = new BufferedWriter(writerCash);
-
-            for (Transaction t : transactions) {
-                cashWriter.write("\"" + t.getCashAccountName() + "\",\"" + t.getAmount() + "\",\""
-                        + t.getDateMade() + "\",\"" + transactions + "\"");
-                cashWriter.newLine();
-            }
-            cashWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

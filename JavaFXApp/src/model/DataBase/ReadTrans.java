@@ -39,51 +39,37 @@ public class ReadTrans {
 
         // iterate through each line representing a Transaction
         for (String[] line : splitFile) {
-            stringCashAccountNameAssociatedWith = line[0];
-            stringAmount = line[1];
+            stringCashAccountNameAssociatedWith = line[3];
+            stringAmount = line[0];
             double amount = Double.parseDouble(stringAmount);
             String stringType;
             try {
                 //***********ADD THE DATE TO THE CONSTRUCTOR of withdrawal & deposit***********
 
 
-                dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[2]);
+                dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[1]);
+                stringType = line[2];
+                //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
+                Transaction newTransactionToAdd;
+                if(stringType.equals("Withdrawal")){
+                    newTransactionToAdd = new Withdrawal(amount, dateMade);
+                } else {//if(stringType.equals("Deposit")){
+                    newTransactionToAdd = new Deposit(amount, dateMade);
+                }
+                if (cashAccountNameTransactionsMap.containsKey(stringCashAccountNameAssociatedWith)) {
+                    ArrayList<Transaction> newTransactionsList = cashAccountNameTransactionsMap.get(stringCashAccountNameAssociatedWith);
+                    newTransactionsList.add(newTransactionToAdd);
+                    cashAccountNameTransactionsMap.replace(stringCashAccountNameAssociatedWith, newTransactionsList);
+                } else {
+                    ArrayList<Transaction> transactionListToAdd = new ArrayList<>();
+                    transactionListToAdd.add(newTransactionToAdd);
+                    cashAccountNameTransactionsMap.put(stringCashAccountNameAssociatedWith, transactionListToAdd);
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
-            stringType = line[3];
-            //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
-            Transaction newTransactionToAdd;
-            if(stringType.equals("Withdrawal")){
-                newTransactionToAdd = new Withdrawal(amount);
-            } else {//if(stringType.equals("Deposit")){
-                newTransactionToAdd = new Deposit(amount);
-            }
-            if (cashAccountNameTransactionsMap.containsKey(stringCashAccountNameAssociatedWith)) {
-                ArrayList<Transaction> newTransactionsList = cashAccountNameTransactionsMap.get(stringCashAccountNameAssociatedWith);
-                newTransactionsList.add(newTransactionToAdd);
-                cashAccountNameTransactionsMap.replace(stringCashAccountNameAssociatedWith, newTransactionsList);
-            } else {
-                ArrayList<Transaction> transactionListToAdd = new ArrayList<>();
-                transactionListToAdd.add(newTransactionToAdd);
-                cashAccountNameTransactionsMap.put(stringCashAccountNameAssociatedWith, transactionListToAdd);
             }
         }
 
         return cashAccountNameTransactionsMap;
-    }
-
-
-    /**
-     * Reads in external holdings file that the user chooses to import.
-     *
-     * @param file - file that user chooses to upload.
-     * @return - arraylist containing the user's imported holdings.
-     * Created by: Kaitlin Brockway
-     */
-    public static Map<String, ArrayList<Transaction>> readInImports(File file) {
-        String path = file.getPath();
-        ArrayList<String[]> splitFile = ReadFile.readIn(path);
-        return read(splitFile);
     }
 }

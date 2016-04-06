@@ -10,52 +10,37 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Kimberly Sookoo on 4/2/16.
  */
 public class ReadTransactions {
 
-    private static ArrayList<CashAccount> cashAccount;
-    private static ArrayList<Transaction> allTransactions;
+    /**
+     * Reads in external holdings file that the user chooses to import.
+     *
+     * @param file - file that user chooses to upload.
+     * @return - arraylist containing the user's imported holdings.
+     * Created by: Kaitlin Brockway & Kimberly Sookoo
+     */
+    public static ArrayList<Transaction> readInImports(File file) {
+        String path = file.getPath();
+        ArrayList<String[]> splitFile = ReadFile.readIn(path);
+        return readTransactionImports(splitFile);
+    }
 
 
     /**
      * Reads in external transaction file that the user chooses to import.
      *
-     * @param file - file that user chooses to upload.
+     * @param splitFile - file that user chooses to upload.
      * @return - arraylist containing the user's imported holdings.
      * Created by: Kimberly Sookoo.
      */
-    public static ArrayList<Transaction> readTransactionImports(File file) {
-        String path = file.getPath();
-        ArrayList<String[]> splitFile = ReadFile.readIn(path);
-        //ArrayList<String[]> splitFile = new ArrayList<>();
-        allTransactions = new ArrayList<>();
+    public static ArrayList<Transaction> readTransactionImports(ArrayList<String[]> splitFile) {
 
-        /*BufferedReader reader = null;
-        String splitLine;
-
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            while ((splitLine = reader.readLine()) != null) {
-                splitLine = splitLine.substring(1, splitLine.length() - 1);
-                String[] split = splitLine.split("\",\"");
-                splitFile.add(split);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found! Please try again.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
+        ArrayList<Transaction> allTransactions = new ArrayList<>();
 
         for (String[] line : splitFile) {
             Date date = null;
@@ -70,29 +55,14 @@ public class ReadTransactions {
             String type = line[2];
             Transaction trans;
             if(type.equals("Withdrawal")){
-                trans = new Withdrawal(amount);
+                trans = new Withdrawal(amount, date);
             } else {//if(stringType.equals("Deposit")){
-                trans = new Deposit(amount);
+                trans = new Deposit(amount, date);
             }
 
             allTransactions.add(trans);
         }
 
         return allTransactions;
-    }
-
-    /**
-     * Allows access to populated cash account.
-     *
-     * @return cashAccount
-     */
-    public static ArrayList<CashAccount> getCashAccount(ArrayList<Transaction> transactions) {
-        cashAccount = new ArrayList<CashAccount>();
-
-        for (Transaction t : transactions) {
-            cashAccount.add(new CashAccount(t.getCashAccountName(), t.getAmount(), t.getDateMade(), transactions));
-        }
-
-        return cashAccount;
     }
 }
