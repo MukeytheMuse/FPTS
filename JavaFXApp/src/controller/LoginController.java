@@ -14,8 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.DataBase.ReadHoldings;
-import model.DataBase.ReadTransactions;
+import model.DataBase.ReadImports;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Portfolio;
@@ -26,6 +25,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class LoginController {
@@ -40,7 +41,6 @@ public class LoginController {
 
     private User currentUser;//How do we know the currentUser after exiting this class??
 
-    private boolean importHoldingsRequested = false;
     private boolean importTransactionsRequested = false;
 
     @FXML
@@ -137,64 +137,33 @@ public class LoginController {
                     // the passwords match ask the user if they would like to import
                     // holdings &OR transactions to initialize the new users portfolio.
 
+                    HashMap<String, ArrayList> importedEquities;
                     ArrayList<Holding> userHoldingsToImport;
                     ArrayList<Transaction> userTransactionsToImport;
                     Portfolio newPortfolio;
                     Portfolio newEmptyPortfolio;
                     User usr;
 
-                    if (importTransactionsRequested && importHoldingsRequested) {
+                    //Handles Imports at Registrations for Holdings and Transactions - Kimberly
+                    if (importTransactionsRequested) {
                         Stage stage = new Stage();
                         FileChooser fd = new FileChooser();
-                        fd.setTitle("Select holdings to upload");
+                        fd.setTitle("Select file to upload");
                         fd.setInitialDirectory(new File(System.getProperty("user.home")));
                         fd.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
                         File file = fd.showOpenDialog(stage);
 
-                        Stage stageT = new Stage();
-                        FileChooser transactionsChooser = new FileChooser();
-                        transactionsChooser.setTitle("Select transactions to upload");
-                        transactionsChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-                        transactionsChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-                        File fileT = transactionsChooser.showOpenDialog(stageT);
-
-                        if ((fileT != null) && (file != null)) {
-                            userHoldingsToImport = ReadHoldings.readInImports(file);
-                            userTransactionsToImport = ReadTransactions.readInImports(fileT);
+                        if (file != null) {
+                            importedEquities = ReadImports.readInImports(file);
+                            //They are being checked for accuracy within ReadImports file.
+                            userHoldingsToImport = importedEquities.get("Holdings");
+                            userTransactionsToImport = importedEquities.get("Transactions");
                             newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
                             currentUser = usr;
                         }
-                    } else if (importTransactionsRequested && !importHoldingsRequested) {
-                        Stage stageT = new Stage();
-                        FileChooser transactionsChooser = new FileChooser();
-                        transactionsChooser.setTitle("Select transactions to upload");
-                        transactionsChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-                        transactionsChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-                        File fileT = transactionsChooser.showOpenDialog(stageT);
-                        if (fileT != null) {
-                            userTransactionsToImport = ReadTransactions.readInImports(fileT);
-                            newPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
-                            usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
-                            this.addUser(usr, this.password1.getText(), new ArrayList<>(), userTransactionsToImport);
-                            currentUser = usr;
-                        }
-                    } else if (!importTransactionsRequested && importHoldingsRequested) {
-                        Stage stage = new Stage();
-                        FileChooser fd = new FileChooser();
-                        fd.setTitle("Select holdings to upload");
-                        fd.setInitialDirectory(new File(System.getProperty("user.home")));
-                        fd.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-                        File file = fd.showOpenDialog(stage);
-                        if (file != null) {
-                            System.out.println("Selected file: " + file.getName());
-                            userHoldingsToImport = ReadHoldings.readInImports(file);
-                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
-                            usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
-                            this.addUser(usr, this.password1.getText(), userHoldingsToImport, new ArrayList<>());
-                            currentUser = usr;
-                        }
+
                     } else {
                         newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
                         usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
@@ -225,7 +194,7 @@ public class LoginController {
      * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleYesImportTransactionsButtonPressed() {
+    public void handleYesImportButtonPressed() {
         importTransactionsRequested = true;
     }
 
@@ -234,26 +203,8 @@ public class LoginController {
      * <p>
      * Author(s): Kaitlin Brockway
      */
-    public void handleNoImportTransactionsButtonPressed() {
+    public void handleNoImportButtonPressed() {
         importTransactionsRequested = false;
-    }
-
-    /**
-     * Based off of user specifications during new user registration.
-     * <p>
-     * Author(s): Kaitlin Brockway
-     */
-    public void handleYesImportHoldingsButtonPressed() {
-        importHoldingsRequested = true;
-    }
-
-    /**
-     * Based off of user specifications during new user registration.
-     * <p>
-     * Author(s): Kaitlin Brockway
-     */
-    public void handleNoImportHoldingsButtonPressed() {
-        importHoldingsRequested = false;
     }
 
 

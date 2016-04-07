@@ -114,29 +114,15 @@
                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="3">
                     <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="125.0"
-                               text="Import Transactions?"/>
-                        <RadioButton mnemonicParsing="false" onAction="#handleYesImportTransactionsButtonPressed"
+                               text="Import"/>
+                        <RadioButton mnemonicParsing="false" onAction="#handleYesImportButtonPressed"
                                      text="Yes">
                             <toggleGroup>
-                                <ToggleGroup fx:id="TransactionsGroup"/>
+                                <ToggleGroup fx:id="ImportsGroup"/>
                             </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" onAction="#handleNoImportTransactionsButtonPressed"
-                                     selected="true" text="No" toggleGroup="$TransactionsGroup"/>
-                    </children>
-                </VBox>
-                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="4">
-                    <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="125.0"
-                               text="Import Holdings?"/>
-                        <RadioButton mnemonicParsing="false" onAction="#handleYesImportHoldingsButtonPressed"
-                                     text="Yes">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="HoldingGroup"/>
-                            </toggleGroup>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" onAction="#handleNoImportHoldingsButtonPressed"
-                                     selected="true" text="No" toggleGroup="$HoldingGroup"/>
+                        <RadioButton mnemonicParsing="false" onAction="#handleNoImportButtonPressed"
+                                     selected="true" text="No" toggleGroup="$ImportsGroup"/>
                     </children>
                 </VBox>
             </children>

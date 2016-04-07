@@ -70,17 +70,4 @@ public class ReadHoldings {
         }
         return allHoldings;
     }
-
-    /**
-     * Reads in external holdings file that the user chooses to import.
-     *
-     * @param file - file that user chooses to upload.
-     * @return - arraylist containing the user's imported holdings.
-     * Created by: Kimberly Sookoo.
-     */
-    public static ArrayList<Holding> readInImports(File file) {
-        String path = file.getPath();
-        ArrayList<String[]> splitFile = ReadFile.readIn(path);
-        return read(splitFile);
-    }
 }
