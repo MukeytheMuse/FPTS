@@ -1,12 +1,11 @@
 package model.DataBase;
 
-import gui.FPTS;
 import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Transaction;
 import model.PortfolioElements.Withdrawal;
 
-import java.io.*;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,42 +49,20 @@ public class ReadImports {
 
         ArrayList<String[]> splitHoldings = new ArrayList<String[]>();
         ArrayList<String[]> splitTransactions = new ArrayList<String[]>();
+        ArrayList<String[]> splitFile = ReadFile.readIn(path);
         Map<String, ArrayList<String[]>> importMap = new HashMap<>();
-        BufferedReader reader = null;
-        String line;
 
-        try {
-            if (path.contains("/equities.c")) {
-                InputStream is = FPTS.class.getClassLoader().getResourceAsStream("model/DataBase/equities.csv");
-                reader = new BufferedReader(new InputStreamReader(is));
+        for (String[] line : splitFile) {
+            if (isDouble(line[0])) {
+                splitTransactions.add(line);
             } else {
-                reader = new BufferedReader(new FileReader(path));
-            }
-
-            while ((line = reader.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
-                String[] split = line.split("\",\"");
-                if (isDouble(split[0])) {
-                    splitTransactions.add(split);
-                } else {
-                    splitHoldings.add(split);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(path + " not found! Please try again.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                    importMap.put(holdings, splitHoldings);
-                    importMap.put(transactions, splitTransactions);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                splitHoldings.add(line);
             }
         }
+
+        importMap.put(holdings, splitHoldings);
+        importMap.put(transactions, splitTransactions);
+
         return importMap;
     }
 

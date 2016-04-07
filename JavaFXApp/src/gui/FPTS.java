@@ -63,6 +63,7 @@ public class FPTS extends Application {
         this.fillIndicies();
         this.fillSectors();
         User.fillUsers();//MUST be called after fillIndicies and fillSectors
+        //TODO: what is all of this about? ^
 
         Timer time = new Timer();
         webServiceReader = new WebServiceReader(this);
@@ -79,6 +80,7 @@ public class FPTS extends Application {
 
         //this.thestage.setScene(loginScene);
 
+        //TODO: Why? What is this doing? comment this
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
 
@@ -99,6 +101,7 @@ public class FPTS extends Application {
         allIndicies.add("DOW");
         allIndicies.add("NASDAQ100");
     }
+    //TODO: Why? ^ and v
 
     /**
      * Populates all of the possible sector fields.
@@ -178,6 +181,8 @@ public class FPTS extends Application {
     public static void main(String[] args) {
         if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
+
+            //TODO: Why? What does this all do? (actually I know why, but comment this!)
 
             try {
                 BufferedReader reader;
@@ -387,7 +392,9 @@ public class FPTS extends Application {
         });
         nav.getChildren().add(aButton);
 
-        /*
+
+
+        /* TODO: Do we still need this?
         The following code is commented out
         because it complies with our current
         design decision that will be revisited
@@ -488,11 +495,6 @@ public class FPTS extends Application {
 
     public static FPTS getSelf() {
         return self;
-    }
-
-    public boolean hasPortfolio(User user) {
-        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
-        return directory.exists();
     }
 
     /**
