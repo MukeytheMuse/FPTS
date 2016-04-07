@@ -55,7 +55,7 @@ public class ReadCash {
             double doubleCashATotalValue = Double.parseDouble(stringCashValue);
             String cashAccountDateAdded = line[2];
             //Cash account is temporarily created with no associated transactions. Association is made in fillUsers method in the User class
-            CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , new Date(), new ArrayList<>());
+            CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , date, new ArrayList<>());
             allCashAccounts.add(cashAccountToAdd);
         }
         return allCashAccounts;

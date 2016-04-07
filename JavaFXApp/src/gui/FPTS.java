@@ -203,7 +203,6 @@ public class FPTS extends Application {
                 while ((line = reader.readLine()) != null) {
                     String[] user = line.split(",");
                     if (user[0].equals(userID)) {
-                        System.out.println("Deleting " + userID);
                     } else {
                         writer.write(user[0] + "," + user[1]);
                         writer.newLine();
@@ -215,7 +214,6 @@ public class FPTS extends Application {
                 csvTemp.renameTo(csv);
 
                 File directory = new File(WriteFile.getPath() + "/lilBase/Portfolios/" + userID);
-                System.out.println(directory.toString());
                 if (directory.exists()) {
                     File transFile = new File(directory, "/Trans.csv");
                     File cashFile = new File(directory, "/Cash.csv");

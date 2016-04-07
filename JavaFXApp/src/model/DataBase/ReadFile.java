@@ -31,11 +31,11 @@ public class ReadFile {
         return ReadHoldings.readDB(un);
     }
 
-    public static ArrayList<WatchedEquity> readWatchedEquities(String user) {
-        return ReadWatchedEquity.readDB(user);
+    public static ArrayList<WatchedEquity> readWatchedEquities(String un) {
+        return ReadWatchedEquity.readDB(un);
     }
 
-    public static ArrayList<CashAccount> readInCashFile(String un) {
+    public static ArrayList<CashAccount> readCash(String un) {
         return ReadCash.readDB(un);
     }
 
@@ -60,7 +60,7 @@ public class ReadFile {
         try {
             csv = writeFile.getPath() + csv;
         } catch (UnsupportedEncodingException e) {
-            System.out.println("readInUser threw an exception for the lilBase's filepath");
+            System.out.println("readInUser threw an exception for the Data Base's filepath");
             e.printStackTrace();
         }
         ArrayList<String[]> result = readIn(csv);

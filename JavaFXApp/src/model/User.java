@@ -178,7 +178,7 @@ public class User implements Serializable {
                 String[] split = line.split(",");
                 String un = split[0];
                 String pwd = split[1];
-                ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
+                ArrayList<CashAccount> usersCashAccounts = readFile.readCash(un);
                 Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
 
 
@@ -206,12 +206,11 @@ public class User implements Serializable {
                     }
                 }
 
-                System.out.println(un);
                 //have to unhash before creating a user because the password is hashed during creation
                 allUsersMap.put(un, newUser);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/UserData.csv not found! Please try again.");
+            System.out.println("UserData.csv not found! Please try again.");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -248,7 +247,7 @@ public class User implements Serializable {
         writeFile.addUser(un, hash(pw1));
         writeFile.updatePortfolioForUser(usr);*/
         //THE CODE BELOW ALSO WORKS WITH THE JAR FILE.
-        //*************
+        //************* TODO: has this been tested? ^ -Ian
 
         try {
             fileWriter = new FileWriter((new File(WriteFile.getPath() + "/lilBase/UserData.csv")).getAbsolutePath(), true);
@@ -260,6 +259,7 @@ public class User implements Serializable {
             //creates portfolio directory to store all user information
             File portfolioDir = new File(WriteFile.getPath() + "/lilBase/Portfolios/");
             //TODO: ask why we are creating a new portfolio directory each time we add a user. THink this could be better in fillUsers so only one portfolio dir is created for all users
+            //******* great question ^ -Ian
             if (!portfolioDir.exists()) {
                 portfolioDir.mkdir();
             }

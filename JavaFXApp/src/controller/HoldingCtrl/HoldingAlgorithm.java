@@ -135,7 +135,6 @@ abstract public class HoldingAlgorithm implements Observer {
      * @return
      */
     public Scene getFirstSearchScene() {
-        System.out.println("getFirstSearchScene() called");
         ArrayList<Searchable> toBeSearched = getToBeSearched();
         s = new SearchedHoldingSearcher();
         s.addObserver(self);
@@ -149,7 +148,6 @@ abstract public class HoldingAlgorithm implements Observer {
      * @return Scene
      */
     public Scene getSecondSearchScene() {
-        System.out.println("getSecondSearchScene() called");
         s = new CashAccountSearcher();
         s.addObserver(self);
         matchDisplay.getChildren().clear();
@@ -171,7 +169,6 @@ abstract public class HoldingAlgorithm implements Observer {
      * @return
      */
     private Scene getSearchScene(ArrayList<Searchable> toBeSearched, VBox queries, Button actionBtn) {
-        System.out.println("getSearchScene(p1 ,p2 ,p3 ) called");
         VBox splitPage = new VBox();
 
         VBox searchPane = new VBox();

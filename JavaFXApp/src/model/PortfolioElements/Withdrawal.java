@@ -18,6 +18,7 @@ public class Withdrawal implements Transaction {
     private CashAccount c;
     private double amount;
     private Date date;
+    private String cashAcctName;
 
     /**
      * Constructs a Withdrawal command
@@ -29,6 +30,7 @@ public class Withdrawal implements Transaction {
         this.c = c;
         this.amount = amount;
         this.date = new Date();
+        this.cashAcctName = c.getAccountName();
     }
 
 
@@ -51,6 +53,7 @@ public class Withdrawal implements Transaction {
     @Override
     public void setCashAccount(CashAccount ca){
         c = ca;
+        cashAcctName = c.getAccountName();
     }
 
     /**
@@ -77,7 +80,7 @@ public class Withdrawal implements Transaction {
 
     @Override
     public String getCashAccountName() {
-        return null;
+        return cashAcctName;
     }
 
     /**

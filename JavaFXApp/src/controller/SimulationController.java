@@ -104,7 +104,6 @@ public class SimulationController extends MenuController {
                 hasSteps = steps;
                 if (simulation.equals("NOGROWTH")) {
                     currentSimulator = new NoGrowthSimulator(numberOfSteps, curInterval, hasSteps);
-                    System.out.println("NOGROWTH");
                 } else {
                     if (priceAnnum.getText().length() != 0) {
                         String pricePerAnum = priceAnnum.getText();
@@ -112,10 +111,8 @@ public class SimulationController extends MenuController {
                             double pricePerYearAsDouble = Double.parseDouble(pricePerAnum);
                             if (pricePerYearAsDouble < 1.00 && pricePerYearAsDouble > 0) {
                                 if (simulation.equals("BEAR")) {
-                                    System.out.println("BEARSIM");
                                     currentSimulator = new BearSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
                                 } else {
-                                    System.out.println("BULLSIM");
                                     currentSimulator = new BullSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
                                 }
                             } else {
@@ -139,7 +136,6 @@ public class SimulationController extends MenuController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
-                System.out.println("Value returned = " + FPTS.getSimulationValue());
             } catch (NumberFormatException x) {
                 error.setText("Invalid Format. Please enter an integer for the number of steps.");
             }
@@ -184,7 +180,6 @@ public class SimulationController extends MenuController {
     protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) {
         //TODO Memento portfolio restoration
         //currentPortfolioState.restoreFromMemento();
-        //System.out.println("Value returned = " + currentPortfolioState.getCurrentValue());
     }
 
     /**

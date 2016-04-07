@@ -15,6 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DataBase.ReadImports;
+import model.DataBase.ReadHoldings;
+//import model.DataBase.ReadTransactions;
+import model.DataBase.WriteFile;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Portfolio;
@@ -41,6 +44,7 @@ public class LoginController {
 
     private User currentUser;//How do we know the currentUser after exiting this class??
 
+    private boolean importHoldingsRequested = false;
     private boolean importTransactionsRequested = false;
 
     @FXML
@@ -239,6 +243,8 @@ public class LoginController {
      */
     @FXML
     protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
+        WriteFile writeFile = new WriteFile();
+        writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
         Stage stg = FPTS.getSelf().getStage();
         stg.setScene(FPTS.getSelf().createLogInScene());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

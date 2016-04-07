@@ -46,7 +46,6 @@ public class AddToWatchlistController extends MenuController {
     }
 
     public void handleUpdate(ActionEvent event) {
-        System.out.println("IN UPDATE");
         Portfolio p = new Portfolio(); // fpts.getCurrentUser().getMyPortfolio();
         ArrayList<WatchedEquity> watchedEquities = p.getWatchedEquities();
         String list = "";
@@ -78,7 +77,6 @@ public class AddToWatchlistController extends MenuController {
                 EquityComponent e = p.getEquityComponent(tickerSymbol);
 
                 if (lowTriggerField != null && !lowTriggerField.getText().isEmpty()) {
-                    System.out.println("TESTING FIRST INPUT: " + lowTriggerField.getText());
                     try {
                         lowTrigger = Double.parseDouble(lowTriggerField.getText());
                     } catch (Exception ex) {
@@ -88,7 +86,6 @@ public class AddToWatchlistController extends MenuController {
                 }
 
                 if (highTriggerField != null && !highTriggerField.getText().isEmpty()) {
-                    System.out.println("TESTING SECOND INPUT: " + highTriggerField.getText());
                     try {
                         highTrigger = Double.parseDouble(highTriggerField.getText());
                     } catch (Exception ex) {
@@ -98,7 +95,6 @@ public class AddToWatchlistController extends MenuController {
                 }
 
                 if (validInput) {
-                    System.out.println("IN VALID INPUT");
                     WatchedEquity w = new WatchedEquity(e, highTrigger, lowTrigger);
                     p.addWatchedEquity(w);
                     Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));

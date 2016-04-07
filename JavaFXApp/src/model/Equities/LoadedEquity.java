@@ -94,12 +94,9 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
 
                         if (cNode.getNodeName().equals("LastTradePriceOnly")) {
                             try {
-                                //System.out.println(cNode.getTextContent());
                                 String priceStr = cNode.getTextContent();
                                 double price = Double.parseDouble(priceStr);
-                                //System.out.println("NEW PRICE: " + price);
                                 pricePerShare = price;
-                                //System.out.println("new price per share is " + pricePerShare);
                             } catch (Exception e) {
                                 //e.printStackTrace();
                             }

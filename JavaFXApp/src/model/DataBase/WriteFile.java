@@ -15,12 +15,6 @@ public class WriteFile {
     public WriteFile() {
     }
 
-    public boolean hasPortfolio(User user) {
-        //File directory = new File("model/Database/Portfolios/" + user.getLoginID());
-        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
-        return directory.exists();
-    }
-
     /*
      * @author: Ian London
      */
@@ -38,7 +32,6 @@ public class WriteFile {
             File userDataFile = new File(lilB, "UserData.csv");
 
             if (!lilB.exists()) {
-                //JOptionPane.showMessageDialog(null, newDir);
                 lilB.mkdir();
                 lilPortfolios.mkdir();
                 userDataFile.createNewFile();
@@ -49,6 +42,7 @@ public class WriteFile {
             e.printStackTrace();
         }
     }
+
 
     /*
      * Finds the jar file's path and returns it.
@@ -77,26 +71,6 @@ public class WriteFile {
     }
 
 
-    //TODO: check Warning:(47, 17) Method 'removePortfolioForUser(model.User)' is never used
-
-    /**
-     * @param user
-     */
-    public void removePortfolioForUser(User user) {
-        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
-        File transFile = new File(directory, "/Trans.csv");
-        File cashFile = new File(directory, "/Cash.csv");
-        File holdingsFile = new File(directory, "/Holdings.csv");
-        transFile.delete();
-        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
-        cashFile.delete();
-        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
-        holdingsFile.delete();
-        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
-        directory.delete();
-        //TODO: check Warning:(52, 19) Result of 'File.delete()' is ignored
-    }
-
     /**
      * @param user
      */
@@ -118,6 +92,7 @@ public class WriteFile {
         }
 
     }
+
 
     /**
      * @param file
@@ -148,6 +123,7 @@ public class WriteFile {
 
     }
 
+
     /**
      *
      */
@@ -170,6 +146,7 @@ public class WriteFile {
         }
     }
 
+
     /**
      * @param cashAccounts
      */
@@ -187,6 +164,7 @@ public class WriteFile {
             }
             bufferedWriter.close();
 
+            transFile.delete();
             FileWriter fileWriterT = new FileWriter(transFile, true);
             BufferedWriter bufferedWriterT = new BufferedWriter(fileWriterT);
 

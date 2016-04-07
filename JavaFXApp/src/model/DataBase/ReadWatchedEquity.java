@@ -18,7 +18,6 @@ public class ReadWatchedEquity {
         ArrayList<WatchedEquity> watchedEquities = new ArrayList<>();
 
         for (String[] watchedEquity : split) {
-            System.out.println(watchedEquity[0]);
             WatchedEquity newWatchedEquity = new WatchedEquity(watchedEquity[0], Double.parseDouble(watchedEquity[1]), Double.parseDouble(watchedEquity[2]),
                     Boolean.parseBoolean(watchedEquity[3]), Boolean.parseBoolean(watchedEquity[4]), Boolean.parseBoolean(watchedEquity[5]),
                     Boolean.parseBoolean(watchedEquity[6]));

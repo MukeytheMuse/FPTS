@@ -26,7 +26,6 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
     }
 
     public ArrayList<Searchable> getToBeSearched() {
-        System.out.println("getToBeSearched called");
         return toBeSearched;
     }
 

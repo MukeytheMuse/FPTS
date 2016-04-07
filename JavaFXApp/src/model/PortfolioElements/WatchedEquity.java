@@ -39,7 +39,6 @@ public class WatchedEquity {
 
         previousPrice = assocEquity.getPricePerShare();
 
-        System.out.println("PREVIOUS PRICE IS " + previousPrice);
         updateTriggers();
     }
 
@@ -62,7 +61,6 @@ public class WatchedEquity {
 
         previousPrice = assocEquity.getPricePerShare();
 
-        System.out.println("PREVIOUS PRICE IS " + previousPrice);
         updateTriggers();
     }
 

@@ -74,7 +74,6 @@ public class RemoveFromWatchlistController extends MenuController implements Ini
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        System.out.println("IN INTIIALIZE");
         //watchedEquitiesBox = new VBox();
         FPTS fpts = FPTS.getSelf();
         Portfolio p = fpts.getCurrentUser().getMyPortfolio();

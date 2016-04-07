@@ -52,8 +52,6 @@ public class EditWatchlistController extends MenuController {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.print("INITIALIZED AGAIN!!!!");
-        // TODO
 
         //watchedEquitiesBox = new VBox();
         fpts = FPTS.getSelf();
@@ -61,14 +59,12 @@ public class EditWatchlistController extends MenuController {
         ArrayList<WatchedEquity> watchlist = p.getWatchedEquities();
 
         for (WatchedEquity w : watchlist) {
-            System.out.println("LOOP");
             Button aButton = new Button(w.getSymbol());
             aButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
 
                     try {
-                        System.out.println("HANDLE");
                         watchedEq = w;
                         respond();
                         //redirect();
@@ -82,12 +78,10 @@ public class EditWatchlistController extends MenuController {
     }
 
     public void redirect() throws IOException {
-        System.out.println("IN REDIRECT");
         Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
-        System.out.println("SET SCENE");
         stage.show();
     }
 
@@ -112,7 +106,6 @@ public class EditWatchlistController extends MenuController {
         EquityComponent e = watchedEq.getAssocEquity();
 
         if (lowTriggerField != null && !lowTriggerField.getText().isEmpty()) {
-            System.out.println("TESTING FIRST INPUT: " + lowTriggerField.getText());
             try {
                 lowTrigger = Double.parseDouble(lowTriggerField.getText());
             } catch (Exception ex) {
@@ -122,7 +115,6 @@ public class EditWatchlistController extends MenuController {
         }
 
         if (highTriggerField != null && !highTriggerField.getText().isEmpty()) {
-            System.out.println("TESTING SECOND INPUT: " + highTriggerField.getText());
             try {
                 highTrigger = Double.parseDouble(highTriggerField.getText());
             } catch (Exception ex) {
@@ -132,9 +124,6 @@ public class EditWatchlistController extends MenuController {
         }
 
         if (validInput) {
-            System.out.println("IN VALID INPUT");
-            //WatchedEquity w = new WatchedEquity(e, lowTrigger, highTrigger);
-            //p.addWatchedEquity(w);
             watchedEq.setHighTrigger(highTrigger);
             watchedEq.setLowTrigger(lowTrigger);
             Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));

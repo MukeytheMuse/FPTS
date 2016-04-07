@@ -106,8 +106,6 @@ public class Portfolio {
 
     public EquityComponent getEquityComponent(String tickerSymbol) {
 
-        System.out.println("IN GET EQUITY COMPONENT");
-        System.out.println("SIZE IS " + equityComponents.size());
         for (EquityComponent ec : equityComponents) {
             if (ec.getDisplayName().toUpperCase().equals(tickerSymbol.toUpperCase())) {
 
@@ -130,16 +128,9 @@ public class Portfolio {
         for (WatchedEquity w : watchedEquities) {
 
             //EquityComponent ec = w.getAssocEquity();
-            //System.out.println("EQUITY COMPONENT VALUE: " + ec.getValuePerShare());
-            //System.out.println("WATCHED COMPONENT OLD VALUE: " + w.getPricePerShare());
-
 
             w.handleNewPrice();
 
-            //System.out.println("WATCHED COMPONENT NEW VALUE : " + w.getPricePerShare());
-
-            //System.out.println(w.getAssocEquity());
-            //System.out.println(getEquityComponent(w.getSymbol()));
         }
     }
 

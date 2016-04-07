@@ -34,7 +34,6 @@ public class WatchlistController extends MenuController implements Observer {
     public void initialize(URL location, ResourceBundle resources) {
         WebServiceReader ws = fpts.getWebServiceReader();
         ws.addObserver(this);
-        //System.out.println("ADDED AS OBSERVER");
         fillWatchlist();
 
         //TODO: Warning:(49, 33) Unchecked assignment: 'javafx.collections.ObservableList' to 'javafx.collections.ObservableList<javafx.scene.chart.PieChart.Data>'    
@@ -43,7 +42,6 @@ public class WatchlistController extends MenuController implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        //System.out.println("IN UPDATE");
         Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
         p.updateWatchlist();
 
