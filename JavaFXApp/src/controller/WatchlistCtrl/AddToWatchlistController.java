@@ -99,7 +99,7 @@ public class AddToWatchlistController extends MenuController {
 
                 if (validInput) {
                     System.out.println("IN VALID INPUT");
-                    WatchedEquity w = new WatchedEquity(e, lowTrigger, highTrigger);
+                    WatchedEquity w = new WatchedEquity(e, highTrigger, lowTrigger);
                     p.addWatchedEquity(w);
                     Parent parent = FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
                     Scene scene = new Scene(parent);
