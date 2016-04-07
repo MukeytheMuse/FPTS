@@ -1,7 +1,10 @@
 package model.DataBase;
 
 import gui.FPTS;
-import model.PortfolioElements.*;
+import model.PortfolioElements.Deposit;
+import model.PortfolioElements.Holding;
+import model.PortfolioElements.Transaction;
+import model.PortfolioElements.Withdrawal;
 
 import java.io.*;
 import java.text.ParseException;
@@ -45,8 +48,8 @@ public class ReadImports {
 
     protected static Map<String, ArrayList<String[]>> readIn(String path) {
 
-        ArrayList<String[]>splitHoldings = new ArrayList<String[]>();
-        ArrayList<String[]>splitTransactions = new ArrayList<String[]>();
+        ArrayList<String[]> splitHoldings = new ArrayList<String[]>();
+        ArrayList<String[]> splitTransactions = new ArrayList<String[]>();
         Map<String, ArrayList<String[]>> importMap = new HashMap<>();
         BufferedReader reader = null;
         String line;
@@ -110,7 +113,7 @@ public class ReadImports {
 
             String type = line[2];
             Transaction trans;
-            if(type.equals("Withdrawal")){
+            if (type.equals("Withdrawal")) {
                 trans = new Withdrawal(amount, date);
             } else {//if(stringType.equals("Deposit")){
                 trans = new Deposit(amount, date);
@@ -125,11 +128,12 @@ public class ReadImports {
     /**
      * Checks to see if the first string is a double to decide between transaction
      * or holding.
-     * @author: Kimberly Sookoo
+     *
      * @param str - string to check if it can be parsed
      * @return - boolean value
+     * @author: Kimberly Sookoo
      */
-    private static boolean isDouble (String str) {
+    private static boolean isDouble(String str) {
         try {
             Double.parseDouble(str);
             return true;

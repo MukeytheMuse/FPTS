@@ -1,24 +1,11 @@
 package gui;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import controller.*;
-import controller.CashAccountCtrl.CashAccountAlgorithm;
-import controller.CashAccountCtrl.CashAccountCreator;
-import controller.CashAccountCtrl.DepositCashAccountAlgorithm;
-import controller.CashAccountCtrl.RemoveCashAccountAlgorithm;
-import controller.CashAccountCtrl.TransferCashAccountAlgorithm;
-import controller.CashAccountCtrl.WithdrawCashAccountAlgorithm;
-
+import controller.CashAccountCtrl.*;
+import controller.Displayer;
 import controller.HoldingCtrl.BuyHoldingAlgorithm;
 import controller.HoldingCtrl.HoldingAlgorithm;
 import controller.HoldingCtrl.SellHoldingAlgorithm;
+import controller.TransactionDisplayer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,9 +22,11 @@ import model.DataBase.WriteFile;
 import model.PortfolioElements.Portfolio;
 import model.Simulators.Simulator;
 import model.User;
-import model.*;
+import model.WebService;
+import model.WebServiceReader;
 
-
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Timer;
 
 public class FPTS extends Application {
@@ -63,7 +52,7 @@ public class FPTS extends Application {
     public static ArrayList<String> allSectors;//all sector names
 
     private WebServiceReader webServiceReader;
-    
+
     public FPTS() {
     }
 
@@ -94,7 +83,7 @@ public class FPTS extends Application {
         currentUser.setMyPortfolio(new Portfolio());
 
         Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
-        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
+        this.thestage.setScene(new Scene(root2, 1200.0D, 600.0D));
         this.thestage.setScene(loginScene);
 
         this.thestage.show();
@@ -164,9 +153,9 @@ public class FPTS extends Application {
     }
 
     public boolean hasCurrentUser() {
-       return currentUser != null;
+        return currentUser != null;
     }
-    
+
     /**
      * @return
      */
@@ -197,7 +186,7 @@ public class FPTS extends Application {
 
                 reader = new BufferedReader(new FileReader(csv));
                 File csvTemp = new File(WriteFile.getPath() + "/lilBase/UserDataTemp.csv");
-                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp,true));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp, true));
 
                 String line;
                 while ((line = reader.readLine()) != null) {

@@ -2,7 +2,6 @@ package model.DataBase;
 
 import model.PortfolioElements.Holding;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

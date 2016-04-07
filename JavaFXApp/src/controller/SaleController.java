@@ -55,7 +55,7 @@ public class SaleController extends MenuController {
 
     private void search() {
         ArrayList<SearchThread> threads = new ArrayList<>();
-        switch(fieldSearch){
+        switch (fieldSearch) {
             case "All":
                 threads.add(new SearchThread(searchText.getText(), "Ticker", typeSearch, holdings));
                 threads.add(new SearchThread(searchText.getText(), "Name", typeSearch, holdings));
@@ -73,9 +73,9 @@ public class SaleController extends MenuController {
                 threads.add(new SearchThread(searchText.getText(), "Sector", typeSearch, holdings));
                 break;
         }
-        for(SearchThread thread : threads)
+        for (SearchThread thread : threads)
             thread.run();
-        for(SearchThread thead : threads) {
+        for (SearchThread thead : threads) {
             try {
                 thead.join();
             } catch (InterruptedException e) {
@@ -85,18 +85,18 @@ public class SaleController extends MenuController {
     }
 
     @FXML
-    public void handleDoubleClickTableRow(MouseEvent event) throws IOException{
+    public void handleDoubleClickTableRow(MouseEvent event) throws IOException {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             Holding holding = tableView.getSelectionModel().getSelectedItem();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/PurchasePopUp.fxml"));
                 Parent root1 = fxmlLoader.load();
-                PurchasePopUpController controller=fxmlLoader.getController();
+                PurchasePopUpController controller = fxmlLoader.getController();
                 controller.setEquity(holding, 0, holding.getPricePerShare(), "SALE");
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.show();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

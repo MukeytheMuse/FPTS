@@ -1,8 +1,5 @@
 package model.PortfolioElements;
 
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.Transaction;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -37,10 +34,9 @@ public class Withdrawal implements Transaction {
     /**
      * Used when fillUsers method is called.
      *
-     * @param amount
-     * Author(s): Kaitlin Brockway
+     * @param amount Author(s): Kaitlin Brockway
      */
-    public Withdrawal(double amount, Date date){
+    public Withdrawal(double amount, Date date) {
         this.amount = amount;
         this.date = date;
     }
@@ -48,10 +44,11 @@ public class Withdrawal implements Transaction {
     /**
      * Used when fillUsers method is called.
      * To set the associated cash account if a cash account still exists.
+     *
      * @param ca
      */
     @Override
-    public void setCashAccount(CashAccount ca){
+    public void setCashAccount(CashAccount ca) {
         c = ca;
         cashAcctName = c.getAccountName();
     }

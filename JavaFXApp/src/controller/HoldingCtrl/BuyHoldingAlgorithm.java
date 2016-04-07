@@ -5,7 +5,6 @@ import model.Equities.EquityComponent;
 import model.PortfolioElements.*;
 import model.Searchers.Searchable;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 

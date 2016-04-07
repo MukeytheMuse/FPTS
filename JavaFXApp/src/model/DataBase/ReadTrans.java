@@ -1,9 +1,10 @@
 package model.DataBase;
 
 
-import model.PortfolioElements.*;
+import model.PortfolioElements.Deposit;
+import model.PortfolioElements.Transaction;
+import model.PortfolioElements.Withdrawal;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,10 +23,8 @@ public class ReadTrans {
     }
 
     /**
-     *
-     *
      * @return list of all Holding objects
-     *
+     * <p>
      * Author(s): Kaitlin Brockway & Ian
      */
     public static Map<String, ArrayList<Transaction>> read(ArrayList<String[]> file) {
@@ -34,7 +33,6 @@ public class ReadTrans {
         String stringAmount;
         Date dateMade;
         Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = new HashMap<>();
-
 
 
         // iterate through each line representing a Transaction
@@ -51,7 +49,7 @@ public class ReadTrans {
                 stringType = line[2];
                 //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
                 Transaction newTransactionToAdd;
-                if(stringType.equals("Withdrawal")){
+                if (stringType.equals("Withdrawal")) {
                     newTransactionToAdd = new Withdrawal(amount, dateMade);
                 } else {//if(stringType.equals("Deposit")){
                     newTransactionToAdd = new Deposit(amount, dateMade);

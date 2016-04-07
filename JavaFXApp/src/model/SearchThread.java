@@ -3,8 +3,6 @@ package model;
 import controller.SearchController;
 import model.DataBase.ReadFile;
 import model.Equities.EquityComponent;
-import model.Equities.EquityComposite;
-import model.Equities.LoadedEquity;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.HoldingUpdatable;
 
@@ -13,12 +11,12 @@ import java.util.ArrayList;
 /**
  * Created by Luke Veilleux
  */
-public class SearchThread extends Thread{
+public class SearchThread extends Thread {
     private ArrayList<Holding> dataList;
     private ArrayList<HoldingUpdatable> matches;
     private String criteria, searchField, typeOfSearch;
 
-    public SearchThread(String criteria, String field, String type, ArrayList<Holding> dataList){
+    public SearchThread(String criteria, String field, String type, ArrayList<Holding> dataList) {
         this.dataList = dataList;
         matches = new ArrayList<>();
         this.criteria = criteria;
@@ -28,7 +26,7 @@ public class SearchThread extends Thread{
 
 
     @Override
-    public void run(){
+    public void run() {
         ArrayList<EquityComponent> list = new ArrayList<>();
         if (dataList == null) {
             list = ReadFile.readEquity();
@@ -49,9 +47,9 @@ public class SearchThread extends Thread{
 
     }
 
-    private boolean search(HoldingUpdatable input){
+    private boolean search(HoldingUpdatable input) {
         String fromInput = "";
-        switch(searchField){
+        switch (searchField) {
             case "Ticker":
                 fromInput = input.getTickerSymbol();
                 break;
@@ -65,7 +63,7 @@ public class SearchThread extends Thread{
                 fromInput = input.getSectors().toString();
                 break;
         }
-        switch(typeOfSearch) {
+        switch (typeOfSearch) {
             case "Contains":
                 return strContains(fromInput, criteria);
             case "Starts with":

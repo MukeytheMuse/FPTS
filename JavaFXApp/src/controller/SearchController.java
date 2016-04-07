@@ -55,7 +55,7 @@ public class SearchController extends MenuController {
 
     private void search() {
         ArrayList<SearchThread> threads = new ArrayList<>();
-        switch(fieldSearch){
+        switch (fieldSearch) {
             case "All":
                 threads.add(new SearchThread(searchText.getText(), "Ticker", typeSearch, null));
                 threads.add(new SearchThread(searchText.getText(), "Name", typeSearch, null));
@@ -73,9 +73,9 @@ public class SearchController extends MenuController {
                 threads.add(new SearchThread(searchText.getText(), "Sector", typeSearch, null));
                 break;
         }
-        for(SearchThread thread : threads)
+        for (SearchThread thread : threads)
             thread.run();
-        for(SearchThread thead : threads) {
+        for (SearchThread thead : threads) {
             try {
                 thead.join();
             } catch (InterruptedException e) {
@@ -84,15 +84,15 @@ public class SearchController extends MenuController {
         }
     }
 
-    private void update(){
+    private void update() {
         ObservableList<EquityComponent> data = FXCollections.observableArrayList(matchList);
         tableView.setItems(data);
     }
 
-    public static void addEquitiesToList(ArrayList<HoldingUpdatable> lst){
-        for (HoldingUpdatable eqt : lst){
+    public static void addEquitiesToList(ArrayList<HoldingUpdatable> lst) {
+        for (HoldingUpdatable eqt : lst) {
             boolean flag = false;
-            for (EquityComponent e : matchList){
+            for (EquityComponent e : matchList) {
                 if (e.equals((EquityComponent) eqt))
                     flag = true;
             }
@@ -102,18 +102,18 @@ public class SearchController extends MenuController {
     }
 
     @FXML
-    public void handleDoubleClickTableRow(MouseEvent event) throws IOException{
+    public void handleDoubleClickTableRow(MouseEvent event) throws IOException {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             EquityComponent equity = tableView.getSelectionModel().getSelectedItem();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/PurchasePopUp.fxml"));
                 Parent root1 = fxmlLoader.load();
-                PurchasePopUpController controller=fxmlLoader.getController();
+                PurchasePopUpController controller = fxmlLoader.getController();
                 controller.setEquity(equity, 0, equity.getPricePerShare(), "BUY");
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.show();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

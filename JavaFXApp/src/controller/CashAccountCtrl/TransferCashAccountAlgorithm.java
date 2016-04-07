@@ -7,7 +7,6 @@ import model.PortfolioElements.Transaction;
 import model.PortfolioElements.Withdrawal;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Observable;
 
 /**

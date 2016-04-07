@@ -48,14 +48,14 @@ public class PurchasePopUpController implements Initializable {
     private double price;
     private String action;
 
-    public void setEquity(Holding h, int shares, double price, String action){
+    public void setEquity(Holding h, int shares, double price, String action) {
         holding = h;
         equityLabel.setText(holding.getName());
         this.action = action;
-        if (priceTextBox != null){
+        if (priceTextBox != null) {
             priceTextBox.setText(holding.getPricePerShare() + "");
             this.price = holding.getPricePerShare();
-        }else {
+        } else {
             this.price = price;
             this.shares = shares;
             equityPrice.setText(price * shares + "");
@@ -63,14 +63,14 @@ public class PurchasePopUpController implements Initializable {
         }
     }
 
-    public void setEquity(EquityComponent e, int shares, double price, String action){
+    public void setEquity(EquityComponent e, int shares, double price, String action) {
         equity = e;
         equityLabel.setText(equity.getName());
         this.action = action;
-        if (priceTextBox != null){
+        if (priceTextBox != null) {
             priceTextBox.setText(equity.getPricePerShare() + "");
             this.price = equity.getPricePerShare();
-        }else {
+        } else {
             this.shares = shares;
             this.price = price;
             equityPrice.setText(price * shares + "");
@@ -78,7 +78,7 @@ public class PurchasePopUpController implements Initializable {
         }
     }
 
-    private void updateCashAccounts(){
+    private void updateCashAccounts() {
         ArrayList<CashAccount> list = new ArrayList<>();
         if (action.equals("BUY")) {
             double total = price * shares;
@@ -94,14 +94,14 @@ public class PurchasePopUpController implements Initializable {
     public void handleProceedButtonPressed(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/CASelectPage.fxml"));
         Parent root1 = fxmlLoader.load();
-        PurchasePopUpController controller=fxmlLoader.getController();
+        PurchasePopUpController controller = fxmlLoader.getController();
         try {
             int shares = Integer.parseInt(numSharesBox.getText());
-            if (holding != null && shares > holding.getNumOfShares()){
+            if (holding != null && shares > holding.getNumOfShares()) {
                 throw new IllegalArgumentException("Shares more than held shares");
             }
             price = Double.parseDouble(priceTextBox.getText());
-            if (fptsChoice.getValue().equals("Process Outside FPTS")){
+            if (fptsChoice.getValue().equals("Process Outside FPTS")) {
                 if (action.equals("BUY")) {
                     BuyHoldingAlgorithm bha = new BuyHoldingAlgorithm();
                     bha.establishContext();
@@ -128,7 +128,7 @@ public class PurchasePopUpController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.close();
             } else {
-                if(equity == null) {
+                if (equity == null) {
                     controller.setEquity(holding, shares, price, action);
                 } else {
                     controller.setEquity(equity, shares, price, action);

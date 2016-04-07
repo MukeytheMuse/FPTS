@@ -1,21 +1,15 @@
 package model;
 
-import gui.FPTS;
-import model.PortfolioElements.*;
 import model.DataBase.ReadFile;
 import model.DataBase.WriteFile;
 import model.PortfolioElements.*;
 
-import javax.swing.*;
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User implements Serializable {
+public class User {
     private String loginID;
     private String password;
     private Portfolio myPortfolio;
@@ -23,10 +17,10 @@ public class User implements Serializable {
     //TODO: Warning:(17, 52) Unchecked assignment: 'java.util.HashMap' to 'java.util.Map<java.lang.String,model.User>'
 
 
-    public Map<String, User> getAllUsersMap(){
+    public Map<String, User> getAllUsersMap() {
         return allUsersMap;
     }
-    
+
     public void setMyPortfolio(Portfolio p) {
         myPortfolio = p;
     }
@@ -43,9 +37,7 @@ public class User implements Serializable {
     /**
      * Acts as a temporary user for accessing static methods.
      *
-     * @param uid
-     *
-     * Author(s): Kaitlin Brockway
+     * @param uid Author(s): Kaitlin Brockway
      */
     public User(String uid) {
         this.loginID = uid;
@@ -57,9 +49,7 @@ public class User implements Serializable {
      *
      * @param loginID
      * @param password
-     * @param portfolio
-     *
-     * Author(s): Kaitlin Brockway
+     * @param portfolio Author(s): Kaitlin Brockway
      */
     public User(String loginID, String password, Portfolio portfolio) {
         this.loginID = loginID;
@@ -85,8 +75,8 @@ public class User implements Serializable {
     private static String hash(String password) {
         String encryptedPW = "";
 
-        for(int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char)(password.charAt(i) + 1);
+        for (int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char) (password.charAt(i) + 1);
             encryptedPW = encryptedPW + encryptedChar;
         }
 
@@ -96,8 +86,8 @@ public class User implements Serializable {
     private static String unHash(String password) {
         String textPass = "";
 
-        for(int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char)(password.charAt(i) - 1);
+        for (int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char) (password.charAt(i) - 1);
             textPass = textPass + encryptedChar;
         }
 
@@ -105,10 +95,10 @@ public class User implements Serializable {
     }
 
     public boolean equals(Object o) {
-        if(!(o instanceof User)) {
+        if (!(o instanceof User)) {
             return false;
         } else {
-            User cur_user = (User)o;
+            User cur_user = (User) o;
             return cur_user.getLoginID().equals(this.loginID) && cur_user.getPassword().equals(this.password);
         }
     }
@@ -145,7 +135,7 @@ public class User implements Serializable {
      * @return: true if the user and password combination exists in the system.
      */
     public static boolean validateUser(String username, String password) {
-        if(allUsersMap.containsKey(username)) {
+        if (allUsersMap.containsKey(username)) {
             String hashedPasswordMappedTo = allUsersMap.get(username).getPassword();
             String hashedPasswordEntered = hash(password);
             return hashedPasswordEntered.equals(hashedPasswordMappedTo);
@@ -182,14 +172,14 @@ public class User implements Serializable {
                 Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
 
 
-                for(CashAccount cashAccountToAssociate: usersCashAccounts){
+                for (CashAccount cashAccountToAssociate : usersCashAccounts) {
                     //if transactions exist for this cash account
-                    if(cashAccountNameTransactionsMap.containsKey(cashAccountToAssociate.getAccountName())){
+                    if (cashAccountNameTransactionsMap.containsKey(cashAccountToAssociate.getAccountName())) {
                         ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAssociate.getAccountName());
                         cashAccountToAssociate.setTransactions(curTransactions);//add transactions to this current cashAccount object
                         //iterate through transactions (that have a cash account association with a cash account that still exists)
                         // and add association to the transaction objects
-                        for(Transaction t: curTransactions){
+                        for (Transaction t : curTransactions) {
                             t.setCashAccount(cashAccountToAssociate);
                         }
                     }//if not it will maintain an empty array list for its transactions
@@ -228,10 +218,7 @@ public class User implements Serializable {
      * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
-     * @param pw1
-     *
-     * Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
-     *
+     * @param pw1 Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
      */
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
@@ -310,9 +297,8 @@ public class User implements Serializable {
      * Writes the users holding content to a file called Cash.csv in the form
      * "CashAccountForUser1","345.00","yyyy/mm/dd"
      *
-     * @author: Kimberly Sookoo
-     *
      * @param transactions
+     * @author: Kimberly Sookoo
      */
     private void addTrans(ArrayList<Transaction> transactions, File importedTransactions) {
         FileWriter writerT = null;

@@ -9,8 +9,6 @@ import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Transaction;
 import model.PortfolioElements.Withdrawal;
 
-import java.util.Date;
-
 /**
  * Implements final step in CashAccountAlgorithm by creating a Withdraw object.
  *

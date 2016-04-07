@@ -27,7 +27,7 @@ public class SellHoldingAlgorithm extends HoldingAlgorithm {
     private ArrayList<Searchable> toBeSearched;
     private Holding holding;
 
-    public SellHoldingAlgorithm(Holding holding){
+    public SellHoldingAlgorithm(Holding holding) {
         this.holding = holding;
     }
 

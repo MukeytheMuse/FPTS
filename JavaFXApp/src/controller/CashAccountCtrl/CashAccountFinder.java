@@ -18,6 +18,7 @@ import model.PortfolioElements.Portfolio;
 import model.Searchers.CashAccountSearcher;
 import model.Searchers.Searchable;
 import model.Searchers.Searcher;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;

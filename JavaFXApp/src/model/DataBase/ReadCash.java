@@ -1,16 +1,12 @@
 package model.DataBase;
 
 import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Transaction;
-import model.User;
 
-import java.io.*;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Created by iLondon on 3/13/16.
@@ -22,8 +18,6 @@ public class ReadCash {
 
     public static ArrayList<CashAccount> allCash;
     private static ArrayList<String[]> splitFile;
-
-
 
 
     public static ArrayList<CashAccount> readDB(String un) {
@@ -55,7 +49,7 @@ public class ReadCash {
             double doubleCashATotalValue = Double.parseDouble(stringCashValue);
             String cashAccountDateAdded = line[2];
             //Cash account is temporarily created with no associated transactions. Association is made in fillUsers method in the User class
-            CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue , date, new ArrayList<>());
+            CashAccount cashAccountToAdd = new CashAccount(cashAccountName, doubleCashATotalValue, date, new ArrayList<>());
             allCashAccounts.add(cashAccountToAdd);
         }
         return allCashAccounts;
