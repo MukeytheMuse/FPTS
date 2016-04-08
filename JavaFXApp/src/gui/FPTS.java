@@ -28,6 +28,7 @@ import model.WebServiceReader;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Timer;
+import model.UndoRedo.UndoRedoManager;
 
 public class FPTS extends Application {
 
@@ -47,6 +48,7 @@ public class FPTS extends Application {
     private static User currentUser;
     private static FPTS self;
 
+    private static UndoRedoManager undoRedoManager;
 
     public static ArrayList<String> allIndicies;//all index names
     public static ArrayList<String> allSectors;//all sector names
@@ -57,7 +59,8 @@ public class FPTS extends Application {
     }
 
     public void start(Stage primaryStage) throws IOException {
-
+        undoRedoManager = new UndoRedoManager();
+        
         self = this;
         this.thestage = primaryStage;
         this.fillIndicies();
@@ -111,6 +114,10 @@ public class FPTS extends Application {
         allSectors.add("TRANSPORTATION");
         allSectors.add("TECHNOLOGY");
         allSectors.add("HEALTH CARE");
+    }
+    
+    public UndoRedoManager getUndoRedoManager() {
+        return undoRedoManager;
     }
 
     public Scene createLogInScene() throws IOException {

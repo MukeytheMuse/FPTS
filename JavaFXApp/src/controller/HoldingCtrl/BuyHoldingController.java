@@ -30,6 +30,14 @@ import model.PortfolioElements.SearchPortfolioVisitor;
 import model.Equities.EquityComponents;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.CashAccounts;
+import gui.FPTS;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+import model.PortfolioElements.Holdings;
+import model.UndoRedo.HoldingAddition;
+import model.UndoRedo.UndoRedoManager;
 
 /**
  * FXML Controller class
@@ -59,12 +67,16 @@ public class BuyHoldingController extends MenuController {
     
     private TextField mainInput;
 
+    private FPTS fpts;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        fpts = FPTS.getSelf();
        
         System.out.println("IN INITIALIZE");
         
@@ -242,6 +254,17 @@ public class BuyHoldingController extends MenuController {
                             //HoldingPurchase()
                             
                             //MAKE COMMAND TO BUY/SELL HOLDING
+                            UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+                            Holdings holdings = new Holdings();// fpts.getCurrentUser().getMyPortfolio().getHoldings();
+                            HoldingAddition holdingAddition = new HoldingAddition(holdings, equityOfInterest, numOfShares);
+                            undoRedoManager.execute(holdingAddition);
+                             
+                            
+                            try { 
+                                redirect();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                             
                             //theStage.setScene(theFPTS.getConfirmationScene());
                             
@@ -347,6 +370,7 @@ public class BuyHoldingController extends MenuController {
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
                                 
+                                UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
                                 //Buy Equity command
                                 //create withdrawal command
                                 //create command to buy shares, so have Holdings, 
@@ -381,6 +405,14 @@ public class BuyHoldingController extends MenuController {
         VBox queries = new VBox();
         queries.getChildren().add(createInputField("Account name: ", mainInput));
         return queries;
+    }
+    
+    public void redirect() throws IOException {
+         Parent parent = FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
     
 }

@@ -8,6 +8,7 @@ package model.Equities;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.PortfolioVisitor;
 
@@ -24,6 +25,10 @@ public class EquityComponents {
 	public EquityComponents() {
 		equityComponents = LoadedEquity.getEquityList();
 	}
+        
+        public List<EquityComponent> getList() {
+            return equityComponents;
+        }
 
 	public void addEquityComponent(EquityComponent eq) {
 		equityComponents.add(eq);

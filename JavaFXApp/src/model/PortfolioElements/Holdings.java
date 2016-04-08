@@ -8,6 +8,7 @@ package model.PortfolioElements;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import model.Equities.EquityComponent;
 import model.PortfolioElements.PortfolioVisitor;
 
 /**
@@ -24,9 +25,42 @@ public class Holdings {
 		holdings = new ArrayList<Holding>();
 	}
 
-	public void addHolding(Holding h) {
+	public void add(Holding h) {
 		holdings.add(h);
 	}
+        
+        public void add(List<Holding> hList) {
+            for (Holding h : hList) {
+                holdings.add(h);
+            }
+        }
+        
+        public List<Holding> getList() {
+            return holdings;
+        }
+        
+        
+	public void remove(Holding h) {
+		holdings.remove(h);
+	}
+        
+        public Holding getHoldingGivenEquityComponent(EquityComponent ec) {
+            for (Holding h : holdings) {
+                if (h.getDisplayName().equals(ec.getDisplayName())) {
+                    return h;
+                }
+            }
+            return null;
+        }
+        
+        public boolean contains(EquityComponent ec) {
+            for (Holding h : holdings) {
+                if (h.getDisplayName().equals(ec.getDisplayName())) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 	public Iterator<Holding> iterator(PortfolioVisitor v) {
 	    results = new ArrayList<Holding>();

@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,6 +29,10 @@ public class Portfolio {
     private ArrayList<Holding> holdings;
     private ArrayList<WatchedEquity> watchedEquities;
 
+    private Holdings holdingsCollection;
+    private CashAccounts cashAccountsCollection;
+    private EquityComponents equityComponentsCollection;
+    
     private double currentValue;
 
 //    private ArrayList<Searchable> portfolioElements;
@@ -53,8 +58,12 @@ public class Portfolio {
      * @author ericepstein & Kaitlin
      */
     public Portfolio() {
-        cashAccounts = new ArrayList<>();
-        holdings = new ArrayList<>();
+        cashAccountsCollection = new CashAccounts();
+        holdingsCollection = new Holdings();
+        equityComponentsCollection = new EquityComponents();
+    
+        //cashAccounts = new ArrayList<>();
+        //holdings = new ArrayList<>();
         watchedEquities = new ArrayList<WatchedEquity>();
         currentValue = 0.00;
     }
@@ -69,6 +78,17 @@ public class Portfolio {
     public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts) {
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
+        
+        try {
+        holdingsCollection.add(readInholdings);
+        cashAccountsCollection.add(readInCashAccounts);
+        } catch (Exception ex) {
+            holdingsCollection = new Holdings();
+            cashAccountsCollection = new CashAccounts();
+                    holdingsCollection.add(readInholdings);
+        cashAccountsCollection.add(readInCashAccounts);
+        }
+        
         currentValue = 0;
         watchedEquities = new ArrayList<WatchedEquity>();
         //Calculates the portfolio's Total Value.
@@ -239,8 +259,9 @@ public class Portfolio {
      *
      * @return ArrayList<Holding>
      */
-    public ArrayList<Holding> getHoldings() {
-        return holdings;
+    public List<Holding> getHoldings() {
+        //return holdings;
+        return holdingsCollection.getList();
     }
 
     public void updateEquityComponentsPrice(Document d) {

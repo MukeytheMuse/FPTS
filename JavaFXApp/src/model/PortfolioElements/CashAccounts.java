@@ -24,10 +24,20 @@ public class CashAccounts {
 	public CashAccounts() {
 		cashAccounts = new ArrayList<CashAccount>();
 	}
+        
+        public List<CashAccount> getList() {
+            return cashAccounts;
+        }
 
 	public void addCashAccount(CashAccount c) {
 		cashAccounts.add(c);
 	}
+        
+        public void add(List<CashAccount> cList) {
+            for (CashAccount c : cList) {
+                cashAccounts.add(c);
+            }
+        }
 
 	public Iterator<CashAccount> iterator(PortfolioVisitor v) {
 	    results = new ArrayList<CashAccount>();
