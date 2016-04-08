@@ -135,11 +135,10 @@ public class LoginController {
     public void handleRegistrationButtonPressed(ActionEvent event) throws IOException {
         if (this.userid.getText().length() != 0 && this.password.getText().length() != 0) {
             if (User.ValidLoginID(this.userid.getText())) {
-                //TODO check Warning:(137, 16) Static member 'model.User.ValidLoginID(java.lang.String)' accessed via instance reference
+
                 if (this.password.getText().equals(this.password1.getText())) {
-                    //At this point, now that we know the username is valid and
-                    // the passwords match ask the user if they would like to import
-                    // holdings &OR transactions to initialize the new users portfolio.
+                    // Now that we know the username is valid and the passwords match,
+                    // ask the user if they would like to import their portfolio.
 
                     HashMap<String, ArrayList> importedEquities;
                     ArrayList<Holding> userHoldingsToImport;

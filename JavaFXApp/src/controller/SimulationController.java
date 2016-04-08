@@ -30,7 +30,6 @@ import java.util.ResourceBundle;
 public class SimulationController extends MenuController {
     @FXML
     private Label error;
-    //TODO: Warning:(30, 19) [UnusedDeclaration] Private field 'error' is never assigned
     @FXML
     private TextField numSteps;
     @FXML
@@ -53,7 +52,6 @@ public class SimulationController extends MenuController {
     protected void handleBearSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "BEAR";
     }
-    //TODO: Warning:(55, 64) [UnusedDeclaration] Parameter 'event' is never used
 
     @FXML
     protected void handleStepYesRadioButtonPressed(ActionEvent event) {
@@ -64,21 +62,16 @@ public class SimulationController extends MenuController {
     protected void handleStepNoRadioButtonPressed(ActionEvent event) {
         steps = false;
     }
-    //TODO:Warning:(60, 63) [UnusedDeclaration] Parameter 'event' is never used
 
     @FXML
     protected void handleBullSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "BULL";
     }
-    //TODO:Warning:(65, 69) [UnusedDeclaration] Parameter 'event' is never used
-
 
     @FXML
     protected void handleNoSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "NOGROWTH";
     }
-    //TODO:Warning:(70, 67) [UnusedDeclaration] Parameter 'event' is never used
-
 
     /**
      * Checks to make sure the number of steps entered is valid.

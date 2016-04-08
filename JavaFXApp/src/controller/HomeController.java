@@ -48,7 +48,6 @@ public class HomeController extends MenuController {
 
         ObservableList pieChartData = FXCollections.observableArrayList(new Data("Holdings", equityTotalValue), new Data("Cash Accounts", cashAccountValue));
         this.valueChart.setData(pieChartData);
-        //TODO: Warning:(49, 33) Unchecked assignment: 'javafx.collections.ObservableList' to 'javafx.collections.ObservableList<javafx.scene.chart.PieChart.Data>'
 
         this.valueChart.setTitle("Portfolio");
         this.valueLabel.setText("Current Portfolio Value: $" + (cashAccountValue + equityTotalValue));

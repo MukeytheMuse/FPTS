@@ -342,9 +342,6 @@ public class Portfolio {
      */
     public void remove(Holding e) {
         holdings.remove(e);
-        //TODO: add as a transaction for selling a holding. totalValueOfPortfolio remains the same
-        //TODO: ask if they get to select a specific cash Account where the transaction and $$ will transfer to
-        //Check "SellHoldingAlgorithm"
     }
 
     //Overloading fieldHasContent for TextField
@@ -366,7 +363,7 @@ public class Portfolio {
     }
 
 
-//
+//    TODO: In progress
 //    public double getCurrentValue(){
 //        return this.currentValue;
 //    }

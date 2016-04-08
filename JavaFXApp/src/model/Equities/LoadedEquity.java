@@ -160,9 +160,6 @@ public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatab
         return indices;
     }
 
-
-    //TODO: find out if we even need add & remove in here (other than the fact that this class implements EquityComponent)
-
     /**
      * @param e - EquityComponent
      *          <p>

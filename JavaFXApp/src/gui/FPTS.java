@@ -37,11 +37,10 @@ public class FPTS extends Application {
     private static double simulationValue;
     private static Simulator currentSimulator;
 
-
+    //TODO: If this is/will be used somewhere add a comment saying where, otherwise delete them
     private final int WIDTH = 1200;
-    //TODO: check Warning:(40, 23) [UnusedDeclaration] Private field 'WIDTH' is never used
     private final int HEIGHT = 600;
-    //TODO: check Warning:(41, 23) [UnusedDeclaration] Private field 'HEIGHT' is never used
+
     private Stage thestage;
 
     private static User currentUser;
@@ -69,10 +68,10 @@ public class FPTS extends Application {
         webServiceReader = new WebServiceReader(this);
         time.schedule(new WebService(webServiceReader), 0, 5000);
 
-        
+
         Parent root = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
-        
+
         //this.thestage.setScene(loginScene);
 
         //TODO: Why? What is this doing? comment this
@@ -80,7 +79,7 @@ public class FPTS extends Application {
         currentUser.setMyPortfolio(new Portfolio());
 
         //Parent root2 = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("/LoginPage.fxml"));
-        
+
         //Parent root2 = (Parent) FXMLLoader.load(getClass().getClassLoader().getResource("res/BuyHoldingPage.fxml"));
         //this.thestage.setScene(new Scene(root2, 1200.0D, 600.0D));
         this.thestage.setScene(loginScene);
@@ -148,7 +147,6 @@ public class FPTS extends Application {
         Label confirmation = new Label("Update completed");
         VBox split = new VBox();
         split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
-        //TODO: check Warning:(127, 36) Redundant array creation for calling varargs method
         return new Scene(split, 1200.0D, 600.0D);
     }
 
@@ -163,10 +161,10 @@ public class FPTS extends Application {
         Label confirmation = new Label("Error");
         VBox split = new VBox();
         split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
-        //TODO: check Warning:(139, 36) Redundant array creation for calling varargs method
         return new Scene(split, 1200.0D, 600.0D);
     }
 
+    //TODO: comment the reason or delete it
 //    public Scene createRegisterPage() throws IOException {
 //        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RegisterPage.fxml"));
 //        Scene scene = new Scene(root, 1200.0D, 600.0D);
@@ -179,8 +177,7 @@ public class FPTS extends Application {
         if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
 
-            //TODO: Why? What does this all do? (actually I know why, but comment this!)
-
+            //TODO: add comments explaining what this does
             try {
                 BufferedReader reader;
 
@@ -279,27 +276,6 @@ public class FPTS extends Application {
         nav.getChildren().add(aButton);
 
         /*
-        * Button to display portfolio
-        *TODO: delete?
-        aButton = new Button();
-        aButton.setText("Display Portfolio");
-        //TODO:Action to be set
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml")));
-                    thestage.setScene(scene);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
-        nav.getChildren().add(aButton);
-        */
-
-        /*
         * Button to view Transaction history
         */
         aButton = new Button();
@@ -311,21 +287,6 @@ public class FPTS extends Application {
                 td.display(getSelf());
             }
 
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to remove CashAccount
-        */
-        aButton = new Button();
-        aButton.setText("Remove Cash Account");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CashAccountAlgorithm cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
-                cashAccountAlgorithm.process(self);
-                //eqUpdater.process(self);
-            }
         });
         nav.getChildren().add(aButton);
 
@@ -383,12 +344,26 @@ public class FPTS extends Application {
             @Override
             public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
-
-                //TODO: check Warning:(346, 36) [UnusedDeclaration] Variable 'cashAccountCreator' is never used
                 //eqUpdater.process(self);
             }
         });
         nav.getChildren().add(aButton);
+
+        /*
+        * Button to remove CashAccount
+        */
+        aButton = new Button();
+        aButton.setText("Remove Cash Account");
+        aButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                CashAccountAlgorithm cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
+                cashAccountAlgorithm.process(self);
+                //eqUpdater.process(self);
+            }
+        });
+        nav.getChildren().add(aButton);
+
         return nav;
     }
 
