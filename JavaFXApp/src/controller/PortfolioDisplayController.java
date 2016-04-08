@@ -14,9 +14,14 @@ import model.PortfolioElements.Portfolio;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Class used to load and display the Holdings and CashAccounts currently in the logged in users account.
+ */
 public class PortfolioDisplayController extends MenuController {
 
-
+    /**
+     * ID tags to access and control the tables that appear on the FXML page.
+     */
     @FXML
     private TableView<Holding> tableView;
     @FXML
@@ -29,8 +34,10 @@ public class PortfolioDisplayController extends MenuController {
 
 
     /**
-     * @param location
-     * @param resources
+     * Initializes the tables shown on the page by setting what elements are shown in each column, and the data
+     * to display in the table.
+     * @param location - Unused Import
+     * @param resources - Unused Import
      */
     public void initialize(URL location, ResourceBundle resources) {
         Portfolio p = FPTS.getCurrentUser().getMyPortfolio();
