@@ -55,7 +55,7 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -68,7 +68,7 @@ public abstract class MenuController implements Initializable {
      * @throws IOException
      */
     public void handlePortfolioMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/PortfolioPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -77,7 +77,7 @@ public abstract class MenuController implements Initializable {
 
 
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/SearchPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/BuyHoldingPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -85,7 +85,7 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleSellEquitiesMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/SellHoldingPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/SellHoldingPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
@@ -93,7 +93,7 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleWatchlistMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/Watchlist/WatchlistPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
