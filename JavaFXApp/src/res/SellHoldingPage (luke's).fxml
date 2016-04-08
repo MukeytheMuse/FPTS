@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SaleController">
+    <children>
+        <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Equities">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWatchlistMenuItemPressed" text="Watchlist" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Cash Account">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <GridPane alignment="CENTER" layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="802.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="496.0" minWidth="10.0" prefWidth="399.33331298828125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.66668701171875" minWidth="10.0" prefWidth="402.66668701171875" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="317.99998474121094" minHeight="10.0" prefHeight="118.33333587646484" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="225.00000762939453" minHeight="10.0" prefHeight="111.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="225.00000762939453" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="174.33331298828125" minHeight="10.0" prefHeight="158.33331298828125" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="132.33334350585938" minHeight="10.0" prefHeight="132.33334350585938" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="400.0" text="Sell a Holding in your portfolio">
+               <font>
+                  <Font name="System Italic" size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <children>
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="150.0" text="Search: " />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="150.0" text="Search by Field" />
+                        <ChoiceBox fx:id="fieldDropDown" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="150.0" text="Search Type" />
+                        <ChoiceBox fx:id="searchType" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <TextField fx:id="searchText" onKeyReleased="#handleSearchTextEntered" promptText="Search Text" />
+               </children>
+            </HBox>
+            <TableView fx:id="tableView" onMousePressed="#handleDoubleClickTableRow" prefHeight="280.0" prefWidth="800.0" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="3">
+               <columns>
+                  <TableColumn fx:id="tickerCol" editable="false" prefWidth="100.0" text="Ticker" />
+                  <TableColumn fx:id="nameCol" editable="false" prefWidth="270.0" text="Company Name" />
+                  <TableColumn fx:id="sharesCol" editable="false" prefWidth="100.0" text="Shares" />
+                  <TableColumn fx:id="priceCol" editable="false" prefWidth="175.0" text="Price per Share ($)" />
+                  <TableColumn fx:id="valueCol" editable="false" prefWidth="150.0" text="Current Value ($)" />
+               </columns>
+            </TableView>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

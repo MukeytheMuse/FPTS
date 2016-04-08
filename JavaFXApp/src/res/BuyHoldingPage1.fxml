@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HoldingCtrl.BuyHoldingController”>
+    <children>
+        <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Equities">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWatchlistMenuItemPressed" text="Watchlist" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Cash Account">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
+                    </items>
+                </Menu>
+
+            </menus>
+        </MenuBar>
+      <VBox fx:id="searchBoxes" layoutX="11.0" layoutY="37.0" prefHeight="129.0" prefWidth="554.0" />
+      <VBox fx:id="results" layoutX="13.0" layoutY="238.0" prefHeight="137.0" prefWidth="562.0" />
+      <Button fx:id="searchBtn" layoutX="30.0" layoutY="166.0" mnemonicParsing="false" text="Search" />
+      <Label fx:id="selectDescription" layoutX="197.0" layoutY="171.0" prefHeight="17.0" prefWidth="194.0" />
+      <Button fx:id="selectBtn" layoutX="400.0" layoutY="166.0" mnemonicParsing="false" text="Select" />
+   </children>
+</AnchorPane>

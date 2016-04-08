@@ -70,7 +70,7 @@ public class LoginController {
             stage = (Stage) this.myMenuBar.getScene().getWindow();
         }
 
-        Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml")));
+        Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("/LoginPage.fxml")));
         stage.setScene(scene);
         stage.show();
     }
@@ -92,7 +92,7 @@ public class LoginController {
                 User sub_user = new User(userid.getText());
                 currentUser = sub_user.getAllUsersMap().get(userid.getText());
                 FPTS.setCurrentUser(currentUser);
-                Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
+                Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml")));
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene);
                 app_stage.show();
@@ -115,7 +115,8 @@ public class LoginController {
     @FXML
     protected void handleRegisterButtonPressed(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        Parent register_parent = (Parent) loader.load(this.getClass().getResourceAsStream("/RegisterPage.fxml"));
+        //Parent register_parent = (Parent) loader.load(this.getClass().getResourceAsStream("/RegisterPage.fxml"));
+        Parent register_parent = (Parent) loader.load(this.getClass().getClassLoader().getResource("res/RegisterPage.fxml"));
         Scene register_scene = new Scene(register_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(register_scene);
@@ -173,7 +174,7 @@ public class LoginController {
                         this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
                         currentUser = usr;
                     }
-                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
+                    Parent parent = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/LoginPage.fxml"));
                     Scene scene = new Scene(parent);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(scene);

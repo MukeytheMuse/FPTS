@@ -8,8 +8,11 @@ package model.PortfolioElements;
 import javafx.scene.control.TextField;
 import model.Equities.EquityComponent;
 import model.Equities.LoadedEquity;
+import model.Equities.EquityComponents;
+
 import model.Searchers.Searchable;
 import org.w3c.dom.Document;
+
 
 import java.util.ArrayList;
 
@@ -26,7 +29,6 @@ public class Portfolio {
     private ArrayList<WatchedEquity> watchedEquities;
 
     private double currentValue;
-
 
 //    private ArrayList<Searchable> portfolioElements;
 
@@ -162,6 +164,10 @@ public class Portfolio {
             temp.add((Searchable) ec);
         }
         return temp;
+    }
+    
+    public EquityComponents getEquityComponentsCollection() {
+        return new EquityComponents();
     }
 
     /**

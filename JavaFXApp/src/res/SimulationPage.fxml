@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.SimulationController">
+    <children>
+        <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Equities">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWatchlistMenuItemPressed" text="Watchlist" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Cash Account">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
+                    </items>
+                </Menu>
+
+            </menus>
+        </MenuBar>
+        <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="802.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="496.0" minWidth="10.0" prefWidth="399.33331298828125"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.66668701171875" minWidth="10.0"
+                                   prefWidth="402.66668701171875"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="317.99998474121094" minHeight="10.0" prefHeight="118.33333587646484"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="225.00000762939453" minHeight="10.0" prefHeight="166.66666412353516"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="174.33331298828125" minHeight="10.0" prefHeight="158.33331298828125"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="132.33334350585938" minHeight="10.0" prefHeight="132.33334350585938"
+                                vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label alignment="CENTER" prefHeight="27.0" prefWidth="329.0" text="Financial Portfolio Tracking System"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <font>
+                        <Font name="System Bold Italic" size="18.0"/>
+                    </font>
+                </Label>
+                <LineChart fx:id="graph" prefHeight="283.0" prefWidth="409.0" title="Portfolio Value"
+                           GridPane.columnIndex="1" GridPane.rowSpan="2">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </LineChart>
+                <GridPane GridPane.rowIndex="2" GridPane.rowSpan="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="135.0" text="Current Step: "
+                               GridPane.halignment="CENTER">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="stepNumber" prefHeight="53.0" prefWidth="137.0" GridPane.columnIndex="1"
+                               GridPane.halignment="CENTER"/>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Change in Portfolio Value: "
+                               GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="pValue" prefHeight="53.0" prefWidth="137.0" GridPane.columnIndex="1"
+                               GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Current Value: "
+                               GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="totalValue" alignment="CENTER" prefHeight="53.0" prefWidth="137.0"
+                               GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+                    </children>
+                </GridPane>
+                <Label fx:id="errors" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="390.0"
+                       GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3"/>
+                <Label alignment="CENTER" prefHeight="27.0" prefWidth="329.0" text="Simulation"
+                       GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                    <font>
+                        <Font name="System Bold Italic" size="18.0"/>
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="1"
+                      GridPane.rowIndex="2">
+                    <children>
+                        <Button fx:id="stepButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                                onAction="#handleStepButtonPressed" prefHeight="25.0" prefWidth="170.0"
+                                text="Next Step">
+                            <font>
+                                <Font size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                                onAction="#handleResetToCurrentPricesButtonPressed" prefHeight="25.0" prefWidth="170.0"
+                                text="Reset to Current Prices">
+                            <font>
+                                <Font size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                                onAction="#handleResetToStartButtonPressed" prefHeight="25.0" prefWidth="170.0"
+                                text="Reset Simulation">
+                            <font>
+                                <Font size="13.0"/>
+                            </font>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
