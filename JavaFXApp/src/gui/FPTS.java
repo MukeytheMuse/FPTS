@@ -392,68 +392,6 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-
-
-        /* TODO: Do we still need this?
-        The following code is commented out
-        because it complies with our current
-        design decision that will be revisited
-        in the next release.
-
-        Create/Delete Portfolio Button disabled
-
-
-        nav.getChildren().add(aButton);
-
-        //Button to add/remove Portfolio
-
-        Button managePortfolio = new Button();
-        WriteFile writeFile = new WriteFile();
-        currentUser.setMyPortfolio(this.getPortfolio());
-
-        if (writeFile.hasPortfolio(currentUser)) {
-            managePortfolio.setText("Remove Portfolio");
-        } else {
-            managePortfolio.setText("Add Portfolio");
-        }
-        managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                if (writeFile.hasPortfolio(currentUser)) {
-                    writeFile.removePortfolioForUser(currentUser);
-                    managePortfolio.setText("Add Portfolio");
-                } else {
-                    writeFile.createPortfolioForUser(currentUser);
-                    managePortfolio.setText("Remove Portfolio");
-                }
-            }
-        });
-        nav.getChildren().add(managePortfolio);
-        */
-
-        /*
-        * Button to Logout
-        * TODO: delete?
-        aButton = new Button();
-        aButton.setText("Log out");
-        //Setting an action for the logout button
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                    Stage stage = new Stage();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/LogoutPage.fxml")));
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (Exception ex) {
-                    //e1.printStackTrace();
-                }
-                thestage.show();
-            }
-        });
-        nav.getChildren().add(aButton);*/
-
         return nav;
     }
 

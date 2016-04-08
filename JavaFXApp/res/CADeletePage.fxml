@@ -10,7 +10,7 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MenuBar fx:id="myMenuBar1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="600.0">
+            <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
