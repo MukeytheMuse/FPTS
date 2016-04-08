@@ -63,7 +63,7 @@ public class FPTS extends Application {
         this.fillIndicies();
         this.fillSectors();
         User.fillUsers();//MUST be called after fillIndicies and fillSectors
-        //TODO: what is all of this about? ^
+        //TODO: what is all of this about? ^ comment appropriately
 
         Timer time = new Timer();
         webServiceReader = new WebServiceReader(this);
@@ -283,7 +283,7 @@ public class FPTS extends Application {
 
         /*
         * Button to display portfolio
-        */
+        *TODO: delete?
         aButton = new Button();
         aButton.setText("Display Portfolio");
         //TODO:Action to be set
@@ -300,6 +300,7 @@ public class FPTS extends Application {
 
         });
         nav.getChildren().add(aButton);
+        */
 
         /*
         * Button to view Transaction history
@@ -393,7 +394,6 @@ public class FPTS extends Application {
         nav.getChildren().add(aButton);
 
 
-
         /* TODO: Do we still need this?
         The following code is commented out
         because it complies with our current
@@ -434,7 +434,7 @@ public class FPTS extends Application {
 
         /*
         * Button to Logout
-        */
+        * TODO: delete?
         aButton = new Button();
         aButton.setText("Log out");
         //Setting an action for the logout button
@@ -452,7 +452,7 @@ public class FPTS extends Application {
                 thestage.show();
             }
         });
-        nav.getChildren().add(aButton);
+        nav.getChildren().add(aButton);*/
 
         return nav;
     }
