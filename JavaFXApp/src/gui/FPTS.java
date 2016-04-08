@@ -68,22 +68,19 @@ public class FPTS extends Application {
         webServiceReader = new WebServiceReader(this);
         time.schedule(new WebService(webServiceReader), 0, 5000);
 
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
+        
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
-
-        try {
-            this.thestage.setScene(this.createLogInScene());
-        } catch (Exception var5) {
-            //TODO: check
-        }
-
+        
         //this.thestage.setScene(loginScene);
 
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
 
-        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml"));
-        this.thestage.setScene(new Scene(root2, 1200.0D, 600.0D));
+        //Parent root2 = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("/LoginPage.fxml"));
+        
+        //Parent root2 = (Parent) FXMLLoader.load(getClass().getClassLoader().getResource("res/BuyHoldingPage.fxml"));
+        //this.thestage.setScene(new Scene(root2, 1200.0D, 600.0D));
         this.thestage.setScene(loginScene);
 
         this.thestage.show();
@@ -125,7 +122,7 @@ public class FPTS extends Application {
         Scene scene = null;
 
         try {
-            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
+            Parent e = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
             scene = new Scene(e);
         } catch (IOException var3) {
             var3.printStackTrace();
