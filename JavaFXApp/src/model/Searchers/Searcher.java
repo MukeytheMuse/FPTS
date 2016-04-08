@@ -145,8 +145,6 @@ abstract public class Searcher extends Observable {
                     }
                     //If there were no matches for one field, terminate
                     isMatch = isMatch && tempMatch;
-                    //TODO: check Warning:(147, 31) Condition 'isMatch' is always 'true'
-
 
                     if (!isMatch) {
                         break;

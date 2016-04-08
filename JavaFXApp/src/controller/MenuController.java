@@ -27,7 +27,6 @@ public abstract class MenuController implements Initializable {
      * @throws IOException
      */
     public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
-        //TODO: Warning:(29, 57) [UnusedDeclaration] Parameter 'event' is never used
         Stage stage = new Stage();
         Parent parent = FXMLLoader.load(this.getClass().getResource("/LogoutPage.fxml"));
         Scene scene = new Scene(parent);
@@ -51,7 +50,7 @@ public abstract class MenuController implements Initializable {
      * @param event - ActionEvent - Event that caused this function to be called.
      */
     public void handleAboutMenuItemPressed(ActionEvent event) {
-        //TODO
+        //TODO Add an about page
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
@@ -135,8 +134,6 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
-
-    //TODO: find out where we use this method
     public void goToLoginPage(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         new Stage();

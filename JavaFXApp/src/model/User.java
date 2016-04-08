@@ -14,8 +14,6 @@ public class User {
     private String password;
     private Portfolio myPortfolio;
     private static Map<String, User> allUsersMap = new HashMap();
-    //TODO: Warning:(17, 52) Unchecked assignment: 'java.util.HashMap' to 'java.util.Map<java.lang.String,model.User>'
-
 
     public Map<String, User> getAllUsersMap() {
         return allUsersMap;
@@ -27,7 +25,7 @@ public class User {
 
 
     //private final String dateFormatPattern = "yyyy/MM/dd";
-
+    //ToDO: either use this or delete it
 //    public User(String loginID, String password) {
 //        this.loginID = loginID;
 //        this.password = hash(password);
@@ -116,7 +114,6 @@ public class User {
      * Checks to see if a username already exists in the system
      * when a user is registering with a new username and password.
      * <p>
-     * TODO: ask if this should be case sensitive???****
      *
      * @param id
      * @return
@@ -223,18 +220,15 @@ public class User {
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
-        //*************
         //WriteFile writeFile = new WriteFile();
         File newHoldingsFile;
         File newTransFile;
         File newCashFile;
 
-        /*// temporary quick fix to add user to lilBase
+        /* temporary quick fix to add user to lilBase
         String un = usr.getLoginID();
         writeFile.addUser(un, hash(pw1));
         writeFile.updatePortfolioForUser(usr);*/
-        //THE CODE BELOW ALSO WORKS WITH THE JAR FILE.
-        //************* TODO: has this been tested? ^ -Ian
 
         try {
             fileWriter = new FileWriter((new File(WriteFile.getPath() + "/lilBase/UserData.csv")).getAbsolutePath(), true);
@@ -245,8 +239,7 @@ public class User {
             bufferedWriter.close();
             //creates portfolio directory to store all user information
             File portfolioDir = new File(WriteFile.getPath() + "/lilBase/Portfolios/");
-            //TODO: ask why we are creating a new portfolio directory each time we add a user. THink this could be better in fillUsers so only one portfolio dir is created for all users
-            //******* great question ^ -Ian
+            //TODO: most of this code already exist in writefile, reuse please
             if (!portfolioDir.exists()) {
                 portfolioDir.mkdir();
             }
@@ -292,6 +285,7 @@ public class User {
         writeFile.holdingsWriter(holdings, importedHoldings);
     }
 
+    //TODO: If neither of these are being used please delete them and their  ^ v
 
     /**
      * Writes the users holding content to a file called Cash.csv in the form
