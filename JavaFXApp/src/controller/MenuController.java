@@ -120,9 +120,12 @@ public abstract class MenuController implements Initializable {
         cashAcctAlgor.process(FPTS.getSelf());
     }
 
-    public void handleRemoveMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new RemoveCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
+    public void handleRemoveMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CADeletePage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleWatchMenuItemPressed(ActionEvent event) throws IOException {

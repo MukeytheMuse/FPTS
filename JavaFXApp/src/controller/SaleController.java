@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.HoldingUpdatable;
 import model.PortfolioElements.Portfolio;
 import model.SearchThread;
 
@@ -27,10 +28,15 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
+ * Search controller used to display all the Holding in the user's account for selling of those holdings. Handles the
+ * SellHoldingPage.fxml page
  * Created by Luke Veilleux
  */
 public class SaleController extends MenuController {
 
+    /**
+     * ID tages for the table and the table columes as well as search criteria shown on the page.
+     */
     @FXML
     private TableView<Holding> tableView;
     @FXML
@@ -40,11 +46,15 @@ public class SaleController extends MenuController {
     @FXML
     private TextField searchText;
 
-    private static Set<EquityComponent> matchList = new HashSet<EquityComponent>();
+    private static Set<Holding> matchList = new HashSet<Holding>();
     private String typeSearch = "Any";
     private String fieldSearch = "All";
     private ArrayList<Holding> holdings;
 
+    /**
+     * Method used to get the values of the current search criteria, and calls to update the displayed holdings
+     * to only show those that conform to this criteria.
+     */
     @FXML
     protected void handleSearchTextEntered() {
         fieldSearch = fieldDropDown.getValue();
@@ -53,6 +63,9 @@ public class SaleController extends MenuController {
         search();
     }
 
+    /**
+     * private function used to initialize threads to search through the Holding lists for those that fit the criteria.
+     */
     private void search() {
         ArrayList<SearchThread> threads = new ArrayList<>();
         switch (fieldSearch) {
@@ -73,17 +86,46 @@ public class SaleController extends MenuController {
                 threads.add(new SearchThread(searchText.getText(), "Sector", typeSearch, holdings));
                 break;
         }
-        for (SearchThread thread : threads)
-            thread.run();
-        for (SearchThread thead : threads) {
+        threads.forEach(SearchThread::run);
+        for(SearchThread thead : threads) {
             try {
                 thead.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        update();
     }
 
+    /**
+     * private method that updates the table on the FXML page to update and display all the matches found in matchList.
+     */
+    private void update(){
+        tableView.setItems(FXCollections.observableArrayList(matchList));
+    }
+
+    /**
+     * Adds a list of HoldingUpdatable objects, that should all be holdings to the matchList for display in the table.
+     * @param lst - ArrayList<HoldingUpdatable> - list of HoldingUpdatable Objects to add to matchList.
+     */
+    public static void addHoldingsToList(ArrayList<HoldingUpdatable> lst){
+        for (HoldingUpdatable holding : lst){
+            boolean flag = false;
+            for (Holding h : matchList){
+                if (h.equals((Holding) holding))
+                    flag = true;
+            }
+            if (!flag)
+                matchList.add((Holding) holding);
+        }
+    }
+
+    /**
+     * Handles double clicking on a table row to signify the user wants to sell shares in that Holding.
+     * Loads the PurchasePopUp page to complete this transaction.
+     * @param event - ActionEvent - Event that caused this method call
+     * @throws IOException - Throws IOException if the PurchasePopUp page is not found.
+     */
     @FXML
     public void handleDoubleClickTableRow(MouseEvent event) throws IOException {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
@@ -102,6 +144,11 @@ public class SaleController extends MenuController {
         }
     }
 
+    /**
+     * Initializes the fields of the drop down menus and the table shown on the page.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fieldDropDown.setItems(FXCollections.observableArrayList(
@@ -119,11 +166,9 @@ public class SaleController extends MenuController {
         sharesCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("numOfShares"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("pricePerShare"));
         valueCol.setCellValueFactory(new PropertyValueFactory<Holding, String>("totalValue"));
-
-        ObservableList<Holding> data = FXCollections.observableArrayList(p.getHoldings());
+        holdings = p.getHoldings();
+        ObservableList<Holding> data = FXCollections.observableArrayList(holdings);
         tableView.setItems(data);
-
-        holdings = FPTS.getSelf().getPortfolio().getHoldings();
     }
 
 }

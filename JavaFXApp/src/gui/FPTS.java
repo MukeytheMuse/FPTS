@@ -63,6 +63,7 @@ public class FPTS extends Application {
         this.fillIndicies();
         this.fillSectors();
         User.fillUsers();//MUST be called after fillIndicies and fillSectors
+        //TODO: what is all of this about? ^ comment appropriately
 
         Timer time = new Timer();
         webServiceReader = new WebServiceReader(this);
@@ -74,6 +75,7 @@ public class FPTS extends Application {
         
         //this.thestage.setScene(loginScene);
 
+        //TODO: Why? What is this doing? comment this
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
 
@@ -96,6 +98,7 @@ public class FPTS extends Application {
         allIndicies.add("DOW");
         allIndicies.add("NASDAQ100");
     }
+    //TODO: Why? ^ and v
 
     /**
      * Populates all of the possible sector fields.
@@ -175,6 +178,8 @@ public class FPTS extends Application {
     public static void main(String[] args) {
         if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
+
+            //TODO: Why? What does this all do? (actually I know why, but comment this!)
 
             try {
                 BufferedReader reader;
@@ -275,7 +280,7 @@ public class FPTS extends Application {
 
         /*
         * Button to display portfolio
-        */
+        *TODO: delete?
         aButton = new Button();
         aButton.setText("Display Portfolio");
         //TODO:Action to be set
@@ -292,6 +297,7 @@ public class FPTS extends Application {
 
         });
         nav.getChildren().add(aButton);
+        */
 
         /*
         * Button to view Transaction history
@@ -383,67 +389,6 @@ public class FPTS extends Application {
             }
         });
         nav.getChildren().add(aButton);
-
-        /*
-        The following code is commented out
-        because it complies with our current
-        design decision that will be revisited
-        in the next release.
-
-        Create/Delete Portfolio Button disabled
-
-
-        nav.getChildren().add(aButton);
-
-        //Button to add/remove Portfolio
-
-        Button managePortfolio = new Button();
-        WriteFile writeFile = new WriteFile();
-        currentUser.setMyPortfolio(this.getPortfolio());
-
-        if (writeFile.hasPortfolio(currentUser)) {
-            managePortfolio.setText("Remove Portfolio");
-        } else {
-            managePortfolio.setText("Add Portfolio");
-        }
-        managePortfolio.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                if (writeFile.hasPortfolio(currentUser)) {
-                    writeFile.removePortfolioForUser(currentUser);
-                    managePortfolio.setText("Add Portfolio");
-                } else {
-                    writeFile.createPortfolioForUser(currentUser);
-                    managePortfolio.setText("Remove Portfolio");
-                }
-            }
-        });
-        nav.getChildren().add(managePortfolio);
-        */
-
-        /*
-        * Button to Logout
-        */
-        aButton = new Button();
-        aButton.setText("Log out");
-        //Setting an action for the logout button
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                    Stage stage = new Stage();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/LogoutPage.fxml")));
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (Exception ex) {
-                    //e1.printStackTrace();
-                }
-                thestage.show();
-            }
-        });
-        nav.getChildren().add(aButton);
-
         return nav;
     }
 
@@ -485,11 +430,6 @@ public class FPTS extends Application {
 
     public static FPTS getSelf() {
         return self;
-    }
-
-    public boolean hasPortfolio(User user) {
-        File directory = new File("model/Database/Portfolios/" + user.getLoginID());
-        return directory.exists();
     }
 
     /**

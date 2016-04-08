@@ -199,4 +199,14 @@ public class Holding implements Searchable, HoldingUpdatable {
         currentValue -= (numOfSharesSubtracted * valuePerShare);
     }
 
+    /**
+     * Method used to compare two holding objects by checking if the ticker symbol and name of the holdings are the same.
+     * Since this is used in user's portfolio's they can only have one holding of each equity.
+     * @param holding - Holding - holding to compare to.
+     * @return True if holdings are the same, otherwise false.
+     */
+    public boolean equals(Holding holding) {
+        return this.getTickerSymbol().equals(holding.getTickerSymbol()) && this.getName().equals(holding.getName());
+    }
+
 }

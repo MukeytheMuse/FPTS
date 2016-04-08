@@ -21,6 +21,7 @@ import model.Simulators.Simulator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -103,20 +104,19 @@ public class SimulationController extends MenuController {
                 Boolean hasSteps;
                 hasSteps = steps;
                 if (simulation.equals("NOGROWTH")) {
-                    currentSimulator = new NoGrowthSimulator(numberOfSteps, curInterval, hasSteps);
+                    currentSimulator = new NoGrowthSimulator(numberOfSteps);
                 } else {
                     if (priceAnnum.getText().length() != 0) {
                         String pricePerAnum = priceAnnum.getText();
                         try {
                             double pricePerYearAsDouble = Double.parseDouble(pricePerAnum);
                             if (pricePerYearAsDouble < 1.00 && pricePerYearAsDouble > 0) {
+                                ArrayList<Holding> holdings = FPTS.getSelf().getPortfolio().getHoldings();
                                 if (simulation.equals("BEAR")) {
-                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
+                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval, pricePerYearAsDouble, holdings);
                                 } else {
-                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble);
+                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, pricePerYearAsDouble, holdings);
                                 }
-                            } else {
-                                error.setText("Please Enter a value between 0 and 1 for the Price per Annum.");
                             }
                         } catch (NumberFormatException x) {
                             error.setText("Invalid Format. Please enter a percent value for the number of steps.");
@@ -125,17 +125,21 @@ public class SimulationController extends MenuController {
                         error.setText("Please enter a percent value for the Price Per Annum.");
                     }
                 }
-                FPTS.setCurrentSimulator(currentSimulator);
-                if (hasSteps) {
-                    FPTS.setSimulationValue(currentSimulator.simulate(1));
-                } else {
-                    FPTS.setSimulationValue(currentSimulator.simulate(numberOfSteps));
+                try {
+                    FPTS.setCurrentSimulator(currentSimulator);
+                    if (hasSteps) {
+                        FPTS.setSimulationValue(currentSimulator.simulate(1));
+                    } else {
+                        FPTS.setSimulationValue(currentSimulator.simulate(numberOfSteps));
+                    }
+                    Parent parent = FXMLLoader.load(getClass().getResource("/SimulationPage.fxml"));
+                    Scene scene = new Scene(parent);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (NullPointerException n) {
+                    error.setText("Please Enter a value between 0 and 1 for the Price per Annum.");
                 }
-                Parent parent = FXMLLoader.load(getClass().getResource("/SimulationPage.fxml"));
-                Scene scene = new Scene(parent);
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
             } catch (NumberFormatException x) {
                 error.setText("Invalid Format. Please enter an integer for the number of steps.");
             }
@@ -147,8 +151,8 @@ public class SimulationController extends MenuController {
     }
 
     /**
-     * @param event
-     * @throws IOException
+     * @param event - Event that caused this class to be called.
+     * @throws IOException - Throws IOException if the SimulatorPage is not found.
      */
     @FXML
     protected void handleStepButtonPressed(ActionEvent event) throws IOException {
@@ -163,8 +167,8 @@ public class SimulationController extends MenuController {
     }
 
     /**
-     * @param event
-     * @throws IOException
+     * @param event - Event that caused this class to be called.
+     * @throws IOException - Throws IOException if the SimulatePage is not found.
      */
     @FXML
     protected void handleResetToStartButtonPressed(ActionEvent event) throws IOException {

@@ -1,6 +1,9 @@
 package controller.CashAccountCtrl;
 
 
+import gui.FPTS;
+import model.PortfolioElements.CashAccount;
+
 /**
  * Implements final step in CashAccountAlgorithm that removes specified CashAccount.
  *
@@ -18,4 +21,7 @@ public class RemoveCashAccountAlgorithm extends CashAccountAlgorithm {
         theFPTS.getStage().setScene(theFPTS.getConfirmationScene());
     }
 
+    public void fxAction(CashAccount cashAccount) {
+        FPTS.getSelf().getPortfolio().remove(cashAccount);
+    }
 }

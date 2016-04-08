@@ -27,10 +27,17 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
+ * Class that displays all of the equities in the system with their ticker symbol, the name of the company, and the
+ * current price per share of that company. Allows for users to double click a holding to purchase one.
+ * The table is dynamically filtered with each character entered into the searchbox.
  * Created by Luke Veilleux
  */
 public class SearchController extends MenuController {
 
+    /**
+     * ID tags to elements found in the FXML page itself. This includes the table and the columns of the table,
+     * the search text, and the search criteria.
+     */
     @FXML
     private TableView<EquityComponent> tableView;
     @FXML
@@ -44,6 +51,10 @@ public class SearchController extends MenuController {
     private String typeSearch = "Any";
     private String fieldSearch = "All";
 
+    /**
+     * Method called when ever a keypress is entered into the search Textbox on the page.
+     * Gets the current values that are to be searched for, and calls to search and update the shown list.
+     */
     @FXML
     protected void handleSearchTextEntered() {
         fieldSearch = fieldDropDown.getValue();
@@ -53,6 +64,10 @@ public class SearchController extends MenuController {
         update();
     }
 
+    /**
+     * Method used to start separate threads to search through the equities in the system. Runs all of the threads
+     * and waits for them to finish.
+     */
     private void search() {
         ArrayList<SearchThread> threads = new ArrayList<>();
         switch (fieldSearch) {
@@ -73,9 +88,8 @@ public class SearchController extends MenuController {
                 threads.add(new SearchThread(searchText.getText(), "Sector", typeSearch, null));
                 break;
         }
-        for (SearchThread thread : threads)
-            thread.run();
-        for (SearchThread thead : threads) {
+        threads.forEach(SearchThread::run);
+        for(SearchThread thead : threads) {
             try {
                 thead.join();
             } catch (InterruptedException e) {
@@ -84,13 +98,21 @@ public class SearchController extends MenuController {
         }
     }
 
+    /**
+     * Method used to update the table with the data stored in matchList. Shows the new list of equities in the table.
+     */
     private void update() {
         ObservableList<EquityComponent> data = FXCollections.observableArrayList(matchList);
         tableView.setItems(data);
     }
 
-    public static void addEquitiesToList(ArrayList<HoldingUpdatable> lst) {
-        for (HoldingUpdatable eqt : lst) {
+    /**
+     * Method used by threads to add equities that were found to match serch criteria back into matchList.
+     * Checks for duplicates already inside of matchList.
+     * @param lst - ArrayList<HoldingUpdateable> - List of Equities to add to the table.
+     */
+    public static void addEquitiesToList(ArrayList<HoldingUpdatable> lst){
+        for (HoldingUpdatable eqt : lst){
             boolean flag = false;
             for (EquityComponent e : matchList) {
                 if (e.equals((EquityComponent) eqt))
@@ -101,6 +123,12 @@ public class SearchController extends MenuController {
         }
     }
 
+    /**
+     * Method used to handle when a row in the table is double clicked, signifying that the user wants to purchase an
+     * share in that equity. Opens the PurchasePopUp page to continue this transaction.
+     * @param event - ActionEvent - event that caused this function to be called.
+     * @throws IOException - Throws IOException if the PurchasePopUp page is not found.
+     */
     @FXML
     public void handleDoubleClickTableRow(MouseEvent event) throws IOException {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
@@ -119,6 +147,12 @@ public class SearchController extends MenuController {
         }
     }
 
+    /**
+     * Initializes the table and menu drop downs to be filled with appropriate information. Table starts filled with
+     * all equities in the system.
+     * @param location - Unused parameter
+     * @param resources - Unused parameter
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fieldDropDown.setItems(FXCollections.observableArrayList(

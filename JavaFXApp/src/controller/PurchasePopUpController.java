@@ -27,10 +27,17 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
+ * Popup pages that handles the front end purchase and sale of equities and holdings respectively. Gives user options to
+ * process the purchase/sale inside or outside of the application, and shows a page to select a cash account to complete
+ * this purchase if necessary.
  * Created by Luke Veilleux
  */
 public class PurchasePopUpController implements Initializable {
 
+    /**
+     * ID Tags for tables and text boxes and other elements found on the FXML page. From both PurchasePopUp page, and
+     * the CASelectPage.
+     */
     @FXML
     private Label equityLabel, equityPrice, errors;
     @FXML
@@ -48,7 +55,14 @@ public class PurchasePopUpController implements Initializable {
     private double price;
     private String action;
 
-    public void setEquity(Holding h, int shares, double price, String action) {
+    /**
+     * Method used to set data between FXML page calls, initializes all variables with relevant infomration.
+     * @param h - Holding - Holding that is to be sold
+     * @param shares - shares that are to be sold
+     * @param price - price per share of the holding
+     * @param action - Current action being taken in the system (Buy/Sell)
+     */
+    public void setEquity(Holding h, int shares, double price, String action){
         holding = h;
         equityLabel.setText(holding.getName());
         this.action = action;
@@ -63,7 +77,14 @@ public class PurchasePopUpController implements Initializable {
         }
     }
 
-    public void setEquity(EquityComponent e, int shares, double price, String action) {
+    /**
+     * Method used to set data between FXML page calls, initializes all variables with relevant infomration.
+     * @param e - EquityComponent - Equity that is to be purchased.
+     * @param shares - shares that are to be bought
+     * @param price - price per share of the Equity
+     * @param action - Current action being taken in the system (Buy/Sell)
+     */
+    public void setEquity(EquityComponent e, int shares, double price, String action){
         equity = e;
         equityLabel.setText(equity.getName());
         this.action = action;
@@ -78,7 +99,11 @@ public class PurchasePopUpController implements Initializable {
         }
     }
 
-    private void updateCashAccounts() {
+    /**
+     * Updates the list of cash accounts shown on the CashAccount selection page. When purchasing, only accounts with
+     * enough money are shown, when selling a holding, all accounts are shown.
+     */
+    private void updateCashAccounts(){
         ArrayList<CashAccount> list = new ArrayList<>();
         if (action.equals("BUY")) {
             double total = price * shares;
@@ -90,6 +115,12 @@ public class PurchasePopUpController implements Initializable {
         CAtableView.setItems(FXCollections.observableArrayList(list));
     }
 
+    /**
+     * Method that handles pressing Proceed on the PurchasPopUp page. Depending on the options selected on the page.
+     * this loads either the CashAccount select page, or the portfolio page with your completed purchase.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void handleProceedButtonPressed(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/CASelectPage.fxml"));
@@ -113,7 +144,7 @@ public class PurchasePopUpController implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
+                } else { // action == SELL
                     SellHoldingAlgorithm sha = new SellHoldingAlgorithm(holding);
                     sha.establishContext();
                     sha.processOutsideFPTS(null, shares, price);
@@ -127,8 +158,8 @@ public class PurchasePopUpController implements Initializable {
                 }
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.close();
-            } else {
-                if (equity == null) {
+            } else { //Process Inside FPTS
+                if(equity == null) {
                     controller.setEquity(holding, shares, price, action);
                 } else {
                     controller.setEquity(equity, shares, price, action);
@@ -146,6 +177,11 @@ public class PurchasePopUpController implements Initializable {
 
     }
 
+    /**
+     * Method that handles double clicking a row in the Cash Account table. Processes the final steps of purchasing
+     * or selling an equity/holding inside of FPTS.
+     * @param event - ActionEvent - Event that caused this method to be called.
+     */
     @FXML
     public void handleDoubleClickTableRow(MouseEvent event) {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
@@ -161,7 +197,7 @@ public class PurchasePopUpController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else {
+            } else { //SELL
                 SellHoldingAlgorithm sha = new SellHoldingAlgorithm(holding);
                 sha.establishContext();
                 sha.processInsideFPTS(equity, shares, account, price);
@@ -178,6 +214,11 @@ public class PurchasePopUpController implements Initializable {
         }
     }
 
+    /**
+     * Initializes the fields and tables on both the CashAccountSelector page, and the PurchasePopUp page.
+     * @param location - Unused Import
+     * @param resources - Unused Import
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (fptsChoice != null) {

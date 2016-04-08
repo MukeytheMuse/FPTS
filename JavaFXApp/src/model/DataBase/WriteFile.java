@@ -35,7 +35,6 @@ public class WriteFile {
                 lilB.mkdir();
                 lilPortfolios.mkdir();
                 userDataFile.createNewFile();
-
             }
 
         } catch (IOException e) {
@@ -56,7 +55,7 @@ public class WriteFile {
         return parentPath;
     }
 
-
+    /* temporarily out of use
     public void addUser(String un, String pw) {
         try {
             FileWriter fileWriter = new FileWriter((new File(getPath() + "/lilBase/UserData.csv")), true);
@@ -69,7 +68,7 @@ public class WriteFile {
             var8.printStackTrace();
         }
     }
-
+    */
 
     /**
      * @param user
