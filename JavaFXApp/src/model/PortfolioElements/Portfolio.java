@@ -259,9 +259,9 @@ public class Portfolio {
      *
      * @return ArrayList<Holding>
      */
-    public List<Holding> getHoldings() {
+    public ArrayList<Holding> getHoldings() {
         //return holdings;
-        return holdingsCollection.getList();
+        return (ArrayList<Holding>) holdingsCollection.getList();
     }
 
     public void updateEquityComponentsPrice(Document d) {
