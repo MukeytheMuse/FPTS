@@ -270,6 +270,10 @@ public class Portfolio {
         }
     }
 
+    public Holdings getHoldingsCollection() {
+        return holdingsCollection;
+    }
+    
 //
 //    /**
 //     * Returns collection of EquityComponent

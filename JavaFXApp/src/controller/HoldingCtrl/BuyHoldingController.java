@@ -255,7 +255,7 @@ public class BuyHoldingController extends MenuController {
                             
                             //MAKE COMMAND TO BUY/SELL HOLDING
                             UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
-                            Holdings holdings = new Holdings();// fpts.getCurrentUser().getMyPortfolio().getHoldings();
+                            Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
                             HoldingAddition holdingAddition = new HoldingAddition(holdings, equityOfInterest, numOfShares);
                             undoRedoManager.execute(holdingAddition);
                              
