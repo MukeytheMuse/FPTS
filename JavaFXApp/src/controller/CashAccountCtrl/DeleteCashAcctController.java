@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Ian London
  */
-public class CADeleteController extends MenuController {
+public class DeleteCashAcctController extends MenuController {
 
     @FXML
     private TableColumn<CashAccount, String> CAnameCol, amountCol, dateCol;

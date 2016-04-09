@@ -1,6 +1,5 @@
 package controller;
 
-import controller.CashAccountCtrl.*;
 import gui.FPTS;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -149,7 +148,7 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleRemoveMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CADeletePage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/DeleteCashAcctPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
