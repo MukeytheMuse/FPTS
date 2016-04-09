@@ -1,7 +1,5 @@
 package model.PortfolioElements;
 
-import model.Searchers.Searchable;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,7 +9,7 @@ import java.util.Date;
  *
  * @author Eric Epstein and Kaitlin Brockway
  */
-public class CashAccount implements Searchable {
+public class CashAccount implements PortfolioElement {
     private String accountName;
     private double currentValue;
     private Date dateAdded;//TODO: change type to date here and for readInCashFile(String userID) method in the User class.

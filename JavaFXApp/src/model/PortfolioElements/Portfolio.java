@@ -10,7 +10,7 @@ import model.Equities.EquityComponent;
 import model.Equities.LoadedEquity;
 import model.Equities.EquityComponents;
 
-import model.Searchers.Searchable;
+
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
@@ -35,7 +35,6 @@ public class Portfolio {
     
     private double currentValue;
     private ArrayList<Transaction> transactions;
-
 
 //    private ArrayList<Searchable> portfolioElements;
 
@@ -173,6 +172,7 @@ public class Portfolio {
      * @return ArrayList<Searchable>
      */
 
+    /*
     public ArrayList<Searchable> getHoldingSearchables() {
         ArrayList<Searchable> temp = new ArrayList<Searchable>();
         for (Holding h : holdings) {
@@ -180,12 +180,15 @@ public class Portfolio {
         }
         return temp;
     }
+    */
 
     /**
      * Returns collection of EquityComponent objects that are cast to Searchable
      *
      * @return ArrayList<Searchable>
      */
+
+    /*
     public ArrayList<Searchable> getEquityComponentSearchables() {
         ArrayList<Searchable> temp = new ArrayList<Searchable>();
         for (EquityComponent ec : equityComponents) {
@@ -193,6 +196,7 @@ public class Portfolio {
         }
         return temp;
     }
+    */
     
     public EquityComponents getEquityComponentsCollection() {
         return new EquityComponents();
@@ -207,6 +211,8 @@ public class Portfolio {
      *
      * @return ArrayList<Searchable>
      */
+
+    /*
     public ArrayList<Searchable> getCashAccountSearchables() {
         ArrayList<Searchable> temp = new ArrayList<Searchable>();
         for (CashAccount c : cashAccounts) {
@@ -214,6 +220,7 @@ public class Portfolio {
         }
         return temp;
     }
+    */
 
 
     /**
@@ -233,12 +240,15 @@ public class Portfolio {
      *
      * @return ArrayList<Searchable>
      */
+
+    /*
     public ArrayList<Searchable> getPortfolioElements() {
         ArrayList<Searchable> portfolioElements = new ArrayList<>();
         portfolioElements.addAll(holdings);
         portfolioElements.addAll(cashAccounts);
         return portfolioElements;
     }
+    */
 
 
     //TODO: used by class "CashAccountCreator". We should make this private and find another way to implement what this this needed for.

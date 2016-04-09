@@ -3,6 +3,7 @@ package model;
 import model.DataBase.ReadFile;
 import model.DataBase.WriteFile;
 import model.PortfolioElements.*;
+import model.UndoRedo.Command;
 
 import javax.swing.*;
 import java.io.*;

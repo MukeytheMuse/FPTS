@@ -1,8 +1,7 @@
 package model.Equities;
 
 import model.DataBase.ReadFile;
-import model.PortfolioElements.HoldingUpdatable;
-import model.Searchers.Searchable;
+import model.PortfolioElements.PortfolioElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Epstein & Ian London
  */
-public class LoadedEquity implements Searchable, EquityComponent, HoldingUpdatable {
+public class LoadedEquity implements PortfolioElement, EquityComponent {
 
     /*
     * the identifying symbol

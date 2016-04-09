@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.PortfolioElements.Transaction;
+import model.UndoRedo.Command;
 
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class TransactionDisplayer implements Displayer {
                 }
             }
         });
-        split.getChildren().addAll(theFPTS.getNav(), queries, submitBtn, results);
+        split.getChildren().addAll(queries, submitBtn, results);
         Scene transactionDisplayScene = new Scene(split, theFPTS.getWidth(), theFPTS.getHeight());
         return transactionDisplayScene;
     }

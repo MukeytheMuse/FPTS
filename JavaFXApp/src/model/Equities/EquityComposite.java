@@ -1,7 +1,6 @@
 package model.Equities;
 
-import model.PortfolioElements.HoldingUpdatable;
-import model.Searchers.Searchable;
+import model.PortfolioElements.PortfolioElement;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.List;
  * <p>
  * Authors: Eric Epstein and Kaitlin Brockway
  */
-public class EquityComposite implements Searchable, EquityComponent, HoldingUpdatable {
+public class EquityComposite implements PortfolioElement, EquityComponent {
 
     //pricePerShare is calculated by the method each time it is called.
     //sectors always -> empty array list
@@ -34,7 +33,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     /*
     * collection of child Equity objects
     */
-    private List<HoldingUpdatable> childEquities;
+    private List<EquityComponent> childEquities;
 
     /**
      * EquityComposite structure takes two parameters before adding
@@ -46,7 +45,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     public EquityComposite(String name, String type) {
         this.equityName = name;
         this.type = type;
-        childEquities = new ArrayList<HoldingUpdatable>();
+        childEquities = new ArrayList<EquityComponent>();
     }
 
     public void updatePrice(Document document) {
@@ -97,7 +96,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     public double getPricePerShare() {
         double count = 0;
         double curVal;
-        for (HoldingUpdatable se : childEquities) {
+        for (EquityComponent se : childEquities) {
             curVal = se.getPricePerShare();
             count += curVal;
         }
@@ -134,7 +133,7 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     @Override
     public void remove(EquityComponent ec) {
 
-        childEquities.remove((HoldingUpdatable) ec);
+        childEquities.remove(ec);
     }
 
     /**
@@ -145,18 +144,20 @@ public class EquityComposite implements Searchable, EquityComponent, HoldingUpda
     @Override
     public void add(EquityComponent ec) {
 
-        childEquities.add((HoldingUpdatable) ec);
+        childEquities.add(ec);
     }
+
 
     /**
      * Adds a child equity to composite
      *
      * @param e - HoldingUpdateable
      */
-    public void add(HoldingUpdatable e) {
+    /*
+    public void add(EquityComponent e) {
 
         childEquities.add(e);
-    }
+    }*/
 
     public boolean equals(EquityComponent e) {
         return e instanceof EquityComposite && this.getName().equals(e.getName()) && this.getTickerSymbol().equals(e.getTickerSymbol());

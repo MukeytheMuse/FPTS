@@ -1,6 +1,7 @@
 package model.DataBase;
 
 import model.PortfolioElements.*;
+import model.UndoRedo.Command;
 import model.UndoRedo.Withdrawal;
 
 import java.io.File;

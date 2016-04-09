@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,30 +22,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.Equities.EquityComponent;
 import model.PortfolioElements.PortfolioVisitor;
 import model.PortfolioElements.SearchPortfolioVisitor;
 
-import model.Equities.EquityComponents;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.CashAccounts;
 import gui.FPTS;
 import java.io.IOException;
-import java.util.Date;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Holdings;
-import model.PortfolioElements.Transaction;
-import model.PortfolioElements.WithdrawalOld;
 import model.UndoRedo.Command;
 import model.UndoRedo.CommandComposite;
-import model.UndoRedo.HoldingAddition;
 import model.UndoRedo.HoldingRemoval;
 import model.UndoRedo.UndoRedoManager;
-import model.UndoRedo.Withdrawal;
 
 /**
  * FXML Controller class
@@ -106,12 +99,11 @@ public class SellHoldingController extends MenuController {
                 public void handle(ActionEvent e) {
                     results.getChildren().clear();
                     System.out.println("CLICKING NOW");
-                    ObservableList<Node> queries = searchBoxes.getChildren();// getHoldingQueries().getChildren();
+                    ObservableList<Node> queries = searchBoxes.getChildren();
                     PortfolioVisitor searchPortfolioV = new SearchPortfolioVisitor(queries);
-                    //EquityComponents eqComponents = new EquityComponents(); // FPTS.getCurrentUser().getMyPortfolio().getEqComponents();
                     Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
                     Iterator hIterator = holdings.iterator(searchPortfolioV);
-                   //eqIterator.accept(searchPortfolioV);
+
                     while (hIterator.hasNext()) {
                         
                         Holding h = (Holding) hIterator.next();

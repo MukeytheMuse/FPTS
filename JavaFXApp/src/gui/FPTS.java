@@ -2,9 +2,6 @@ package gui;
 
 import controller.CashAccountCtrl.*;
 import controller.Displayer;
-import controller.HoldingCtrl.BuyHoldingAlgorithm;
-import controller.HoldingCtrl.HoldingAlgorithm;
-import controller.HoldingCtrl.SellHoldingAlgorithm;
 import controller.TransactionDisplayer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -27,7 +24,6 @@ import model.WebServiceReader;
 
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Timer;
 import model.UndoRedo.UndoRedoManager;
 
@@ -117,35 +113,6 @@ public class FPTS extends Application {
     public WebServiceReader getWebServiceReader() {
         return webServiceReader;
     }
-
-
-    /**
-     * Called by "CashAccountCreator" class
-     *
-     * @return
-     */
-    public Scene getConfirmationScene() {
-        Label confirmation = new Label("Update completed");
-        VBox split = new VBox();
-        split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
-        return new Scene(split, 1200.0D, 600.0D);
-    }
-
-    public boolean hasCurrentUser() {
-       return currentUser != null;
-    }
-    
-    /**
-     * @return
-     */
-    public Scene getErrorScene() {
-        Label confirmation = new Label("Error");
-        VBox split = new VBox();
-        split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
-        //TODO: check Warning:(139, 36) Redundant array creation for calling varargs method
-        return new Scene(split, 1200.0D, 600.0D);
-    }
-
     
     
     public static void main(String[] args) {
@@ -206,151 +173,6 @@ public class FPTS extends Application {
     public Portfolio getPortfolio() {
         return currentUser.getMyPortfolio();
     }
-
-    /**
-     * Constructs navigation for relevant subsystems
-     *
-     * @return HBox
-     */
-    public HBox getNav() {
-        HBox nav = new HBox();
-        Button aButton;
-
-        /*
-        * Button to visit Home
-        */
-        aButton = new Button();
-        aButton.setText("Home");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                thestage.setScene(getHomeScene());
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to buy Equity
-        */
-        aButton = new Button();
-        aButton.setText("Buy Holding");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                HoldingAlgorithm eqUpdater = new BuyHoldingAlgorithm();
-                eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to sell equity
-        */
-        aButton = new Button();
-        aButton.setText("Sell Holding");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                HoldingAlgorithm eqUpdater = new SellHoldingAlgorithm(null);
-                eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to view Transaction history
-        */
-        aButton = new Button();
-        aButton.setText("History");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Displayer td = new TransactionDisplayer();
-                td.display(getSelf());
-            }
-
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to Deposit CashAccount
-        */
-        aButton = new Button();
-        aButton.setText("Deposit");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CashAccountAlgorithm cashAccountAlgorithm = new DepositCashAccountAlgorithm();
-                cashAccountAlgorithm.process(self);
-                //eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to withdraw from CashAccout
-        */
-        aButton = new Button();
-        aButton.setText("Withdraw");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CashAccountAlgorithm cashAccountAlgorithm = new WithdrawCashAccountAlgorithm();
-                cashAccountAlgorithm.process(self);
-                //eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to transfer from one CashAccount to another
-        */
-        aButton = new Button();
-        aButton.setText("Transfer");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CashAccountAlgorithm cashAccountAlgorithm = new TransferCashAccountAlgorithm();
-                cashAccountAlgorithm.process(self);
-                //eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to create CashAccount
-        */
-        aButton = new Button();
-        aButton.setText("Add Cash Account");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
-
-                //TODO: check Warning:(346, 36) [UnusedDeclaration] Variable 'cashAccountCreator' is never used
-                //eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        /*
-        * Button to remove CashAccount
-        */
-        aButton = new Button();
-        aButton.setText("Remove Cash Account");
-        aButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CashAccountAlgorithm cashAccountAlgorithm = new RemoveCashAccountAlgorithm();
-                cashAccountAlgorithm.process(self);
-                //eqUpdater.process(self);
-            }
-        });
-        nav.getChildren().add(aButton);
-
-        return nav;
-    }
-
 
     public static User getCurrentUser() {
         return currentUser;

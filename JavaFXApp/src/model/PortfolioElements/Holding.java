@@ -1,6 +1,6 @@
 package model.PortfolioElements;
 
-import model.Searchers.Searchable;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author Eric Epstein
  */
-public class Holding implements Searchable, HoldingUpdatable {
+public class Holding implements PortfolioElement {
 
     /*
     * ticker symbol
@@ -108,7 +108,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return double
      */
-    @Override
+    //@Override
     public double getPricePerShare() {
         return valuePerShare;
     }
@@ -128,7 +128,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return String
      */
-    @Override
+    //@Override
     public String getTickerSymbol() {
         return tickerSymbol;
     }
@@ -138,7 +138,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return String
      */
-    @Override
+    //@Override
     public String toString() {
         return tickerSymbol + ", " + holdingName + ", " + numOfShares + " shares, $" + valuePerShare + " per share, $" + currentValue + " current value";
     }
@@ -149,7 +149,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return String
      */
-    @Override
+    //@Override
     public String getName() {
         return holdingName;
     }
@@ -181,7 +181,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return ArrayList<String>
      */
-    @Override
+    //@Override
     public ArrayList<String> getSectors() {
         return sectors;
     }
@@ -191,7 +191,7 @@ public class Holding implements Searchable, HoldingUpdatable {
      *
      * @return ArrayList<String>
      */
-    @Override
+    //@Override
     public ArrayList<String> getIndices() {
         return indices;
     }

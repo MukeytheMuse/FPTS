@@ -4,6 +4,7 @@ import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Transaction;
 import model.PortfolioElements.WatchedEquity;
+import model.UndoRedo.Command;
 import model.User;
 
 import java.io.*;

@@ -14,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Equities.EquityComponent;
-import model.Searchers.Searchable;
 
 import java.util.Iterator;
 import java.util.List;

@@ -111,13 +111,23 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleWithdrawMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new WithdrawCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
+        /* REPLACE THE FXML PATH TO THE FXML PAGE FOR WITHDRAWAL
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+        */
     }
 
     public void handleDepositMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new DepositCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
+        /* REPLACE THE FXML PATH TO THE FXML PAGE FOR DEPOSIT
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+        */
     }
 
     public void handleCreateMenuItemPressed(ActionEvent event) throws IOException {
@@ -129,8 +139,13 @@ public abstract class MenuController implements Initializable {
     }
 
     public void handleTransferMenuItemPressed(ActionEvent event) {
-        CashAccountAlgorithm cashAcctAlgor = new TransferCashAccountAlgorithm();
-        cashAcctAlgor.process(FPTS.getSelf());
+        /* REPLACE THE FXML PATH TO THE FXML PAGE FOR TRANSFER
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+        */
     }
 
     public void handleRemoveMenuItemPressed(ActionEvent event) throws IOException {
