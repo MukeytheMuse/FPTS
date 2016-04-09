@@ -15,7 +15,7 @@ import model.PortfolioElements.PortfolioVisitor;
  *
  * @author ericepstein
  */
-public class CashAccounts {
+public class CashAccounts implements PortfolioCollection {
     
         List<CashAccount> cashAccounts;
         

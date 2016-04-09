@@ -15,7 +15,7 @@ import model.PortfolioElements.PortfolioVisitor;
  *
  * @author ericepstein
  */
-public class Holdings {
+public class Holdings implements PortfolioCollection {
     
         List<Holding> holdings;
         

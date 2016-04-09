@@ -10,13 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
+import model.PortfolioElements.PortfolioCollection;
 import model.PortfolioElements.PortfolioVisitor;
 
 /**
  *
  * @author ericepstein
  */
-public class EquityComponents {
+public class EquityComponents implements PortfolioCollection {
     
         List<EquityComponent> equityComponents;
         
