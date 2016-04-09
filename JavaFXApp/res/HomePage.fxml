@@ -23,8 +23,8 @@
                 </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false" text="Undo" />
-                  <MenuItem mnemonicParsing="false" text="Redo" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleUndoMenuItemPressed" text="Undo" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleRedoMenuItemPressed" text="Redo" />
               </items>
             </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
@@ -43,6 +43,9 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleHistoryMenuItemPressed" text="History" />
+
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

@@ -60,6 +60,26 @@ public class Watchlist implements PortfolioCollection {
             return false;
         }
 
+    public List<WatchedEquity> getWatchedEquities() {
+        return watchedEquities;
+    }
+
+
+    public void addWatchedEquity(WatchedEquity w) {
+        watchedEquities.add(w);
+    }
+
+    public void updateWatchlist() {
+
+        for (WatchedEquity w : watchedEquities) {
+
+            //EquityComponent ec = w.getAssocEquity();
+
+            w.handleNewPrice();
+
+        }
+    }
+
 	public WatchedEquityIterator iterator() {
 	    results = new ArrayList<WatchedEquity>();
             for (WatchedEquity c : watchedEquities) {

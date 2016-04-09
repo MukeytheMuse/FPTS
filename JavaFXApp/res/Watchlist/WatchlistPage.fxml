@@ -21,8 +21,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleUndoMenuItemPressed" text="Undo" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRedoMenuItemPressed" text="Redo" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">

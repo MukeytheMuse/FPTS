@@ -34,5 +34,7 @@ public interface PortfolioVisitor {
      */
     public void visit(CashAccounts cashAccounts);
 
-    public void visit(Watchlist watchList);
+    public void visit(Watchlist watchlist);
+
+    public void visit(History history);
 }

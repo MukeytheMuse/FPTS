@@ -5,16 +5,19 @@
  */
 package model.PortfolioElements;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Equities.EquityComponent;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javafx.collections.ObservableList;
@@ -162,8 +165,46 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
     }
 
     @Override
-    public void visit(Watchlist watchList) {
+    public void visit(Watchlist watchlist) {
+        //Do nothing
+    }
 
+    @Override
+    public void visit(History history) {
+        DatePicker startDate = (DatePicker) queries.get(0);
+        DatePicker endDate = (DatePicker) queries.get(1);
+
+        List<Transaction> results = history.getResults();
+
+        if (startDate.getValue() != null && endDate.getValue() == null) {
+            Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            for (int i = results.size() - 1; i >= 0; i--) {
+                Transaction t = results.get(i);
+                Date aDate = t.getCashAccount().getDateAdded();
+                if (!aDate.after(start)) {
+                    results.remove(i);
+                }
+            }
+        } else if (startDate.getValue() == null && endDate.getValue() != null) {
+                Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                for (int i = results.size() - 1; i >= 0; i--) {
+                    Transaction t = results.get(i);
+                    Date aDate = t.getCashAccount().getDateAdded();
+                    if (!aDate.before(end)) {
+                        results.remove(i);
+                    }
+                }
+            } else if (startDate.getValue() != null && endDate.getValue() != null) {
+                Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
+                Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
+                for (int i = results.size() - 1; i >= 0; i--) {
+                    Transaction t = results.get(i);
+                    Date aDate = t.getCashAccount().getDateAdded();
+                    if (!(aDate.after(start) && aDate.before(end))) {
+                        results.remove(i);
+                    }
+                }
+        }
     }
 
     @Override

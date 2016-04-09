@@ -6,45 +6,57 @@
 package controller;
 
 import gui.FPTS;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.PortfolioElements.History;
+import model.PortfolioElements.PortfolioVisitor;
+import model.PortfolioElements.SearchPortfolioVisitor;
 import model.PortfolioElements.Transaction;
-import model.UndoRedo.Command;
 
+import java.net.URL;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.ResourceBundle;
 
 /**
  * Displays Transaction objects in one Scene.
  *
  * @author Eric Epstein
  */
-public class TransactionDisplayer implements Displayer {
+public class HistoryController extends MenuController {
+
+    @FXML
+    private VBox mainVbox;
+
 
     /*
     * context data
     */
     FPTS theFPTS;
-    ArrayList<Transaction> transactions;
+    //ArrayList<Transaction> transactions;
+    History history;
     VBox results;//TODO: check
+
+
+    VBox queries;
 
     /*
     * Establishes context data and overrides Displayer's display method
     * by calling a scene constructor.
     */
-    @Override
-    public void display(FPTS theFPTS) {
-        this.theFPTS = theFPTS;
-        transactions = theFPTS.getPortfolio().getTransactions();
-        theFPTS.getStage().setScene(getTransactionDisplayScene());
-    }
+
+
 
     /**
      * Helper method to construct Scene with controller functionality for
@@ -52,10 +64,10 @@ public class TransactionDisplayer implements Displayer {
      *
      * @return
      */
-    private Scene getTransactionDisplayScene() {
+    private void getTransactionDisplayScene() {
 
-        VBox split = new VBox();
-        VBox queries = new VBox();
+        //VBox split = new VBox();
+        VBox prompts = new VBox();
         HBox aField = new HBox();
 
         /**
@@ -64,7 +76,7 @@ public class TransactionDisplayer implements Displayer {
         DatePicker startDate = new DatePicker();
         Label aLabel = new Label("Start date: ");
         aField.getChildren().addAll(aLabel, startDate);
-        queries.getChildren().add(aField);
+        prompts.getChildren().add(aField);
 
         /*
         * Field to select end date
@@ -72,14 +84,19 @@ public class TransactionDisplayer implements Displayer {
         aField = new HBox();
         DatePicker endDate = new DatePicker();
         aLabel = new Label("End date: ");
-        aField.getChildren().addAll(aLabel, endDate);
+        prompts.getChildren().addAll(aLabel, endDate);
 
-        queries.getChildren().add(aField);
+        prompts.getChildren().add(aField);
+
+        queries.getChildren().addAll(startDate, endDate);
 
         /*
         * Initially displays all Transaction objects.
         */
         VBox results = new VBox();
+
+        ArrayList<Transaction> transactions = (ArrayList<Transaction>) history.getList();
+
         for (Transaction t : transactions) {
             results.getChildren().add(new Label(t.toString()));
         }
@@ -93,30 +110,31 @@ public class TransactionDisplayer implements Displayer {
         submitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+
+                PortfolioVisitor aPv = new SearchPortfolioVisitor(queries.getChildren());
+
                 results.getChildren().clear();
-                if (startDate.getValue() != null && endDate.getValue() != null) {
-                    Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
-                    Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
-                    /*
-                    * Update display to represent filtered Transaction objects
-                    */
-                    for (Transaction t : transactions) {
-                        //TODO: change date to type date.
-                        Date aDate = t.getCashAccount().getDateAdded();//TODO: check
-                        /*
-                        * Add to display if Transaction object is after the start
-                        * date and before the end date.
-                        */
-//                        if (aDate.after(start) && aDate.before(end)) {
-//                            results.getChildren().add(new Label(t.toString()));
-//                        }
-                    }
+                Iterator resultsIterator = history.iterator(aPv);
+
+                while (resultsIterator.hasNext()) {
+                    results.getChildren().add(new Label(resultsIterator.next().toString()));
                 }
+
+
             }
         });
-        split.getChildren().addAll(queries, submitBtn, results);
-        Scene transactionDisplayScene = new Scene(split, theFPTS.getWidth(), theFPTS.getHeight());
-        return transactionDisplayScene;
+        mainVbox.getChildren().addAll(queries, submitBtn, results);
+        //Scene transactionDisplayScene = new Scene(split, theFPTS.getWidth(), theFPTS.getHeight());
+        //return transactionDisplayScene;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.theFPTS = theFPTS;
+        queries = new VBox();
+        //transactions = theFPTS.getCurrentUser().getMyPortfolio().getTransactions();
+        history = theFPTS.getCurrentUser().getMyPortfolio().getHistory();
+        getTransactionDisplayScene();
     }
 }
 

@@ -33,13 +33,9 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Holdings;
-import model.UndoRedo.Command;
-import model.UndoRedo.CommandComposite;
-import model.UndoRedo.HoldingRemoval;
-import model.UndoRedo.UndoRedoManager;
+import model.UndoRedo.*;
 
 /**
  * FXML Controller class

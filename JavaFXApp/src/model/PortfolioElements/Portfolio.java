@@ -32,6 +32,8 @@ public class Portfolio {
     private Holdings holdingsCollection;
     private CashAccounts cashAccountsCollection;
     private EquityComponents equityComponentsCollection;
+    private Watchlist watchlist;
+    private History history;
     
     private double currentValue;
     private ArrayList<Transaction> transactions;
@@ -62,6 +64,8 @@ public class Portfolio {
         cashAccountsCollection = new CashAccounts();
         holdingsCollection = new Holdings();
         equityComponentsCollection = new EquityComponents();
+        watchlist = new Watchlist();
+        history = new History();
     
         //cashAccounts = new ArrayList<>();
         //holdings = new ArrayList<>();
@@ -79,10 +83,14 @@ public class Portfolio {
     public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts, ArrayList<Transaction> readInTransactions) {
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
+
+        watchlist = new Watchlist();
+        history = new History();
         
         try {
         holdingsCollection.add(readInholdings);
         cashAccountsCollection.add(readInCashAccounts);
+            history.add(readInTransactions);
         } catch (Exception ex) {
             holdingsCollection = new Holdings();
             cashAccountsCollection = new CashAccounts();
@@ -144,23 +152,23 @@ public class Portfolio {
         return null;
     }
 
+    /*
+    * functions related to watchlist
+     */
     public ArrayList<WatchedEquity> getWatchedEquities() {
-        return watchedEquities;
+        return (ArrayList<WatchedEquity>) watchlist.getWatchedEquities();
     }
 
+    public Watchlist getWatchlist() {
+        return watchlist;
+    }
 
     public void addWatchedEquity(WatchedEquity w) {
-        watchedEquities.add(w);
+        watchlist.add(w);
     }
 
     public void updateWatchlist() {
-        for (WatchedEquity w : watchedEquities) {
-
-            //EquityComponent ec = w.getAssocEquity();
-
-            w.handleNewPrice();
-
-        }
+       watchlist.updateWatchlist();
     }
 
     /**
@@ -229,7 +237,7 @@ public class Portfolio {
      * @return ArrayList<Transaction>
      */
     public ArrayList<Transaction> getTransactions() {
-        return transactions;
+        return (ArrayList<Transaction>) history.getList();
     }
 
 
@@ -277,10 +285,9 @@ public class Portfolio {
         return (ArrayList<Holding>) holdingsCollection.getList();
     }
 
-    public void updateEquityComponentsPrice(Document d) {
-        for (EquityComponent eq : equityComponents) {
-            eq.updatePrice(d);
-        }
+
+    public History getHistory() {
+        return history;
     }
 
     public Holdings getHoldingsCollection() {

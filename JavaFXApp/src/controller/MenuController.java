@@ -119,18 +119,26 @@ public abstract class MenuController implements Initializable {
         */
     }
 
-    public void handleDepositMenuItemPressed(ActionEvent event) {
-        /* REPLACE THE FXML PATH TO THE FXML PAGE FOR DEPOSIT
+    public void handleDepositMenuItemPressed(ActionEvent event) throws IOException {
+
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/DepositPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void handleCreateMenuItemPressed(ActionEvent event) throws IOException {
         Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-        */
     }
 
-    public void handleCreateMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+    public void handleHistoryMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/HistoryPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);

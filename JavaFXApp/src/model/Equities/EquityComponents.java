@@ -12,6 +12,7 @@ import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.PortfolioCollection;
 import model.PortfolioElements.PortfolioVisitor;
+import org.w3c.dom.Document;
 
 /**
  *
@@ -33,6 +34,12 @@ public class EquityComponents implements PortfolioCollection {
 
 	public void addEquityComponent(EquityComponent eq) {
 		equityComponents.add(eq);
+	}
+
+	public void updateEquityComponentsPrice(Document d) {
+		for (EquityComponent eq : equityComponents) {
+			eq.updatePrice(d);
+		}
 	}
 
 	public Iterator<EquityComponent> iterator(PortfolioVisitor v) {

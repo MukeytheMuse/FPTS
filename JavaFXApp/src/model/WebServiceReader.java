@@ -7,6 +7,7 @@ package model;
 
 import gui.FPTS;
 import model.Equities.EquityComponent;
+import model.Equities.EquityComponents;
 import model.PortfolioElements.Portfolio;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -37,7 +38,6 @@ public class WebServiceReader extends Observable {
     }
 
     public void run() {
-
 
         try {
             String strArrayInQuery = "";
@@ -76,9 +76,8 @@ public class WebServiceReader extends Observable {
             InputSource is = new InputSource(new StringReader(response.toString()));
             Document document = builder.parse(is);
 
-            Portfolio p = fpts.getCurrentUser().getMyPortfolio();
-            p.updateEquityComponentsPrice(document);
-
+            EquityComponents equityComponents = fpts.getCurrentUser().getMyPortfolio().getEquityComponentsCollection();
+            equityComponents.updateEquityComponentsPrice(document);
 
             // MAKE SURE TO CLOSE YOUR CONNECTION!
             in.close();
