@@ -241,17 +241,12 @@ public class Portfolio {
      * @return ArrayList<CashAccount>
      */
     public ArrayList<CashAccount> getCashAccounts() {
-        return cashAccounts;
+        return (ArrayList<CashAccount>) cashAccountsCollection.getList();
     }
 
 
     public CashAccount getCashAccount(CashAccount c) {
-        for (CashAccount aC : cashAccounts) {
-            if (aC.equals(c)) {
-                return aC;
-            }
-        }
-        return null;
+        return cashAccountsCollection.get(c);
     }
 
     /**

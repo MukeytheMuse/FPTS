@@ -25,14 +25,18 @@ public class UndoRedoManager {
     }
     
     public void undo() {
-        Command c = undoStack.pop();
-        c.undo();
-        redoStack.push(c);
+        try { 
+            Command c = undoStack.pop();
+            c.undo();
+            redoStack.push(c);
+        } catch (Exception ex) {}
     }
     
     public void redo() {
-        Command c = redoStack.pop();
-        c.execute();
+        try {
+            Command c = redoStack.pop();
+            c.execute();
+        } catch (Exception ex) {}
     }
     
 }

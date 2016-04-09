@@ -29,7 +29,7 @@ public class CashAccounts {
             return cashAccounts;
         }
 
-	public void addCashAccount(CashAccount c) {
+	public void add(CashAccount c) {
 		cashAccounts.add(c);
 	}
         
@@ -37,6 +37,29 @@ public class CashAccounts {
             for (CashAccount c : cList) {
                 cashAccounts.add(c);
             }
+        }
+        
+        public void remove(CashAccount c) {
+            cashAccounts.remove(c);
+        }
+        
+        public CashAccount get(CashAccount c) {
+            for (CashAccount aC : cashAccounts) {
+                if (aC.getAccountName().equals(c)) {
+                    return aC;
+                } 
+            }
+            return null;
+        }
+        
+        
+        public boolean contains(CashAccount c) {
+            for (CashAccount aC : cashAccounts) {
+                if (aC.getAccountName().equals(c)) {
+                    return true;
+                } 
+            }
+            return false;
         }
 
 	public Iterator<CashAccount> iterator(PortfolioVisitor v) {

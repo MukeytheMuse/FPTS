@@ -8,6 +8,8 @@ package model.UndoRedo;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Equities.EquityComponent;
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.CashAccounts;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Holdings;
 
@@ -15,37 +17,25 @@ import model.PortfolioElements.Holdings;
  *
  * @author ericepstein
  */
-public class HoldingRemoval implements Command {
+public class CashAccountRemoval implements Command {
 
-    Holdings holdings;
-    int numShares;
-    Holding holding;
+    CashAccounts cashAccounts;
+    CashAccount c;
     
-    public HoldingRemoval(Holdings holdings, EquityComponent ec, int numShares) {
-        
-        this.numShares = numShares;
-        this.holding = holding;
-        this.holdings = holdings;   
+    public CashAccountRemoval(CashAccounts cashAccounts, CashAccount c) {
+        this.c = c;
+        this.cashAccounts = cashAccounts;
     }
     
     @Override
     public void execute() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        holding.remove(numShares);
-        if (holding.getNumOfShares() == 0) {
-            holdings.remove(holding);
-        }
+        cashAccounts.remove(c);
+
     }
 
     @Override
     public void undo() {
-        
-        holding.add(numShares);
-        if (!holdings.contains(holding)) {
-            holdings.add(holding);
-        }
-
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cashAccounts.add(c);  
     }
 
     @Override
