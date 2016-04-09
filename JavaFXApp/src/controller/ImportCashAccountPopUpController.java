@@ -3,10 +3,18 @@ package controller;
 import gui.FPTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import model.DataBase.WriteFile;
 import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Transaction;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,7 +40,8 @@ public class ImportCashAccountPopUpController implements Initializable {
      */
     @FXML
     protected void handleIgnoreButtonPressed (ActionEvent actionEvent) {
-
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     /**
@@ -41,7 +50,17 @@ public class ImportCashAccountPopUpController implements Initializable {
      */
     @FXML
     protected void handleReplaceButtonPressed (ActionEvent actionEvent) {
-
+        this.account.overwrite(this.importedAccount);
+        this.account.setTransactions(this.importedAccount.getTransactions());
+        try {
+            Stage stg = FPTS.getSelf().getStage();
+            Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
+            stg.setScene(new Scene(parent));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     /**
@@ -50,11 +69,23 @@ public class ImportCashAccountPopUpController implements Initializable {
      */
     @FXML
     protected void handleCombineButtonPressed (ActionEvent actionEvent) {
+        double valueToAdd = this.importedAccount.getValue();
+        double currentValue = this.account.getValue();
+        this.account.setValue((currentValue + valueToAdd));
+        try {
+            Stage stg = FPTS.getSelf().getStage();
+            Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml"));
+            stg.setScene(new Scene(parent));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        accountLabel.setText("Cash Account: " + account.toString());
+        //accountLabel.setText("Cash Account: " + account.getAccountName());
     }
 }

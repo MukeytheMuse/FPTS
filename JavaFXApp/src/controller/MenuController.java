@@ -183,25 +183,45 @@ public abstract class MenuController implements Initializable {
             userTransactionsToImport = importedEquities.get("Transactions");
             userCashAccountsToImport = importedEquities.get("Cash Accounts");
 
+            for (Holding holding : userHoldingsToImport) {
+                FPTS.getCurrentUser().getMyPortfolio().getHoldings().add(holding);
+            }
+
+            for (Transaction transaction : userTransactionsToImport) {
+                FPTS.getCurrentUser().getMyPortfolio().getTransactions().add(transaction);
+            }
+
+
             ArrayList<CashAccount> cashAccountArrayList = FPTS.getCurrentUser().getMyPortfolio().getCashAccounts();
 
-            for (CashAccount cashAccount : cashAccountArrayList) {
-                for (CashAccount importedCashAccount : userCashAccountsToImport) {
-                    if (cashAccount.getAccountName().equals(importedCashAccount.getAccountName())) {
-                        try {
-                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ImportPopUp.fxml"));
-                            Parent root1 = fxmlLoader.load();
-                            ImportCashAccountPopUpController controller = fxmlLoader.getController();
-                            controller.setAccounts(cashAccount, importedCashAccount);
-                            Stage stg = new Stage();
-                            stg.setScene(new Scene(root1));
-                            stg.show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+            if (!(cashAccountArrayList.isEmpty())) {
+                for (CashAccount cashAccount : cashAccountArrayList) {
+                    for (CashAccount importedCashAccount : userCashAccountsToImport) {
+                        if (cashAccount.getAccountName().equals(importedCashAccount.getAccountName())) {
+                            try {
+                                System.out.println("How about here?");
+                                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ImportPopUp.fxml"));
+                                Parent root1 = fxmlLoader.load();
+                                ImportCashAccountPopUpController controller = fxmlLoader.getController();
+                                controller.setAccounts(cashAccount, importedCashAccount);
+                                Stage stg = new Stage();
+                                stg.setScene(new Scene(root1));
+                                stg.show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
+            } else {
+                System.out.println("Am I in here?");
+                for (CashAccount importedCashAccount : userCashAccountsToImport) {
+                    FPTS.getCurrentUser().getMyPortfolio().getCashAccounts().add(importedCashAccount);
+                }
             }
+
+            WriteFile writeFile = new WriteFile();
+            writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
         }
     }
 

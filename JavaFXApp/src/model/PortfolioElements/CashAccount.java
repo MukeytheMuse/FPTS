@@ -105,6 +105,10 @@ public class CashAccount implements PortfolioElement {
         return currentValue;
     }
 
+    public void setValue(double currentValue) {
+        this.currentValue = currentValue;
+    }
+
     /**
      * overrides default equals() method
      * <p>

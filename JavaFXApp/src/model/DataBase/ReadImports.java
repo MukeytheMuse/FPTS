@@ -40,6 +40,7 @@ public class ReadImports {
         ArrayList<Transaction> transactionArrayList = readTransactionImports(transactionImports);
         ArrayList<Holding> holdingArrayList = ReadHoldings.read(holdingImports);
         ArrayList<CashAccount> cashAccountArrayList = ReadCash.read(cashAccountsImports);
+        System.out.println(cashAccountArrayList.size());
 
         HashMap<String, ArrayList> returnedImports = new HashMap<>();
         returnedImports.put(holdings, holdingArrayList);
