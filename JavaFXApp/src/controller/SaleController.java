@@ -14,11 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Equities.EquityComponent;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.HoldingUpdatable;
 import model.PortfolioElements.Portfolio;
-import model.SearchThread;
 
 import java.io.IOException;
 import java.net.URL;

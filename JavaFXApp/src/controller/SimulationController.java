@@ -1,28 +1,25 @@
 package controller;
 
-import gui.FPTS;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.PortfolioElements.Holding;
-import model.Simulators.BearSimulator;
-import model.Simulators.BullSimulator;
-import model.Simulators.NoGrowthSimulator;
-import model.Simulators.Simulator;
+import model.Simulators.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -31,6 +28,8 @@ import java.util.ResourceBundle;
 public class SimulationController extends MenuController {
     @FXML
     private Label error;
+    @FXML
+    private XYChart<Integer, Double> graph;
     @FXML
     private TextField numSteps;
     @FXML
@@ -48,6 +47,7 @@ public class SimulationController extends MenuController {
     private Label stepNumber;
     private String simulation = "NOGROWTH";
     private boolean steps = false;
+    private ArrayList<Holding> holdings;
 
     @FXML
     protected void handleBearSimulateRadioButtonPressed(ActionEvent event) {
@@ -69,9 +69,37 @@ public class SimulationController extends MenuController {
         simulation = "BULL";
     }
 
+
     @FXML
     protected void handleNoSimulateRadioButtonPressed(ActionEvent event) {
         simulation = "NOGROWTH";
+    }
+
+
+    protected void setHoldings(ArrayList<Holding> holdings) {
+        this.holdings = holdings;
+    }
+
+    protected void setSimulator(Simulator simulator) {
+        this.currentSimulator = simulator;
+        if (pValue != null) {
+            pValue.setText("$" + currentSimulator.getChangeInValue());
+            stepNumber.setText("" + currentSimulator.getCurrentStep());
+            if (currentSimulator.getCurrentStep() >= currentSimulator.getTotalSteps()) {
+                stepButton.setDisable(true);
+            }
+            totalValue.setText("$" + currentSimulator.getCurrentValue());
+
+        }
+    }
+
+    private void storeMemento() {
+        Memento memento = new Memento(holdings);
+        memento.storeMemento();
+    }
+
+    private void resetToMemento() {
+
     }
 
     /**
@@ -85,12 +113,7 @@ public class SimulationController extends MenuController {
      * @throws java.io.IOException - Exception thrown if the SimulationPage.fxml is not found.
      */
     public void handleSimulateButtonPressed(ActionEvent event) throws IOException {
-//        MementoCareTaker careTaker = new MementoCareTaker();
-//        Portfolio portfolio = new Portfolio();
-//        Memento cur_state = FPTS.getSelf().getPortfolio().createMemento();
-//
-//        portfolio.setMemento(portfolio);
-        //Portfolio cur_portfolio = FPTS.getSelf().getPortfolio();
+        storeMemento();
         if (numSteps.getText().length() != 0 && priceAnnum.getText().length() != 0) {
             try {
                 int numberOfSteps = Integer.parseInt(numSteps.getText());
@@ -98,18 +121,17 @@ public class SimulationController extends MenuController {
                 Boolean hasSteps;
                 hasSteps = steps;
                 if (simulation.equals("NOGROWTH")) {
-                    currentSimulator = new NoGrowthSimulator(numberOfSteps, curInterval, hasSteps);
+                    currentSimulator = new NoGrowthSimulator(numberOfSteps, holdings);
                 } else {
                     if (priceAnnum.getText().length() != 0) {
                         String pricePerAnum = priceAnnum.getText();
                         try {
                             double pricePerYearAsDouble = Double.parseDouble(pricePerAnum);
                             if (pricePerYearAsDouble < 1.00 && pricePerYearAsDouble > 0) {
-                                ArrayList<Holding> holdings = FPTS.getSelf().getPortfolio().getHoldings();
                                 if (simulation.equals("BEAR")) {
-                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval,  hasSteps,pricePerYearAsDouble, holdings);
+                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval, pricePerYearAsDouble, holdings);
                                 } else {
-                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble, holdings);
+                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, pricePerYearAsDouble, holdings);
                                 }
                             }
                         } catch (NumberFormatException x) {
@@ -120,17 +142,23 @@ public class SimulationController extends MenuController {
                     }
                 }
                 try {
-                    FPTS.setCurrentSimulator(currentSimulator);
                     if (hasSteps) {
-                        FPTS.setSimulationValue(currentSimulator.simulate(1));
+                        currentSimulator.simulate(1);
                     } else {
-                        FPTS.setSimulationValue(currentSimulator.simulate(numberOfSteps));
+                        currentSimulator.simulate(numberOfSteps);
                     }
-                    Parent parent = FXMLLoader.load(getClass().getResource("/SimulationPage.fxml"));
-                    Scene scene = new Scene(parent);
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SimulationPage.fxml"));
+                        Parent root1 = fxmlLoader.load();
+                        SimulationController controller = fxmlLoader.getController();
+                        controller.setSimulator(currentSimulator);
+                        controller.setHoldings(holdings);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(new Scene(root1));
+                        stage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } catch (NullPointerException n) {
                     error.setText("Please Enter a value between 0 and 1 for the Price per Annum.");
                 }
@@ -150,38 +178,64 @@ public class SimulationController extends MenuController {
      */
     @FXML
     protected void handleStepButtonPressed(ActionEvent event) throws IOException {
-        currentSimulator = FPTS.getCurrentSimulator();
         if (currentSimulator.getCurrentStep() < currentSimulator.getTotalSteps()) {
-            FPTS.setSimulationValue(FPTS.getSimulationValue() + currentSimulator.simulate(1));
-
+            currentSimulator.simulate(1);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SimulationPage.fxml"));
+            Parent root1 = fxmlLoader.load();
+            SimulationController controller = fxmlLoader.getController();
+            controller.setSimulator(currentSimulator);
+            controller.setHoldings(holdings);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/SimulationPage.fxml"))));
+            stage.setScene(new Scene(root1));
             stage.show();
         }
     }
 
     /**
+     * Handles starting a new simulation without resetting the Holdings.
      * @param event - Event that caused this class to be called.
      * @throws IOException - Throws IOException if the SimulatePage is not found.
      */
     @FXML
     protected void handleResetToStartButtonPressed(ActionEvent event) throws IOException {
+        ArrayList<Holding> lst = Memento.mementos.get(0).getHoldings();
+        for(Holding holding : holdings) {
+            for (Holding stored : lst) {
+                if (holding.equals(stored)) {
+                    holding.setHoldingValue(stored.getPricePerShare());
+                    break;
+                }
+            }
+        }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/SimulatePage.fxml"))));
         stage.show();
     }
 
     /**
+     * Restores Holdings back to the start of the original simulation.
      * @param event authors: Kaitlin
      */
     @FXML
-    protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) {
-        //TODO Memento portfolio restoration
-        //currentPortfolioState.restoreFromMemento();
+    protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) throws IOException {
+        ArrayList<Holding> lst = Memento.mementos.get(0).getHoldings();
+        for(Holding holding : holdings) {
+            for (Holding stored : lst) {
+                if (holding.equals(stored)) {
+                    holding.setHoldingValue(stored.getPricePerShare());
+                    break;
+                }
+            }
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SimulatePage.fxml"));
+        Parent root1 = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root1));
+        stage.show();
     }
 
     /**
-     * Method used to initialize the choiceBox on the SimulatePage and the simulation value on the SimulationPage.
+     * Method used to initialize the choiceBox on the SimulatePage.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -189,22 +243,16 @@ public class SimulationController extends MenuController {
             interval.setItems(FXCollections.observableArrayList(
                     "Day", "Month", "Year"
             ));
+            priceAnnum.setText("0.0");
         }
-        if (pValue != null) {
-            pValue.setText("$" + FPTS.getSimulationValue());
-            stepNumber.setText("" + FPTS.getCurrentSimulator().getCurrentStep());
-            currentSimulator = FPTS.getCurrentSimulator();
-            if (currentSimulator.getCurrentStep() >= currentSimulator.getTotalSteps()) {
-                stepButton.setDisable(true);
+        if (graph != null){
+            ArrayList<Double> data = Simulator.series;
+            XYChart.Series series = new XYChart.Series();
+            for (int i = 0; i < data.size(); i++) {
+                series.getData().add(new XYChart.Data(i, data.get(i)));
             }
-            double value = 0;
-            for (Holding h : FPTS.getSelf().getPortfolio().getHoldings()) {
-                value += h.getTotalValue();
-            }
-            totalValue.setText("$" + (value + FPTS.getSimulationValue()));
-
+            graph.getData().add(series);
         }
-
     }
 }
 

@@ -1,12 +1,21 @@
 package model.Simulators;
 
+import java.util.ArrayList;
+
 /**
  * authors: Kaitlin Brockway & Luke
  */
-public interface Simulator {
-    public double simulate(int numberOfSteps);
+public abstract class Simulator {
 
-    public int getCurrentStep();
+    public static ArrayList<Double> series;
 
-    public int getTotalSteps();
+    public abstract double simulate(int numberOfSteps);
+
+    public abstract int getCurrentStep();
+
+    public abstract int getTotalSteps();
+
+    public abstract double getCurrentValue();
+
+    public abstract double getChangeInValue();
 }

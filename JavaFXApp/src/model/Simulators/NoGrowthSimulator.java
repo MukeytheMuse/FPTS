@@ -1,6 +1,7 @@
 package model.Simulators;
 
-import gui.FPTS;
+
+import javafx.scene.chart.XYChart;
 import model.PortfolioElements.Holding;
 
 import java.util.ArrayList;
@@ -8,26 +9,25 @@ import java.util.ArrayList;
 /**
  * Created by Brockway on 3/10/16.
  */
-public class NoGrowthSimulator implements Simulator {
+public class NoGrowthSimulator extends Simulator {
     public static String name = "No Growth Simulator";
+
     private int numSteps;
     private int stepNumber;
-
+    private double currentValue;
     private ArrayList<Holding> holdings;
-    //TODO: holdings is never used
-    private String interval;
-    //TODO:Warning:(14, 20) [UnusedDeclaration] Private field 'interval' is assigned but never accessed
-    private boolean hasSteps;
-    //TODO:Warning:(15, 21) [UnusedDeclaration] Private field 'hasSteps' is assigned but never accessed
 
     /**
      *
      */
-    public NoGrowthSimulator(int numSteps, String interval, boolean hasSteps) {
-        this.interval = interval;
-        this.hasSteps = hasSteps;
+    public NoGrowthSimulator(int numSteps, ArrayList<Holding> lst) {
         this.numSteps = numSteps;
         this.stepNumber = 0;
+        this.holdings = lst;
+        this.currentValue = 0;
+        if (Simulator.series == null) {
+            Simulator.series = new ArrayList<Double>();
+        }
     }
 
     //TODO: CHECK IF IT HAS STEPS.
@@ -36,7 +36,14 @@ public class NoGrowthSimulator implements Simulator {
      * @return
      */
     public double simulate(int numberOfSteps) {
-        stepNumber += numberOfSteps;
+        for(int i = 0; i < numberOfSteps; i++) {
+            currentValue = 0;
+            for (Holding h : holdings) {
+                currentValue += h.getTotalValue();
+            }
+            series.add(stepNumber, currentValue);
+            stepNumber += 1;
+        }
         return 0;
     }
 
@@ -49,4 +56,10 @@ public class NoGrowthSimulator implements Simulator {
     public int getTotalSteps() {
         return numSteps;
     }
+
+    @Override
+    public double getCurrentValue() { return currentValue; }
+
+    @Override
+    public double getChangeInValue() { return 0; }
 }

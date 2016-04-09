@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import controller.SaleController;
 import controller.SearchController;

@@ -84,6 +84,26 @@ public class Holding implements Searchable, HoldingUpdatable {
     }
 
     /**
+     * Constructor used to add a copy of a holding. Used primarily in storing values for the simulator.
+     * @param holding - Holding that is to be copied.
+     */
+    public Holding(Holding holding){
+        this.tickerSymbol = holding.getTickerSymbol();
+        this.holdingName = holding.getName();
+        this.numOfShares = holding.getNumOfShares();
+        this.valuePerShare = holding.getPricePerShare();
+        this.currentValue = numOfShares * valuePerShare;
+        this.acquisitionDate = holding.getAcquisitionDate();
+        this.indices = holding.getIndices();
+        this.sectors = holding.getSectors();
+    }
+
+    public void setHoldingValue(double newValue) {
+        this.valuePerShare = newValue;
+        this.currentValue = numOfShares * valuePerShare;
+    }
+
+    /**
      * returns value per share
      *
      * @return double

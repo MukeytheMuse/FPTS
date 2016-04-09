@@ -86,11 +86,7 @@ public class HomeController extends MenuController {
      */
     @FXML
     protected void handleSimulateButtonPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/SimulatePage.fxml"));
-        Scene scene = new Scene(parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(scene);
-        app_stage.show();
+        super.goToSimulation(event);
     }
 
     /**

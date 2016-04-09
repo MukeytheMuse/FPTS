@@ -1,6 +1,6 @@
 package model.Simulators;
 
-import gui.FPTS;
+import javafx.scene.chart.XYChart;
 import model.PortfolioElements.Holding;
 
 import java.util.ArrayList;
@@ -9,19 +9,16 @@ import model.PortfolioElements.Holding;
 /**
  * authors: Kaitlin Brockway & Luke
  */
-public class BearSimulator implements Simulator {
+public class BearSimulator extends Simulator {
     public static String name = "Bear Market Simulator";
 
-    private ArrayList<Holding> holdings;//TODO: find out how to get the holdings******
-    //TODO: holdings is never assigned and is accessed
+    private ArrayList<Holding> holdings;
     private String interval;
-    private boolean hasSteps;
-    //TODO: Warning:(15, 21) [UnusedDeclaration] Private field 'hasSteps' is assigned but never accessed
     private int numSteps;
     private double pricePerYear;
-    private double currentPercentDecrease;
-    //TODO: Warning:(18, 20) [UnusedDeclaration] Private field 'currentPercentDecrease' is assigned but never accessed
+    private double valueCount;
     private int stepNumber;
+    private double currentValue;
 
     /**
      * Bear Market Constructor. Input values are converted
@@ -33,18 +30,17 @@ public class BearSimulator implements Simulator {
      * @param pricePerYearPercentage - Per Annum, the change in price of each holding.
      * @param holdings - ArrayList of holdings that are used in simulation
      */
-    public BearSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage, ArrayList<Holding> holdings) {
+    public BearSimulator(int numSteps, String interval, double pricePerYearPercentage, ArrayList<Holding> holdings) {
         this.interval = interval;
-        this.hasSteps = hasSteps;
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
-        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
-        //this.holdings = holdings;
+        this.holdings = holdings;
         this.stepNumber = 0;
+        this.currentValue = 0;
+        if (Simulator.series == null) {
+            Simulator.series = new ArrayList<Double>();
+        }
     }
-
-
-    //TODO: CHECK IF IT HAS STEPS.
 
     /**
      * The Bear Market simulation will decrease the equities
@@ -57,7 +53,8 @@ public class BearSimulator implements Simulator {
      */
     @Override
     public double simulate(int numberOfSteps) {
-        double valueCount = 0;
+        currentValue = 0;
+        double currentPercentDecrease = 0;
         if (interval.equals("Day")) {
             currentPercentDecrease = pricePerYear / 365;
         } else if (interval.equals("Month")) {
@@ -65,20 +62,26 @@ public class BearSimulator implements Simulator {
         } else {
             currentPercentDecrease = pricePerYear;
         }
-        double currentDecreaseValue;
         for (int i = 0; i < numberOfSteps; i++) {
+            currentValue = 0;
             for (Holding h : holdings) {
-                currentDecreaseValue = currentPercentDecrease * h.getTotalValue();
-                //the system shall ensure that the simulation algorithm
-                // keeps all equity prices greater than or equal to zero.
-                if (h.getTotalValue() - currentDecreaseValue > 0) {
-                    valueCount -= currentDecreaseValue;
+                double change = 0;
+                change = currentPercentDecrease * h.getPricePerShare();
+                if (h.getTotalValue() - change > 0) {
+                    h.setHoldingValue(h.getPricePerShare() - change);
+                    currentValue += h.getTotalValue();
+                    valueCount += change;
+                } else {
+                    h.setHoldingValue(0);
+                    valueCount += (h.getTotalValue());
                 }
             }
+            series.add(stepNumber, currentValue);
+            stepNumber += 1;
         }
-        stepNumber += numberOfSteps;
         return valueCount;
     }
+
 
     @Override
     public int getCurrentStep() {
@@ -90,5 +93,11 @@ public class BearSimulator implements Simulator {
         return numSteps;
     }
 
+    @Override
+    public double getCurrentValue() {
+        return currentValue;
+    }
 
+    @Override
+    public double getChangeInValue() { return valueCount; }
 }

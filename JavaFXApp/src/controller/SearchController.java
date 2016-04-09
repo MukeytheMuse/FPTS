@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.HoldingUpdatable;
 import model.PortfolioElements.Portfolio;
-import model.SearchThread;
 
 import java.io.IOException;
 import java.net.URL;
@@ -89,9 +88,9 @@ public class SearchController extends MenuController {
                 break;
         }
         threads.forEach(SearchThread::run);
-        for(SearchThread thead : threads) {
+        for(SearchThread thread : threads) {
             try {
-                thead.join();
+                thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
