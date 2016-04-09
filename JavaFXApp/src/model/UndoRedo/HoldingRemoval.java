@@ -24,7 +24,7 @@ public class HoldingRemoval implements Command {
     public HoldingRemoval(Holdings holdings, Holding h, int numShares) {
         
         this.numShares = numShares;
-        this.holding = holding;
+        this.holding = h;
         this.holdings = holdings;   
     }
     

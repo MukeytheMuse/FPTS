@@ -6,8 +6,11 @@
 package model.PortfolioElements;
 
 import java.util.ArrayList;
+
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Equities.EquityComponent;
@@ -64,7 +67,7 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
             for (int l = allItems.size() - 1; l >= 0; l--) {
                 ArrayList<ArrayList<String>> anItem = allItems.get(l);
                 boolean isMatch = true;
-                
+
                 for (int i = 0; i < queries.size(); i++) {
 
                     Pane p = (Pane) queries.get(i);
@@ -74,6 +77,48 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
 
                     //Access what the user inputted in that field
                     TextField content = (TextField) p.getChildren().get(2);
+
+
+                        //ComboBox co = (ComboBox) aHbox.getChildren().get(1);
+
+                    /*
+
+                    try {
+                        System.out.println("QUERIES SIZE IS :");
+                        System.out.println(queries.size());
+                        ComboBox co = (ComboBox) queries.get(i);
+                    } catch (Exception ex) {
+                        System.out.println("FAILED AT CO FOR QUERIES i = " + i);
+                        ex.printStackTrace();
+
+                    }
+
+                    //System.out.println("SIZE OF QUERIES IS " + queries.size());
+                    //System.out.println("SIZE OF PANE IS " + p.getChildren().size());
+                    //System.out.println("SIZE OF first child of pane is " + p.getChildren().get(0));
+
+                    int index = -1;
+                    try {
+                        p = (Pane) queries.get(i);
+
+                        System.out.println("p SIZE IS :");
+                        System.out.println(p.getChildren().size());
+                        for (int j = 0; j < queries.size(); j++) {
+                            index = j;
+                            ComboBox co = (ComboBox) p.getChildren().get(j);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("FAILED AT CO FOR PANE j = " + index);
+                        ex.printStackTrace();
+                    }
+                    */
+
+
+                    //Access the search condition for that field
+                    //ComboBox cond = (ComboBox) p.getChildren().get(1);
+
+                    //Access what the user inputted in that field
+                    //TextField content = (TextField) p.getChildren().get(2);
 
                     List<String> validInfo = anItem.get(i);
                     //Enter inspection if the user inputted something

@@ -120,9 +120,12 @@ public abstract class MenuController implements Initializable {
         cashAcctAlgor.process(FPTS.getSelf());
     }
 
-    public void handleCreateMenuItemPressed(ActionEvent event) {
-        CashAccountCreator cashAcctAlgor = new CashAccountCreator(FPTS.getSelf());
-        cashAcctAlgor.getCashAccountCreatorScene();
+    public void handleCreateMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleTransferMenuItemPressed(ActionEvent event) {

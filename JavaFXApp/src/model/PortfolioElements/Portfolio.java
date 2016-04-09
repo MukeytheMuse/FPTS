@@ -198,6 +198,10 @@ public class Portfolio {
         return new EquityComponents();
     }
 
+    public CashAccounts getCashAccountsCollection() {
+        return cashAccountsCollection;
+    }
+
     /**
      * Returns collection of CashAccount objects that are cast to Searchable
      *

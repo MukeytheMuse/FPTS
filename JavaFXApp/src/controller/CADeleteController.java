@@ -19,7 +19,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Equities.EquityComponent;
 import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.CashAccounts;
 import model.PortfolioElements.Holding;
+
+import gui.FPTS;
+import model.UndoRedo.CashAccountRemoval;
+import model.UndoRedo.Command;
+import model.UndoRedo.UndoRedoManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,12 +43,19 @@ public class CADeleteController extends MenuController {
     @FXML
     private TableView<CashAccount> CAtableView;
 
+    private FPTS fpts;
+
     @FXML
     public void handleDoubleClickTableRow(MouseEvent event) {
         if (event.getClickCount() == 2) {
             CashAccount account = CAtableView.getSelectionModel().getSelectedItem();
-            RemoveCashAccountAlgorithm rcaa = new RemoveCashAccountAlgorithm();
-            rcaa.fxAction(account);
+
+            UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+            CashAccounts cashAccounts = fpts.getCurrentUser().getMyPortfolio().getCashAccountsCollection();
+            Command comm = (Command) new CashAccountRemoval(cashAccounts, account);
+
+            undoRedoManager.execute(comm);
+
             Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
             try {
                 Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml")));
@@ -55,6 +68,7 @@ public class CADeleteController extends MenuController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fpts = fpts.getSelf();
         CAnameCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("accountName"));
         amountCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("value"));
         dateCol.setCellValueFactory(new PropertyValueFactory<CashAccount, String>("dateAdded"));

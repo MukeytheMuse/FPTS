@@ -30,7 +30,6 @@ public class CashAccountRemoval implements Command {
     @Override
     public void execute() {
         cashAccounts.remove(c);
-
     }
 
     @Override

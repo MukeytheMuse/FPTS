@@ -12,12 +12,14 @@ import java.util.List;
  *
  * @author ericepstein
  */
-public class CommandComposite implements Command{
+public class CommandComposite implements Command {
 
     List<Command> commands; 
         
-    public void CommandComposite() {
+    public CommandComposite() {
+
         commands = new ArrayList();
+
     }
     
     @Override

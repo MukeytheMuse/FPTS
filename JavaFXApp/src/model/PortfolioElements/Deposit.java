@@ -1,5 +1,7 @@
 package model.PortfolioElements;
 
+import model.UndoRedo.Command;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -10,7 +12,7 @@ import java.util.Date;
  *
  * @author Eric Epstein
  */
-public class Deposit implements Transaction {
+public class Deposit implements Command, Transaction {
     private CashAccount c;
     private double amount;
     private Date date;
@@ -57,6 +59,20 @@ public class Deposit implements Transaction {
      */
     public void execute() {
         c.deposit(amount);
+    }
+
+    public void undo() {
+        c.withdraw(amount);
+    }
+
+    @Override
+    public void addChild(Command c) {
+
+    }
+
+    @Override
+    public void removeChild(Command c) {
+
     }
 
     @Override

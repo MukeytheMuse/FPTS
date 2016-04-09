@@ -74,7 +74,9 @@ public class HomeController extends MenuController {
      */
     @FXML
     protected void handleBuyEquityButtonPressed(ActionEvent event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/SearchPage.fxml")));
+
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/BuyHoldingPage.fxml"));
+        Scene scene = new Scene(parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene);
         app_stage.show();

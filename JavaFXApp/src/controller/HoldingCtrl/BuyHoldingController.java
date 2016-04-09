@@ -76,7 +76,7 @@ public class BuyHoldingController extends MenuController {
 
     private FPTS fpts;
     
-    private Command aCommand;
+    private CommandComposite aCommand;
     
     /**
      * Initializes the controller class.
@@ -185,6 +185,7 @@ public class BuyHoldingController extends MenuController {
 
         searchConditions.getSelectionModel().select(0);
         aField.getChildren().addAll(descriptionLabel, searchConditions, input);
+        System.out.println("Size of HBXO is " + aField.getChildren().size());
         aField.setSpacing(10);
         return aField;
     }
@@ -340,11 +341,12 @@ public class BuyHoldingController extends MenuController {
         selectBtn.setVisible(false);
         mainInput.setText("");
         
-        
-        
+
         /*searchBoxes.getChildren(); */
+        searchBoxes.getChildren().clear();
         searchBoxes.getChildren().addAll(getCashAccountQueries().getChildren()); //= getHoldingQueries();
         System.out.println("UPDATED SEARCH BOXES");
+
         
         searchBtn.setVisible(true);
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -352,9 +354,9 @@ public class BuyHoldingController extends MenuController {
                 public void handle(ActionEvent e) {
                     results.getChildren().clear();
                     System.out.println("CLICKING NOW");
-                    ObservableList<Node> queries = searchBoxes.getChildren();// getHoldingQueries().getChildren();
+                    ObservableList<Node> queries = searchBoxes.getChildren(); // getHoldingQueries().getChildren();
                     PortfolioVisitor searchPortfolioV = new SearchPortfolioVisitor(queries);
-                    CashAccounts cashAccounts = new CashAccounts(); // FPTS.getCurrentUser().getMyPortfolio().getEqComponents();
+                    CashAccounts cashAccounts = fpts.getCurrentUser().getMyPortfolio().getCashAccountsCollection();
                     Iterator cashAccountIterator = cashAccounts.iterator(searchPortfolioV);
                    //eqIterator.accept(searchPortfolioV);
                     while (cashAccountIterator.hasNext()) {
@@ -391,7 +393,6 @@ public class BuyHoldingController extends MenuController {
                                 searchBtn.setVisible(false);
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
-                                
                                 
 
                                 UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
@@ -432,6 +433,7 @@ public class BuyHoldingController extends MenuController {
     private VBox getCashAccountQueries() {
         VBox queries = new VBox();
         queries.getChildren().add(createInputField("Account name: ", mainInput));
+        System.out.println("SIZE OF A QUERY IS " + queries.getChildren().size());
         return queries;
     }
     

@@ -124,7 +124,7 @@ public class SellHoldingController extends MenuController {
                             public void handle(ActionEvent e) {
                                    mainInput.setText(h.getDisplayName());
                                    holdingOfInterest = h;
-                                   selectDescription.setText("Selected equity is " + h.getDisplayName());
+                                   selectDescription.setText("Selected holding is " + h.getDisplayName());
                                    selectBtn.setVisible(true);
                             }
                         });
@@ -260,6 +260,9 @@ public class SellHoldingController extends MenuController {
                     pricePerShare = Double.parseDouble(pricePerShareField.getText());
                     numOfShares = Integer.parseInt(numOfSharesField.getText());
 
+                    System.out.println("numOfShares is " + numOfShares);
+                    System.out.println("holding is " + holdingOfInterest);
+
                     UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
                     Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
                     HoldingRemoval holdingRemoval = new HoldingRemoval(holdings, holdingOfInterest, numOfShares);
@@ -343,9 +346,9 @@ public class SellHoldingController extends MenuController {
         selectBtn.setVisible(false);
         mainInput.setText("");
         
-        
-        
+
         /*searchBoxes.getChildren(); */
+        searchBoxes.getChildren().clear();
         searchBoxes.getChildren().addAll(getCashAccountQueries().getChildren()); //= getHoldingQueries();
         System.out.println("UPDATED SEARCH BOXES");
         
@@ -355,9 +358,10 @@ public class SellHoldingController extends MenuController {
                 public void handle(ActionEvent e) {
                     results.getChildren().clear();
                     System.out.println("CLICKING NOW");
+
                     ObservableList<Node> queries = searchBoxes.getChildren();// getHoldingQueries().getChildren();
                     PortfolioVisitor searchPortfolioV = new SearchPortfolioVisitor(queries);
-                    CashAccounts cashAccounts = new CashAccounts(); // FPTS.getCurrentUser().getMyPortfolio().getEqComponents();
+                    CashAccounts cashAccounts = FPTS.getCurrentUser().getMyPortfolio().getCashAccountsCollection();
                     Iterator cashAccountIterator = cashAccounts.iterator(searchPortfolioV);
                    //eqIterator.accept(searchPortfolioV);
                     while (cashAccountIterator.hasNext()) {
