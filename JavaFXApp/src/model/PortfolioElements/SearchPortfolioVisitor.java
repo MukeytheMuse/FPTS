@@ -8,7 +8,6 @@ package model.PortfolioElements;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;

@@ -12,15 +12,13 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="Logout" mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed"
-                                  text="Logout"/>
-                        <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#handleExitMenuItemPressed"
+                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed"
                                   text="Exit"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAboutMenuItemPressed"
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed"
                                   text="About"/>
                     </items>
                 </Menu>

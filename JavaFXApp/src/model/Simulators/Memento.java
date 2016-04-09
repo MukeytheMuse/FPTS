@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * Created by Luke Veilleux
  */
 public class Memento {
-    public static ArrayList<Memento> mementos;
+    private static ArrayList<Memento> mementos;
     private ArrayList<Holding> holdings = new ArrayList<>();
 
     public Memento(ArrayList<Holding> lst) {
@@ -27,8 +27,8 @@ public class Memento {
         mementos.add(this);
     }
 
-    public void removedMemento() {
-        mementos.remove(this);
+    public static Memento getMemento() {
+        return mementos.get(0);
     }
 
 }

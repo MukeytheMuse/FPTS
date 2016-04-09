@@ -198,7 +198,7 @@ public class SimulationController extends MenuController {
      */
     @FXML
     protected void handleResetToStartButtonPressed(ActionEvent event) throws IOException {
-        ArrayList<Holding> lst = Memento.mementos.get(0).getHoldings();
+        ArrayList<Holding> lst = Memento.getMemento().getHoldings();
         for(Holding holding : holdings) {
             for (Holding stored : lst) {
                 if (holding.equals(stored)) {
@@ -218,7 +218,7 @@ public class SimulationController extends MenuController {
      */
     @FXML
     protected void handleResetToCurrentPricesButtonPressed(ActionEvent event) throws IOException {
-        ArrayList<Holding> lst = Memento.mementos.get(0).getHoldings();
+        ArrayList<Holding> lst = Memento.getMemento().getHoldings();
         for(Holding holding : holdings) {
             for (Holding stored : lst) {
                 if (holding.equals(stored)) {
@@ -245,6 +245,7 @@ public class SimulationController extends MenuController {
             ));
             priceAnnum.setText("0.0");
         }
+        /*
         if (graph != null){
             ArrayList<Double> data = Simulator.series;
             XYChart.Series series = new XYChart.Series();
@@ -253,6 +254,7 @@ public class SimulationController extends MenuController {
             }
             graph.getData().add(series);
         }
+        */
     }
 }
 
