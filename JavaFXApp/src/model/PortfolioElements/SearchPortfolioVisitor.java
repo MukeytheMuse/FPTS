@@ -160,7 +160,12 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
                 }
             }
     }
-    
+
+    @Override
+    public void visit(Watchlist watchList) {
+
+    }
+
     @Override
     public void visit(EquityComponents equityComponents) {
         

@@ -33,4 +33,6 @@ public interface PortfolioVisitor {
      * 
      */
     public void visit(CashAccounts cashAccounts);
+
+    public void visit(Watchlist watchList);
 }

@@ -45,7 +45,7 @@ public class CashAccounts implements PortfolioCollection {
         
         public CashAccount get(CashAccount c) {
             for (CashAccount aC : cashAccounts) {
-                if (aC.getAccountName().equals(c)) {
+                if (aC.getAccountName().equals(c.getAccountName())) {
                     return aC;
                 } 
             }
