@@ -94,7 +94,7 @@ public class FPTS extends Application {
     }
 
     public Scene createLogInScene() throws IOException {
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene scene = new Scene(root, 900.0D, 600.0D);
         //        Scene scene = new Scene(root, 1200.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
@@ -105,7 +105,7 @@ public class FPTS extends Application {
         Scene scene = null;
 
         try {
-            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("HomePage.fxml"));
+            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
             scene = new Scene(e);
         } catch (IOException var3) {
             var3.printStackTrace();

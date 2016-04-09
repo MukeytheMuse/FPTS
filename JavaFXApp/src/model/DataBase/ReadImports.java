@@ -1,9 +1,7 @@
 package model.DataBase;
 
-import model.PortfolioElements.Deposit;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Transaction;
-import model.PortfolioElements.WithdrawalOld;
+import model.PortfolioElements.*;
+import model.UndoRedo.Withdrawal;
 
 import java.io.File;
 import java.text.ParseException;
@@ -20,6 +18,7 @@ public class ReadImports {
 
     private static String holdings = "Holdings";
     private static String transactions = "Transactions";
+    private static String cashAccounts = "Cash Accounts";
 
     /**
      * Reads in external file that the user chooses to import.
@@ -35,12 +34,16 @@ public class ReadImports {
 
         ArrayList<String[]> transactionImports = splitFile.get(transactions);
         ArrayList<String[]> holdingImports = splitFile.get(holdings);
+        ArrayList<String[]> cashAccountsImports = splitFile.get(cashAccounts);
+
         ArrayList<Transaction> transactionArrayList = readTransactionImports(transactionImports);
         ArrayList<Holding> holdingArrayList = ReadHoldings.read(holdingImports);
+        ArrayList<CashAccount> cashAccountArrayList = ReadCash.read(cashAccountsImports);
 
         HashMap<String, ArrayList> returnedImports = new HashMap<>();
         returnedImports.put(holdings, holdingArrayList);
         returnedImports.put(transactions, transactionArrayList);
+        returnedImports.put(cashAccounts, cashAccountArrayList);
 
         return returnedImports;
     }
@@ -49,19 +52,23 @@ public class ReadImports {
 
         ArrayList<String[]> splitHoldings = new ArrayList<String[]>();
         ArrayList<String[]> splitTransactions = new ArrayList<String[]>();
+        ArrayList<String[]> splitCashAccounts = new ArrayList<String[]>();
         ArrayList<String[]> splitFile = ReadFile.readIn(path);
         Map<String, ArrayList<String[]>> importMap = new HashMap<>();
 
         for (String[] line : splitFile) {
-            if (isDouble(line[0])) {
+            if (isDouble(line[2])) {
+                splitHoldings.add(line);
+            } else if (isTransaction(line)) {
                 splitTransactions.add(line);
             } else {
-                splitHoldings.add(line);
+                splitCashAccounts.add(line);
             }
         }
 
         importMap.put(holdings, splitHoldings);
         importMap.put(transactions, splitTransactions);
+        importMap.put(cashAccounts, splitCashAccounts);
 
         return importMap;
     }
@@ -81,17 +88,17 @@ public class ReadImports {
         for (String[] line : splitFile) {
             Date date = null;
             try {
-                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[1]);
+                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[2]);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            double amount = Double.parseDouble(line[0]);
+            double amount = Double.parseDouble(line[1]);
             //(double amount, String dateMade, String type, String cashAccountName) {
 
-            String type = line[2];
+            String type = line[3];
             Transaction trans;
             if (type.equals("Withdrawal")) {
-                trans = new WithdrawalOld(amount, date);
+                trans = new Withdrawal(amount, date);
             } else {//if(stringType.equals("Deposit")){
                 trans = new Deposit(amount, date);
             }
@@ -119,5 +126,12 @@ public class ReadImports {
         }
     }
 
+    private static boolean isTransaction(String[] line) {
+        if (line.length == 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

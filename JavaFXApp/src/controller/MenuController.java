@@ -11,10 +11,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.DataBase.ReadImports;
 import model.DataBase.WriteFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import model.PortfolioElements.CashAccount;
+import model.PortfolioElements.Holding;
+import model.PortfolioElements.Portfolio;
+import model.PortfolioElements.Transaction;
 import model.UndoRedo.UndoRedoManager;
 
 public abstract class MenuController implements Initializable {
@@ -133,6 +143,39 @@ public abstract class MenuController implements Initializable {
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void handleImportMenuItemPressed(ActionEvent event) {
+        HashMap<String, ArrayList> importedEquities;
+        ArrayList<Holding> userHoldingsToImport;
+        ArrayList<Transaction> userTransactionsToImport;
+        ArrayList<CashAccount> userCashAccountsToImport;
+        Portfolio newPortfolio;
+
+        Stage stage = new Stage();
+        FileChooser fd = new FileChooser();
+        fd.setTitle("Select file to upload");
+        fd.setInitialDirectory(new File(System.getProperty("user.home")));
+        fd.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        File file = fd.showOpenDialog(stage);
+
+        if (file != null) {
+            importedEquities = ReadImports.readInImports(file);
+            //They are being checked for accuracy within ReadImports file.
+            userHoldingsToImport = importedEquities.get("Holdings");
+            userTransactionsToImport = importedEquities.get("Transactions");
+            userCashAccountsToImport = importedEquities.get("Cash Accounts");
+
+            ArrayList<CashAccount> cashAccountArrayList = fpts.getCurrentUser().getMyPortfolio().getCashAccounts();
+
+            for (CashAccount cashAccount : cashAccountArrayList) {
+                for (CashAccount importedCashAccount : userCashAccountsToImport) {
+                    if (cashAccount.getAccountName().equals(importedCashAccount.getAccountName())) {
+
+                    }
+                }
+            }
+        }
     }
     
     public void handleUndoMenuItemPressed(ActionEvent event) throws IOException {

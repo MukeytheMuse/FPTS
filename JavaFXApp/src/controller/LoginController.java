@@ -43,8 +43,7 @@ public class LoginController {
 
     private User currentUser;//How do we know the currentUser after exiting this class??
 
-    private boolean importHoldingsRequested = false;
-    private boolean importTransactionsRequested = false;
+    private boolean importsRequested = false;
 
     @FXML
     MenuBar myMenuBar;
@@ -148,7 +147,7 @@ public class LoginController {
                     User usr;
 
                     //Handles Imports at Registrations for Holdings and Transactions - Kimberly
-                    if (importTransactionsRequested) {
+                    if (importsRequested) {
                         Stage stage = new Stage();
                         FileChooser fd = new FileChooser();
                         fd.setTitle("Select file to upload");
@@ -198,7 +197,7 @@ public class LoginController {
      * Author(s): Kaitlin Brockway
      */
     public void handleYesImportButtonPressed() {
-        importTransactionsRequested = true;
+        importsRequested = true;
     }
 
     /**
@@ -207,7 +206,7 @@ public class LoginController {
      * Author(s): Kaitlin Brockway
      */
     public void handleNoImportButtonPressed() {
-        importTransactionsRequested = false;
+        importsRequested = false;
     }
 
 

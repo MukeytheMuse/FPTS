@@ -55,7 +55,7 @@ public class WriteFile {
         return parentPath;
     }
 
-    /* temporarily out of use
+    //temporarily out of use
     public void addUser(String un, String pw) {
         try {
             FileWriter fileWriter = new FileWriter((new File(getPath() + "/lilBase/UserData.csv")), true);
@@ -68,7 +68,6 @@ public class WriteFile {
             var8.printStackTrace();
         }
     }
-    */
 
     /**
      * @param user
@@ -83,7 +82,9 @@ public class WriteFile {
             File cashFile = new File(e, "Cash.csv");
             File holdingsFile = new File(e, "Holdings.csv");
             File watchedEquitiesFile = new File(e, "Watch.csv");
-            this.cashAccountsWriter(user.getMyPortfolio().getCashAccounts(), cashFile, transFile);
+            this.transactionsWriter(user.getMyPortfolio().getTransactions(), transFile);
+            this.cashAccountsWriter(user.getMyPortfolio().getCashAccounts(), cashFile);
+            System.out.println(user.getMyPortfolio().getCashAccounts().size());
             this.holdingsWriter(user.getMyPortfolio().getHoldings(), holdingsFile);
             this.equityWriter(user.getMyPortfolio().getWatchedEquities(), watchedEquitiesFile);
         } catch (Exception var8) {
@@ -149,7 +150,7 @@ public class WriteFile {
     /**
      * @param cashAccounts
      */
-    private void cashAccountsWriter(ArrayList<CashAccount> cashAccounts, File cashFile, File transFile) {
+    private void cashAccountsWriter(ArrayList<CashAccount> cashAccounts, File cashFile) {
 
         try {
             cashFile.delete();
@@ -158,26 +159,40 @@ public class WriteFile {
 
             for (CashAccount cashAccount : cashAccounts) {
                 bufferedWriter.write("\"" + cashAccount.getAccountName() + "\",\"" + cashAccount.getValue() + "\",\"" +
-                        cashAccount.getDateAdded() + "\",\"" + cashAccount.getTransactions() + "\"");
+                        cashAccount.getDateAdded() + "\"");
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
-
-            transFile.delete();
-            FileWriter fileWriterT = new FileWriter(transFile, true);
-            BufferedWriter bufferedWriterT = new BufferedWriter(fileWriterT);
-
-            for (CashAccount cashAccount : cashAccounts) {
-                for (Transaction t : cashAccount.getTransactions()) {
-                    bufferedWriterT.write("\"" + t.getAmount() + "\",\"" + t.getDateMade() + "\",\"" +
-                            t.getType() + "\",\"" + t.getCashAccountName() + "\"");
-                    bufferedWriterT.newLine();
-                }
-            }
-            bufferedWriterT.close();
         } catch (Exception e) {
 
         }
+    }
+
+
+    /**
+     * Writes the users holding content to a file called Cash.csv in the form
+     * "CashAccountForUser1","345.00","yyyy/mm/dd"
+     *
+     * @param transactions
+     * @author: Kimberly Sookoo
+     */
+    private void transactionsWriter(ArrayList<Transaction> transactions, File importedTransactions) {
+        FileWriter writerT = null;
+        try {
+            importedTransactions.delete();
+            writerT = new FileWriter(importedTransactions, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writerT);
+
+            for (Transaction transaction : transactions) {
+                bufferedWriter.write("\"" + transaction.getCashAccountName() + "\",\"" + transaction.getAmount() +
+                        "\",\"" + transaction.getDateMade() + "\",\"" + transaction.getType() + "\"");
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 
