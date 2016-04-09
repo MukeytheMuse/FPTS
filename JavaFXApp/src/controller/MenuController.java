@@ -86,7 +86,7 @@ public abstract class MenuController implements Initializable {
 
 
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) throws IOException {
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/SearchPage.fxml"));
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/BuyHoldingPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);

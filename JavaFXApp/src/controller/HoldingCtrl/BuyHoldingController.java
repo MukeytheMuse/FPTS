@@ -368,6 +368,7 @@ public class BuyHoldingController extends MenuController {
                                    cashAccountOfInterest = c;
                                    selectDescription.setText("Selected cash account is " + c.getDisplayName());
                                    selectBtn.setVisible(true);
+
                             }
                         });
                         results.getChildren().add(resultBtn);
@@ -388,7 +389,6 @@ public class BuyHoldingController extends MenuController {
                                 searchBtn.setVisible(false);
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
-                                
 
                                 UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
                                 aCommand.addChild(new Withdrawal(cashAccountOfInterest, pricePerShare * numOfShares));
@@ -406,10 +406,12 @@ public class BuyHoldingController extends MenuController {
                                 //add number of shares
                                 
                                 //
+                                    try { redirect(); } catch (Exception ex) { ex.printStackTrace(); }
                                 }
                                 
                                 
-                                //getAdditionalInfo();   
+                                //getAdditionalInfo();
+
                             }
                         });
                                             
@@ -433,7 +435,7 @@ public class BuyHoldingController extends MenuController {
     }
     
     public void redirect() throws IOException {
-         Parent parent = FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);

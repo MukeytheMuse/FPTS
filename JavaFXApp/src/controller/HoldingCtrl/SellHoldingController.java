@@ -397,6 +397,7 @@ public class SellHoldingController extends MenuController {
                                 Command aDeposit = (Command) new Deposit(cashAccountOfInterest, pricePerShare * numOfShares);
                                 aCommand.addChild(aDeposit);
                                 undoRedoManager.execute(aCommand);
+                                    try { redirect(); } catch (Exception ex) { ex.printStackTrace(); }
                                 //Buy Equity command
                                 //create withdrawal command
                                 //create command to buy shares, so have Holdings, 
