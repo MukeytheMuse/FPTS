@@ -243,20 +243,7 @@ public class Portfolio {
 
     //TODO: make this private and find another way to access whats needed
 
-    /**
-     * Returns collection of portfolio elements
-     *
-     * @return ArrayList<Searchable>
-     */
 
-    /*
-    public ArrayList<Searchable> getPortfolioElements() {
-        ArrayList<Searchable> portfolioElements = new ArrayList<>();
-        portfolioElements.addAll(holdings);
-        portfolioElements.addAll(cashAccounts);
-        return portfolioElements;
-    }
-    */
 
 
     //TODO: used by class "CashAccountCreator". We should make this private and find another way to implement what this this needed for.

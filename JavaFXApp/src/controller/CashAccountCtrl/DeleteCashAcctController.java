@@ -14,12 +14,13 @@ import javafx.stage.Stage;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.CashAccounts;
 
-import model.UndoRedo.CashAccountRemoval;
-import model.UndoRedo.Command;
-import model.UndoRedo.UndoRedoManager;
+import model.PortfolioElements.Transaction;
+import model.UndoRedo.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -43,7 +44,15 @@ public class DeleteCashAcctController extends MenuController {
             CashAccounts cashAccounts = fpts.getCurrentUser().getMyPortfolio().getCashAccountsCollection();
             Command comm = (Command) new CashAccountRemoval(cashAccounts, account);
 
-            undoRedoManager.execute(comm);
+            Command commComposite = new CommandComposite();
+            commComposite.addChild(comm);
+
+
+            Transaction t = (Transaction) new Withdrawal(account, account.getValue());
+            comm = new HistoryAddition(t, fpts.getCurrentUser().getMyPortfolio().getHistory());
+            commComposite.addChild(comm);
+
+            undoRedoManager.execute(commComposite);
 
             Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
             try {

@@ -14,9 +14,7 @@ import javafx.stage.Stage;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.CashAccounts;
 import model.PortfolioElements.Transaction;
-import model.UndoRedo.CashAccountAddition;
-import model.UndoRedo.Command;
-import model.UndoRedo.UndoRedoManager;
+import model.UndoRedo.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,9 +52,16 @@ public class addCashAccountController extends MenuController {
                     String name = nameField.getText();
                     double amount = Double.parseDouble(amountField.getText());
                     if (amount >= 0) {
+                        Command commComposite = new CommandComposite();
+
                         CashAccount c = new CashAccount(name, amount, new Date(), new ArrayList<Transaction>());
                         Command comm = (Command) new CashAccountAddition(cashAccounts, c);
-                        undoRedoManager.execute(comm);
+                        commComposite.addChild(comm);
+                        Transaction t = (Transaction) new Deposit(c, amount);
+                        comm = new HistoryAddition(t, fpts.getCurrentUser().getMyPortfolio().getHistory());
+                        commComposite.addChild(comm);
+
+                        undoRedoManager.execute(commComposite);
                         redirect();
                     } else {
                         nameField.setText("INVALID VALUE");

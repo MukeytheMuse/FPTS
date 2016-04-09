@@ -145,14 +145,14 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
-    public void handleTransferMenuItemPressed(ActionEvent event) {
-        /* REPLACE THE FXML PATH TO THE FXML PAGE FOR TRANSFER
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+    public void handleTransferMenuItemPressed(ActionEvent event) throws IOException {
+
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/TransferPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-        */
+
     }
 
     public void handleRemoveMenuItemPressed(ActionEvent event) throws IOException {

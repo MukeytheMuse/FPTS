@@ -1,19 +1,9 @@
 package gui;
 
-import controller.CashAccountCtrl.*;
-import controller.Displayer;
-import controller.TransactionDisplayer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DataBase.WriteFile;
 import model.PortfolioElements.Portfolio;
