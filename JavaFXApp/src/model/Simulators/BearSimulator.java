@@ -1,5 +1,6 @@
 package model.Simulators;
 
+import gui.FPTS;
 import model.PortfolioElements.Holding;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class BearSimulator implements Simulator {
     private ArrayList<Holding> holdings;//TODO: find out how to get the holdings******
     //TODO: holdings is never assigned and is accessed
     private String interval;
+    private boolean hasSteps;
+    //TODO: Warning:(15, 21) [UnusedDeclaration] Private field 'hasSteps' is assigned but never accessed
     private int numSteps;
     private double pricePerYear;
     private double currentPercentDecrease;
@@ -30,13 +33,18 @@ public class BearSimulator implements Simulator {
      * @param pricePerYearPercentage - Per Annum, the change in price of each holding.
      * @param holdings - ArrayList of holdings that are used in simulation
      */
-    public BearSimulator(int numSteps, String interval, double pricePerYearPercentage, ArrayList<Holding> holdings) {
+    public BearSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage, ArrayList<Holding> holdings) {
         this.interval = interval;
+        this.hasSteps = hasSteps;
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
-        this.holdings = holdings;
+        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+        //this.holdings = holdings;
         this.stepNumber = 0;
     }
+
+
+    //TODO: CHECK IF IT HAS STEPS.
 
     /**
      * The Bear Market simulation will decrease the equities

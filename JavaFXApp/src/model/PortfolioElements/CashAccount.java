@@ -175,7 +175,5 @@ public class CashAccount implements Searchable {
         this.currentValue = c.getValue();
         this.dateAdded = c.getDateAdded();
     }
-
-
 }
 

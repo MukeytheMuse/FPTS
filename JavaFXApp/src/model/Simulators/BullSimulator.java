@@ -12,11 +12,16 @@ public class BullSimulator implements Simulator {
     public static String name = "Bull Market Simulator";
 
     private ArrayList<Holding> holdings;//TODO: prices increase
+    //TODO: holdings is never assigned
     private String interval;
+    private boolean hasSteps;
+    //TODO:Warning:(15, 21) [UnusedDeclaration] Private field 'hasSteps' is assigned but never accessed
     private int numSteps;
     private double pricePerYear;
     private double currentPercentIncrease;
     //TODO:Warning:(18, 20) [UnusedDeclaration] Private field 'currentPercentIncrease' is assigned but never accessed
+    private double valueChangePerStep;//may not need
+    //TODO:Warning:(19, 20) [UnusedDeclaration] Private field 'valueChangePerStep' is never used
     private int stepNumber;
 
     /**
@@ -25,11 +30,12 @@ public class BullSimulator implements Simulator {
      * @param pricePerYearPercentage - Per Annum, the change in price of each holding.
      * @param holdings - ArrayList of holdings that are used in simulation
      */
-    public BullSimulator(int numSteps, String interval, double pricePerYearPercentage, ArrayList<Holding> holdings) {
+    public BullSimulator(int numSteps, String interval, boolean hasSteps, double pricePerYearPercentage, ArrayList<Holding> holdings) {
         this.interval = interval;
         this.numSteps = numSteps;
         this.pricePerYear = pricePerYearPercentage;
-        this.holdings = holdings;
+        this.holdings = FPTS.getSelf().getPortfolio().getHoldings();
+        //this.holdings = holdings;
         this.stepNumber = 0;
     }
 

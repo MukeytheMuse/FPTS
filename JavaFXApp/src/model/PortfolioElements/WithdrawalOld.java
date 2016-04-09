@@ -41,6 +41,7 @@ public class WithdrawalOld implements Transaction {
         this.date = date;
     }
 
+
     /**
      * Used when fillUsers method is called.
      * To set the associated cash account if a cash account still exists.

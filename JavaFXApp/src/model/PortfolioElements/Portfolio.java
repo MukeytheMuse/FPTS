@@ -13,8 +13,8 @@ import model.Equities.EquityComponents;
 import model.Searchers.Searchable;
 import org.w3c.dom.Document;
 
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -34,6 +34,8 @@ public class Portfolio {
     private EquityComponents equityComponentsCollection;
     
     private double currentValue;
+    private ArrayList<Transaction> transactions;
+
 
 //    private ArrayList<Searchable> portfolioElements;
 
@@ -75,7 +77,7 @@ public class Portfolio {
      * @param readInholdings
      * @param readInCashAccounts Author(s): Kaitlin Brockway
      */
-    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts) {
+    public Portfolio(ArrayList<Holding> readInholdings, ArrayList<CashAccount> readInCashAccounts, ArrayList<Transaction> readInTransactions) {
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
         
@@ -101,6 +103,12 @@ public class Portfolio {
             for (CashAccount c : cashAccounts) {
                 currentValue += c.getValue();
             }
+        }
+
+        if(!readInTransactions.isEmpty()){
+            this.transactions = readInTransactions;
+        } else {
+            transactions = new ArrayList<>();
         }
     }
 
@@ -210,10 +218,6 @@ public class Portfolio {
      * @return ArrayList<Transaction>
      */
     public ArrayList<Transaction> getTransactions() {
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        for (CashAccount c : cashAccounts) {
-            transactions.addAll(c.getTransactions());
-        }
         return transactions;
     }
 
@@ -362,6 +366,9 @@ public class Portfolio {
      */
     public void remove(Holding e) {
         holdings.remove(e);
+        //TODO: add as a transaction for selling a holding. totalValueOfPortfolio remains the same
+        //TODO: ask if they get to select a specific cash Account where the transaction and $$ will transfer to
+        //Check "SellHoldingAlgorithm"
     }
 
     //Overloading fieldHasContent for TextField

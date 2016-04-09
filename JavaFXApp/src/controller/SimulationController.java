@@ -98,7 +98,7 @@ public class SimulationController extends MenuController {
                 Boolean hasSteps;
                 hasSteps = steps;
                 if (simulation.equals("NOGROWTH")) {
-                    currentSimulator = new NoGrowthSimulator(numberOfSteps);
+                    currentSimulator = new NoGrowthSimulator(numberOfSteps, curInterval, hasSteps);
                 } else {
                     if (priceAnnum.getText().length() != 0) {
                         String pricePerAnum = priceAnnum.getText();
@@ -107,9 +107,9 @@ public class SimulationController extends MenuController {
                             if (pricePerYearAsDouble < 1.00 && pricePerYearAsDouble > 0) {
                                 ArrayList<Holding> holdings = FPTS.getSelf().getPortfolio().getHoldings();
                                 if (simulation.equals("BEAR")) {
-                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval, pricePerYearAsDouble, holdings);
+                                    currentSimulator = new BearSimulator(numberOfSteps, curInterval,  hasSteps,pricePerYearAsDouble, holdings);
                                 } else {
-                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, pricePerYearAsDouble, holdings);
+                                    currentSimulator = new BullSimulator(numberOfSteps, curInterval, hasSteps, pricePerYearAsDouble, holdings);
                                 }
                             }
                         } catch (NumberFormatException x) {

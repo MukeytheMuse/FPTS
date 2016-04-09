@@ -25,6 +25,7 @@ import model.User;
 import model.WebService;
 import model.WebServiceReader;
 
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -40,8 +41,9 @@ public class FPTS extends Application {
 
     //TODO: If this is/will be used somewhere add a comment saying where, otherwise delete them
     private final int WIDTH = 1200;
+    //TODO: check Warning:(40, 23) [UnusedDeclaration] Private field 'WIDTH' is never used
     private final int HEIGHT = 600;
-
+    //TODO: check Warning:(41, 23) [UnusedDeclaration] Private field 'HEIGHT' is never used
     private Stage thestage;
 
     private static User currentUser;
@@ -49,11 +51,9 @@ public class FPTS extends Application {
 
     private static UndoRedoManager undoRedoManager;
 
-    public static ArrayList<String> allIndicies;//all index names
-    public static ArrayList<String> allSectors;//all sector names
 
     private WebServiceReader webServiceReader;
-
+    
     public FPTS() {
     }
 
@@ -62,57 +62,31 @@ public class FPTS extends Application {
         
         self = this;
         this.thestage = primaryStage;
-        this.fillIndicies();
-        this.fillSectors();
-        User.fillUsers();//MUST be called after fillIndicies and fillSectors
-        //TODO: what is all of this about? ^ comment appropriately
+        User.fillUsers();
 
         Timer time = new Timer();
         webServiceReader = new WebServiceReader(this);
         time.schedule(new WebService(webServiceReader), 0, 5000);
 
-
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene loginScene = new Scene(root, 1200.0D, 600.0D);
+
+//        try {
+//            this.thestage.setScene(this.createLogInScene());
+//        } catch (Exception var5) {
+//            //TODO: check
+//        }
 
         //this.thestage.setScene(loginScene);
 
-        //TODO: Why? What is this doing? comment this
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
 
-        //Parent root2 = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("/LoginPage.fxml"));
-
-        //Parent root2 = (Parent) FXMLLoader.load(getClass().getClassLoader().getResource("res/BuyHoldingPage.fxml"));
-        //this.thestage.setScene(new Scene(root2, 1200.0D, 600.0D));
+//        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
+//        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
 
         this.thestage.show();
-    }
-
-    /**
-     * Populates the possible index fields.
-     * <p>
-     * Author(s): Kaitlin Brockway
-     */
-    public void fillIndicies() {
-        allIndicies = new ArrayList<>();
-        allIndicies.add("DOW");
-        allIndicies.add("NASDAQ100");
-    }
-    //TODO: Why? ^ and v
-
-    /**
-     * Populates all of the possible sector fields.
-     * <p>
-     * Author(s): Kaitlin Brockway
-     */
-    public void fillSectors() {
-        allSectors = new ArrayList<>();
-        allSectors.add("FINANCE");
-        allSectors.add("TRANSPORTATION");
-        allSectors.add("TECHNOLOGY");
-        allSectors.add("HEALTH CARE");
     }
     
     public UndoRedoManager getUndoRedoManager() {
@@ -120,7 +94,7 @@ public class FPTS extends Application {
     }
 
     public Scene createLogInScene() throws IOException {
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, 900.0D, 600.0D);
         //        Scene scene = new Scene(root, 1200.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
@@ -131,7 +105,7 @@ public class FPTS extends Application {
         Scene scene = null;
 
         try {
-            Parent e = (Parent) FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
+            Parent e = (Parent) FXMLLoader.load(this.getClass().getResource("HomePage.fxml"));
             scene = new Scene(e);
         } catch (IOException var3) {
             var3.printStackTrace();
@@ -158,9 +132,9 @@ public class FPTS extends Application {
     }
 
     public boolean hasCurrentUser() {
-        return currentUser != null;
+       return currentUser != null;
     }
-
+    
     /**
      * @return
      */
@@ -168,26 +142,24 @@ public class FPTS extends Application {
         Label confirmation = new Label("Error");
         VBox split = new VBox();
         split.getChildren().addAll(new Node[]{this.getNav(), confirmation});
+        //TODO: check Warning:(139, 36) Redundant array creation for calling varargs method
         return new Scene(split, 1200.0D, 600.0D);
     }
 
-    //TODO: comment the reason or delete it
-//    public Scene createRegisterPage() throws IOException {
-//        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RegisterPage.fxml"));
-//        Scene scene = new Scene(root, 1200.0D, 600.0D);
-//        this.thestage.setScene(scene);
-//        this.thestage.setTitle("Financial Portfolio Tracking System");
-//        return scene;
-//    }
-
+    
+    
     public static void main(String[] args) {
         if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
+//            File csv = new File("model/DataBase/UserData.csv");
+//            File csvTemp = new File("model/DataBase/UserDataTemp.csv");
 
             //TODO: add comments explaining what this does
             try {
+//                BufferedReader e = new BufferedReader(new FileReader(csv));
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
                 BufferedReader reader;
-
+                //*******NEW DELETE THIS COMMENT -Kaitlin
                 File csv = new File(WriteFile.getPath() + "/lilBase/UserData.csv");
 
                 reader = new BufferedReader(new FileReader(csv));
@@ -195,6 +167,7 @@ public class FPTS extends Application {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp, true));
 
                 String line;
+                 //******
                 while ((line = reader.readLine()) != null) {
                     String[] user = line.split(",");
                     if (user[0].equals(userID)) {
@@ -215,7 +188,9 @@ public class FPTS extends Application {
                     File holdingsFile = new File(directory, "/Holdings.csv");
                     File watchFile = new File(directory, "/Watch.csv");
                     transFile.delete();
+                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
                     cashFile.delete();
+                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
                     holdingsFile.delete();
                     watchFile.delete();
                     directory.delete();
@@ -351,6 +326,8 @@ public class FPTS extends Application {
             @Override
             public void handle(ActionEvent event) {
                 CashAccountCreator cashAccountCreator = new CashAccountCreator(getSelf());
+
+                //TODO: check Warning:(346, 36) [UnusedDeclaration] Variable 'cashAccountCreator' is never used
                 //eqUpdater.process(self);
             }
         });

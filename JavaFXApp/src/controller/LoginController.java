@@ -161,14 +161,14 @@ public class LoginController {
                             //They are being checked for accuracy within ReadImports file.
                             userHoldingsToImport = importedEquities.get("Holdings");
                             userTransactionsToImport = importedEquities.get("Transactions");
-                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>());
+                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>(), userTransactionsToImport);
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
                             currentUser = usr;
                         }
 
                     } else {
-                        newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>());
+                        newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>(), new ArrayList<>());
                         usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
                         this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
                         currentUser = usr;

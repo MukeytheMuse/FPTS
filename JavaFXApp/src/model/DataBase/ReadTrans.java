@@ -1,10 +1,10 @@
 package model.DataBase;
 
 
-import model.PortfolioElements.Deposit;
-import model.PortfolioElements.Transaction;
-import model.PortfolioElements.WithdrawalOld;
+import model.PortfolioElements.*;
+import model.UndoRedo.Withdrawal;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ReadTrans {
 
-    public static Map<String, ArrayList<Transaction>> readDB(String un) {
+    public static HashMap<String, ArrayList<Transaction>> readDB(String un) {
         ArrayList<String[]> splitFile = ReadFile.readInUser(un + "/Trans.csv");
         return read(splitFile);
     }
@@ -28,30 +28,29 @@ public class ReadTrans {
      * <p>
      * Author(s): Kaitlin Brockway & Ian
      */
-    public static Map<String, ArrayList<Transaction>> read(ArrayList<String[]> file) {
+    public static HashMap<String, ArrayList<Transaction>> read(ArrayList<String[]> file) {
         ArrayList<String[]> splitFile = file;
         String stringCashAccountNameAssociatedWith;
         String stringAmount;
         Date dateMade;
-        Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = new HashMap<>();
+        HashMap<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = new HashMap<>();
 
 
         // iterate through each line representing a Transaction
         for (String[] line : splitFile) {
-            stringCashAccountNameAssociatedWith = line[3];
-            stringAmount = line[0];
+            stringCashAccountNameAssociatedWith = line[0];
+            stringAmount = line[1];
             double amount = Double.parseDouble(stringAmount);
             String stringType;
             try {
                 //***********ADD THE DATE TO THE CONSTRUCTOR of withdrawal & deposit***********
 
-
-                dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[1]);
-                stringType = line[2];
+                dateMade = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[2]);
+                stringType = line[3];
                 //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
                 Transaction newTransactionToAdd;
-                if (stringType.equals("Withdrawal")) {
-                    newTransactionToAdd = new WithdrawalOld(amount, dateMade);
+                if(stringType.equals("Withdrawal")){
+                    newTransactionToAdd = new Withdrawal(amount, dateMade);
                 } else {//if(stringType.equals("Deposit")){
                     newTransactionToAdd = new Deposit(amount, dateMade);
                 }
@@ -70,5 +69,19 @@ public class ReadTrans {
         }
 
         return cashAccountNameTransactionsMap;
+    }
+
+
+    /**
+     * Reads in external holdings file that the user chooses to import.
+     *
+     * @param file - file that user chooses to upload.
+     * @return - arraylist containing the user's imported holdings.
+     * Created by: Kaitlin Brockway
+     */
+    public static Map<String, ArrayList<Transaction>> readInImports(File file) {
+        String path = file.getPath();
+        ArrayList<String[]> splitFile = ReadFile.readIn(path);
+        return read(splitFile);
     }
 }

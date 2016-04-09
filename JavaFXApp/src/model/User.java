@@ -4,38 +4,39 @@ import model.DataBase.ReadFile;
 import model.DataBase.WriteFile;
 import model.PortfolioElements.*;
 
+import javax.swing.*;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
     private String loginID;
     private String password;
     private Portfolio myPortfolio;
     private static Map<String, User> allUsersMap = new HashMap();
+    //TODO: Warning:(17, 52) Unchecked assignment: 'java.util.HashMap' to 'java.util.Map<java.lang.String,model.User>'
 
-    public Map<String, User> getAllUsersMap() {
+
+    public Map<String, User> getAllUsersMap(){
         return allUsersMap;
     }
-
+    
     public void setMyPortfolio(Portfolio p) {
         myPortfolio = p;
     }
-
-
-    //private final String dateFormatPattern = "yyyy/MM/dd";
-    //ToDO: either use this or delete it
-//    public User(String loginID, String password) {
-//        this.loginID = loginID;
-//        this.password = hash(password);
-//    }
+    
 
 
     /**
      * Acts as a temporary user for accessing static methods.
      *
-     * @param uid Author(s): Kaitlin Brockway
+     * @param uid
+     *
+     * Author(s): Kaitlin Brockway
      */
     public User(String uid) {
         this.loginID = uid;
@@ -47,7 +48,9 @@ public class User {
      *
      * @param loginID
      * @param password
-     * @param portfolio Author(s): Kaitlin Brockway
+     * @param portfolio
+     *
+     * Author(s): Kaitlin Brockway
      */
     public User(String loginID, String password, Portfolio portfolio) {
         this.loginID = loginID;
@@ -73,8 +76,8 @@ public class User {
     private static String hash(String password) {
         String encryptedPW = "";
 
-        for (int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char) (password.charAt(i) + 1);
+        for(int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char)(password.charAt(i) + 1);
             encryptedPW = encryptedPW + encryptedChar;
         }
 
@@ -84,8 +87,8 @@ public class User {
     private static String unHash(String password) {
         String textPass = "";
 
-        for (int i = 0; i < password.length(); ++i) {
-            char encryptedChar = (char) (password.charAt(i) - 1);
+        for(int i = 0; i < password.length(); ++i) {
+            char encryptedChar = (char)(password.charAt(i) - 1);
             textPass = textPass + encryptedChar;
         }
 
@@ -93,10 +96,10 @@ public class User {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof User)) {
+        if(!(o instanceof User)) {
             return false;
         } else {
-            User cur_user = (User) o;
+            User cur_user = (User)o;
             return cur_user.getLoginID().equals(this.loginID) && cur_user.getPassword().equals(this.password);
         }
     }
@@ -154,6 +157,7 @@ public class User {
      * from the UserData.csv file.
      */
     public static void fillUsers() {
+        //String user_csv = "JavaFXApp/src/model/DataBase/UserData.csv";
         BufferedReader reader = null;
         String line;
         ReadFile readFile = new ReadFile();
@@ -165,9 +169,10 @@ public class User {
                 String[] split = line.split(",");
                 String un = split[0];
                 String pwd = split[1];
-                ArrayList<CashAccount> usersCashAccounts = readFile.readCash(un);
+                ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
                 Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
 
+                ArrayList<Transaction> portfolioTransactions = new ArrayList<>();
 
                 for (CashAccount cashAccountToAssociate : usersCashAccounts) {
                     //if transactions exist for this cash account
@@ -176,15 +181,23 @@ public class User {
                         cashAccountToAssociate.setTransactions(curTransactions);//add transactions to this current cashAccount object
                         //iterate through transactions (that have a cash account association with a cash account that still exists)
                         // and add association to the transaction objects
-                        for (Transaction t : curTransactions) {
+                      
+                        portfolioTransactions.addAll(curTransactions);
+                        for(Transaction t: curTransactions){
                             t.setCashAccount(cashAccountToAssociate);
                         }
-                    }//if not it will maintain an empty array list for its transactions
+                        cashAccountNameTransactionsMap.remove(cashAccountToAssociate.getAccountName());
+                    } //if not it will maintain an empty array list for its transactions
                 }
+                //only remaining transactions will be those that are not associated with any cash account in the system
+                for(String cashNameThatIsNotAssociatedWithThisUser: cashAccountNameTransactionsMap.keySet()){
+                    portfolioTransactions.addAll(cashAccountNameTransactionsMap.get(cashNameThatIsNotAssociatedWithThisUser));
+                }
+
                 //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
                 ArrayList<Holding> usersHoldings = readFile.readHoldings(un);
                 ArrayList<WatchedEquity> watchedEquities = readFile.readWatchedEquities(un);
-                Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts);
+                Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts, portfolioTransactions);
                 User newUser = new User(un, unHash(pwd), userPortfolio);
 
                 if (watchedEquities.size() != 0) {
@@ -192,12 +205,12 @@ public class User {
                         newUser.getMyPortfolio().addWatchedEquity(w);
                     }
                 }
-
+                
                 //have to unhash before creating a user because the password is hashed during creation
                 allUsersMap.put(un, newUser);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("UserData.csv not found! Please try again.");
+            System.out.println("JavaFXApp/src/model/DataBase/UserData.csv not found! Please try again.");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -215,7 +228,10 @@ public class User {
      * Adds the user to UserDate.csv that holds all the users usernames and associated passwords.
      *
      * @param usr
-     * @param pw1 Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
+     * @param pw1
+     *
+     * Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
+     *
      */
     public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
         FileWriter fileWriter = null;
@@ -296,6 +312,7 @@ public class User {
      */
     private void addTrans(ArrayList<Transaction> transactions, File importedTransactions) {
         FileWriter writerT = null;
+        FileWriter writerCash = null;
         try {
             writerT = new FileWriter(importedTransactions, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writerT);
