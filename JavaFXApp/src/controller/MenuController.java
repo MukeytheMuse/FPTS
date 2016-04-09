@@ -207,7 +207,7 @@ public abstract class MenuController implements Initializable {
         UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
         undoRedoManager.redo();
 
-        Scene scene = new Scene(FXMLLoader.load(this.getClass().getClassLoader().getResource("/HomePage.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();

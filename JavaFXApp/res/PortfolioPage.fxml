@@ -13,9 +13,16 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Import" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">

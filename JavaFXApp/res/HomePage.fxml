@@ -15,11 +15,18 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Import" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Undo" />
+                  <MenuItem mnemonicParsing="false" text="Redo" />
+              </items>
+            </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
@@ -43,7 +50,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
                     </items>
                 </Menu>
-                                
             </menus>
         </MenuBar>
         <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="802.0">

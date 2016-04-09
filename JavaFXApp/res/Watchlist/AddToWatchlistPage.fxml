@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -14,9 +13,16 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Import" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
@@ -42,7 +48,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
                     </items>
                 </Menu>
-
             </menus>
         </MenuBar>
                 <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="805.0">

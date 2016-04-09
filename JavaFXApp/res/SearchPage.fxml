@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchController">
     <children>
@@ -15,9 +11,16 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Import" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
