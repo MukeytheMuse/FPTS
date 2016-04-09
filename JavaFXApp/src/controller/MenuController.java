@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import model.DataBase.WriteFile;
 
 import java.io.IOException;
+import model.UndoRedo.UndoRedoManager;
 
 public abstract class MenuController implements Initializable {
     @FXML
@@ -129,6 +130,28 @@ public abstract class MenuController implements Initializable {
 
     public void handleWatchMenuItemPressed(ActionEvent event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/Watchlist/WatchlistPage.fxml")));
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void handleUndoMenuItemPressed(ActionEvent event) throws IOException {
+        FPTS fpts = FPTS.getSelf();
+        UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+        undoRedoManager.undo();
+        
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void handleRedoMenuItemPressed(ActionEvent event) throws IOException {
+        FPTS fpts = FPTS.getSelf();
+        UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+        undoRedoManager.redo();
+        
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();

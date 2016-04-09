@@ -61,6 +61,15 @@ public class Holdings {
             }
             return false;
         }
+        
+        public boolean contains(Holding anH) {
+                for (Holding h : holdings) {
+                if (h.getDisplayName().equals(anH.getDisplayName())) {
+                    return true;
+                }
+            }
+            return false;   
+        }
 
 	public Iterator<Holding> iterator(PortfolioVisitor v) {
 	    results = new ArrayList<Holding>();
