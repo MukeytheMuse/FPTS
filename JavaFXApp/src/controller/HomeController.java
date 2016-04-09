@@ -87,7 +87,7 @@ public class HomeController extends MenuController {
      * @throws IOException
      */
     @FXML
-    protected void handleSimulateButtonPressed(ActionEvent event) throws IOException {
+    protected void handleSimulateButtonPressed(ActionEvent event) {
         super.goToSimulation(event);
     }
 

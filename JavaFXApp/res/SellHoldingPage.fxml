@@ -48,6 +48,11 @@
 
                     </items>
                 </Menu>
+                <Menu mnemonicParsing="false" text="Simulation">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSimulationButtonPressed" text="Simulation" />
+                    </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />

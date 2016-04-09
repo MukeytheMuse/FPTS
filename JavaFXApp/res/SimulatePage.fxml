@@ -13,7 +13,7 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Import" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleImportMenuItemPressed" text="Import" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
@@ -21,8 +21,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleUndoMenuItemPressed" text="Undo" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleRedoMenuItemPressed" text="Redo" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Equities">
@@ -35,12 +35,20 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Cash Account">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
                         <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
                         <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
                         <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleHistoryMenuItemPressed" text="History" />
+
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Simulation">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSimulationButtonPressed" text="Simulation" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

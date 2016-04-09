@@ -84,6 +84,10 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
+    public void handleSimulationButtonPressed(ActionEvent event) {
+        goToSimulation(event);
+    }
+
 
     public void handleBuyEquitiesMenuItemPressed(ActionEvent event) throws IOException {
         Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/BuyHoldingPage.fxml"));
@@ -109,14 +113,13 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
-    public void handleWithdrawMenuItemPressed(ActionEvent event) {
-        /* REPLACE THE FXML PATH TO THE FXML PAGE FOR WITHDRAWAL
-        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/CreateCashAccountPage.fxml"));
+    public void handleWithdrawMenuItemPressed(ActionEvent event) throws IOException {
+        Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/WithdrawPage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-        */
+
     }
 
     public void handleDepositMenuItemPressed(ActionEvent event) throws IOException {
