@@ -151,14 +151,14 @@ public abstract class MenuController implements Initializable {
         UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
         undoRedoManager.redo();
         
-        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getClassLoader().getResource("/HomePage.fxml")));
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
     public void goToLoginPage(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getClassLoader().getResource("/LoginPage.fxml"));
         new Stage();
 
         Stage stage;

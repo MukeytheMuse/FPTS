@@ -40,8 +40,8 @@
                 </Menu>
             <Menu mnemonicParsing="false" text="Undo/Redo">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleUndoMenuItemPressed text="Undo" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleRedoMenuItemPressed text="Redo" />
+                <MenuItem mnemonicParsing="false" onAction="#handleUndoMenuItemPressed" text="Undo" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleRedoMenuItemPressed" text="Redo" />
               </items>
             </Menu>
                 <Menu mnemonicParsing="false" text="Help">
