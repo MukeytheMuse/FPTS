@@ -23,12 +23,12 @@ public class Deposit implements Command {
     
     @Override
     public void execute() {
-
+        c.deposit(amount);
     }
 
     @Override
     public void undo() {
-        
+        c.withdraw(amount);
     }
 
     @Override

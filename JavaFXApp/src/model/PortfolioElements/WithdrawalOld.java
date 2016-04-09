@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author Eric Epstein
  */
-public class Withdrawal implements Transaction {
+public class WithdrawalOld implements Transaction {
 
     private CashAccount c;
     private double amount;
@@ -23,7 +23,7 @@ public class Withdrawal implements Transaction {
      * @param c
      * @param amount
      */
-    public Withdrawal(CashAccount c, double amount) {
+    public WithdrawalOld(CashAccount c, double amount) {
         this.c = c;
         this.amount = amount;
         this.date = new Date();
@@ -36,7 +36,7 @@ public class Withdrawal implements Transaction {
      *
      * @param amount Author(s): Kaitlin Brockway
      */
-    public Withdrawal(double amount, Date date) {
+    public WithdrawalOld(double amount, Date date) {
         this.amount = amount;
         this.date = date;
     }
@@ -96,7 +96,7 @@ public class Withdrawal implements Transaction {
     }
 
     /**
-     * returns CashAccount associated with Withdrawal
+     * returns CashAccount associated with WithdrawalOld
      *
      * @return CashAccount
      */

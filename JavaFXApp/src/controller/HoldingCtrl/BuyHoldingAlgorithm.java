@@ -53,7 +53,7 @@ public class BuyHoldingAlgorithm extends HoldingAlgorithm {
             //CashAccount aC = theFPTS.getPortfolio().getCashAccount(cashAccountOfInterest);
             //TODO: check if its ok that I replaced the line above with the line below????
             //Date date = new Date(2012 - 11 - 14);
-            Transaction t = new Withdrawal(account, numOfShares * price);//TODO: add date***
+            Transaction t = new WithdrawalOld(account, numOfShares * price);//TODO: add date***
             t.execute();//operates on portfolio
             p.add(t, account);
             p.add(e);

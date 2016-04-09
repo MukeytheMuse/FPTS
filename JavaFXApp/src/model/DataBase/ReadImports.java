@@ -3,7 +3,7 @@ package model.DataBase;
 import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Transaction;
-import model.PortfolioElements.Withdrawal;
+import model.PortfolioElements.WithdrawalOld;
 
 import java.io.File;
 import java.text.ParseException;
@@ -91,7 +91,7 @@ public class ReadImports {
             String type = line[2];
             Transaction trans;
             if (type.equals("Withdrawal")) {
-                trans = new Withdrawal(amount, date);
+                trans = new WithdrawalOld(amount, date);
             } else {//if(stringType.equals("Deposit")){
                 trans = new Deposit(amount, date);
             }

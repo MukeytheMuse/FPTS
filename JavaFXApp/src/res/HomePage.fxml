@@ -35,6 +35,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
                         <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
                         <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Create Account" />
                         <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
                     </items>
                 </Menu>

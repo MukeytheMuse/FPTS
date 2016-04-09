@@ -3,7 +3,7 @@ package model.DataBase;
 
 import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Transaction;
-import model.PortfolioElements.Withdrawal;
+import model.PortfolioElements.WithdrawalOld;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +51,7 @@ public class ReadTrans {
                 //TODO: ADD CHECK TO SEE IF "stringAmount" is in the format 90809890.99 with only numbers as parts of the string.
                 Transaction newTransactionToAdd;
                 if (stringType.equals("Withdrawal")) {
-                    newTransactionToAdd = new Withdrawal(amount, dateMade);
+                    newTransactionToAdd = new WithdrawalOld(amount, dateMade);
                 } else {//if(stringType.equals("Deposit")){
                     newTransactionToAdd = new Deposit(amount, dateMade);
                 }

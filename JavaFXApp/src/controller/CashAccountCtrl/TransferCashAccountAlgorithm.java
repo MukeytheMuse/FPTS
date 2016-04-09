@@ -4,7 +4,7 @@ import controller.AmountInput;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Deposit;
 import model.PortfolioElements.Transaction;
-import model.PortfolioElements.Withdrawal;
+import model.PortfolioElements.WithdrawalOld;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -99,7 +99,7 @@ public class TransferCashAccountAlgorithm extends CashAccountAlgorithm {
         if (c.getValue() >= amount) {
             //TODO: change "date" to an actual date.
             CashAccount aC = theFPTS.getPortfolio().getCashAccount(c);
-            Transaction t = new Withdrawal(aC, amount);//TODO: add date********
+            Transaction t = new WithdrawalOld(aC, amount);//TODO: add date********
             t.execute();
             theFPTS.getPortfolio().add(t, c);
             aC = theFPTS.getPortfolio().getCashAccount(c2);

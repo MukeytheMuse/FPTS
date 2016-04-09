@@ -30,6 +30,23 @@ import model.PortfolioElements.SearchPortfolioVisitor;
 import model.Equities.EquityComponents;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.CashAccounts;
+import gui.FPTS;
+import java.io.IOException;
+import java.util.Date;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+import model.PortfolioElements.Deposit;
+import model.PortfolioElements.Holding;
+import model.PortfolioElements.Holdings;
+import model.PortfolioElements.Transaction;
+import model.PortfolioElements.WithdrawalOld;
+import model.UndoRedo.Command;
+import model.UndoRedo.CommandComposite;
+import model.UndoRedo.HoldingAddition;
+import model.UndoRedo.HoldingRemoval;
+import model.UndoRedo.UndoRedoManager;
+import model.UndoRedo.Withdrawal;
 
 /**
  * FXML Controller class
@@ -41,7 +58,7 @@ public class SellHoldingController extends MenuController {
     double pricePerShare;
     double valuePerShare;
     int numOfShares;
-    EquityComponent equityOfInterest;
+    Holding holdingOfInterest;
     CashAccount cashAccountOfInterest;
     
     @FXML
@@ -59,12 +76,20 @@ public class SellHoldingController extends MenuController {
     
     private TextField mainInput;
 
+    private FPTS fpts;
+    
+    private Command aCommand;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        aCommand = new CommandComposite();
+        
+        fpts = FPTS.getSelf();
        
         System.out.println("IN INITIALIZE");
         
@@ -83,22 +108,23 @@ public class SellHoldingController extends MenuController {
                     System.out.println("CLICKING NOW");
                     ObservableList<Node> queries = searchBoxes.getChildren();// getHoldingQueries().getChildren();
                     PortfolioVisitor searchPortfolioV = new SearchPortfolioVisitor(queries);
-                    EquityComponents eqComponents = new EquityComponents(); // FPTS.getCurrentUser().getMyPortfolio().getEqComponents();
-                    Iterator eqIterator = eqComponents.iterator(searchPortfolioV);
+                    //EquityComponents eqComponents = new EquityComponents(); // FPTS.getCurrentUser().getMyPortfolio().getEqComponents();
+                    Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
+                    Iterator hIterator = holdings.iterator(searchPortfolioV);
                    //eqIterator.accept(searchPortfolioV);
-                    while (eqIterator.hasNext()) {
+                    while (hIterator.hasNext()) {
                         
-                        EquityComponent ec = (EquityComponent) eqIterator.next();
+                        Holding h = (Holding) hIterator.next();
                         //Object ec = eqIterator.next();
                         
-                        Button resultBtn = new Button(ec.getDisplayName());
+                        Button resultBtn = new Button(h.getDisplayName());
                      
                         resultBtn.setOnAction(new EventHandler<ActionEvent>() {
                              @Override
                             public void handle(ActionEvent e) {
-                                   mainInput.setText(ec.getDisplayName());
-                                   equityOfInterest = ec;
-                                   selectDescription.setText("Selected equity is " + ec.getDisplayName());
+                                   mainInput.setText(h.getDisplayName());
+                                   holdingOfInterest = h;
+                                   selectDescription.setText("Selected equity is " + h.getDisplayName());
                                    selectBtn.setVisible(true);
                             }
                         });
@@ -185,7 +211,7 @@ public class SellHoldingController extends MenuController {
         * Defines first field : price per share
         */
         TextField pricePerShareField = new TextField();
-        pricePerShareField.setText("" + equityOfInterest.getPricePerShare());
+        pricePerShareField.setText("" + holdingOfInterest.getPricePerShare());
         aField.getChildren().addAll(new Label("Price per share: "), pricePerShareField);
         queries.getChildren().add(aField);
 
@@ -228,10 +254,17 @@ public class SellHoldingController extends MenuController {
                 * If input is valid, analyze response and determine which step in the
                 * algorithm to go.
                 */
+                                 
+                
                 if (isValid) {
                     pricePerShare = Double.parseDouble(pricePerShareField.getText());
                     numOfShares = Integer.parseInt(numOfSharesField.getText());
 
+                    UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+                    Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
+                    HoldingRemoval holdingRemoval = new HoldingRemoval(holdings, holdingOfInterest, numOfShares);
+                    aCommand.addChild(holdingRemoval);
+                    
                     switch (searchConditions.getValue().toString()) {
                         case ("Outside FPTS"):
                             /*
@@ -242,6 +275,15 @@ public class SellHoldingController extends MenuController {
                             //HoldingPurchase()
                             
                             //MAKE COMMAND TO BUY/SELL HOLDING
+
+                            undoRedoManager.execute(aCommand);
+                           
+                            
+                            try { 
+                                redirect();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                             
                             //theStage.setScene(theFPTS.getConfirmationScene());
                             
@@ -301,6 +343,8 @@ public class SellHoldingController extends MenuController {
         selectBtn.setVisible(false);
         mainInput.setText("");
         
+        
+        
         /*searchBoxes.getChildren(); */
         searchBoxes.getChildren().addAll(getCashAccountQueries().getChildren()); //= getHoldingQueries();
         System.out.println("UPDATED SEARCH BOXES");
@@ -342,11 +386,21 @@ public class SellHoldingController extends MenuController {
         selectBtn.setOnAction(new EventHandler<ActionEvent>() {
                              @Override
                             public void handle(ActionEvent e) {
+                                
+                                if (true) {
+            
+       
                                 results.getChildren().clear();
                                 searchBtn.setVisible(false);
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
                                 
+                                
+
+                                UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+                                Command aDeposit = (Command) new Deposit(cashAccountOfInterest, pricePerShare * numOfShares);
+                                aCommand.addChild(aDeposit);
+                                undoRedoManager.execute(aCommand);
                                 //Buy Equity command
                                 //create withdrawal command
                                 //create command to buy shares, so have Holdings, 
@@ -360,16 +414,18 @@ public class SellHoldingController extends MenuController {
                                 //add number of shares
                                 
                                 //
+                                }
                                 
                                 
                                 //getAdditionalInfo();   
                             }
                         });
-                       
-                        
+                                            
                         //results.getChildren().add(new Button(eqIterator.next().toString()));
                
     }
+    
+
  
         /**
      * This helper method returns queries in relation to searching/selecting a
@@ -381,6 +437,14 @@ public class SellHoldingController extends MenuController {
         VBox queries = new VBox();
         queries.getChildren().add(createInputField("Account name: ", mainInput));
         return queries;
+    }
+    
+    public void redirect() throws IOException {
+         Parent parent = FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
     
 }

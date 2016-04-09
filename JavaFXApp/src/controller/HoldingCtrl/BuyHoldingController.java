@@ -32,12 +32,19 @@ import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.CashAccounts;
 import gui.FPTS;
 import java.io.IOException;
+import java.util.Date;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import model.PortfolioElements.Holding;
 import model.PortfolioElements.Holdings;
+import model.PortfolioElements.Transaction;
+import model.PortfolioElements.WithdrawalOld;
+import model.UndoRedo.Command;
+import model.UndoRedo.CommandComposite;
 import model.UndoRedo.HoldingAddition;
 import model.UndoRedo.UndoRedoManager;
+import model.UndoRedo.Withdrawal;
 
 /**
  * FXML Controller class
@@ -69,12 +76,16 @@ public class BuyHoldingController extends MenuController {
 
     private FPTS fpts;
     
+    private Command aCommand;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        aCommand = new CommandComposite();
         
         fpts = FPTS.getSelf();
        
@@ -240,10 +251,17 @@ public class BuyHoldingController extends MenuController {
                 * If input is valid, analyze response and determine which step in the
                 * algorithm to go.
                 */
+                                 
+                
                 if (isValid) {
                     pricePerShare = Double.parseDouble(pricePerShareField.getText());
                     numOfShares = Integer.parseInt(numOfSharesField.getText());
 
+                    UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+                    Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
+                    HoldingAddition holdingAddition = new HoldingAddition(holdings, equityOfInterest, numOfShares);
+                    aCommand.addChild(holdingAddition);
+                    
                     switch (searchConditions.getValue().toString()) {
                         case ("Outside FPTS"):
                             /*
@@ -254,11 +272,9 @@ public class BuyHoldingController extends MenuController {
                             //HoldingPurchase()
                             
                             //MAKE COMMAND TO BUY/SELL HOLDING
-                            UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
-                            Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
-                            HoldingAddition holdingAddition = new HoldingAddition(holdings, equityOfInterest, numOfShares);
-                            undoRedoManager.execute(holdingAddition);
-                             
+
+                            undoRedoManager.execute(aCommand);
+                           
                             
                             try { 
                                 redirect();
@@ -324,6 +340,8 @@ public class BuyHoldingController extends MenuController {
         selectBtn.setVisible(false);
         mainInput.setText("");
         
+        
+        
         /*searchBoxes.getChildren(); */
         searchBoxes.getChildren().addAll(getCashAccountQueries().getChildren()); //= getHoldingQueries();
         System.out.println("UPDATED SEARCH BOXES");
@@ -365,12 +383,20 @@ public class BuyHoldingController extends MenuController {
         selectBtn.setOnAction(new EventHandler<ActionEvent>() {
                              @Override
                             public void handle(ActionEvent e) {
+                                
+                                if (cashAccountOfInterest.getValue() >= (numOfShares * pricePerShare)) {
+            
+       
                                 results.getChildren().clear();
                                 searchBtn.setVisible(false);
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
                                 
+                                
+
                                 UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+                                aCommand.addChild(new Withdrawal(cashAccountOfInterest, pricePerShare * numOfShares));
+                                undoRedoManager.execute(aCommand);
                                 //Buy Equity command
                                 //create withdrawal command
                                 //create command to buy shares, so have Holdings, 
@@ -384,16 +410,18 @@ public class BuyHoldingController extends MenuController {
                                 //add number of shares
                                 
                                 //
+                                }
                                 
                                 
                                 //getAdditionalInfo();   
                             }
                         });
-                       
-                        
+                                            
                         //results.getChildren().add(new Button(eqIterator.next().toString()));
                
     }
+    
+
  
         /**
      * This helper method returns queries in relation to searching/selecting a
