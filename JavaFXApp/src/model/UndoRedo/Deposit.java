@@ -14,7 +14,7 @@ import java.util.Date;
 
 /**
  *
- * @author ericepstein
+ * @author Eric Epstein
  */
 public class Deposit implements Command, Transaction {
 
