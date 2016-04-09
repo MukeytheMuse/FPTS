@@ -437,7 +437,7 @@ public class SellHoldingController extends MenuController {
     }
     
     public void redirect() throws IOException {
-         Parent parent = FXMLLoader.load(this.getClass().getClassLoader().getResource("res/HomePage.fxml"));
+         Parent parent = FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) this.myMenuBar.getScene().getWindow();
         stage.setScene(scene);
