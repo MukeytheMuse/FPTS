@@ -22,19 +22,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.PortfolioElements.PortfolioVisitor;
-import model.PortfolioElements.SearchPortfolioVisitor;
+import model.PortfolioElements.*;
 
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.CashAccounts;
 import gui.FPTS;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import model.PortfolioElements.Holding;
-import model.PortfolioElements.Holdings;
 import model.UndoRedo.*;
 
 /**
@@ -392,6 +387,11 @@ public class SellHoldingController extends MenuController {
                                 UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
                                 Command aDeposit = (Command) new Deposit(cashAccountOfInterest, pricePerShare * numOfShares);
                                 aCommand.addChild(aDeposit);
+
+                                    Transaction t = (Transaction) aDeposit;
+                                    Command aComm = new HistoryAddition(t, fpts.getCurrentUser().getMyPortfolio().getHistory());
+                                    aCommand.addChild(aComm);
+
                                 undoRedoManager.execute(aCommand);
                                     try { redirect(); } catch (Exception ex) { ex.printStackTrace(); }
                                 //Buy Equity command

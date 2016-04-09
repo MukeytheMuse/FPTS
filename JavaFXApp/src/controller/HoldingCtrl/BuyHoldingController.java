@@ -23,23 +23,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Equities.EquityComponent;
-import model.PortfolioElements.PortfolioVisitor;
-import model.PortfolioElements.SearchPortfolioVisitor;
+import model.PortfolioElements.*;
 
 import model.Equities.EquityComponents;
-import model.PortfolioElements.CashAccount;
-import model.PortfolioElements.CashAccounts;
 import gui.FPTS;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import model.PortfolioElements.Holdings;
-import model.UndoRedo.CommandComposite;
-import model.UndoRedo.HoldingAddition;
-import model.UndoRedo.UndoRedoManager;
-import model.UndoRedo.Withdrawal;
+import model.UndoRedo.*;
 
 /**
  * FXML Controller class
@@ -364,14 +357,18 @@ public class BuyHoldingController extends MenuController {
                         resultBtn.setOnAction(new EventHandler<ActionEvent>() {
                              @Override
                             public void handle(ActionEvent e) {
-                                   mainInput.setText(c.getDisplayName());
-                                   cashAccountOfInterest = c;
-                                   selectDescription.setText("Selected cash account is " + c.getDisplayName());
-                                   selectBtn.setVisible(true);
-
-                            }
+                                 if (c.getValue() >= numOfShares * pricePerShare) {
+                                     mainInput.setText(c.getDisplayName());
+                                     cashAccountOfInterest = c;
+                                     selectDescription.setText("Selected cash account is " + c.getDisplayName());
+                                     selectBtn.setVisible(true);
+                                 } else {
+                                     mainInput.setText("INSUFFICIENT BALANCE");
+                                 }
+                             }
                         });
                         results.getChildren().add(resultBtn);
+
                     }
                         
                         //results.getChildren().add(new Button(eqIterator.next().toString()));
@@ -390,8 +387,14 @@ public class BuyHoldingController extends MenuController {
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
 
+
                                 UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
-                                aCommand.addChild(new Withdrawal(cashAccountOfInterest, pricePerShare * numOfShares));
+                                Command aComm = new Withdrawal(cashAccountOfInterest, pricePerShare * numOfShares);
+                                    aCommand.addChild(aComm);
+                                    Transaction t = (Transaction) aComm;
+                                    aComm = new HistoryAddition(t, fpts.getCurrentUser().getMyPortfolio().getHistory());
+                                    aCommand.addChild(aComm);
+
                                 undoRedoManager.execute(aCommand);
                                 //Buy Equity command
                                 //create withdrawal command
