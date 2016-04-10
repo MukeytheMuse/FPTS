@@ -111,7 +111,7 @@ public class FPTS extends Application {
 //            File csv = new File("model/DataBase/UserData.csv");
 //            File csvTemp = new File("model/DataBase/UserDataTemp.csv");
 
-            //TODO: add comments explaining what this does
+            //TODO: add comments explaining what this does & get rid of commented code
             try {
 //                BufferedReader e = new BufferedReader(new FileReader(csv));
 //                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));

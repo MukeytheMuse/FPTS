@@ -127,7 +127,7 @@ public class BuyHoldingController extends MenuController {
                                 searchBtn.setVisible(false);
                                 selectBtn.setVisible(false);
                                 selectDescription.setVisible(false);
-                                getAdditionalInfo();   
+                                getAdditionalInfo();
                             }
                         });
                         
@@ -241,7 +241,6 @@ public class BuyHoldingController extends MenuController {
                 * algorithm to go.
                 */
                                  
-                
                 if (isValid) {
                     pricePerShare = Double.parseDouble(pricePerShareField.getText());
                     numOfShares = Integer.parseInt(numOfSharesField.getText());

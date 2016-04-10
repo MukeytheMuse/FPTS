@@ -19,8 +19,6 @@ public class User implements Serializable {
     private String password;
     private Portfolio myPortfolio;
     private static Map<String, User> allUsersMap = new HashMap();
-    //TODO: Warning:(17, 52) Unchecked assignment: 'java.util.HashMap' to 'java.util.Map<java.lang.String,model.User>'
-
 
     public Map<String, User> getAllUsersMap(){
         return allUsersMap;
@@ -29,12 +27,9 @@ public class User implements Serializable {
     public void setMyPortfolio(Portfolio p) {
         myPortfolio = p;
     }
-    
-
 
     /**
      * Acts as a temporary user for accessing static methods.
-     *
      * @param uid
      *
      * Author(s): Kaitlin Brockway
@@ -158,7 +153,6 @@ public class User implements Serializable {
      * from the UserData.csv file.
      */
     public static void fillUsers() {
-        //String user_csv = "JavaFXApp/src/model/DataBase/UserData.csv";
         BufferedReader reader = null;
         String line;
         ReadFile readFile = new ReadFile();
@@ -170,35 +164,12 @@ public class User implements Serializable {
                 String[] split = line.split(",");
                 String un = split[0];
                 String pwd = split[1];
+
                 ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
-                //ArrayList<Transaction> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
-
                 ArrayList<Transaction> portfolioTransactions = readFile.readInTransFile(un);
-
-                //TODO:This is not being used anymore; can we delete it.
-                /*for (CashAccount cashAccountToAssociate : usersCashAccounts) {
-                    //if transactions exist for this cash account
-                    if (cashAccountNameTransactionsMap.containsKey(cashAccountToAssociate.getAccountName())) {
-                        ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAssociate.getAccountName());
-                        cashAccountToAssociate.setTransactions(curTransactions);//add transactions to this current cashAccount object
-                        //iterate through transactions (that have a cash account association with a cash account that still exists)
-                        // and add association to the transaction objects
-                      
-                        portfolioTransactions.addAll(curTransactions);
-                        for(Transaction t: curTransactions){
-                            t.setCashAccount(cashAccountToAssociate);
-                        }
-                        cashAccountNameTransactionsMap.remove(cashAccountToAssociate.getAccountName());
-                    } //if not it will maintain an empty array list for its transactions
-                }
-                //only remaining transactions will be those that are not associated with any cash account in the system
-                for(String cashNameThatIsNotAssociatedWithThisUser: cashAccountNameTransactionsMap.keySet()){
-                    portfolioTransactions.addAll(cashAccountNameTransactionsMap.get(cashNameThatIsNotAssociatedWithThisUser));
-                }*/
-
-                //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
                 ArrayList<Holding> usersHoldings = readFile.readHoldings(un);
                 ArrayList<WatchedEquity> watchedEquities = readFile.readWatchedEquities(un);
+
                 Portfolio userPortfolio = new Portfolio(usersHoldings, usersCashAccounts, portfolioTransactions);
                 User newUser = new User(un, unHash(pwd), userPortfolio);
 
@@ -207,12 +178,11 @@ public class User implements Serializable {
                         newUser.getMyPortfolio().addWatchedEquity(w);
                     }
                 }
-                
-                //have to unhash before creating a user because the password is hashed during creation
+                //have to decrypt before creating a user because the password is encrypted during creation
                 allUsersMap.put(un, newUser);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("JavaFXApp/src/model/DataBase/UserData.csv not found! Please try again.");
+            System.out.println("DataBase/UserData.csv not found! Please try again.");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -237,8 +207,7 @@ public class User implements Serializable {
      */
     public void addUser(User usr, String pw1) {
         WriteFile writeFile = new WriteFile();
-
-        //temporary quick fix to add user to lilBase
+        //add user into the database with an encrypted password and create their profile
         String un = usr.getLoginID();
         writeFile.addUser(un, hash(pw1));
         writeFile.updatePortfolioForUser(usr);

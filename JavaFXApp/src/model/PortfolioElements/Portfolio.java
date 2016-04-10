@@ -27,7 +27,6 @@ import java.util.List;
 public class Portfolio {
     private ArrayList<CashAccount> cashAccounts;
     private ArrayList<Holding> holdings;
-    private ArrayList<WatchedEquity> watchedEquities;
 
     private Holdings holdingsCollection;
     private CashAccounts cashAccountsCollection;
@@ -38,13 +37,7 @@ public class Portfolio {
     private double currentValue;
     private ArrayList<Transaction> transactions;
 
-//    private ArrayList<Searchable> portfolioElements;
-
     private ArrayList<EquityComponent> equityComponents = LoadedEquity.getEquityList();  // lists what you can buy
-//
-//    private ArrayList<Searchable> matches;
-//    private Memento memento;
-
 
     //this is observable. I missed the first thing, as i enter a search from the FPTS (gui),
     // it will tell the controller (ActionEvent in the button) to empty the "matches' array
@@ -66,10 +59,6 @@ public class Portfolio {
         equityComponentsCollection = new EquityComponents();
         watchlist = new Watchlist();
         history = new History();
-    
-        //cashAccounts = new ArrayList<>();
-        //holdings = new ArrayList<>();
-        watchedEquities = new ArrayList<WatchedEquity>();
         currentValue = 0.00;
     }
 
@@ -99,7 +88,6 @@ public class Portfolio {
         }
         
         currentValue = 0;
-        watchedEquities = new ArrayList<WatchedEquity>();
         //Calculates the portfolio's Total Value.
         if (!readInholdings.isEmpty()) {
             for (Holding h : holdings) {
@@ -140,7 +128,7 @@ public class Portfolio {
     }
 
     public ArrayList<EquityComponent> getEquityComponents() {
-        return equityComponents;
+        return (ArrayList <EquityComponent>) equityComponentsCollection.getList();
     }
 
     public EquityComponent getEquityComponent(String tickerSymbol) {
@@ -173,40 +161,6 @@ public class Portfolio {
        watchlist.updateWatchlist();
     }
 
-    /**
-     * When creating a new portfolio, the system shall allow the user to
-     * import holdings and transactions to initialize the new portfolio.
-     * <p>
-     * Returns a collection of Holding objects that are cast to Searchable
-     *
-     * @return ArrayList<Searchable>
-     */
-
-    /*
-    public ArrayList<Searchable> getHoldingSearchables() {
-        ArrayList<Searchable> temp = new ArrayList<Searchable>();
-        for (Holding h : holdings) {
-            temp.add((Searchable) h);
-        }
-        return temp;
-    }
-    */
-
-    /**
-     * Returns collection of EquityComponent objects that are cast to Searchable
-     *
-     * @return ArrayList<Searchable>
-     */
-
-    /*
-    public ArrayList<Searchable> getEquityComponentSearchables() {
-        ArrayList<Searchable> temp = new ArrayList<Searchable>();
-        for (EquityComponent ec : equityComponents) {
-            temp.add((Searchable) ec);
-        }
-        return temp;
-    }
-    */
     
     public EquityComponents getEquityComponentsCollection() {
         return new EquityComponents();
@@ -217,23 +171,6 @@ public class Portfolio {
     }
 
     /**
-     * Returns collection of CashAccount objects that are cast to Searchable
-     *
-     * @return ArrayList<Searchable>
-     */
-
-    /*
-    public ArrayList<Searchable> getCashAccountSearchables() {
-        ArrayList<Searchable> temp = new ArrayList<Searchable>();
-        for (CashAccount c : cashAccounts) {
-            temp.add((Searchable) c);
-        }
-        return temp;
-    }
-    */
-
-
-    /**
      * Returns collection of Transaction objects
      *
      * @return ArrayList<Transaction>
@@ -241,15 +178,6 @@ public class Portfolio {
     public ArrayList<Transaction> getTransactions() {
         return (ArrayList<Transaction>) history.getList();
     }
-
-
-
-    //TODO: make this private and find another way to access whats needed
-
-
-
-
-    //TODO: used by class "CashAccountCreator". We should make this private and find another way to implement what this this needed for.
 
     /**
      * Returns collection of CashAccount
@@ -283,17 +211,6 @@ public class Portfolio {
     public Holdings getHoldingsCollection() {
         return holdingsCollection;
     }
-    
-//
-//    /**
-//     * Returns collection of EquityComponent
-//     *
-//     * @return ArrayList<EquityComponent>
-//     */
-//    public ArrayList<EquityComponent> getEquityComponents() {
-//        return Equity.getEquityList();
-//    }
-//
 
     /**
      * Adds EquityComponent object to portfolio
@@ -303,16 +220,6 @@ public class Portfolio {
     public void add(EquityComponent e) {
         equityComponents.add(e);
     }
-//
-//    /**
-//     * Removes EquityCompoonent object from portfolio
-//     *
-//     * @param e
-//     */
-//    public void remove(EquityComponent e) {
-//        equityComponents.remove(e);
-//    }
-//
 
     /**
      * Adds CashAccount to portfolio
@@ -342,22 +249,6 @@ public class Portfolio {
     public void add(Transaction t, CashAccount c) {
         c.addTransaction(t);
     }
-
-//    /**
-//     * Removes Transaction from history list
-//     *
-//     * @param t
-//     */
-//    public void remove(Transaction t) {
-//
-//        transactions.remove(t);
-//    }
-
-//    public ArrayList<Searchable> getMatches() {
-//        return matches;
-//    }
-//
-//
 
     /**
      * Adds Holding to portfolio
@@ -399,31 +290,5 @@ public class Portfolio {
             return false;
         }
     }
-
-
-//    TODO: In progress
-//    public double getCurrentValue(){
-//        return this.currentValue;
-//    }
-//
-//
-//    public Memento createMemento(){
-//        Memento newMemento = new Memento(holdings, currentValue);
-//        return newMemento;
-//    }
-//
-//    /**
-//     * The memento only needs to know the holdings and current value of
-//     * the portfolio for the simulation(s) being ran.
-//     *
-//     * @param toBeAMemento: The porfolio's state that is being requested from the
-//     *                    SimulationController.
-//     *
-//     * Author(s): Kaitlin Brockway
-//     */
-//    public void setMemento(Portfolio toBeAMemento){
-//        Memento newMemento = new Memento(holdings, currentValue);
-//    }
-
 
 }
