@@ -1,5 +1,0 @@
-Information:Using javac 1.8.0_73 to compile java sources
-Information:3/14/2016 12:53 AM - Compilation completed successfully in 7s 792ms
-C:\Users\nveil_000\Documents\SWEN262\HelloWorld\JavaFXApp\src\controller\CashAccountFinder.java
-    Information:Information:java: Some input files use unchecked or unsafe operations.
-    Information:Information:java: Recompile with -Xlint:unchecked for details.
