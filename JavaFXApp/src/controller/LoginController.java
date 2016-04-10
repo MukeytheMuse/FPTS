@@ -41,16 +41,13 @@ public class LoginController {
     @FXML
     private PasswordField password1;
 
-    private User currentUser;//How do we know the currentUser after exiting this class??
+    private User currentUser;
 
     private boolean importsRequested = false;
 
     @FXML
-    MenuBar myMenuBar;
+    private MenuBar myMenuBar;
 
-    public void handleLogoutMenuItemPressed(ActionEvent event) throws IOException {
-        this.goToLoginPage(event);
-    }
 
     public void handleExitMenuItemPressed(ActionEvent event) {
         Platform.exit();
@@ -238,7 +235,7 @@ public class LoginController {
      * @throws IOException
      */
     @FXML
-    protected void handleSaveExitButtonPressed(ActionEvent event) throws IOException {
+    protected void handleSaveLogoutButtonPressed(ActionEvent event) throws IOException {
         WriteFile writeFile = new WriteFile();
         writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
         Stage stg = FPTS.getSelf().getStage();
@@ -252,7 +249,7 @@ public class LoginController {
      * @throws IOException
      */
     @FXML
-    protected void handleExitExitButtonPressed(ActionEvent event) throws IOException {
+    protected void handleLogoutNOSAVEButtonPressed(ActionEvent event) throws IOException {
         Stage stg = FPTS.getSelf().getStage();
         stg.setScene(FPTS.getSelf().createLogInScene());
         stg.show();

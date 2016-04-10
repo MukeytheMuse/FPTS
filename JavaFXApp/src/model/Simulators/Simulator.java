@@ -1,21 +1,32 @@
 package model.Simulators;
 
+import model.PortfolioElements.Holding;
+
 import java.util.ArrayList;
 
 /**
  * authors: Kaitlin Brockway & Luke
  */
-public abstract class Simulator {
+public interface Simulator {
 
-    public static ArrayList<Double> series;
+    double simulate(int numberOfSteps);
 
-    public abstract double simulate(int numberOfSteps);
+    int getCurrentStep();
 
-    public abstract int getCurrentStep();
+    void stepBack();
 
-    public abstract int getTotalSteps();
+    void addPreviousValues(ArrayList<Double> lst);
 
-    public abstract double getCurrentValue();
+    int getTotalSteps();
 
-    public abstract double getChangeInValue();
+    double getCurrentValue();
+
+    void resetSimulator();
+
+    double getChangeInValue();
+
+    ArrayList<Holding> getHoldings();
+
+    ArrayList<Double> getValues();
+
 }

@@ -7,15 +7,16 @@ import model.PortfolioElements.Holding;
 import java.util.ArrayList;
 
 /**
- * Created by Brockway on 3/10/16.
+ * Created by Brockway
  */
-public class NoGrowthSimulator extends Simulator {
+public class NoGrowthSimulator implements Simulator {
     public static String name = "No Growth Simulator";
 
     private int numSteps;
     private int stepNumber;
     private double currentValue;
     private ArrayList<Holding> holdings;
+    private ArrayList<Double> portfolioValues;
 
     /**
      *
@@ -25,15 +26,13 @@ public class NoGrowthSimulator extends Simulator {
         this.stepNumber = 0;
         this.holdings = lst;
         this.currentValue = 0;
-        if (Simulator.series == null) {
-            Simulator.series = new ArrayList<Double>();
-        }
+        this.portfolioValues = new ArrayList<>();
     }
 
     //TODO: CHECK IF IT HAS STEPS.
 
     /**
-     * @return
+     * @return - the change in the portfolio's value.
      */
     public double simulate(int numberOfSteps) {
         for(int i = 0; i < numberOfSteps; i++) {
@@ -41,10 +40,19 @@ public class NoGrowthSimulator extends Simulator {
             for (Holding h : holdings) {
                 currentValue += h.getTotalValue();
             }
-            series.add(stepNumber, currentValue);
+            if (portfolioValues.size() == 0)
+                portfolioValues.add(currentValue);
+            portfolioValues.add(currentValue);
             stepNumber += 1;
         }
         return 0;
+    }
+
+    @Override
+    public void stepBack() {
+        stepNumber --;
+        currentValue = portfolioValues.get(stepNumber);
+        portfolioValues.remove(stepNumber + 1);
     }
 
     @Override
@@ -61,5 +69,20 @@ public class NoGrowthSimulator extends Simulator {
     public double getCurrentValue() { return currentValue; }
 
     @Override
+    public void addPreviousValues(ArrayList<Double> lst) {
+        if (lst != null)
+            portfolioValues.addAll(lst);
+    }
+
+    @Override
     public double getChangeInValue() { return 0; }
+
+    @Override
+    public void resetSimulator() { portfolioValues.clear(); stepNumber = 0;}
+
+    @Override
+    public ArrayList<Holding> getHoldings() { return holdings; }
+
+    @Override
+    public ArrayList<Double> getValues() { return portfolioValues; }
 }

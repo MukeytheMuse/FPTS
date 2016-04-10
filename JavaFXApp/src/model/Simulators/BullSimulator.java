@@ -8,10 +8,11 @@ import java.util.ArrayList;
 /**
  * authors: Kaitlin Brockway & Luke
  */
-public class BullSimulator extends Simulator {
+public class BullSimulator implements Simulator {
     public static String name = "Bull Market Simulator";
 
     private ArrayList<Holding> holdings;
+    private ArrayList<Double> portfolioValues;
     private String interval;
     private int numSteps;
     private double pricePerYear;
@@ -33,9 +34,7 @@ public class BullSimulator extends Simulator {
         this.holdings = holdings;
         this.stepNumber = 0;
         this.currentValue = 0;
-        if (Simulator.series == null) {
-            Simulator.series = new ArrayList<Double>();
-        }
+        this.portfolioValues = new ArrayList<>();
     }
 
     /**
@@ -53,6 +52,7 @@ public class BullSimulator extends Simulator {
         }
         for (int i = 0; i < numberOfSteps; i++) {
             currentValue = 0;
+            valueCount = 0;
             for (Holding h : holdings) {
                 double change = 0;
                 change = currentPercentIncrease * h.getPricePerShare();
@@ -60,10 +60,19 @@ public class BullSimulator extends Simulator {
                 currentValue += h.getTotalValue();
                 valueCount += change;
             }
-            series.add(stepNumber, currentValue);
+            if (portfolioValues.size() == 0)
+                portfolioValues.add(currentValue - valueCount);
+            portfolioValues.add(currentValue);
             stepNumber += 1;
         }
         return valueCount;
+    }
+
+    @Override
+    public void stepBack() {
+        stepNumber --;
+        currentValue = portfolioValues.get(stepNumber);
+        portfolioValues.remove(stepNumber + 1);
     }
 
     @Override
@@ -80,6 +89,30 @@ public class BullSimulator extends Simulator {
     public double getCurrentValue() { return currentValue; }
 
     @Override
-    public double getChangeInValue() { return valueCount; }
+    public void addPreviousValues(ArrayList<Double> lst) {
+        if (lst != null)
+            portfolioValues.addAll(lst);
+    }
+
+    @Override
+    public double getChangeInValue() {
+        if(portfolioValues.size() == 0)
+            return 0;
+        return portfolioValues.get(portfolioValues.size() - 1) - portfolioValues.get(0);
+    }
+
+    @Override
+    public void resetSimulator() {
+        currentValue -= valueCount;
+        valueCount = 0;
+        portfolioValues.clear();
+        stepNumber = 0;
+    }
+
+    @Override
+    public ArrayList<Holding> getHoldings() { return holdings; }
+
+    @Override
+    public ArrayList<Double> getValues() { return portfolioValues; }
 }
 

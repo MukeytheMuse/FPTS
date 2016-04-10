@@ -25,14 +25,14 @@
                         <Font name="System Bold" size="14.0"/>
                     </font>
                 </Label>
-                <Button fx:id="saveEXIT" mnemonicParsing="false" onAction="#handleSaveExitButtonPressed"
+                <Button fx:id="saveEXIT" mnemonicParsing="false" onAction="#handleSaveLogoutButtonPressed"
                         prefHeight="25.0" prefWidth="140.0" text="Save" GridPane.halignment="CENTER"
                         GridPane.rowIndex="1">
                     <font>
                         <Font name="System Italic" size="13.0"/>
                     </font>
                 </Button>
-                <Button fx:id="exitEXIT" mnemonicParsing="false" onAction="#handleExitExitButtonPressed"
+                <Button fx:id="exitEXIT" mnemonicParsing="false" onAction="#handleLogoutNOSAVEButtonPressed"
                         prefHeight="25.0" prefWidth="140.0" text="Don't Save" GridPane.columnIndex="1"
                         GridPane.halignment="CENTER" GridPane.rowIndex="1">
                     <font>

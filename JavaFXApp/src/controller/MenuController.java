@@ -269,7 +269,6 @@ public abstract class MenuController implements Initializable {
         } catch (ClassCastException var5) {
             stage = (Stage) this.myMenuBar.getScene().getWindow();
         }
-
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -280,7 +279,7 @@ public abstract class MenuController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SimulatePage.fxml"));
             Parent root1 = fxmlLoader.load();
             SimulationController controller = fxmlLoader.getController();
-            controller.setHoldings(fpts.getPortfolio().getHoldings());
+            controller.setHoldings(fpts.getPortfolio().getHoldings(), null);
             Stage stage;
             try {
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

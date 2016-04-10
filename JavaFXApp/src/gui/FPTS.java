@@ -55,7 +55,7 @@ public class FPTS extends Application {
         time.schedule(new WebService(webServiceReader), 0, 5000);
 
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
-        Scene loginScene = new Scene(root, 1200.0D, 600.0D);
+        Scene loginScene = new Scene(root, 800.0D, 600.0D);
 
 //        try {
 //            this.thestage.setScene(this.createLogInScene());
@@ -71,7 +71,7 @@ public class FPTS extends Application {
 //        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
 //        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
-
+        this.thestage.setTitle("Financial Portfolio Tracking System");
         this.thestage.show();
     }
     

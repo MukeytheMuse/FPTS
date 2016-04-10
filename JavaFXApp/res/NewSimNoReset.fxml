@@ -7,57 +7,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationController">
     <children>
-        <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.topAnchor="2.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleHomeMenuItemPressed" text="Home" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleSaveMenuItemPressed" text="Save" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleImportMenuItemPressed" text="Import" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenuItemPressed" text="Logout" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleExitMenuItemPressed" text="Exit" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleUndoMenuItemPressed" text="Undo" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleRedoMenuItemPressed" text="Redo" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Equities">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handlePortfolioMenuItemPressed" text="Show Portfolio" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleBuyEquitiesMenuItemPressed" text="Buy Equities" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleWatchlistMenuItemPressed" text="Watchlist" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleSellEquitiesMenuItemPressed" text="Sell Equities" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Cash Account">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleDepositMenuItemPressed" text="Deposit" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleWithdrawMenuItemPressed" text="Withdraw" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleTransferMenuItemPressed" text="Transfer" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleRemoveMenuItemPressed" text="Remove Account" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCreateMenuItemPressed" text="Create New" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleHistoryMenuItemPressed" text="History" />
-
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Simulation">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleSimulationButtonPressed" text="Simulation" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenuItemPressed" text="About" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+      <MenuBar fx:id="myMenuBar" layoutY="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Simulation">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#endSimulation" text="End Simulation" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
         <GridPane layoutX="-3.0" layoutY="29.0" prefHeight="573.0" prefWidth="802.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="496.0" minWidth="10.0" prefWidth="442.0" />
