@@ -197,21 +197,43 @@ public abstract class MenuController implements Initializable {
             userHoldingsToImport = importedEquities.get("Holdings");
             userTransactionsToImport = importedEquities.get("Transactions");
             userCashAccountsToImport = importedEquities.get("Cash Accounts");
+            boolean flag;
 
-            for (Holding holding : userHoldingsToImport) {
-                FPTS.getCurrentUser().getMyPortfolio().getHoldings().add(holding);
+            ArrayList<Holding> HoldingArrayList = FPTS.getCurrentUser().getMyPortfolio().getHoldings();
+
+            for (Holding importedHolding : userHoldingsToImport) {
+                flag = false;
+                for(Holding existingHolding : HoldingArrayList ){
+                    if (importedHolding.getTickerSymbol().equals(existingHolding.getTickerSymbol())) {
+                        existingHolding.add(importedHolding.getNumOfShares());
+                        flag = true;
+                    }
+                }
+                if (!flag) {
+                    HoldingArrayList.add(importedHolding);
+                }
             }
 
-            for (Transaction transaction : userTransactionsToImport) {
-                FPTS.getCurrentUser().getMyPortfolio().getTransactions().add(transaction);
+            ArrayList<Transaction> TransactionArrayList = FPTS.getCurrentUser().getMyPortfolio().getTransactions();
+
+            for (Transaction importedTransaction : userTransactionsToImport) {
+                flag = false;
+                for(Transaction existingTransaction : TransactionArrayList ){
+                    if (importedTransaction.toString().equals(existingTransaction.toString())) {
+                        flag = true;
+                    }
+                }
+                if (!flag){
+                    TransactionArrayList.add(importedTransaction);
+                }
             }
 
 
             ArrayList<CashAccount> cashAccountArrayList = FPTS.getCurrentUser().getMyPortfolio().getCashAccounts();
 
-            if (!(cashAccountArrayList.isEmpty())) {
-                for (CashAccount cashAccount : cashAccountArrayList) {
-                    for (CashAccount importedCashAccount : userCashAccountsToImport) {
+            if (!cashAccountArrayList.isEmpty()) {
+                for (CashAccount importedCashAccount : userCashAccountsToImport) {
+                    for (CashAccount cashAccount : cashAccountArrayList) {
                         if (cashAccount.getAccountName().equals(importedCashAccount.getAccountName())) {
                             try {
                                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ImportPopUp.fxml"));
@@ -225,11 +247,14 @@ public abstract class MenuController implements Initializable {
                                 e.printStackTrace();
                             }
                         }
+                        else {
+                            cashAccountArrayList.add(importedCashAccount);
+                        }
                     }
                 }
             } else {
                 for (CashAccount importedCashAccount : userCashAccountsToImport) {
-                    FPTS.getCurrentUser().getMyPortfolio().getCashAccounts().add(importedCashAccount);
+                    cashAccountArrayList.add(importedCashAccount);
                 }
             }
 
