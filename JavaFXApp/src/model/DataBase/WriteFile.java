@@ -88,7 +88,7 @@ public class WriteFile {
             this.holdingsWriter(user.getMyPortfolio().getHoldings(), holdingsFile);
             this.equityWriter(user.getMyPortfolio().getWatchedEquities(), watchedEquitiesFile);
         } catch (Exception var8) {
-            System.out.println("updatePortfolioForUser within WriteFile threw an exception");
+            var8.printStackTrace();
         }
 
     }
@@ -104,13 +104,18 @@ public class WriteFile {
             FileWriter writerH = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writerH);
 
-            for (int i = 0; i < holdings.size(); i++) {
-                for (int j = (i+1); j < holdings.size(); j++) {
-                    if (holdings.get(i).getTickerSymbol().equals(holdings.get(j).getTickerSymbol())) {
-                        int numberOfShares = (holdings.get(i).getNumOfShares() + holdings.get(i).getNumOfShares());
-                        Holding h = new Holding(holdings.get(i).getTickerSymbol(), holdings.get(i).getDisplayName(), holdings.get(i).getPricePerShare(), numberOfShares, holdings.get(i).getAcquisitionDate(), holdings.get(i).getIndices(), holdings.get(i).getSectors());
-                        holdings.remove(holdings.get(i));
-                        holdings.add(h);
+            if (holdings.size() > 1) {
+                for (int i = 0; i < holdings.size(); i++) {
+                    for (int j = (i + 1); j < holdings.size(); j++) {
+                        if (holdings.get(i).getTickerSymbol().equals(holdings.get(j).getTickerSymbol())) {
+                            Holding iHolding = holdings.get(i);
+                            Holding jHolding = holdings.get(j);
+                            int numberOfShares = (iHolding.getNumOfShares() + jHolding.getNumOfShares());
+                            Holding h = new Holding(iHolding.getTickerSymbol(), iHolding.getDisplayName(),iHolding.getPricePerShare(), numberOfShares, iHolding.getAcquisitionDate(), iHolding.getIndices(), iHolding.getSectors());
+                            holdings.add(h);
+                            holdings.remove(iHolding);
+                            holdings.remove(jHolding);
+                        }
                     }
                 }
             }
@@ -130,7 +135,7 @@ public class WriteFile {
             bufferedWriter.close();
 
         } catch (Exception var6) {
-            System.out.println("holdingsWriter within WriteFile threw an exception");
+            var6.printStackTrace();
         }
 
     }

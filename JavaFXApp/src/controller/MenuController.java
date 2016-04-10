@@ -233,9 +233,6 @@ public abstract class MenuController implements Initializable {
                 }
             }
 
-            WriteFile writeFile = new WriteFile();
-            writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
-
             Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
             Stage stageHome = (Stage) this.myMenuBar.getScene().getWindow();
             stageHome.setScene(scene);

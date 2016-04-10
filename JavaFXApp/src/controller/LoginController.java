@@ -142,6 +142,7 @@ public class LoginController {
                     HashMap<String, ArrayList> importedEquities;
                     ArrayList<Holding> userHoldingsToImport;
                     ArrayList<Transaction> userTransactionsToImport;
+                    ArrayList<CashAccount> userCashAccountsToImport;
                     Portfolio newPortfolio;
                     Portfolio newEmptyPortfolio;
                     User usr;
@@ -160,7 +161,8 @@ public class LoginController {
                             //They are being checked for accuracy within ReadImports file.
                             userHoldingsToImport = importedEquities.get("Holdings");
                             userTransactionsToImport = importedEquities.get("Transactions");
-                            newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>(), userTransactionsToImport);
+                            userCashAccountsToImport = importedEquities.get("Cash Accounts");
+                            newPortfolio = new Portfolio(userHoldingsToImport, userCashAccountsToImport, userTransactionsToImport);
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
                             this.addUser(usr, this.password1.getText());
                             currentUser = usr;
