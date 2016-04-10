@@ -198,7 +198,7 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
                 Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());//TODO: check
                 for (int i = results.size() - 1; i >= 0; i--) {
                     Transaction t = results.get(i);
-                    Date aDate = t.getCashAccount().getDateAdded();
+                    Date aDate = t.getDateMade();
                     if (!(aDate.after(start) && aDate.before(end))) {
                         results.remove(i);
                     }
