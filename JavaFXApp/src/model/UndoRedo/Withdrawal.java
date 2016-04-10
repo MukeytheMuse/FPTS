@@ -101,7 +101,7 @@ public class Withdrawal implements Command, Transaction {
         String theDateString = (localDate.getMonthValue() + "/" +
                 localDate.getDayOfMonth() +
                 "/" + localDate.getYear());
-        return "Withdrew " + amount + " from " + c.getAccountName() + " on " + theDateString;
+        return "Withdrew " + amount + " from " + cashAcctName + " on " + theDateString;
     }
 
     /**

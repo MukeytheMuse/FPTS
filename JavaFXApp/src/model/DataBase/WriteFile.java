@@ -99,29 +99,17 @@ public class WriteFile {
      */
     public void holdingsWriter(ArrayList<Holding> holdings, File file) {
         try {
-            ArrayList<String[]> splitFile = new ArrayList<>();
-            ArrayList<Holding> readHoldings;
-            FileReader reader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String line = "";
-
-            while ((line = bufferedReader.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
-                String[] split = line.split("\",\"");
-                splitFile.add(split);
-            }
-            readHoldings = ReadHoldings.read(splitFile);
 
             file.delete();
             FileWriter writerH = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writerH);
 
-            for (Holding holding : holdings) {
-                for (Holding readHolding : readHoldings) {
-                    if (holding.getTickerSymbol().equals(readHolding.getTickerSymbol())) {
-                        int numberOfShares = (holding.getNumOfShares() + readHolding.getNumOfShares());
-                        Holding h = new Holding(holding.getTickerSymbol(), holding.getDisplayName(), holding.getPricePerShare(), numberOfShares, holding.getAcquisitionDate(), holding.getIndices(), holding.getSectors());
-                        holdings.remove(holding);
+            for (int i = 0; i < holdings.size(); i++) {
+                for (int j = 1; j < holdings.size(); j++) {
+                    if (holdings.get(i).getTickerSymbol().equals(holdings.get(j).getTickerSymbol())) {
+                        int numberOfShares = (holdings.get(i).getNumOfShares() + holdings.get(i).getNumOfShares());
+                        Holding h = new Holding(holdings.get(i).getTickerSymbol(), holdings.get(i).getDisplayName(), holdings.get(i).getPricePerShare(), numberOfShares, holdings.get(i).getAcquisitionDate(), holdings.get(i).getIndices(), holdings.get(i).getSectors());
+                        holdings.remove(holdings.get(i));
                         holdings.add(h);
                     }
                 }
