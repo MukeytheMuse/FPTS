@@ -104,7 +104,7 @@ public class SimulationController extends MenuController {
     }
 
 
-    protected void setHoldings(ArrayList<Holding> holdings, ArrayList<Double> values) {
+    void setHoldings(ArrayList<Holding> holdings, ArrayList<Double> values) {
         this.holdings = holdings;
         if (currentSimulator == null && values != null){
             this.values = values;
@@ -174,7 +174,9 @@ public class SimulationController extends MenuController {
                         error.setText("Please enter a percent value for the Price Per Annum.");
                     }
                 }
-                currentSimulator.addPreviousValues(values);
+                if(currentSimulator != null && values != null) {
+                    currentSimulator.addPreviousValues(values);
+                }
                 try {
                     if (hasSteps) {
                         currentSimulator.simulate(1);
@@ -231,7 +233,15 @@ public class SimulationController extends MenuController {
      */
     @FXML
     protected void handleResetToStartButtonPressed(ActionEvent event) throws IOException {
-        Memento.getMemento(0).resetToMemento(holdings);
+        Memento memento;
+        try {
+            memento = Memento.getMemento(0);
+        } catch (NullPointerException n) {
+            memento = null;
+        }
+        if (memento != null) {
+            memento.resetToMemento(holdings);
+        }
         Parent parent = FXMLLoader.load(this.getClass().getResource("/SimulatePage.fxml"));
         Stage stage;
         try {
