@@ -146,7 +146,6 @@ public class SimulationController extends MenuController {
      * @throws java.io.IOException - Exception thrown if the SimulationPage.fxml is not found.
      */
     public void handleSimulateButtonPressed(ActionEvent event) throws IOException {
-        storeMemento();
         if (numSteps.getText().length() != 0 && priceAnnum.getText().length() != 0) {
             try {
                 int numberOfSteps = Integer.parseInt(numSteps.getText());
@@ -179,9 +178,13 @@ public class SimulationController extends MenuController {
                 }
                 try {
                     if (hasSteps) {
+                        storeMemento();
                         currentSimulator.simulate(1);
                     } else {
-                        currentSimulator.simulate(numberOfSteps);
+                        for(int i = 0; i < numberOfSteps; i++) {
+                            storeMemento();
+                            currentSimulator.simulate(1);
+                        }
                     }
                     loadSimulationPage(event);
                 } catch (NullPointerException n) {

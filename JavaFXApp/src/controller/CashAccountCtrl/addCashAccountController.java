@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
- * Created by ericepstein on 4/8/16.
+ * Created by ericepstein
  */
 public class AddCashAccountController extends MenuController {
     @FXML
