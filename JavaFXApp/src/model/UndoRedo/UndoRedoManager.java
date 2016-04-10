@@ -7,6 +7,8 @@ package model.UndoRedo;
 
 /**
  *
+ * Persists undo/redo stack throughout the lifetime of the invocation, transfers Command objects between stacks when called.
+ *
  * @author ericepstein
  */
 public class UndoRedoManager {

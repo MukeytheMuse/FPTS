@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 /**
  * Created by ericepstein on 4/8/16.
  */
-public class addCashAccountController extends MenuController {
+public class AddCashAccountController extends MenuController {
     @FXML
     private TextField nameField;
 

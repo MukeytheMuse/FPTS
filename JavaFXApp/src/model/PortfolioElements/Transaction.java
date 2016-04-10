@@ -36,9 +36,10 @@ public interface Transaction {
          */
         public CashAccount getCashAccount();
 
-        public void setCashAccount(CashAccount ca);
+        public void setCashAccountName(String s);
+        //public void setCashAccount(CashAccount ca);
 
-        public void setCashAccountName(String cashAccountName);
+        //public void setCashAccountName(String cashAccountName);
 
         //    private double amount;
 //    private String dateMade;

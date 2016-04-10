@@ -245,51 +245,57 @@ public class SellHoldingController extends MenuController {
 
                     System.out.println("numOfShares is " + numOfShares);
                     System.out.println("holding is " + holdingOfInterest);
+                    if (numOfShares <= holdingOfInterest.getNumOfShares()) {
 
-                    UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
-                    Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
-                    HoldingRemoval holdingRemoval = new HoldingRemoval(holdings, holdingOfInterest, numOfShares);
-                    aCommand.addChild(holdingRemoval);
-                    
-                    switch (searchConditions.getValue().toString()) {
-                        case ("Outside FPTS"):
+                        UndoRedoManager undoRedoManager = fpts.getUndoRedoManager();
+                        Holdings holdings = fpts.getCurrentUser().getMyPortfolio().getHoldingsCollection();
+                        HoldingRemoval holdingRemoval = new HoldingRemoval(holdings, holdingOfInterest, numOfShares);
+                        aCommand.addChild(holdingRemoval);
+
+                        switch (searchConditions.getValue().toString()) {
+                            case ("Outside FPTS"):
                             /*
                             * Delegates purchase/sale outside FPTS in respective subclass
                             */
-                            
-                            //processOutsideFPTS(null, 0, 0);
-                            //HoldingPurchase()
-                            
-                            //MAKE COMMAND TO BUY/SELL HOLDING
 
-                            undoRedoManager.execute(aCommand);
-                           
-                            
-                            try { 
-                                redirect();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                            
-                            //theStage.setScene(theFPTS.getConfirmationScene());
-                            
-                            break;
-                        case ("Use existing cash account"):
+                                //processOutsideFPTS(null, 0, 0);
+                                //HoldingPurchase()
+
+                                //MAKE COMMAND TO BUY/SELL HOLDING
+
+                                undoRedoManager.execute(aCommand);
+
+
+                                try {
+                                    redirect();
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+
+                                //theStage.setScene(theFPTS.getConfirmationScene());
+
+                                break;
+                            case ("Use existing cash account"):
                             /*
                             * Constructs another scene to get CashAccount if purchase/sale
                             * is made inside FPTS.
                             */
-                            
-                            submitButton.setVisible(false);
-                            setSearchCashAccountView();
-                            
-                            //theStage.setScene(getSecondSearchScene());
-                            
-                            break;
+
+                                submitButton.setVisible(false);
+                                setSearchCashAccountView();
+
+                                //theStage.setScene(getSecondSearchScene());
+
+                                break;
+                        }
+
+                    } else {
+                        pricePerShareField.setText("INVALID");
+
                     }
-                } else {
-                    pricePerShareField.setText("INVALID");
-                }
+                } else{
+                        pricePerShareField.setText("INVALID");
+                    }
             }
         });
 
