@@ -32,6 +32,9 @@ public class ImportCashAccountPopUpController implements Initializable {
     public void setAccounts(CashAccount acct, CashAccount imported) {
         this.account = acct;
         this.importedAccount = imported;
+        this.accountLabel.setText("Cash Account in the System: " + account.getAccountName() + " with $" +
+                                account.getValue() + "\n\nAccount being imported: " + importedAccount.getAccountName() +
+                                " with $" + importedAccount.getValue());
     }
 
     /**
@@ -84,7 +87,5 @@ public class ImportCashAccountPopUpController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //accountLabel.setText("Cash Account: " + account.getAccountName());
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 }

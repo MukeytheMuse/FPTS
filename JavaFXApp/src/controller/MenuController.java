@@ -228,9 +228,9 @@ public abstract class MenuController implements Initializable {
                 }
             }
 
-
             ArrayList<CashAccount> cashAccountArrayList = FPTS.getCurrentUser().getMyPortfolio().getCashAccounts();
-
+            ArrayList<CashAccount> tempList = new ArrayList<>();
+            boolean popUpCalled = false;
             if (!cashAccountArrayList.isEmpty()) {
                 for (CashAccount importedCashAccount : userCashAccountsToImport) {
                     for (CashAccount cashAccount : cashAccountArrayList) {
@@ -239,6 +239,7 @@ public abstract class MenuController implements Initializable {
                                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ImportPopUp.fxml"));
                                 Parent root1 = fxmlLoader.load();
                                 ImportCashAccountPopUpController controller = fxmlLoader.getController();
+                                popUpCalled = true;
                                 controller.setAccounts(cashAccount, importedCashAccount);
                                 Stage stg = new Stage();
                                 stg.setScene(new Scene(root1));
@@ -248,7 +249,7 @@ public abstract class MenuController implements Initializable {
                             }
                         }
                         else {
-                            cashAccountArrayList.add(importedCashAccount);
+                            tempList.add(importedCashAccount);
                         }
                     }
                 }
@@ -257,11 +258,13 @@ public abstract class MenuController implements Initializable {
                     cashAccountArrayList.add(importedCashAccount);
                 }
             }
-
-            Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
-            Stage stageHome = (Stage) this.myMenuBar.getScene().getWindow();
-            stageHome.setScene(scene);
-            stageHome.show();
+            cashAccountArrayList.addAll(tempList);
+            if (!popUpCalled) {
+                Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
+                Stage stageHome = (Stage) this.myMenuBar.getScene().getWindow();
+                stageHome.setScene(scene);
+                stageHome.show();
+            }
         }
     }
 
