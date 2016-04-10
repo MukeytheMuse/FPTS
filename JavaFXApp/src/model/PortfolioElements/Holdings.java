@@ -46,7 +46,7 @@ public class Holdings implements PortfolioCollection {
         
         public Holding getHoldingGivenEquityComponent(EquityComponent ec) {
             for (Holding h : holdings) {
-                if (h.getDisplayName().equals(ec.getDisplayName())) {
+                if (h.getTickerSymbol().equals(ec.getTickerSymbol())) {
                     return h;
                 }
             }
@@ -55,7 +55,7 @@ public class Holdings implements PortfolioCollection {
         
         public boolean contains(EquityComponent ec) {
             for (Holding h : holdings) {
-                if (h.getDisplayName().equals(ec.getDisplayName())) {
+                if (h.getTickerSymbol().equals(ec.getTickerSymbol())) {
                     return true;
                 }
             }

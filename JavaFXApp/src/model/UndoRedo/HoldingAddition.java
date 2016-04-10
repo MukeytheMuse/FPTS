@@ -35,7 +35,7 @@ public class HoldingAddition implements Command {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         if (!holdings.contains(ec)) {
             String tickerSymbol = ec.getTickerSymbol();
-            String equityName = ec.getDisplayName();
+            String equityName = ec.getName();
             double valuePerShare = ec.getPricePerShare();
             ArrayList<String> indices = ec.getIndices();
             ArrayList<String> sectors = ec.getSectors();
