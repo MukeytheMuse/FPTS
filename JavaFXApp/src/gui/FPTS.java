@@ -94,20 +94,15 @@ public class FPTS extends Application {
     public WebServiceReader getWebServiceReader() {
         return webServiceReader;
     }
-    
-    
+
+
     public static void main(String[] args) {
         if (args.length >= 2 && args[0].equals("-delete")) {
             String userID = args[1];
-//            File csv = new File("model/DataBase/UserData.csv");
-//            File csvTemp = new File("model/DataBase/UserDataTemp.csv");
 
-            //TODO: add comments explaining what this does & get rid of commented code
             try {
-//                BufferedReader e = new BufferedReader(new FileReader(csv));
-//                BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp));
                 BufferedReader reader;
-                //*******NEW DELETE THIS COMMENT -Kaitlin
+
                 File csv = new File(WriteFile.getPath() + "/lilBase/UserData.csv");
 
                 reader = new BufferedReader(new FileReader(csv));
@@ -115,7 +110,6 @@ public class FPTS extends Application {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(csvTemp, true));
 
                 String line;
-                 //******
                 while ((line = reader.readLine()) != null) {
                     String[] user = line.split(",");
                     if (user[0].equals(userID)) {
@@ -136,9 +130,7 @@ public class FPTS extends Application {
                     File holdingsFile = new File(directory, "/Holdings.csv");
                     File watchFile = new File(directory, "/Watch.csv");
                     transFile.delete();
-                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
                     cashFile.delete();
-                    //TODO: check Warning:(181, 31) Result of 'File.delete()' is ignored
                     holdingsFile.delete();
                     watchFile.delete();
                     directory.delete();
