@@ -160,14 +160,14 @@ public class LoginController {
                             userTransactionsToImport = importedEquities.get("Transactions");
                             newPortfolio = new Portfolio(userHoldingsToImport, new ArrayList<CashAccount>(), userTransactionsToImport);
                             usr = new User(this.userid.getText(), this.password.getText(), newPortfolio);
-                            this.addUser(usr, this.password1.getText(), userHoldingsToImport, userTransactionsToImport);
+                            this.addUser(usr, this.password1.getText());
                             currentUser = usr;
                         }
 
                     } else {
                         newEmptyPortfolio = new Portfolio(new ArrayList<Holding>(), new ArrayList<CashAccount>(), new ArrayList<>());
                         usr = new User(this.userid.getText(), this.password.getText(), newEmptyPortfolio);
-                        this.addUser(usr, this.password1.getText(), new ArrayList<>(), new ArrayList<>());
+                        this.addUser(usr, this.password1.getText());
                         currentUser = usr;
                     }
                     Parent parent = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
@@ -277,9 +277,9 @@ public class LoginController {
      * @param usr
      * @param pw1
      */
-    private void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
+    private void addUser(User usr, String pw1) {
         User.addToUserMap(usr);//add to the Static collection allUsersMap
-        usr.addUser(usr, pw1, holdings, transactions);//add to the non Static collection of UserData.csv
+        usr.addUser(usr, pw1);//add to the non Static collection of UserData.csv
     }
 }
 

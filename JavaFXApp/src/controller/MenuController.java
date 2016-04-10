@@ -173,7 +173,7 @@ public abstract class MenuController implements Initializable {
         stage.show();
     }
 
-    public void handleImportMenuItemPressed(ActionEvent event) {
+    public void handleImportMenuItemPressed(ActionEvent event) throws IOException{
         HashMap<String, ArrayList> importedEquities;
         ArrayList<Holding> userHoldingsToImport;
         ArrayList<Transaction> userTransactionsToImport;
@@ -210,7 +210,6 @@ public abstract class MenuController implements Initializable {
                     for (CashAccount importedCashAccount : userCashAccountsToImport) {
                         if (cashAccount.getAccountName().equals(importedCashAccount.getAccountName())) {
                             try {
-                                System.out.println("How about here?");
                                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ImportPopUp.fxml"));
                                 Parent root1 = fxmlLoader.load();
                                 ImportCashAccountPopUpController controller = fxmlLoader.getController();
@@ -225,7 +224,6 @@ public abstract class MenuController implements Initializable {
                     }
                 }
             } else {
-                System.out.println("Am I in here?");
                 for (CashAccount importedCashAccount : userCashAccountsToImport) {
                     FPTS.getCurrentUser().getMyPortfolio().getCashAccounts().add(importedCashAccount);
                 }
@@ -233,6 +231,11 @@ public abstract class MenuController implements Initializable {
 
             WriteFile writeFile = new WriteFile();
             writeFile.updatePortfolioForUser(FPTS.getCurrentUser());
+
+            Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
+            Stage stageHome = (Stage) this.myMenuBar.getScene().getWindow();
+            stageHome.setScene(scene);
+            stageHome.show();
         }
     }
 

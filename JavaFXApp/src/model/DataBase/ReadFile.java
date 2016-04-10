@@ -40,7 +40,7 @@ public class ReadFile {
         return ReadCash.readDB(un);
     }
 
-    public static Map<String, ArrayList<Transaction>> readInTransFile(String un){
+    public static ArrayList<Transaction> readInTransFile(String un){
         return ReadTrans.readDB(un);
     }
 

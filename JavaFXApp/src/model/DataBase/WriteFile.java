@@ -85,7 +85,6 @@ public class WriteFile {
             File watchedEquitiesFile = new File(e, "Watch.csv");
             this.transactionsWriter(user.getMyPortfolio().getTransactions(), transFile);
             this.cashAccountsWriter(user.getMyPortfolio().getCashAccounts(), cashFile);
-            System.out.println(user.getMyPortfolio().getCashAccounts().size());
             this.holdingsWriter(user.getMyPortfolio().getHoldings(), holdingsFile);
             this.equityWriter(user.getMyPortfolio().getWatchedEquities(), watchedEquitiesFile);
         } catch (Exception var8) {
@@ -100,13 +99,37 @@ public class WriteFile {
      */
     public void holdingsWriter(ArrayList<Holding> holdings, File file) {
         try {
+            ArrayList<String[]> splitFile = new ArrayList<>();
+            ArrayList<Holding> readHoldings;
+            FileReader reader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line = "";
+
+            while ((line = bufferedReader.readLine()) != null) {
+                line = line.substring(1, line.length() - 1);
+                String[] split = line.split("\",\"");
+                splitFile.add(split);
+            }
+            readHoldings = ReadHoldings.read(splitFile);
+
             file.delete();
             FileWriter writerH = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writerH);
 
             for (Holding holding : holdings) {
+                for (Holding readHolding : readHoldings) {
+                    if (holding.getTickerSymbol().equals(readHolding.getTickerSymbol())) {
+                        int numberOfShares = (holding.getNumOfShares() + readHolding.getNumOfShares());
+                        Holding h = new Holding(holding.getTickerSymbol(), holding.getDisplayName(), holding.getPricePerShare(), numberOfShares, holding.getAcquisitionDate(), holding.getIndices(), holding.getSectors());
+                        holdings.remove(holding);
+                        holdings.add(h);
+                    }
+                }
+            }
+
+            for (Holding holding : holdings) {
                 bufferedWriter.write("\"" + holding.getTickerSymbol() + "\",\"" +
-                        holding.getName() + "\",\"" + holding.getPricePerShare() + "\",\""
+                        holding.getDisplayName() + "\",\"" + holding.getPricePerShare() + "\",\""
                         + holding.getNumOfShares() + "\",\"" + holding.getAcquisitionDate() + "\"");
                 for (String s : holding.getIndices()) {
                     bufferedWriter.write(",\"" + s + "\"");

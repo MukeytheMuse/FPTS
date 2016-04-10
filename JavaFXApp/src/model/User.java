@@ -171,11 +171,12 @@ public class User implements Serializable {
                 String un = split[0];
                 String pwd = split[1];
                 ArrayList<CashAccount> usersCashAccounts = readFile.readInCashFile(un);
-                Map<String, ArrayList<Transaction>> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
+                //ArrayList<Transaction> cashAccountNameTransactionsMap = readFile.readInTransFile(un);
 
-                ArrayList<Transaction> portfolioTransactions = new ArrayList<>();
+                ArrayList<Transaction> portfolioTransactions = readFile.readInTransFile(un);
 
-                for (CashAccount cashAccountToAssociate : usersCashAccounts) {
+                //TODO:This is not being used anymore; can we delete it.
+                /*for (CashAccount cashAccountToAssociate : usersCashAccounts) {
                     //if transactions exist for this cash account
                     if (cashAccountNameTransactionsMap.containsKey(cashAccountToAssociate.getAccountName())) {
                         ArrayList<Transaction> curTransactions = cashAccountNameTransactionsMap.get(cashAccountToAssociate.getAccountName());
@@ -193,7 +194,7 @@ public class User implements Serializable {
                 //only remaining transactions will be those that are not associated with any cash account in the system
                 for(String cashNameThatIsNotAssociatedWithThisUser: cashAccountNameTransactionsMap.keySet()){
                     portfolioTransactions.addAll(cashAccountNameTransactionsMap.get(cashNameThatIsNotAssociatedWithThisUser));
-                }
+                }*/
 
                 //ArrayList<Holding> usersHoldings = readInHoldingsFile(un);
                 ArrayList<Holding> usersHoldings = readFile.readHoldings(un);
@@ -234,7 +235,7 @@ public class User implements Serializable {
      * Author(s): Kimberly Sookoo & Kaitlin Brockway & Ian London
      *
      */
-    public void addUser(User usr, String pw1, ArrayList<Holding> holdings, ArrayList<Transaction> transactions) {
+    public void addUser(User usr, String pw1) {
         WriteFile writeFile = new WriteFile();
 
         //temporary quick fix to add user to lilBase

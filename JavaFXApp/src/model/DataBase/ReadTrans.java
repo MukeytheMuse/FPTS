@@ -18,9 +18,49 @@ import java.util.Map;
  */
 public class ReadTrans {
 
-    public static HashMap<String, ArrayList<Transaction>> readDB(String un) {
+    public static ArrayList<Transaction> readDB(String un) {
         ArrayList<String[]> splitFile = ReadFile.readInUser(un + "/Trans.csv");
-        return read(splitFile);
+        return readTransactionImports(splitFile);
+    }
+
+    /**
+     * Reads in external transaction file that the user chooses to import.
+     *
+     * @param splitFile - file that user chooses to upload.
+     * @return - arraylist containing the user's imported holdings.
+     * Created by: Kimberly Sookoo.
+     */
+    public static ArrayList<Transaction> readTransactionImports(ArrayList<String[]> splitFile) {
+
+        ArrayList<Transaction> allTransactions = new ArrayList<>();
+
+        for (String[] line : splitFile) {
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(line[2]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            double amount = Double.parseDouble(line[1]);
+            //(double amount, String dateMade, String type, String cashAccountName) {
+
+            String cashAccountName = line[0];
+            String type = line[3];
+            Transaction trans;
+            if (type.equals("Withdrawal")) {
+                trans = new Withdrawal(amount, date);
+                trans.setCashAccountName(cashAccountName);
+            } else {//if(stringType.equals("Deposit")){
+                trans = new Deposit(amount, date);
+                trans.setCashAccountName(cashAccountName);
+            }
+
+
+
+            allTransactions.add(trans);
+        }
+
+        return allTransactions;
     }
 
 
@@ -28,7 +68,7 @@ public class ReadTrans {
      * @return list of all Holding objects
      * <p>
      * Author(s): Kaitlin Brockway & Ian
-     */
+
     public static HashMap<String, ArrayList<Transaction>> read(ArrayList<String[]> file) {
         ArrayList<String[]> splitFile = file;
         String stringCashAccountNameAssociatedWith;
@@ -70,7 +110,7 @@ public class ReadTrans {
         }
 
         return cashAccountNameTransactionsMap;
-    }
+    }*/
 
 
     /**
@@ -79,10 +119,10 @@ public class ReadTrans {
      * @param file - file that user chooses to upload.
      * @return - arraylist containing the user's imported holdings.
      * Created by: Kaitlin Brockway
-     */
+
     public static Map<String, ArrayList<Transaction>> readInImports(File file) {
         String path = file.getPath();
         ArrayList<String[]> splitFile = ReadFile.readIn(path);
         return read(splitFile);
-    }
+    }*/
 }

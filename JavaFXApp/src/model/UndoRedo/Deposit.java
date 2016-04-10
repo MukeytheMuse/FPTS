@@ -75,6 +75,11 @@ public class Deposit implements Command, Transaction {
     }
 
     @Override
+    public void setCashAccountName(String cashAccountName) {
+        cashAcctName = cashAccountName;
+    }
+
+    @Override
     public double getAmount() {
         return amount;
     }

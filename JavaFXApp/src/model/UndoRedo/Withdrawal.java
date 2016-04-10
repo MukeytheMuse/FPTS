@@ -56,6 +56,12 @@ public class Withdrawal implements Command, Transaction {
         cashAcctName = c.getAccountName();
     }
 
+    @Override
+    public void setCashAccountName(String cashAccountName) {
+        cashAcctName = cashAccountName;
+    }
+
+
     /**
      * invokes operation
      */

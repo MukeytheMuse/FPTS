@@ -114,8 +114,10 @@ public class Portfolio {
 
         if(!readInTransactions.isEmpty()){
             this.transactions = readInTransactions;
+            history.add(readInTransactions);
         } else {
             transactions = new ArrayList<>();
+            history = new History();
         }
     }
 
@@ -239,6 +241,7 @@ public class Portfolio {
     public ArrayList<Transaction> getTransactions() {
         return (ArrayList<Transaction>) history.getList();
     }
+
 
 
     //TODO: make this private and find another way to access whats needed
