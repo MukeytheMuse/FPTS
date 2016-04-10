@@ -13,6 +13,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.DataBase.WriteFile;
 import model.PortfolioElements.CashAccount;
 import model.PortfolioElements.Holding;
 import model.PortfolioElements.Portfolio;
@@ -59,11 +60,9 @@ public class HomeController extends MenuController {
      * @param event - ActionEvent - the event that caused this method to run.
      */
     @FXML
-    protected void handlePortfolioButtonPressed(ActionEvent event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/PortfolioPage.fxml")));
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(scene);
-        app_stage.show();
+    protected void handleExportButtonPressed(ActionEvent event) throws IOException {
+        WriteFile writefile = new WriteFile();
+        writefile.exportPortfolioForUser(FPTS.getSelf().getCurrentUser());
     }
 
     /**

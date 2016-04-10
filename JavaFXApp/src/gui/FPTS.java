@@ -25,11 +25,8 @@ public class FPTS extends Application {
     private static double simulationValue;
     private static Simulator currentSimulator;
 
-    //TODO: If this is/will be used somewhere add a comment saying where, otherwise delete them
     private final int WIDTH = 1200;
-    //TODO: check Warning:(40, 23) [UnusedDeclaration] Private field 'WIDTH' is never used
     private final int HEIGHT = 600;
-    //TODO: check Warning:(41, 23) [UnusedDeclaration] Private field 'HEIGHT' is never used
     private Stage thestage;
 
     private static User currentUser;
@@ -73,7 +70,6 @@ public class FPTS extends Application {
     public Scene createLogInScene() throws IOException {
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene scene = new Scene(root, 900.0D, 600.0D);
-        //        Scene scene = new Scene(root, 1200.0D, 600.0D);
         this.thestage.setTitle("Financial Portfolio Tracking System");
         return scene;
     }

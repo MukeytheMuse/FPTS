@@ -19,7 +19,5 @@ public interface Command {
     public void undo();
     public void addChild(Command c);
     public void removeChild(Command c);
-
-
     
 }

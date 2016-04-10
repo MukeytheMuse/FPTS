@@ -93,6 +93,27 @@ public class WriteFile {
 
     }
 
+    /**
+     * @param user
+     */
+    public void exportPortfolioForUser(User user) {
+        try {
+            File e = new File(getPath() + "/" + user.getLoginID() + "'s exports");
+            if (!e.exists()) {
+                e.mkdir();
+            }
+            File transFile = new File(e, "Trans.csv");
+            File cashFile = new File(e, "Cash.csv");
+            File holdingsFile = new File(e, "Holdings.csv");
+            this.transactionsWriter(user.getMyPortfolio().getTransactions(), transFile);
+            this.cashAccountsWriter(user.getMyPortfolio().getCashAccounts(), cashFile);
+            this.holdingsWriter(user.getMyPortfolio().getHoldings(), holdingsFile);
+        } catch (Exception var8) {
+            var8.printStackTrace();
+        }
+
+    }
+
 
     /**
      * @param file
