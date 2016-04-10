@@ -179,7 +179,7 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
             Date start = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             for (int i = results.size() - 1; i >= 0; i--) {
                 Transaction t = results.get(i);
-                Date aDate = t.getCashAccount().getDateAdded();
+                Date aDate = t.getDateMade();
                 if (!aDate.after(start)) {
                     results.remove(i);
                 }
@@ -188,7 +188,7 @@ public class SearchPortfolioVisitor implements PortfolioVisitor {
                 Date end = Date.from(endDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
                 for (int i = results.size() - 1; i >= 0; i--) {
                     Transaction t = results.get(i);
-                    Date aDate = t.getCashAccount().getDateAdded();
+                    Date aDate = t.getDateMade();
                     if (!aDate.before(end)) {
                         results.remove(i);
                     }
