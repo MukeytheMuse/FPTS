@@ -57,19 +57,10 @@ public class FPTS extends Application {
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene loginScene = new Scene(root, 800.0D, 600.0D);
 
-//        try {
-//            this.thestage.setScene(this.createLogInScene());
-//        } catch (Exception var5) {
-//            //TODO: check
-//        }
-
-        //this.thestage.setScene(loginScene);
 
         currentUser = new User("lala");
         currentUser.setMyPortfolio(new Portfolio());
 
-//        Parent root2 = (Parent) FXMLLoader.load(this.getClass().getResource("/gui/Watchlist/WatchlistPage.fxml"));
-//        this.thestage.setScene(new Scene(root2, 1200.0D,600.0D));
         this.thestage.setScene(loginScene);
         this.thestage.setTitle("Financial Portfolio Tracking System");
         this.thestage.show();

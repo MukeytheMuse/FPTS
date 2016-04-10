@@ -25,6 +25,7 @@ import model.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -253,13 +254,39 @@ public class LoginController {
      * @throws IOException
      */
     @FXML
-    protected void handleLogoutNOSAVEButtonPressed(ActionEvent event) throws IOException {
-        Stage stg = FPTS.getSelf().getStage();
-        stg.setScene(FPTS.getSelf().createLogInScene());
-        stg.show();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    protected void handleLogoutNOSAVEButtonPressed(ActionEvent event) throws IOException, URISyntaxException {
+        if (WriteFile.getPath().contains("HelloWorld2")) { //TODO Make sure this matches the name of the jarFile
+            restartApplication();
+        } else {
+            Stage stg = FPTS.getSelf().getStage();
+            stg.setScene(FPTS.getSelf().createLogInScene());
+            stg.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
+
+    /**
+     * RESTARTS THE APPLICATION. THIS WILL ONLY WORK WITH A JAR FILE, NOT FROM THE IDE.
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public void restartApplication() throws URISyntaxException, IOException {
+        final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+        final File currentJar = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+  /* is it a jar file? */
+        if(!currentJar.getName().endsWith(".jar"))
+            return;
+  /* Build command: java -jar application.jar */
+        final ArrayList<String> command = new ArrayList<String>();
+        command.add(javaBin);
+        command.add("-jar");
+        command.add(currentJar.getPath());
+        final ProcessBuilder builder = new ProcessBuilder(command);
+        builder.start();
+        System.exit(0);
+    }
+
 
     /**
      * CURRENTLY NOT IN USE.
