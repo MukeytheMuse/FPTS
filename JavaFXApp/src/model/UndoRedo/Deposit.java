@@ -111,7 +111,7 @@ public class Deposit implements Command, Transaction {
         String theDateString = (localDate.getMonthValue() + "/" +
                 localDate.getDayOfMonth() +
                 "/" + localDate.getYear());
-        return "Deposited " + amount + " to " + c.getAccountName() + " on " + theDateString;
+        return "Deposited " + amount + " to " + cashAcctName + " on " + theDateString;
     }
 
     /**
