@@ -121,6 +121,7 @@ public class FPTS extends Application {
 
                 writer.close();
                 reader.close();
+                csv.delete();
                 csvTemp.renameTo(csv);
 
                 File directory = new File(WriteFile.getPath() + "/lilBase/Portfolios/" + userID);
