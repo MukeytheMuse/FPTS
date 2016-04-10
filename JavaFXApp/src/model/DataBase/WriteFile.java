@@ -105,7 +105,7 @@ public class WriteFile {
             BufferedWriter bufferedWriter = new BufferedWriter(writerH);
 
             for (int i = 0; i < holdings.size(); i++) {
-                for (int j = 1; j < holdings.size(); j++) {
+                for (int j = (i+1); j < holdings.size(); j++) {
                     if (holdings.get(i).getTickerSymbol().equals(holdings.get(j).getTickerSymbol())) {
                         int numberOfShares = (holdings.get(i).getNumOfShares() + holdings.get(i).getNumOfShares());
                         Holding h = new Holding(holdings.get(i).getTickerSymbol(), holdings.get(i).getDisplayName(), holdings.get(i).getPricePerShare(), numberOfShares, holdings.get(i).getAcquisitionDate(), holdings.get(i).getIndices(), holdings.get(i).getSectors());
