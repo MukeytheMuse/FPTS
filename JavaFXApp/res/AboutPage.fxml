@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+    <children>
+      <TextArea editable="false" prefHeight="300.0" prefWidth="400.0" text="Financial Portfolio Tracking System&#10;  This application is used as a way for our users to simulate their &#10;use of the Stock Market and Financial System.&#10;  We allow items to be brought into the system in ways that are&#10;unconvential to allow for ease of use for our users in order to &#10;show a simple simulation of their portfolio.&#10;&#10;This application was built by 5 Software Engineering students &#10;here at Rochester Institute of Technology as a group and team&#10;project, and was designed solely for educational use.&#10;&#10;For support with this application, please feel free to contact us&#10;at              FPTS.wewillnotreply@dontevenbother.com">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextArea>
+    </children>
+</AnchorPane>

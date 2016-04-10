@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gui.FPTS;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -54,8 +55,11 @@ public class LoginController {
         System.exit(0);
     }
 
-    public void handleAboutMenuItemPressed(ActionEvent event) {
-        //TODO Add an about page
+    public void handleAboutMenuItemPressed(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource("/AboutPage.fxml")));
+        stage.setScene(scene);
+        stage.show();
     }
 
     protected void goToLoginPage(ActionEvent event) throws IOException {

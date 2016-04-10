@@ -59,8 +59,12 @@ public abstract class MenuController implements Initializable {
      *
      * @param event - ActionEvent - Event that caused this function to be called.
      */
-    public void handleAboutMenuItemPressed(ActionEvent event) {
-        //TODO Add an about page
+    public void handleAboutMenuItemPressed(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/AboutPage.fxml"));
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleHomeMenuItemPressed(ActionEvent event) throws IOException {
