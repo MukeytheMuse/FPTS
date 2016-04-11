@@ -55,12 +55,6 @@ public class ImportCashAccountPopUpController implements Initializable {
     protected void handleReplaceButtonPressed (ActionEvent actionEvent) {
         this.account.overwrite(this.importedAccount);
         this.account.setTransactions(this.importedAccount.getTransactions());
-        try {
-            Stage stg = FPTS.getSelf().getStage();
-            stg.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -74,13 +68,6 @@ public class ImportCashAccountPopUpController implements Initializable {
         double valueToAdd = this.importedAccount.getValue();
         double currentValue = this.account.getValue();
         this.account.setValue((currentValue + valueToAdd));
-        try {
-            Stage stg = FPTS.getSelf().getStage();
-            Parent parent = FXMLLoader.load(this.getClass().getResource("/HomePage.fxml"));
-            stg.setScene(new Scene(parent));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
 

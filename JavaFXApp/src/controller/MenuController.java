@@ -233,8 +233,10 @@ public abstract class MenuController implements Initializable {
             boolean popUpCalled = false;
             if (!cashAccountArrayList.isEmpty()) {
                 for (CashAccount importedCashAccount : userCashAccountsToImport) {
+                    boolean duplicate = false;
                     for (CashAccount cashAccount : cashAccountArrayList) {
                         if (cashAccount.getAccountName().equals(importedCashAccount.getAccountName())) {
+                            duplicate = true;
                             try {
                                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ImportPopUp.fxml"));
                                 Parent root1 = fxmlLoader.load();
@@ -248,9 +250,9 @@ public abstract class MenuController implements Initializable {
                                 e.printStackTrace();
                             }
                         }
-                        else {
-                            tempList.add(importedCashAccount);
-                        }
+                    }
+                    if (!duplicate) {
+                        tempList.add(importedCashAccount);
                     }
                 }
             } else {
