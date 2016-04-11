@@ -73,6 +73,7 @@ public class Portfolio {
         this.holdings = readInholdings;
         this.cashAccounts = readInCashAccounts;
 
+        equityComponentsCollection = new EquityComponents();
         watchlist = new Watchlist();
         history = new History();
         

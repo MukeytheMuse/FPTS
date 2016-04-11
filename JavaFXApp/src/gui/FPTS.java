@@ -35,7 +35,7 @@ public class FPTS extends Application {
     private static UndoRedoManager undoRedoManager;
 
 
-    private WebServiceReader webServiceReader;
+    private static WebServiceReader webServiceReader;
     
     public FPTS() {
     }
@@ -46,10 +46,6 @@ public class FPTS extends Application {
         self = this;
         this.thestage = primaryStage;
         User.fillUsers();
-
-        Timer time = new Timer();
-        webServiceReader = new WebServiceReader(this);
-        time.schedule(new WebService(webServiceReader), 0, 5000);
 
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/LoginPage.fxml"));
         Scene loginScene = new Scene(root, 800.0D, 600.0D);
@@ -200,6 +196,13 @@ public class FPTS extends Application {
      */
     public static void setCurrentUser(User user) {
         currentUser = user;
+        beginWatching();
+    }
+
+    public static void beginWatching() {
+        Timer time = new Timer();
+        webServiceReader = new WebServiceReader(FPTS.getSelf());
+        time.schedule(new WebService(webServiceReader), 0, 30000);
     }
 
 

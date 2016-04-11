@@ -22,6 +22,8 @@ import model.PortfolioElements.Holding;
 import model.PortfolioElements.Portfolio;
 import model.PortfolioElements.Transaction;
 import model.User;
+import model.WebService;
+import model.WebServiceReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.Timer;
 
 //import model.DataBase.ReadTransactions;
 
@@ -93,6 +96,8 @@ public class LoginController {
                 User sub_user = new User(userid.getText());
                 currentUser = sub_user.getAllUsersMap().get(userid.getText());
                 FPTS.setCurrentUser(currentUser);
+
+
                 Scene scene = new Scene((Parent) FXMLLoader.load(this.getClass().getResource("/HomePage.fxml")));
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene);
